@@ -5,7 +5,7 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        SELECT * FROM `TB_CM_Menu` WHERE ID = @@ID@@ <%= AND `MenuName` LIKE @@MenuName@@ %>;
+        SELECT * FROM `TB_CM_Menu` WHERE 1=1 <%= AND ID = @@ID@@ %> <%= AND `MenuName` LIKE @@MenuName@@ %>;
       ]]>
       </SqlCommand>
     </SqlDefinition>
