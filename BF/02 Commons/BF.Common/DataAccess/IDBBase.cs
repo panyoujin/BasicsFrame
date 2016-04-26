@@ -13,7 +13,7 @@ namespace BF.Common.DataAccess
         /// <param name="key">SQL配置关键字</param>
         /// <param name="paramDic">参数集合</param>
         /// <returns></returns>
-        int ExecuteNonQuery(string sqlText, Dictionary<string, object> paramDic, string sqlConnStringName = "");
+        int ExecuteNonQuery(string sqlKey, Dictionary<string, object> paramDic, string sqlConnStringName = "");
 
         /// <summary>
         /// 执行sql命令，返回影响行数
@@ -22,7 +22,7 @@ namespace BF.Common.DataAccess
         /// <param name="paramDic">参数集合</param>
         /// <param name="isUseTrans">是否启用事务</param>
         /// <returns></returns>
-        int ExecuteNonQuery(string sqlText, Dictionary<string, object> paramDic, bool isUseTrans, string sqlConnStringName = "");
+        int ExecuteNonQuery(string sqlKey, Dictionary<string, object> paramDic, bool isUseTrans, string sqlConnStringName = "");
         
         #endregion ExecuteNonQuery
 
@@ -34,7 +34,7 @@ namespace BF.Common.DataAccess
         /// <param name="key">SQL配置关键字</param>
         /// <param name="paramDic">参数集合</param>
         /// <returns></returns>
-        object ExecuteScalar(string sqlText, Dictionary<string, object> paramDic, string sqlConnStringName = "");
+        object ExecuteScalar(string sqlKey, Dictionary<string, object> paramDic, string sqlConnStringName = "");
 
         /// <summary>
         /// 执行sql命令，返回第一行第一列
@@ -43,7 +43,7 @@ namespace BF.Common.DataAccess
         /// <param name="paramDic">参数集合</param>
         /// <param name="isUseTrans">是否启用事务</param>
         /// <returns></returns>
-        object ExecuteScalar(string sqlText, Dictionary<string, object> paramDic, bool isUseTrans, string sqlConnStringName = "");
+        object ExecuteScalar(string sqlKey, Dictionary<string, object> paramDic, bool isUseTrans, string sqlConnStringName = "");
         
         #endregion ExecuteScalar
         
@@ -56,7 +56,7 @@ namespace BF.Common.DataAccess
         /// <param name="key">SQL配置关键字</param>
         /// <param name="paramDic">参数集合</param>
         /// <returns></returns>
-        IDataReader ExecuteReader(string sqlText, Dictionary<string, object> paramDic, string sqlConnStringName = "");
+        IDataReader ExecuteReader(string sqlKey, Dictionary<string, object> paramDic, string sqlConnStringName = "");
         
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace BF.Common.DataAccess
         /// <param name="key">SQL配置关键字</param>
         /// <param name="paramDic">参数集合</param>
         /// <returns></returns>
-        DataSet QueryForDataSet(string sqlText, Dictionary<string, object> paramDic, string sqlConnStringName = "");
+        DataSet QueryForDataSet(string sqlKey, Dictionary<string, object> paramDic, string sqlConnStringName = "");
         
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace BF.Common.DataAccess
         /// <param name="key">SQL配置关键字</param>
         /// <param name="paramDic">参数集合</param>
         /// <returns></returns>
-        DataTable QueryForDataTable(string sqlText, Dictionary<string, object> paramDic, string sqlConnStringName = "");
+        DataTable QueryForDataTable(string sqlKey, Dictionary<string, object> paramDic, string sqlConnStringName = "");
         
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace BF.Common.DataAccess
         /// <param name="key">SQL配置关键字</param>
         /// <param name="paramDic">参数集合</param>
         /// <returns></returns>
-        List<T> QueryForList<T>(string sqlText, Dictionary<string, object> paramDic, string sqlConnStringName = "") where T : new();
+        List<T> QueryForList<T>(string sqlKey, Dictionary<string, object> paramDic, string sqlConnStringName = "") where T : new();
         
 
 
@@ -94,7 +94,7 @@ namespace BF.Common.DataAccess
         /// <param name="key"></param>
         /// <param name="paramDic"></param>
         /// <returns></returns>
-        T QueryForObject<T>(string sqlText, Dictionary<string, object> paramDic, string sqlConnStringName = "") where T : new();
+        T QueryForObject<T>(string sqlKey, Dictionary<string, object> paramDic, string sqlConnStringName = "") where T : new();
 
         List<T> TableToList<T>(DataTable dt, string filter = "") where T : new();
 

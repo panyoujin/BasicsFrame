@@ -1,4 +1,5 @@
 ﻿using BF.Common.DataAccess.Helper;
+using BF.Common.SQLAnalytical;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,59 +28,59 @@ namespace BF.Common.DataAccess
         }
 
         #endregion
-        public int ExecuteNonQuery(string sqlText, Dictionary<string, object> paramDic, string sqlConnStringName = "")
+        public int ExecuteNonQuery(string sqlKey, Dictionary<string, object> paramDic, string sqlConnStringName = "")
         {
             SqlConfig.SqlConnStringName = sqlConnStringName;
-            return MySqlHelper.ExecuteNonQuery(sqlText, CommandType.Text, paramDic, false);
+            return MySqlHelper.ExecuteNonQuery(CacheSqlConfig.Instance.GetSqlByKey(sqlKey,paramDic), CommandType.Text, paramDic, false);
         }
 
-        public int ExecuteNonQuery(string sqlText, Dictionary<string, object> paramDic, bool isUseTrans, string sqlConnStringName = "")
+        public int ExecuteNonQuery(string sqlKey, Dictionary<string, object> paramDic, bool isUseTrans, string sqlConnStringName = "")
         {
             SqlConfig.SqlConnStringName = sqlConnStringName;
-            return MySqlHelper.ExecuteNonQuery(sqlText, CommandType.Text, paramDic, isUseTrans);
+            return MySqlHelper.ExecuteNonQuery(CacheSqlConfig.Instance.GetSqlByKey(sqlKey,paramDic), CommandType.Text, paramDic, isUseTrans);
         }
 
-        public IDataReader ExecuteReader(string sqlText, Dictionary<string, object> paramDic, string sqlConnStringName = "")
+        public IDataReader ExecuteReader(string sqlKey, Dictionary<string, object> paramDic, string sqlConnStringName = "")
         {
             SqlConfig.SqlConnStringName = sqlConnStringName;
-            return MySqlHelper.ExecuteReader(sqlText, CommandType.Text, paramDic);
+            return MySqlHelper.ExecuteReader(CacheSqlConfig.Instance.GetSqlByKey(sqlKey,paramDic), CommandType.Text, paramDic);
         }
 
-        public object ExecuteScalar(string sqlText, Dictionary<string, object> paramDic, string sqlConnStringName = "")
+        public object ExecuteScalar(string sqlKey, Dictionary<string, object> paramDic, string sqlConnStringName = "")
         {
             SqlConfig.SqlConnStringName = sqlConnStringName;
-            return MySqlHelper.ExecuteScalar(sqlText, CommandType.Text, paramDic, false);
+            return MySqlHelper.ExecuteScalar(CacheSqlConfig.Instance.GetSqlByKey(sqlKey,paramDic), CommandType.Text, paramDic, false);
         }
 
-        public object ExecuteScalar(string sqlText, Dictionary<string, object> paramDic, bool isUseTrans, string sqlConnStringName = "")
+        public object ExecuteScalar(string sqlKey, Dictionary<string, object> paramDic, bool isUseTrans, string sqlConnStringName = "")
         {
             SqlConfig.SqlConnStringName = sqlConnStringName;
-            return MySqlHelper.ExecuteScalar(sqlText, CommandType.Text, paramDic, isUseTrans);
+            return MySqlHelper.ExecuteScalar(CacheSqlConfig.Instance.GetSqlByKey(sqlKey,paramDic), CommandType.Text, paramDic, isUseTrans);
         }
 
-        public DataSet QueryForDataSet(string sqlText, Dictionary<string, object> paramDic, string sqlConnStringName = "")
+        public DataSet QueryForDataSet(string sqlKey, Dictionary<string, object> paramDic, string sqlConnStringName = "")
         {
             SqlConfig.SqlConnStringName = sqlConnStringName;
-            return MySqlHelper.QueryForDataSet(sqlText, CommandType.Text, paramDic);
+            return MySqlHelper.QueryForDataSet(CacheSqlConfig.Instance.GetSqlByKey(sqlKey,paramDic), CommandType.Text, paramDic);
         }
 
-        public DataTable QueryForDataTable(string sqlText, Dictionary<string, object> paramDic, string sqlConnStringName = "")
+        public DataTable QueryForDataTable(string sqlKey, Dictionary<string, object> paramDic, string sqlConnStringName = "")
         {
             SqlConfig.SqlConnStringName = sqlConnStringName;
-            return MySqlHelper.QueryForDataTable(sqlText, CommandType.Text, paramDic);
+            return MySqlHelper.QueryForDataTable(CacheSqlConfig.Instance.GetSqlByKey(sqlKey,paramDic), CommandType.Text, paramDic);
         }
 
-        public List<T> QueryForList<T>(string sqlText, Dictionary<string, object> paramDic, string sqlConnStringName = "") where T : new()
+        public List<T> QueryForList<T>(string sqlKey, Dictionary<string, object> paramDic, string sqlConnStringName = "") where T : new()
         {
             SqlConfig.SqlConnStringName = sqlConnStringName;
-            var dt = MySqlHelper.QueryForDataTable(sqlText, CommandType.Text, paramDic);
+            var dt = MySqlHelper.QueryForDataTable(CacheSqlConfig.Instance.GetSqlByKey(sqlKey,paramDic), CommandType.Text, paramDic);
             return TableToList<T>(dt);
         }
 
-        public T QueryForObject<T>(string sqlText, Dictionary<string, object> paramDic, string sqlConnStringName = "") where T : new()
+        public T QueryForObject<T>(string sqlKey, Dictionary<string, object> paramDic, string sqlConnStringName = "") where T : new()
         {
             SqlConfig.SqlConnStringName = sqlConnStringName;
-            var dt = MySqlHelper.QueryForDataTable(sqlText, CommandType.Text, paramDic);
+            var dt = MySqlHelper.QueryForDataTable(CacheSqlConfig.Instance.GetSqlByKey(sqlKey,paramDic), CommandType.Text, paramDic);
             return TableToObject<T>(dt);
         }
 

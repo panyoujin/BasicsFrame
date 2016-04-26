@@ -1,14 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FFD8F5E7-963A-4FBF-B6F1-5FED0C14547C}</ProjectGuid>
+    <ProjectGuid>5c4e48e1-8a18-4ba8-b185-517d437962db</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BF.Common</RootNamespace>
-    <AssemblyName>BF.Common</AssemblyName>
+    <RootNamespace>BF.Ioc</RootNamespace>
+    <AssemblyName>BF.Ioc</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,41 +30,25 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FastReflectionLib">
-      <HintPath>..\..\01 Reference\MySql\FastReflectionLib.dll</HintPath>
-    </Reference>
-    <Reference Include="MySql.Data, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
-    <Reference Include="System" />
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System"/>
+    
+    <Reference Include="System.Core"/>
+    <Reference Include="System.Xml.Linq"/>
+    <Reference Include="System.Data.DataSetExtensions"/>
+    
+    
+    <Reference Include="Microsoft.CSharp"/>
+    
+    <Reference Include="System.Data"/>
+    
+    <Reference Include="System.Net.Http"/>
+    
+    <Reference Include="System.Xml"/>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
-    <Compile Include="Configuration\FileInfoConfigRefresher.cs" />
-    <Compile Include="Configuration\IConfigRefresher.cs" />
-    <Compile Include="DataAccess\DBBaseFactory.cs" />
-    <Compile Include="DataAccess\IDBBase.cs" />
-    <Compile Include="DataAccess\Helper\MySqlHelper.cs" />
-    <Compile Include="DataAccess\MySqlDBBase.cs" />
-    <Compile Include="DataAccess\SqlConfig.cs" />
-    <Compile Include="Helper\ConfigHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SQLAnalytical\CacheSqlConfig.cs" />
-    <Compile Include="SQLAnalytical\ParameterInfo.cs" />
-    <Compile Include="SQLAnalytical\ParameterInfoCollection.cs" />
-    <Compile Include="SQLAnalytical\ParseItem.cs" />
-    <Compile Include="SQLAnalytical\SqlDefinition.cs" />
-    <Compile Include="SQLAnalytical\KeywordVariable.cs" />
-    <Compile Include="Utilities\XmlUtility.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -73,4 +57,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-</Project>
+
+ </Project>
