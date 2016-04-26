@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HCIP.AjaxDataSetting>
+
+  <Data name="BackWeb_GetMenuList">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT * FROM `TB_CM_Menu` WHERE ID = @@ID@@ <%= AND `MenuName` LIKE @@MenuName@@ %>;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+
+</HCIP.AjaxDataSetting>

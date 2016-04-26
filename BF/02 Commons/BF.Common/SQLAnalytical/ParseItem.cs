@@ -90,7 +90,7 @@ namespace BF.Common.SQLAnalytical
                 string result = keyItem.Value + "";
                 if (string.IsNullOrEmpty(result) && keyItem.IsNull) allEmpty = true;
 
-                returnValue = returnValue.Replace(keyItem.Keyword, string.Format("?{0}", keyItem.Keyword));
+                returnValue = returnValue.Replace(keyItem.Keyword, string.Format("?{0}", keyItem.KeyName));
             }
             if (allEmpty) return string.Empty;
 
