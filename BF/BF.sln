@@ -27,6 +27,44 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BF.BackWebAPI", "06 WebAPI\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BF.PublicConfig", "02 Commons\BF.PublicConfig\BF.PublicConfig.csproj", "{2E62B7AA-4B14-4AF6-B362-82AE7824A2DC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{FD606449-A8B6-49A2-B232-5D4CBB1012CB}"
+	ProjectSection(SolutionItems) = preProject
+		01 Reference\Common\log4net.dll = 01 Reference\Common\log4net.dll
+		01 Reference\Common\Newtonsoft.Json.dll = 01 Reference\Common\Newtonsoft.Json.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EnterLib", "EnterLib", "{F46F2C45-70FA-49B8-BD65-8CF9EC584356}"
+	ProjectSection(SolutionItems) = preProject
+		01 Reference\EnterLib\Microsoft.Office.Interop.Excel.dll = 01 Reference\EnterLib\Microsoft.Office.Interop.Excel.dll
+		01 Reference\EnterLib\Microsoft.Practices.EnterpriseLibrary.Caching.dll = 01 Reference\EnterLib\Microsoft.Practices.EnterpriseLibrary.Caching.dll
+		01 Reference\EnterLib\Microsoft.Practices.EnterpriseLibrary.Common.dll = 01 Reference\EnterLib\Microsoft.Practices.EnterpriseLibrary.Common.dll
+		01 Reference\EnterLib\Microsoft.Practices.EnterpriseLibrary.Data.dll = 01 Reference\EnterLib\Microsoft.Practices.EnterpriseLibrary.Data.dll
+		01 Reference\EnterLib\Microsoft.Practices.EnterpriseLibrary.Data.SqlCe.dll = 01 Reference\EnterLib\Microsoft.Practices.EnterpriseLibrary.Data.SqlCe.dll
+		01 Reference\EnterLib\Microsoft.Practices.ServiceLocation.dll = 01 Reference\EnterLib\Microsoft.Practices.ServiceLocation.dll
+		01 Reference\EnterLib\Microsoft.Practices.Unity.Configuration.dll = 01 Reference\EnterLib\Microsoft.Practices.Unity.Configuration.dll
+		01 Reference\EnterLib\Microsoft.Practices.Unity.dll = 01 Reference\EnterLib\Microsoft.Practices.Unity.dll
+		01 Reference\EnterLib\Microsoft.Practices.Unity.Interception.Configuration.dll = 01 Reference\EnterLib\Microsoft.Practices.Unity.Interception.Configuration.dll
+		01 Reference\EnterLib\Microsoft.Practices.Unity.Interception.dll = 01 Reference\EnterLib\Microsoft.Practices.Unity.Interception.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IOC", "IOC", "{3E0D25D5-15BA-4ECC-92A5-71512FC90C10}"
+	ProjectSection(SolutionItems) = preProject
+		01 Reference\IOC\StructureMap.dll = 01 Reference\IOC\StructureMap.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Memcached", "Memcached", "{55EB43F9-E61B-4134-8D01-B6DBD134C580}"
+	ProjectSection(SolutionItems) = preProject
+		01 Reference\Memcached\Enyim.Caching.dll = 01 Reference\Memcached\Enyim.Caching.dll
+		01 Reference\Memcached\Memcached.ClientLibrary.dll = 01 Reference\Memcached\Memcached.ClientLibrary.dll
+		01 Reference\Memcached\MemcachedProviders.dll = 01 Reference\Memcached\MemcachedProviders.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MySql", "MySql", "{7C8A7B29-2C58-49A2-BDB6-15F569275039}"
+	ProjectSection(SolutionItems) = preProject
+		01 Reference\MySql\FastReflectionLib.dll = 01 Reference\MySql\FastReflectionLib.dll
+		01 Reference\MySql\MySql.Data.dll = 01 Reference\MySql\MySql.Data.dll
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,5 +101,10 @@ Global
 		{5C4E48E1-8A18-4BA8-B185-517D437962DB} = {574645AD-CEC4-4B04-8E5C-780CBC14B1E8}
 		{CF3987E4-7F87-4E95-8BDC-A12C948AFBC5} = {2B595582-C5F8-4E00-AE92-DEBCF3450BEE}
 		{2E62B7AA-4B14-4AF6-B362-82AE7824A2DC} = {574645AD-CEC4-4B04-8E5C-780CBC14B1E8}
+		{FD606449-A8B6-49A2-B232-5D4CBB1012CB} = {5A663EC1-B5CA-4EC8-9CF6-7FFDD3D4979D}
+		{F46F2C45-70FA-49B8-BD65-8CF9EC584356} = {5A663EC1-B5CA-4EC8-9CF6-7FFDD3D4979D}
+		{3E0D25D5-15BA-4ECC-92A5-71512FC90C10} = {5A663EC1-B5CA-4EC8-9CF6-7FFDD3D4979D}
+		{55EB43F9-E61B-4134-8D01-B6DBD134C580} = {5A663EC1-B5CA-4EC8-9CF6-7FFDD3D4979D}
+		{7C8A7B29-2C58-49A2-BDB6-15F569275039} = {5A663EC1-B5CA-4EC8-9CF6-7FFDD3D4979D}
 	EndGlobalSection
 EndGlobal
