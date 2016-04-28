@@ -1,6 +1,9 @@
 ﻿using BF.BackWebAPI.Models.Back;
+using BF.Common.CommonEntities;
+using BF.Common.CustomException;
 using BF.Common.DataAccess;
 using BF.Common.Helper;
+using BF.Common.StaticConstant;
 using System;
 using System.Collections.Generic;
 using System.Web;
@@ -31,17 +34,31 @@ namespace BF.BackWebAPI.Controllers.Back
         {
             get
             {
-                var cacheUser = HttpContext.Cache.Get(SessionID) as UserModel;
-                if (cacheUser == null)
+                if (string.IsNullOrWhiteSpace(SessionID))
+                {
+                    throw new NotLoginException("用户未登录！");
+                    return null;
+                }
+                var cacheUser = HttpContext.Cache.Get(SessionID);
+                UserModel user = null;
+                if (cacheUser != null)
+                {
+                    user = cacheUser as UserModel;
+                    if (user != null && user.ID > 0)
+                    {
+                        return user;
+                    }
+                }
+                else
                 {
                     Dictionary<string, object> dic = new Dictionary<string, object>();
                     dic.Add("SessionID", SessionID);
                     //从数据看获取
-                    cacheUser = DBBaseFactory.DALBase.QueryForObject<UserModel>("BackWeb_GetLoginUser", dic);
+                    user = DBBaseFactory.DALBase.QueryForObject<UserModel>("BackWeb_GetLoginUser", dic);
                     HttpContext.Cache.Remove(SessionID);
-                    HttpContext.Cache.Insert(SessionID, cacheUser);
+                    HttpContext.Cache.Insert(SessionID, user);
                 }
-                return cacheUser;
+                return user;
             }
         }
 
@@ -104,6 +121,7 @@ namespace BF.BackWebAPI.Controllers.Back
         /// <param name="errorContext"></param>
         protected override void OnException(ExceptionContext errorContext)
         {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_EXCEPTION, msg = ResultMsg.CODE_EXCEPTION };
             string url = errorContext.HttpContext.Request.RawUrl;
             string postParameter = string.Empty;
             if (errorContext.HttpContext.Request.RequestType == "POST")
@@ -115,8 +133,15 @@ namespace BF.BackWebAPI.Controllers.Back
                 }
                 postParameter += "\r\n";
             }
-            string errMsg = string.Format("请求URL：{0},IP:{1},请求类型:{2}{3}", url,RequestInfo.RequestIP , errorContext.HttpContext.Request.RequestType, postParameter);
+            string errMsg = string.Format("请求URL：{0},IP:{1},请求类型:{2}{3}", url, RequestInfo.RequestIP, errorContext.HttpContext.Request.RequestType, postParameter);
             LogHelper.Info(errMsg);
+            if (errorContext.Exception is NotLoginException)
+            {
+                apiResult.code = ResultCode.CODE_ERROR_USER_NOT_LOGIN;
+                apiResult.msg = ResultMsg.CODE_ERROR_USER_NOT_LOGIN;
+            }
+            Response.Write(JsonHelper.SerializeObjectToWebApi(apiResult));
+            Response.End();
             base.OnException(errorContext);
         }
     }

@@ -169,6 +169,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Authorize\BFAuthorizeAttribute.cs" />
     <Compile Include="Controllers\Back\AccountController.cs" />
     <Compile Include="Controllers\Back\BackBaseController.cs" />
     <Compile Include="Controllers\Back\HealthModelController.cs" />
@@ -195,7 +196,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Authorize\" />
     <Folder Include="Views\Account\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\HealthModel\" />

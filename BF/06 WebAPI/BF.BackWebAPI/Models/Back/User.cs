@@ -17,5 +17,6 @@ namespace BF.BackWebAPI.Models.Back
         public string NickName { get; set; }
         public string QQ { get; set; }
         public string ImageUrl { get; set; }
+        public Boolean IsAdmin { get; set; }
     }
 }
