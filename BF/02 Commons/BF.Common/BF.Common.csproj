@@ -66,6 +66,7 @@
     <Compile Include="CommonEntities\ApiResult.cs" />
     <Compile Include="Configuration\FileInfoConfigRefresher.cs" />
     <Compile Include="Configuration\IConfigRefresher.cs" />
+    <Compile Include="CustomException\NotLoginException.cs" />
     <Compile Include="DataAccess\DBBaseFactory.cs" />
     <Compile Include="DataAccess\IDBBase.cs" />
     <Compile Include="DataAccess\Helper\MySqlHelper.cs" />

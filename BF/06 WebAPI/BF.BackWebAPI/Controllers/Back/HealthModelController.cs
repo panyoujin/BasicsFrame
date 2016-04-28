@@ -2,15 +2,12 @@
 using BF.Common.DataAccess;
 using BF.Common.Helper;
 using BF.Common.StaticConstant;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
-namespace BF.BackWebAPI.Controllers
+namespace BF.BackWebAPI.Controllers.Back
 {
-    public class HealthModelController : BaseController
+    public class HealthModelController : BackBaseController
     {
         
         /// <summary>

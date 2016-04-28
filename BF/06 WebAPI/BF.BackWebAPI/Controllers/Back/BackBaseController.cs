@@ -1,24 +1,18 @@
-﻿using BF.BackWebAPI.Models;
+﻿using BF.BackWebAPI.Models.Back;
 using BF.Common.DataAccess;
 using BF.Common.Helper;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace BF.BackWebAPI.Controllers
+namespace BF.BackWebAPI.Controllers.Back
 {
 
-    public class BaseController : Controller
+    public class BackBaseController : Controller
     {
 
-        public BaseController()
+        public BackBaseController()
         {
         }
         /// <summary>
@@ -102,6 +96,28 @@ namespace BF.BackWebAPI.Controllers
         public int GetStartSize(int page, int pageSize)
         {
             return (page > 1 ? (page - 1) * pageSize : 0);
+        }
+
+        /// <summary>
+        /// 将异常写入日志中
+        /// </summary>
+        /// <param name="errorContext"></param>
+        protected override void OnException(ExceptionContext errorContext)
+        {
+            string url = errorContext.HttpContext.Request.RawUrl;
+            string postParameter = string.Empty;
+            if (errorContext.HttpContext.Request.RequestType == "POST")
+            {
+                postParameter += "\r\n";
+                foreach (string key in errorContext.HttpContext.Request.Form.AllKeys)
+                {
+                    postParameter += string.Format("\"{0}\":{1};", key, errorContext.HttpContext.Request.Form[key]);
+                }
+                postParameter += "\r\n";
+            }
+            string errMsg = string.Format("请求URL：{0},IP:{1},请求类型:{2}{3}", url,RequestInfo.RequestIP , errorContext.HttpContext.Request.RequestType, postParameter);
+            LogHelper.Info(errMsg);
+            base.OnException(errorContext);
         }
     }
 }

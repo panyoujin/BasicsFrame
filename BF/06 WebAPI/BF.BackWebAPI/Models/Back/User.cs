@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BF.BackWebAPI.Models
+namespace BF.BackWebAPI.Models.Back
 {
     public class UserModel
     {

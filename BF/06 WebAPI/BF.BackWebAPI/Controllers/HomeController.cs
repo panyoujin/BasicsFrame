@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace BF.BackWebAPI.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
         public HomeController()
         {
