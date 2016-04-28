@@ -9,14 +9,19 @@ using System.Web.Mvc;
 
 namespace BF.BackWebAPI.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
+        public HomeController()
+        {
+        }
+
+        [Authorize(Roles ="Users")]
         public ActionResult Index()
         {
             return View();
         }
 
-
+        [Authorize(Roles = "Users")]
         public string GetMemnuList(string name="")
         {
             Dictionary<string, object> dic = new Dictionary<string, object>();

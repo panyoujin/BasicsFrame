@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HCIP.AjaxDataSetting>
+
+  <!--通过类型获取养生模式-->
+  <Data name="BackWeb_GetHealthModelListByType">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT `ID`,Introduce,Model_Name,IcoUrl,ImageUrl,Sort FROM `TB_MB_Models` WHERE `Status` AND Model_Type = @@Model_Type@@ order BY Sort DESC <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+
+</HCIP.AjaxDataSetting>

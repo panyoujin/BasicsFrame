@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HCIP.AjaxDataSetting>
+  <!--根据登录标识获取登录信息-->
+  <Data name="BackWeb_GetLoginUser">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT  `ID`, `UserAccount`, `UserName`, `PhoneNum`, `EMail`, `UserPassword`, `Sex`, `Status` FROM `TB_CM_User`  WHERE `Status` AND SessionID = @@SessionID@@;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  <!--根据 登录凭证(手机号码/帐号/电子邮箱) 获取用户信息-->
+  <!--可能存在帐号和手机号码相等的BUG-->
+  <Data name="BackWeb_GetUserByLoginVoucher">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT  `ID`, `UserAccount`, `UserName`, `PhoneNum`, `EMail`, `UserPassword`, `Sex`, `Status` FROM `TB_CM_User`  WHERE `Status` AND (UserAccount = @@UserAccount@@ OR PhoneNum = @@UserAccount@@ OR EMail = @@UserAccount@@) <%=AND UserPassword = @@UserPassword@@ %>;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  
+  <Data name="BackWeb_UpdateLoginUserSessionID">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        UPDATE TB_CM_User SET SessionID = @@SessionID@@,LoginTime=NOW() WHERE ID=@@ID@@;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+
+  
+</HCIP.AjaxDataSetting>
