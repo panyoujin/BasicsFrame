@@ -14,6 +14,7 @@ namespace BF.BackWebAPI.Authorize
     public class BFAuthorizeAttribute : AuthorizeAttribute
     {
         private HttpContextBase _httpContext;
+        public bool IsLogin { get; set; }
         [Authorize]
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
@@ -22,6 +23,7 @@ namespace BF.BackWebAPI.Authorize
                 throw new ArgumentNullException("httpContext");
             }
             this._httpContext = httpContext;
+
             return true;
         }
 

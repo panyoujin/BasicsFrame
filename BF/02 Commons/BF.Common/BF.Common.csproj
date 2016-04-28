@@ -30,22 +30,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FastReflectionLib">
-      <HintPath>..\..\01 Reference\MySql\FastReflectionLib.dll</HintPath>
+    <Reference Include="FastReflectionLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\源码管理\Github\BasicsFrame\BF\01 Reference\MySql\FastReflectionLib.dll</HintPath>
     </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\..\01 Reference\Common\log4net.dll</HintPath>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\源码管理\Github\BasicsFrame\BF\01 Reference\Common\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <EmbedInteropTypes>True</EmbedInteropTypes>
-      <HintPath>..\..\01 Reference\EnterLib\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\源码管理\Github\BasicsFrame\BF\01 Reference\EnterLib\Microsoft.Office.Interop.Excel.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data, Version=6.6.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\..\01 Reference\MySql\MySql.Data.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\源码管理\Github\BasicsFrame\BF\01 Reference\MySql\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\01 Reference\Common\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\源码管理\Github\BasicsFrame\BF\01 Reference\Common\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
