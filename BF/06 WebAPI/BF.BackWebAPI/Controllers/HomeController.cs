@@ -21,8 +21,8 @@ namespace BF.BackWebAPI.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Users")]
-        public string GetMemnuList(string name="")
+
+        public string GetMenuList(string name="")
         {
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("MenuName", string.Format("%{0}%", name));
