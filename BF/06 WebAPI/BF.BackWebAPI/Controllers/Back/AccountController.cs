@@ -5,7 +5,7 @@ using BF.Common.Helper;
 using BF.Common.StaticConstant;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Web.Mvc;
+using System.Web.Http;
 
 namespace BF.BackWebAPI.Controllers.Back
 {
