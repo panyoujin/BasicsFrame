@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BF.Common.SQLAnalytical;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,6 +13,7 @@ namespace BF.WebAPI
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            CacheSqlConfig.Instance.SqlConfigPath = Server.MapPath("/bin/SqlConfig");
         }
     }
 }
