@@ -63,6 +63,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MySql", "MySql", "{7C8A7B29
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "项目文件", "项目文件", "{8FC65F89-1E3E-4F76-8D9C-233BB7B22E68}"
 	ProjectSection(SolutionItems) = preProject
+		G:\OneDrive\智能茶壶\table_all.sql = G:\OneDrive\智能茶壶\table_all.sql
 		01 Reference\项目文件\手机app.pdf = 01 Reference\项目文件\手机app.pdf
 		01 Reference\项目文件\表SQL.txt = 01 Reference\项目文件\表SQL.txt
 		01 Reference\项目文件\表设计.txt = 01 Reference\项目文件\表设计.txt
