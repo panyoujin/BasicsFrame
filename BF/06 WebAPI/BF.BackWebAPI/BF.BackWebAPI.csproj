@@ -165,7 +165,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Authorize\BFAuthorizeAttribute.cs" />
     <Compile Include="Controllers\Back\AccountController.cs" />
-    <Compile Include="Controllers\Back\BackBaseController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\Back\HealthModelController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">

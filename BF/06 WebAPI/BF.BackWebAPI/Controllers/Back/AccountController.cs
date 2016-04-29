@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace BF.BackWebAPI.Controllers.Back
 {
-    public class AccountController : BackBaseController
+    public class AccountController : BaseController
     {
         [HttpGet]
         public string Login(string account, string password)
@@ -29,6 +29,7 @@ namespace BF.BackWebAPI.Controllers.Back
                 apiResult.msg = "帐号不存在！";
                 return JsonHelper.SerializeObject(apiResult);
             }
+            user.IsAdmin = true;
             if (user.UserPassword != password)
             {
                 apiResult.code = ResultCode.CODE_BUSINESS_ERROR;

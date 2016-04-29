@@ -5,6 +5,7 @@ using System.IO;
 using System.Net.Http;
 using System.Runtime.Serialization.Json;
 using System.Text;
+using System.Web;
 
 namespace BF.Common.Helper
 {
@@ -129,5 +130,7 @@ namespace BF.Common.Helper
             HttpResponseMessage result = new HttpResponseMessage { Content = new StringContent(JsonConvert.SerializeObject(t), Encoding.GetEncoding("UTF-8"), "application/json") };
             return result;
         }
+
+        
     }
 }

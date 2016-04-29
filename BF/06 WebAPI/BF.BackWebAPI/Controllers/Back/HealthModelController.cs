@@ -1,4 +1,5 @@
-﻿using BF.Common.CommonEntities;
+﻿using BF.BackWebAPI.Authorize;
+using BF.Common.CommonEntities;
 using BF.Common.DataAccess;
 using BF.Common.Helper;
 using BF.Common.StaticConstant;
@@ -7,7 +8,7 @@ using System.Web.Mvc;
 
 namespace BF.BackWebAPI.Controllers.Back
 {
-    public class HealthModelController : BackBaseController
+    public class HealthModelController : BaseController
     {
 
         /// <summary>
@@ -18,6 +19,7 @@ namespace BF.BackWebAPI.Controllers.Back
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
+        [BFAuthorizeAttribute(IsLogin =false)]
         public string GetHealthModelList(int type = 0, int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
