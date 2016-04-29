@@ -6,7 +6,7 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        SELECT `ID`,Introduce,Model_Name,IcoUrl,ImageUrl,Sort FROM `TB_MB_Models` WHERE `Status` AND Model_Type = @@Model_Type@@ order BY Sort DESC <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
+        SELECT `ID` AS MID,Introduce,Model_Name,IcoUrl,ImageUrl,Sort FROM `TB_MB_Models` WHERE `Status` AND Model_Type = @@Model_Type@@ order BY Sort DESC <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
       ]]>
       </SqlCommand>
     </SqlDefinition>
@@ -16,10 +16,28 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        SELECT  `ID`, `User_ID`, `Model_Name`, `IcoUrl`, `ImageUrl`, `Introduce`, `Describe`, `Remarks`, `Sort`, `IsBubble`, `Bubble_Time`, `Bubble_Temperature`
+        SELECT  `ID` AS MID, `User_ID`, `Model_Name`, `IcoUrl`, `ImageUrl`, `Introduce`, `Describe`, `Remarks`, `Sort`, `IsBubble`, `Bubble_Time`, `Bubble_Temperature`
         , `Cook_Time`, `Cook_Temperature`, `Is_Heat_Preservation`, `Heat_Preservation_Time`, `Heat_Preservation_Temperature`, `Removal_Chlorine_Time`
         , `Final_Temperature`, `IsFerv`, `Model_Type`, `Model_Status`
         FROM `TB_MB_Models` WHERE `Status` AND ID=@@ModelID@@ <%= AND (Model_Type=0 OR (Model_Type=1 AND User_ID=@@User_ID@@)) %>;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  <!--新增模式-->
+  <Data name="BackWeb_AddHealthModel">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        INSERT INTO `TB_MB_Models` (
+        `User_ID`,`Model_Name`,`IcoUrl`,`ImageUrl`,`Introduce`,`Describe`,`Remarks`,`Sort`,`IsBubble`,
+        `Bubble_Time`,`Bubble_Temperature`,`Cook_Time`,`Cook_Temperature`,`Is_Heat_Preservation`,`Heat_Preservation_Time`,`Heat_Preservation_Temperature`,
+        `Removal_Chlorine_Time`,`Final_Temperature`,`IsFerv`,`Model_Type`,`Model_Status`,`CreationUser`,`CreationDate`) 
+        VALUES(
+        @@User_ID@@, @@Model_Name@@, @@IcoUrl@@, @@ImageUrl@@, @@Introduce@@, @@Describe@@, @@Remarks@@, @@Sort@@, @@IsBubble@@
+        , @@Bubble_Time@@,@@Bubble_Temperature@@,@@Cook_Time@@,@@Cook_Temperature@@,@@Is_Heat_Preservation@@,@@Heat_Preservation_Time@@,@@Heat_Preservation_Temperature@@,
+        @@Removal_Chlorine_Time@@,@@Final_Temperature@@,@@IsFerv@@,@@Model_Type@@,@@Model_Status@@,'@@CreationUser@@',NOW()
+        );
       ]]>
       </SqlCommand>
     </SqlDefinition>

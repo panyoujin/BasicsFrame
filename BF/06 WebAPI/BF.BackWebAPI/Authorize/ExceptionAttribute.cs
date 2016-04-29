@@ -40,6 +40,11 @@ namespace BF.BackWebAPI.Authorize
                 apiResult.code = ResultCode.CODE_ERROR_USER_NOT_LOGIN;
                 apiResult.msg = ResultMsg.CODE_ERROR_USER_NOT_LOGIN;
             }
+            else if(context.Exception is BusinessException)
+            {
+                apiResult.code = ResultCode.CODE_BUSINESS_ERROR;
+                apiResult.msg = context.Exception.Message;
+            }
             context.Response = JsonHelper.SerializeObjectToWebApi(apiResult);
         }
 

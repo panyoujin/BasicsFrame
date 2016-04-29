@@ -4,23 +4,23 @@ using System.Runtime.Serialization;
 namespace BF.Common.CustomException
 {
     /// <summary>
-    /// 未登录异常
+    /// 逻辑异常
     /// </summary>
     [Serializable]
-    public class NotLoginException : Exception
+    public class BusinessException : Exception
     {
-        public NotLoginException()
+        public BusinessException()
         {
         }
-        public NotLoginException(string message)
+        public BusinessException(string message)
             : base(message)
         {
         }
-        public NotLoginException(string message, Exception inner)
+        public BusinessException(string message, Exception inner)
             : base(message, inner)
         {
         }
-        protected NotLoginException(SerializationInfo info, StreamingContext context)
+        protected BusinessException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
         }

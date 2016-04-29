@@ -71,12 +71,14 @@
     <Compile Include="CommonEntities\ApiResult.cs" />
     <Compile Include="Configuration\FileInfoConfigRefresher.cs" />
     <Compile Include="Configuration\IConfigRefresher.cs" />
+    <Compile Include="CustomException\LogicException.cs" />
     <Compile Include="CustomException\NotLoginException.cs" />
     <Compile Include="DataAccess\DBBaseFactory.cs" />
     <Compile Include="DataAccess\IDBBase.cs" />
     <Compile Include="DataAccess\Helper\MySqlHelper.cs" />
     <Compile Include="DataAccess\MySqlDBBase.cs" />
     <Compile Include="DataAccess\SqlConfig.cs" />
+    <Compile Include="Enums\Model_Enums.cs" />
     <Compile Include="Encrypt\DESEncrypt.cs" />
     <Compile Include="Encrypt\HashSignature.cs" />
     <Compile Include="Encrypt\MD5Encrypt.cs" />

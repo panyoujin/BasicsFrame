@@ -28,6 +28,7 @@ namespace BF.BackWebAPI.Controllers
                     dic.Add("SessionID", RequestInfo.SessionID);
                     //从数据看获取
                     user = DBBaseFactory.DALBase.QueryForObject<UserModel>("BackWeb_GetLoginUser", dic);
+                    user.IsAdmin = true;
                     HttpContext.Current.Cache.Remove(RequestInfo.SessionID);
                     HttpContext.Current.Cache.Insert(RequestInfo.SessionID, user);
                 }
