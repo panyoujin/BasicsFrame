@@ -1,14 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <HCIP.AjaxDataSetting>
 
-  <Data name="FrontApi_GetMemberInfoByAccount">
-    <SqlDefinition type="sql">
-      <SqlCommand>
-        <![CDATA[
-SELECT `Account`,`Passwd`,`Name`,`Age`,`Birthday`,`Sex`,`Email`,`Phone`,`Remark`,`QQ`,`ImageUrl` FROM `TB_MB_MemberInfo` WHERE `Account`='@@Account@@' AND `Status`=FALSE;
+	<Data name="FrontApi_GetMemberInfoByAccount">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+SELECT `ID`,`Account`,`Passwd`,`Name`,`Age`,`Birthday`,`Sex`,`Email`,`Phone`,`Remark`,`QQ`,`ImageUrl` FROM `TB_MB_MemberInfo` WHERE `Account`=@@Account@@ AND `Status`=FALSE;
       ]]>
-      </SqlCommand>
-    </SqlDefinition>
-  </Data>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
 
+	<Data name="FrontApi_InsertMemberInfo">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+INSERT INTO  `TB_MB_MemberInfo`(`Account`,`Passwd`,`Status`,`IsAuto`) VALUES(@@Account@@,@@Passwd@@,FALSE,FALSE);
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
 </HCIP.AjaxDataSetting>

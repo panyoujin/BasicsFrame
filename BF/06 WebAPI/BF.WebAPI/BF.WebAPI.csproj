@@ -105,11 +105,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\Request\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\02 Commons\BF.Common\BF.Common.csproj">
       <Project>{ffd8f5e7-963a-4fbf-b6f1-5fed0c14547c}</Project>
       <Name>BF.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\02 Commons\BF.PublicConfig\BF.PublicConfig.csproj">
+      <Project>{2e62b7aa-4b14-4af6-b362-82ae7824a2dc}</Project>
+      <Name>BF.PublicConfig</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
