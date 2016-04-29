@@ -1,9 +1,8 @@
-﻿using System;
+﻿using BF.Common.CustomException;
+using BF.Common.DataAccess;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace BF.Common.Helper
@@ -21,21 +20,66 @@ namespace BF.Common.Helper
 
         public RequestHelper(HttpRequestBase requestMessage)
         {
-            this.RequestMessage = requestMessage;
+            this.MvcRequestMessage = requestMessage;
+        }
+        public RequestHelper(HttpRequestMessage requestMessage)
+        {
+            this.APIRequestMessage = requestMessage;
         }
         /// <summary>
         /// 请求信息
         /// </summary>
-        public HttpRequestBase RequestMessage { get; set; }
+        public HttpRequestMessage APIRequestMessage { get; set; }
+        /// <summary>
+        /// 请求信息
+        /// </summary>
+        public HttpRequestBase MvcRequestMessage { get; set; }
 
         /// <summary>
         /// 请求信息
         /// </summary>
         public HttpRequest Request { get; set; }
 
-        
 
-        
+        /// <summary>
+        /// 缓存使用的session
+        /// </summary>
+        public string SessionID
+        {
+            get
+            {
+                return GetHeaderListToValue("CACHED_SESSION_ID");
+                //return User.Identity.GetUserId();
+            }
+        }
+        public T UserInfo<T>(bool isDB=false) where T : class, new()
+        {
+
+            if (string.IsNullOrWhiteSpace(SessionID))
+            {
+                throw new NotLoginException("用户未登录！");
+            }
+            var cacheUser = HttpContext.Current.Cache.Get(SessionID);
+            T user = default(T);
+            if (cacheUser != null)
+            {
+                user = cacheUser as T;
+            }
+            else if(isDB)
+            {
+                Dictionary<string, object> dic = new Dictionary<string, object>();
+                dic.Add("SessionID", SessionID);
+                //从数据看获取
+                user = DBBaseFactory.DALBase.QueryForObject<T>("BackWeb_GetLoginUser", dic);
+                if (user != null)
+                {
+
+                    HttpContext.Current.Cache.Remove(SessionID);
+                    HttpContext.Current.Cache.Insert(SessionID, user);
+                }
+            }
+            return user;
+        }
 
         /// <summary>
         /// 获得url参数数组（主要用于静态化）
@@ -111,9 +155,25 @@ namespace BF.Common.Helper
 
             if (!string.IsNullOrEmpty(key))
             {
-                if (RequestMessage != null)
+                if (APIRequestMessage != null)
                 {
-                    var values = RequestMessage.Headers.GetValues(key);
+                    if (APIRequestMessage.Headers.Where(h => h.Key.ToLower() == key.ToLower()).Count() > 0)
+                    {
+                        var values = APIRequestMessage.Headers.GetValues(key);
+                        if (values != null && values.Count() > 0)
+                        {
+                            var value = "";
+                            foreach (var str in values)
+                            {
+                                value += str;
+                            }
+                            return value;
+                        }
+                    }
+                }
+                else if (MvcRequestMessage != null)
+                {
+                    var values = MvcRequestMessage.Headers.GetValues(key);
                     if (values != null && values.Count() > 0)
                         return values.FirstOrDefault();
                 }
@@ -137,9 +197,19 @@ namespace BF.Common.Helper
             if (!string.IsNullOrEmpty(key))
             {
                 HttpCookieCollection values = null;
-                if (RequestMessage != null)
+
+                if (APIRequestMessage != null)
                 {
-                    values = RequestMessage.Cookies;
+                    var values2 = APIRequestMessage.Headers.GetCookies();
+
+                    if (values2 != null && values2.Count() > 0 && values2.FirstOrDefault() != null && values2.FirstOrDefault()[key] != null)
+                    {
+                        return values2.FirstOrDefault()[key].Value;
+                    }
+                }
+                else if (MvcRequestMessage != null)
+                {
+                    values = MvcRequestMessage.Cookies;
                 }
                 else if (Request != null)
                 {

@@ -1,18 +1,8 @@
-﻿using BF.BackWebAPI.Models;
-using BF.Common.Helper;
+﻿using BF.Common.Helper;
 using BF.Common.SQLAnalytical;
-using Microsoft.AspNet.Identity;
-using Microsoft.Owin.Security;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Security.Claims;
-using System.Threading.Tasks;
 using System.Web;
-using System.Web.Mvc;
-using System.Web.Optimization;
-using System.Web.Routing;
+using System.Web.Http;
 
 namespace BF.BackWebAPI
 {
@@ -20,10 +10,11 @@ namespace BF.BackWebAPI
     {
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
+            //AreaRegistration.RegisterAllAreas();
+            //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            //RouteConfig.RegisterRoutes(RouteTable.Routes);
+            //BundleConfig.RegisterBundles(BundleTable.Bundles);
+            WebApiConfig.Register(GlobalConfiguration.Configuration);
             CacheSqlConfig.Instance.SqlConfigPath = Server.MapPath("/bin/SqlConfig");
         }
 

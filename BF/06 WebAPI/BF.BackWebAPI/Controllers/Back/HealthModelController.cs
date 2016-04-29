@@ -4,6 +4,7 @@ using BF.Common.DataAccess;
 using BF.Common.Helper;
 using BF.Common.StaticConstant;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Web.Mvc;
 
 namespace BF.BackWebAPI.Controllers.Back
@@ -19,8 +20,8 @@ namespace BF.BackWebAPI.Controllers.Back
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
-        [BFAuthorizeAttribute(IsLogin =false)]
-        public string GetHealthModelList(int type = 0, int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
+        [BFAuthorizeAttribute(IsLogin =true)]
+        public HttpResponseMessage GetHealthModelList(int type = 0, int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             if (page <= 0)
@@ -38,7 +39,7 @@ namespace BF.BackWebAPI.Controllers.Back
             dic.Add("Model_Type", type);
 
             apiResult.data = DBBaseFactory.DALBase.QueryForDataTable("BackWeb_GetHealthModelListByType", dic);
-            return JsonHelper.SerializeObject(apiResult);
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
 
         /// <summary>
@@ -47,7 +48,7 @@ namespace BF.BackWebAPI.Controllers.Back
         /// <param name="modelID"></param>
         /// <returns></returns>
         [HttpGet]
-        public string GetHealthModelInfo(int modelID)
+        public HttpResponseMessage GetHealthModelInfo(int modelID)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             Dictionary<string, object> dic = new Dictionary<string, object>();
@@ -57,7 +58,7 @@ namespace BF.BackWebAPI.Controllers.Back
                 dic.Add("User_ID", UserInfo.ID);
             }
             apiResult.data = DBBaseFactory.DALBase.QueryForDataTable("BackWeb_GetHealthModelInfoByModelID", dic);
-            return JsonHelper.SerializeObject(apiResult);
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
     }
 }
