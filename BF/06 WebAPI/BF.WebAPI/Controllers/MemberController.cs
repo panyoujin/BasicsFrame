@@ -122,10 +122,30 @@ namespace BF.WebAPI.Controllers
             }
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+        /// <summary>
+        /// 修改密码接口
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
         [HttpPost]
         public HttpResponseMessage UpdatePasswd([FromBody]UpdatePasswdModel param)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("ID", MemberInfo.ID);
+            dic.Add("ModifyUser", MemberInfo.Account);
+            dic.Add("OldPasswd", param.OldPasswd);
+            dic.Add("NewPasswd", param.NewPasswd);
+            int result = DBBaseFactory.DALBase.ExecuteNonQuery("FrontApi_UpdateMemberInfoPasswd", dic);
+            if (result > 0)
+            {
+                apiResult.data = true;
+            }
+            else
+            {
+                apiResult.code = ResultCode.CODE_EXCEPTION;
+                apiResult.msg = "修改密码失败！";
+            }
 
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
