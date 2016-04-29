@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Http;
 
-namespace BF.BackWebAPI.Controllers
+namespace BF.BackWebAPI.Controllers.Back
 {
 
-    public class BaseController : ApiController
+    public class BackBaseController : ApiController
     {
 
-        public BaseController()
+        public BackBaseController()
         {
         }
 

@@ -169,13 +169,19 @@
     <Compile Include="Authorize\BFAuthorizeAttribute.cs" />
     <Compile Include="Authorize\ExceptionAttribute.cs" />
     <Compile Include="Controllers\Back\AccountController.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\Back\BackBaseController.cs" />
     <Compile Include="Controllers\Back\HealthModelController.cs" />
+    <Compile Include="Controllers\Front\BaseController.cs" />
+    <Compile Include="Controllers\Front\MemberController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Back\User.cs" />
+    <Compile Include="Models\Front\MemberInfo.cs" />
+    <Compile Include="Models\Front\Request\RegisterModel.cs" />
+    <Compile Include="Models\Front\Request\UpdateMemberInfoModel.cs" />
+    <Compile Include="Models\Front\Request\UpdatePasswdModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

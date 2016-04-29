@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace BF.BackWebAPI.Controllers.Back
 {
-    public class AccountController : BaseController
+    public class AccountController : BackBaseController
     {
         [HttpGet]
         public HttpResponseMessage Login(string account, string password)

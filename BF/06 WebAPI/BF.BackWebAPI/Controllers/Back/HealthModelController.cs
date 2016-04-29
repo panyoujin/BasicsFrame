@@ -11,7 +11,7 @@ using System.Web.Http;
 
 namespace BF.BackWebAPI.Controllers.Back
 {
-    public class HealthModelController : BaseController
+    public class HealthModelController : BackBaseController
     {
 
         /// <summary>
