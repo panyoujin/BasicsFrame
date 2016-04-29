@@ -68,5 +68,10 @@ namespace BF.WebAPI.Controllers
             HttpContext.Current.Response.AppendCookie(cook);
             #endregion
         }
+        public void Update_Cache(MemberInfo user)
+        {
+            HttpContext.Current.Cache.Remove(RequestInfo.SessionID);
+            HttpContext.Current.Cache.Insert(RequestInfo.SessionID, user);
+        }
     }
 }

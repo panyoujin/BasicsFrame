@@ -15,7 +15,20 @@ SELECT `ID`,`Account`,`Passwd`,`Name`,`Age`,`Birthday`,`Sex`,`Email`,`Phone`,`Re
 		<SqlDefinition type="sql">
 			<SqlCommand>
 				<![CDATA[
-INSERT INTO  `TB_MB_MemberInfo`(`Account`,`Passwd`,`Status`,`IsAuto`) VALUES(@@Account@@,@@Passwd@@,FALSE,FALSE);
+INSERT INTO  `TB_MB_MemberInfo`(`Account`,`Passwd`,`Status`,`IsAuto`,`CreationDate`,`CreationUser`) VALUES(@@Account@@,@@Passwd@@,FALSE,FALSE,NOW(),@@Account@@);
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	
+	<Data name="FrontApi_UpdateMemberInfo">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+UPDATE TB_MB_MemberInfo 
+SET <%=`Name`=@@Name@@,%><%=`Age`=@@Age@@,%><%=`Sex`=@@Sex@@,%><%=`Email`=@@Email@@,%><%=`Phone`=@@Phone@@,%>
+<%=`QQ`=@@QQ@@,%><%=`ImageUrl`=@@ImageUrl@@,%> `ModifyDate`=NOW(),`ModifyUser`=@@ModifyUser@@
+WHERE `ID`=@@ID@@ and `Status`=FALSE;
       ]]>
 			</SqlCommand>
 		</SqlDefinition>
