@@ -44,7 +44,7 @@ namespace BF.BackWebAPI.Controllers
                 return JsonHelper.SerializeObjectToWebApi(apiResult);
             }
             Login_Cache(user);
-            apiResult.data = new { Account = user.Account, ImageUrl = user.ImageUrl };
+            apiResult.data = new { Account = user.Account, Name = user.Name, ImageUrl = user.ImageUrl };
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
         /// <summary>
