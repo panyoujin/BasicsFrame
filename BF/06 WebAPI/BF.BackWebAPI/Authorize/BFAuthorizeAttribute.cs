@@ -1,5 +1,6 @@
 ﻿using BF.BackWebAPI.Models.Back;
 using BF.Common.CommonEntities;
+using BF.Common.CustomException;
 using BF.Common.DataAccess;
 using BF.Common.Helper;
 using BF.Common.StaticConstant;
@@ -64,6 +65,10 @@ namespace BF.BackWebAPI.Authorize
                         HttpContext.Current.Cache.Remove(RequestInfo.SessionID);
                         HttpContext.Current.Cache.Insert(RequestInfo.SessionID, user);
                     }
+                }
+                if (user == null || user.ID <= 0)
+                {
+                    throw new NotLoginException(ResultMsg.CODE_ERROR_USER_NOT_LOGIN);
                 }
                 return user;
             }
