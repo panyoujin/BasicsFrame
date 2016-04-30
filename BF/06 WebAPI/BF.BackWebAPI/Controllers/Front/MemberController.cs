@@ -146,5 +146,13 @@ namespace BF.BackWebAPI.Controllers
 
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+        [HttpGet]
+        public HttpResponseMessage LogOut()
+        {
+            ApiResult<bool> apiResult = new ApiResult<bool>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Delete_Cache();
+            apiResult.data = true;
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
     }
 }
