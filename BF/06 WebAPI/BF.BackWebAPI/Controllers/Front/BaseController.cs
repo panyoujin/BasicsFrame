@@ -71,5 +71,19 @@ namespace BF.BackWebAPI.Controllers
             HttpContext.Current.Cache.Remove(RequestInfo.SessionID);
             HttpContext.Current.Cache.Insert(RequestInfo.SessionID, user);
         }
+
+        public void Delete_Cache()
+        {
+            HttpContext.Current.Cache.Remove(RequestInfo.SessionID);
+        }
+        /// <summary>
+        /// 获取开始页
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        public int GetStartSize(int page, int pageSize)
+        {
+            return (page > 1 ? (page - 1) * pageSize : 0);
+        }
     }
 }

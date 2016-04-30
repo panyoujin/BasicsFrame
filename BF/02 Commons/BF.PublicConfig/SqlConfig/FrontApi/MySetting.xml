@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HCIP.AjaxDataSetting>
+
+	<Data name="Get_MyShoppings">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+SELECT `ID`,`Name`,`Description`,`Url`,`Price`,`NowPrice` FROM `TB_MB_Shopping`
+WHERE `Status`=TRUE
+<%=AND `Name` LIKE @@Name@@%>
+<%=AND `Description` LIKE @@Description@@%>
+ORDER BY `CreationDate` DESC
+<%= LIMIT @@StartSize@@ , @@PageSize@@%>;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+
+</HCIP.AjaxDataSetting>

@@ -5,7 +5,7 @@
 		<SqlDefinition type="sql">
 			<SqlCommand>
 				<![CDATA[
-SELECT `ID`,`Account`,`Passwd`,`Name`,`Age`,`Birthday`,`Sex`,`Email`,`Phone`,`Remark`,`QQ`,`ImageUrl` FROM `TB_MB_MemberInfo` WHERE `Account`=@@Account@@ AND `Status`=FALSE;
+SELECT `ID`,`Account`,`Passwd`,`Name`,`Age`,`Birthday`,`Sex`,`Email`,`Phone`,`Remark`,`QQ`,`ImageUrl` FROM `TB_MB_MemberInfo` WHERE `Account`=@@Account@@ AND `Status`=TRUE;
       ]]>
 			</SqlCommand>
 		</SqlDefinition>
@@ -15,7 +15,7 @@ SELECT `ID`,`Account`,`Passwd`,`Name`,`Age`,`Birthday`,`Sex`,`Email`,`Phone`,`Re
 		<SqlDefinition type="sql">
 			<SqlCommand>
 				<![CDATA[
-INSERT INTO  `TB_MB_MemberInfo`(`Account`,`Passwd`,`Status`,`IsAuto`,`CreationDate`,`CreationUser`) VALUES(@@Account@@,@@Passwd@@,FALSE,FALSE,NOW(),@@Account@@);
+INSERT INTO  `TB_MB_MemberInfo`(`Account`,`Passwd`,`Status`,`IsAuto`,`CreationDate`,`CreationUser`) VALUES(@@Account@@,@@Passwd@@,TRUE,FALSE,NOW(),@@Account@@);
       ]]>
 			</SqlCommand>
 		</SqlDefinition>
@@ -27,8 +27,8 @@ INSERT INTO  `TB_MB_MemberInfo`(`Account`,`Passwd`,`Status`,`IsAuto`,`CreationDa
 				<![CDATA[
 UPDATE TB_MB_MemberInfo 
 SET <%=`Name`=@@Name@@,%><%=`Age`=@@Age@@,%><%=`Sex`=@@Sex@@,%><%=`Email`=@@Email@@,%><%=`Phone`=@@Phone@@,%>
-<%=`QQ`=@@QQ@@,%><%=`ImageUrl`=@@ImageUrl@@,%> `ModifyDate`=NOW(),`ModifyUser`=@@ModifyUser@@
-WHERE `ID`=@@ID@@ and `Status`=FALSE;
+<%=`QQ`=@@QQ@@,%><%=`ImageUrl`=@@ImageUrl@@,%> `ModificationDate`=NOW(),`ModificationUser`=@@ModifyUser@@
+WHERE `ID`=@@ID@@ and `Status`=TRUE;
       ]]>
 			</SqlCommand>
 		</SqlDefinition>
@@ -37,8 +37,8 @@ WHERE `ID`=@@ID@@ and `Status`=FALSE;
 		<SqlDefinition type="sql">
 			<SqlCommand>
 				<![CDATA[
-UPDATE TB_MB_MemberInfo SET Passwd=@@NewPasswd@@, `ModifyDate`=NOW(),`ModifyUser`=@@ModifyUser@@
-WHERE `ID`=@@ID@@ AND `Status`=FALSE AND `Passwd`=@@OldPasswd@@;
+UPDATE TB_MB_MemberInfo SET Passwd=@@NewPasswd@@, `ModificationDate`=NOW(),`ModificationUser`=@@ModifyUser@@
+WHERE `ID`=@@ID@@ AND `Status`=TRUE AND `Passwd`=@@OldPasswd@@;
       ]]>
 			</SqlCommand>
 		</SqlDefinition>
