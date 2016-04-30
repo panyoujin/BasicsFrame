@@ -74,6 +74,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BF.WebAPI", "06 WebAPI\BF.W
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{95FCB11F-E5B0-4B71-99CA-ACD5ED7EBF33}"
 	ProjectSection(SolutionItems) = preProject
+		01 Reference\Web\System.Net.Http.Formatting.dll = 01 Reference\Web\System.Net.Http.Formatting.dll
 		01 Reference\Web\System.Web.Http.dll = 01 Reference\Web\System.Web.Http.dll
 		01 Reference\Web\System.Web.Http.WebHost.dll = 01 Reference\Web\System.Web.Http.WebHost.dll
 	EndProjectSection
