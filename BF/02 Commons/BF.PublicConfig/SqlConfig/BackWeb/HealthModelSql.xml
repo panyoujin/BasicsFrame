@@ -42,4 +42,27 @@
       </SqlCommand>
     </SqlDefinition>
   </Data>
+  <!--设置常用模式-->
+  <Data name="BackWeb_SetCommonModel">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        UPDATE TB_MB_CommonModel SET `Status`=TRUE,`ModificationUser`=@@UserAccount@@,`ModificationDate`=NOW() WHERE User_ID=@@User_ID@@ AND Model_ID = @@Model_ID@@;
+        INSERT INTO `TB_MB_CommonModel` (`User_ID`,`Model_ID`,`CreationDate`,`CreationUser`) 
+        SELECT @@User_ID@@,@@Model_ID@@,now(),@@UserAccount@@
+        FROM `TB_MB_MemberInfo` WHERE NOT EXISTS (SELECT ID FROM TB_MB_CommonModel WHERE User_ID=@@User_ID@@ and Model_ID = @@Model_ID@@ and `Status`=TRUE) LIMIT 0,1;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  <!--取消常用模式-->
+  <Data name="BackWeb_CancelCommonModel">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        UPDATE TB_MB_CommonModel SET `Status`=FALSE,`ModificationUser`=@@UserAccount@@,`ModificationDate`=NOW() WHERE User_ID=@@User_ID@@ AND Model_ID = @@Model_ID@@;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
 </HCIP.AjaxDataSetting>

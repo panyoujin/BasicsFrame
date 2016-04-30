@@ -142,7 +142,38 @@ namespace BF.BackWebAPI.Controllers.Back
             apiResult.data = DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_AddHealthModel", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+        /// <summary>
+        /// 设置常用
+        /// </summary>
+        /// <param name="modelID"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public HttpResponseMessage SetCommonModel(int modelID)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("ModelID", modelID);
+            dic.Add("UserAccount", UserInfo.UserAccount ?? UserInfo.ID + "");
+            dic.Add("User_ID", UserInfo.ID);
+            apiResult.data = DBBaseFactory.DALBase.QueryForDataTable("BackWeb_SetCommonModel", dic);
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
 
-
+        /// <summary>
+        /// 取消常用
+        /// </summary>
+        /// <param name="modelID"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public HttpResponseMessage CancelCommonModel(int modelID)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("ModelID", modelID);
+            dic.Add("UserAccount", UserInfo.UserAccount ?? UserInfo.ID + "");
+            dic.Add("User_ID", UserInfo.ID);
+            apiResult.data = DBBaseFactory.DALBase.QueryForDataTable("BackWeb_CancelCommonModel", dic);
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
     }
 }
