@@ -47,10 +47,11 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        UPDATE TB_MB_CommonModel SET `Status`=TRUE,`ModificationUser`=@@UserAccount@@,`ModificationDate`=NOW() WHERE User_ID=@@User_ID@@ AND Model_ID = @@Model_ID@@;
+        UPDATE TB_MB_CommonModel SET `Status`=TRUE,`ModificationUser`=@@UserAccount@@,`ModificationDate`=NOW() WHERE User_ID=@@User_ID@@ AND Model_ID = @@ModelID@@;
         INSERT INTO `TB_MB_CommonModel` (`User_ID`,`Model_ID`,`CreationDate`,`CreationUser`) 
-        SELECT @@User_ID@@,@@Model_ID@@,now(),@@UserAccount@@
-        FROM `TB_MB_MemberInfo` WHERE NOT EXISTS (SELECT ID FROM TB_MB_CommonModel WHERE User_ID=@@User_ID@@ and Model_ID = @@Model_ID@@ and `Status`=TRUE) LIMIT 0,1;
+        SELECT @@User_ID@@,@@ModelID@@,now(),@@UserAccount@@
+        FROM `TB_MB_MemberInfo` WHERE NOT EXISTS (SELECT ID FROM TB_MB_CommonModel WHERE User_ID=@@User_ID@@ and Model_ID = @@ModelID@@ and `Status`=TRUE)
+        AND EXISTS (SELECT ID FROM `TB_MB_Models` WHERE `ID`=@@ModelID@@ AND `Status`=TRUE)LIMIT 0,1;
       ]]>
       </SqlCommand>
     </SqlDefinition>
@@ -60,7 +61,7 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        UPDATE TB_MB_CommonModel SET `Status`=FALSE,`ModificationUser`=@@UserAccount@@,`ModificationDate`=NOW() WHERE User_ID=@@User_ID@@ AND Model_ID = @@Model_ID@@;
+        UPDATE TB_MB_CommonModel SET `Status`=FALSE,`ModificationUser`=@@UserAccount@@,`ModificationDate`=NOW() WHERE User_ID=@@User_ID@@ AND Model_ID = @@ModelID@@;
       ]]>
       </SqlCommand>
     </SqlDefinition>

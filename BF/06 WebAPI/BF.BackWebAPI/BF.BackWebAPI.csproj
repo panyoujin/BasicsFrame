@@ -186,6 +186,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Back\InParam\HealthModel.cs" />
+    <Compile Include="Models\Back\InParam\Login.cs" />
+    <Compile Include="Models\Back\InParam\CommonModel.cs" />
     <Compile Include="Models\Back\User.cs" />
     <Compile Include="Models\Front\MemberInfo.cs" />
     <Compile Include="Models\Front\Request\RegisterModel.cs" />
