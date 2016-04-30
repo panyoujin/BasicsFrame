@@ -15,5 +15,7 @@ namespace BF.BackWebAPI.Models.Front
         public string Email { get; set; }
         public string QQ { get; set; }
         public string ImageUrl { get; set; }
+
+        public bool IsAdmin { get; set; }
     }
 }

@@ -139,7 +139,7 @@ namespace BF.BackWebAPI.Controllers.Back
             dic.Add("IsFerv", healthModel.isFerv);
             dic.Add("Model_Type", UserInfo.IsAdmin ? (int)Model_Type.System : (int)Model_Type.Custom);
             dic.Add("Model_Status", UserInfo.IsAdmin ? (int)Model_Status.Public : (int)Model_Status.Private);
-            dic.Add("CreationUser", UserInfo.UserAccount ?? UserInfo.ID + "");
+            dic.Add("CreationUser", UserInfo.Account ?? UserInfo.ID + "");
             apiResult.data = DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_AddHealthModel", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
@@ -158,7 +158,7 @@ namespace BF.BackWebAPI.Controllers.Back
             }
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("ModelID", model.modelID);
-            dic.Add("UserAccount", UserInfo.UserAccount ?? UserInfo.ID + "");
+            dic.Add("UserAccount", UserInfo.Account ?? UserInfo.ID + "");
             dic.Add("User_ID", UserInfo.ID);
             DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_SetCommonModel", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
@@ -179,7 +179,7 @@ namespace BF.BackWebAPI.Controllers.Back
             }
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("ModelID", model.modelID);
-            dic.Add("UserAccount", UserInfo.UserAccount ?? UserInfo.ID + "");
+            dic.Add("UserAccount", UserInfo.Account ?? UserInfo.ID + "");
             dic.Add("User_ID", UserInfo.ID);
             DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_CancelCommonModel", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);

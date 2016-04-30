@@ -5,7 +5,7 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        SELECT  `ID`, `UserAccount`, `UserName`, `PhoneNum`, `EMail`, `UserPassword`, `Sex`, `Status` FROM `TB_CM_User`  WHERE `Status` AND SessionID = @@SessionID@@;
+        SELECT  `ID`, `UserAccount` AS Account, `UserName` AS `Name`, `PhoneNum` AS Phone, `EMail`, `UserPassword` AS Passwd, `Sex`, `Status` FROM `TB_CM_User`  WHERE `Status` AND SessionID = @@SessionID@@;
       ]]>
       </SqlCommand>
     </SqlDefinition>
@@ -16,7 +16,7 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        SELECT  `ID`, `UserAccount`, `UserName`, `PhoneNum`, `EMail`, `UserPassword`, `Sex`, `Status` FROM `TB_CM_User`  WHERE `Status` AND (UserAccount = @@UserAccount@@ OR PhoneNum = @@UserAccount@@ OR EMail = @@UserAccount@@) <%=AND UserPassword = @@UserPassword@@ %>;
+        SELECT  `ID`, `UserAccount` AS Account, `UserName` AS `Name`, `PhoneNum` AS Phone, `EMail`, `UserPassword` AS Passwd, `Sex`, `Status` FROM `TB_CM_User`  WHERE `Status` AND (UserAccount = @@UserAccount@@ OR PhoneNum = @@UserAccount@@ OR EMail = @@UserAccount@@) <%=AND UserPassword = @@UserPassword@@ %>;
       ]]>
       </SqlCommand>
     </SqlDefinition>
