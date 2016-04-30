@@ -181,7 +181,6 @@ namespace BF.BackWebAPI.Controllers.Back
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [BFAuthorizeAttribute(IsLogin = true)]
         public HttpResponseMessage GetCommonHealthModelList()
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
