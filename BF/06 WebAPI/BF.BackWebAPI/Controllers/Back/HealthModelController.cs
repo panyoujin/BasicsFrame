@@ -147,7 +147,7 @@ namespace BF.BackWebAPI.Controllers.Back
         /// </summary>
         /// <param name="modelID"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         public HttpResponseMessage SetCommonModel(int modelID)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
@@ -164,7 +164,7 @@ namespace BF.BackWebAPI.Controllers.Back
         /// </summary>
         /// <param name="modelID"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         public HttpResponseMessage CancelCommonModel(int modelID)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
@@ -173,6 +173,21 @@ namespace BF.BackWebAPI.Controllers.Back
             dic.Add("UserAccount", UserInfo.UserAccount ?? UserInfo.ID + "");
             dic.Add("User_ID", UserInfo.ID);
             apiResult.data = DBBaseFactory.DALBase.QueryForDataTable("BackWeb_CancelCommonModel", dic);
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+
+        /// <summary>
+        /// 获取常用模式列表
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [BFAuthorizeAttribute(IsLogin = true)]
+        public HttpResponseMessage GetCommonHealthModelList()
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("User_ID", UserInfo.ID);
+            apiResult.data = DBBaseFactory.DALBase.QueryForDataTable("BackWeb_GetCommonHealthModelList", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
     }
