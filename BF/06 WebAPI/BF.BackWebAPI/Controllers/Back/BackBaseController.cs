@@ -22,15 +22,18 @@ namespace BF.BackWebAPI.Controllers.Back
             get
             {
                 var user = RequestInfo.UserInfo<UserModel>();
-                if (user == null || user.ID <= 0)
+                if (user == null || user.ID <= 0 && !string.IsNullOrWhiteSpace(RequestInfo.SessionID))
                 {
                     Dictionary<string, object> dic = new Dictionary<string, object>();
                     dic.Add("SessionID", RequestInfo.SessionID);
                     //从数据看获取
                     user = DBBaseFactory.DALBase.QueryForObject<UserModel>("BackWeb_GetLoginUser", dic);
-                    user.IsAdmin = true;
-                    HttpContext.Current.Cache.Remove(RequestInfo.SessionID);
-                    HttpContext.Current.Cache.Insert(RequestInfo.SessionID, user);
+                    if(user!=null)
+                    {
+                        user.IsAdmin = true;
+                        HttpContext.Current.Cache.Remove(RequestInfo.SessionID);
+                        HttpContext.Current.Cache.Insert(RequestInfo.SessionID, user);
+                    }
                 }
                 return user;
             }
