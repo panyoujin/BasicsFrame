@@ -74,7 +74,7 @@
         SELECT m.`ID` AS MID,m.Introduce,m.Model_Name,m.IcoUrl,m.ImageUrl,m.Sort 
         FROM `TB_MB_CommonModel` AS cm
         JOIN `TB_MB_Models` AS m ON m.`ID`=cm.`Model_ID`
-        WHERE cm.`User_ID`=@@User_ID@@ AND cm.`Status`=TRUE AND m.`Status`=TRUE ORDER BY m.Sort DESC,CM.`CreationDate` DESC;
+        WHERE cm.`User_ID`=@@User_ID@@ AND cm.`Status`=TRUE AND m.`Status`=TRUE ORDER BY m.Sort DESC,cm.`CreationDate` DESC;
       ]]>
       </SqlCommand>
     </SqlDefinition>
