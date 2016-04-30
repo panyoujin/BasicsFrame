@@ -200,6 +200,7 @@ namespace BF.Common.Helper
 
                 if (APIRequestMessage != null)
                 {
+                    APIRequestMessage.Headers.GetValues("");
                     var values2 = APIRequestMessage.Headers.GetCookies();
 
                     if (values2 != null && values2.Count() > 0 && values2.FirstOrDefault() != null && values2.FirstOrDefault()[key] != null)
