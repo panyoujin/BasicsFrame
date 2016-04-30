@@ -48,5 +48,6 @@ namespace BF.BackWebAPI.Controllers.Back
             apiResult.data = UserInfo;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+
     }
 }

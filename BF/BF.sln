@@ -27,6 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{FD6064
 	ProjectSection(SolutionItems) = preProject
 		01 Reference\Common\log4net.dll = 01 Reference\Common\log4net.dll
 		01 Reference\Common\Newtonsoft.Json.dll = 01 Reference\Common\Newtonsoft.Json.dll
+		01 Reference\Common\RestSharp.dll = 01 Reference\Common\RestSharp.dll
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EnterLib", "EnterLib", "{F46F2C45-70FA-49B8-BD65-8CF9EC584356}"
