@@ -228,3 +228,16 @@ CREATE TABLE `TB_MB_Shopping` (
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+DROP TABLE IF EXISTS `TB_MB_CommonModel`;
+CREATE TABLE `TB_MB_CommonModel` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `User_ID` int(11) NOT NULL COMMENT '用户ID',
+  `Model_ID` int(11) DEFAULT NULL COMMENT '模式ID',
+  `Status` bit(1) DEFAULT b'1' COMMENT '是否有效，默认有效',
+  `CreationDate` datetime DEFAULT NULL,
+  `CreationUser` varchar(50) DEFAULT NULL,
+  `ModificationUser` varchar(50) DEFAULT NULL,
+  `ModificationDate` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

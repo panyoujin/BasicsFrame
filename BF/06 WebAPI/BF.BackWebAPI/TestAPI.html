@@ -61,9 +61,9 @@
             </tr>
             <tr>
                 <td colspan="3" style="text-align: center;">
-                    <input type="button" onclick="getData()" value="GET请求" style="margin-left: 300px;" />
+                    <input type="button" onclick="getData(0)" value="GET请求" style="margin-left: 300px;" />
 
-                    <input type="button" onclick="getData()" value="POST请求" style="margin-right: 300px;" />
+                    <input type="button" onclick="getData(1)" value="POST请求" style="margin-right: 300px;" />
 
                 </td>
             </tr>
@@ -84,7 +84,7 @@
             hello();
         });
 
-        function getData() {
+        function getData(type) {
 
             var url = escape($("#url").val());
             var CookieP = $("#COOKIEP").val();
@@ -93,7 +93,7 @@
             var ParamP = $("#ParamP").val();
             $.ajax({
                 type: "GET",
-                url: "/Home/ApiTest?url=" + url + "&type=0" + "&HeaderP=" + HeaderP + "&CookieP=" + CookieP + "&fileParam=" + fileP + "&ParamP=" + ParamP,
+                url: "/Home/ApiTest?url=" + url + "&type=" + (type||0) + "&HeaderP=" + HeaderP + "&CookieP=" + CookieP + "&fileParam=" + fileP + "&ParamP=" + ParamP,
                 success: function (data) {
                     //alert(data);
                     $("#htmlData").val(data);
