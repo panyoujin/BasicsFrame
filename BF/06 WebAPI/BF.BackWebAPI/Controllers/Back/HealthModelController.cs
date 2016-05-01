@@ -23,7 +23,7 @@ namespace BF.BackWebAPI.Controllers.Back
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
-        [BFAuthorizeAttribute(IsLogin = true)]
+        [BFAuthorizeAttribute(IsLogin = true)] 
         public HttpResponseMessage GetHealthModelList(int type = 0, int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
