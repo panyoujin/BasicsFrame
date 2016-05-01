@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BF.Common", "02 Commons\BF.Common\BF.Common.csproj", "{FFD8F5E7-963A-4FBF-B6F1-5FED0C14547C}"
 EndProject
@@ -66,7 +66,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "项目文件", "项目文�
 	ProjectSection(SolutionItems) = preProject
 		G:\OneDrive\智能茶壶\table_all.sql = G:\OneDrive\智能茶壶\table_all.sql
 		01 Reference\项目文件\手机app.pdf = 01 Reference\项目文件\手机app.pdf
-		01 Reference\项目文件\智能水壶V1.0.0.1.docx = 01 Reference\项目文件\智能水壶V1.0.0.1.docx
+		01 Reference\项目文件\智能水壶V1.0.0.0.docx = 01 Reference\项目文件\智能水壶V1.0.0.0.docx
 		01 Reference\项目文件\表SQL.txt = 01 Reference\项目文件\表SQL.txt
 		01 Reference\项目文件\表设计.txt = 01 Reference\项目文件\表设计.txt
 	EndProjectSection
@@ -108,6 +108,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{FFD8F5E7-963A-4FBF-B6F1-5FED0C14547C} = {574645AD-CEC4-4B04-8E5C-780CBC14B1E8}
+		{CF3987E4-7F87-4E95-8BDC-A12C948AFBC5} = {2B595582-C5F8-4E00-AE92-DEBCF3450BEE}
 		{2E62B7AA-4B14-4AF6-B362-82AE7824A2DC} = {574645AD-CEC4-4B04-8E5C-780CBC14B1E8}
 		{FD606449-A8B6-49A2-B232-5D4CBB1012CB} = {5A663EC1-B5CA-4EC8-9CF6-7FFDD3D4979D}
 		{F46F2C45-70FA-49B8-BD65-8CF9EC584356} = {5A663EC1-B5CA-4EC8-9CF6-7FFDD3D4979D}
@@ -115,8 +116,7 @@ Global
 		{55EB43F9-E61B-4134-8D01-B6DBD134C580} = {5A663EC1-B5CA-4EC8-9CF6-7FFDD3D4979D}
 		{7C8A7B29-2C58-49A2-BDB6-15F569275039} = {5A663EC1-B5CA-4EC8-9CF6-7FFDD3D4979D}
 		{8FC65F89-1E3E-4F76-8D9C-233BB7B22E68} = {5A663EC1-B5CA-4EC8-9CF6-7FFDD3D4979D}
-		{95FCB11F-E5B0-4B71-99CA-ACD5ED7EBF33} = {5A663EC1-B5CA-4EC8-9CF6-7FFDD3D4979D}
-		{CF3987E4-7F87-4E95-8BDC-A12C948AFBC5} = {2B595582-C5F8-4E00-AE92-DEBCF3450BEE}
 		{3B2BBB41-6981-403B-A7AE-D2E4EBD4F744} = {2B595582-C5F8-4E00-AE92-DEBCF3450BEE}
+		{95FCB11F-E5B0-4B71-99CA-ACD5ED7EBF33} = {5A663EC1-B5CA-4EC8-9CF6-7FFDD3D4979D}
 	EndGlobalSection
 EndGlobal
