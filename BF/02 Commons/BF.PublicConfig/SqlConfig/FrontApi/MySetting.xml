@@ -71,5 +71,14 @@ ORDER BY rel.`Default` DESC;
       </SqlCommand>
     </SqlDefinition>
   </Data>
-  
+  <Data name="Set_MyKettleDefault">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+UPDATE `TB_MB_MyKettleRel` SET `Default`=FALSE WHERE `MemberID`= @@MemberID@@ and `Default`=TRUE;
+UPDATE `TB_MB_MyKettleRel` SET `Default`=TRUE WHERE `MemberID`= @@MemberID@@ and `KettleID`=@@KettleID@@;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
 </HCIP.AjaxDataSetting>

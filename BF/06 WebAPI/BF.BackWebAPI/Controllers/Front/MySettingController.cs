@@ -87,5 +87,16 @@ namespace BF.BackWebAPI.Controllers.Front
             apiResult.data = DBBaseFactory.DALBase.QueryForList<KettleModel>("Get_QueryMyKettles", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+        [HttpGet]
+        public HttpResponseMessage SetDefaultKettle(int KettleID)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("MemberID", MemberInfo.ID);
+            dic.Add("KettleID", KettleID);
+            int result = DBBaseFactory.DALBase.ExecuteNonQuery("Set_MyKettleDefault", dic);
+            apiResult.data = true;
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
     }
 }
