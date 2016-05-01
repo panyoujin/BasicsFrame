@@ -62,10 +62,10 @@ namespace BF.BackWebAPI.Controllers
             //{
 
             //}
-            //HttpCookie cook = new HttpCookie("CACHED_SESSION_ID", sessionID);
-            //HttpContext.Current.Response.AppendCookie(cook);
-            return sessionID;
+            HttpCookie cook = new HttpCookie("CACHED_SESSION_ID", sessionID);
+            HttpContext.Current.Response.AppendCookie(cook);
             #endregion
+            return sessionID;
         }
         public void Update_Cache(MemberInfo user)
         {

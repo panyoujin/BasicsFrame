@@ -40,7 +40,7 @@ namespace BF.BackWebAPI.Controllers.Back
                 return JsonHelper.SerializeObjectToWebApi(apiResult);
             }
             var sessionID = Login_Cache(user);
-            apiResult.data = new { userName=user.Name, ImageUrl=user.ImageUrl, SESSION_ID=sessionID };
+            apiResult.data = new { userName=user.Name, ImageUrl=user.ImageUrl, SessionID = sessionID };
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
         [HttpGet]
