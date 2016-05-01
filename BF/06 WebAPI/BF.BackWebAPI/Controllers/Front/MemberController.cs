@@ -43,8 +43,8 @@ namespace BF.BackWebAPI.Controllers
                 apiResult.msg = "帐号或密码错误！";
                 return JsonHelper.SerializeObjectToWebApi(apiResult);
             }
-            Login_Cache(user);
-            apiResult.data = new { Account = user.Account, Name = user.Name, ImageUrl = user.ImageUrl };
+            var sessionID = Login_Cache(user);
+            apiResult.data = new { Account = user.Account, Name = user.Name, ImageUrl = user.ImageUrl, SESSION_ID=sessionID };
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
         /// <summary>
