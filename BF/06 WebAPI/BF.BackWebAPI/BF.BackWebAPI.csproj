@@ -179,6 +179,7 @@
     <Compile Include="Authorize\ExceptionAttribute.cs" />
     <Compile Include="Controllers\Back\AccountController.cs" />
     <Compile Include="Controllers\Back\BackBaseController.cs" />
+    <Compile Include="Controllers\Back\CollectionController.cs" />
     <Compile Include="Controllers\Back\HealthModelController.cs" />
     <Compile Include="Controllers\Front\BaseController.cs" />
     <Compile Include="Controllers\Front\MemberController.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Back\InParam\Collection.cs" />
     <Compile Include="Models\Back\InParam\HealthModel.cs" />
     <Compile Include="Models\Back\InParam\Login.cs" />
     <Compile Include="Models\Back\InParam\CommonModel.cs" />
@@ -221,6 +223,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Account\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Collection\" />
     <Folder Include="Views\HealthModel\" />
   </ItemGroup>
   <ItemGroup>

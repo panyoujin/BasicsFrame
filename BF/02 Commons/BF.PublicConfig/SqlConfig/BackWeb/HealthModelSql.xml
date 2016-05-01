@@ -67,7 +67,7 @@
     </SqlDefinition>
   </Data>
 
-  <!--通过类型获取养生模式-->
+  <!--获取常用养生模式列表-->
   <Data name="BackWeb_GetCommonHealthModelList">
     <SqlDefinition type="sql">
       <SqlCommand>

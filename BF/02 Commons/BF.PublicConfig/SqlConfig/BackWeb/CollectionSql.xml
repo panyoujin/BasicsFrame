@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HCIP.AjaxDataSetting>
+
+  <!--根据类型获取收藏列表  后面还需要添加养生堂的收藏-->
+  <Data name="BackWeb_GetCollectionListByType">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT m.`ID` AS sID,1 AS sType,m.Introduce AS sIntroduce,m.Model_Name AS sName,m.IcoUrl AS sIcoUrl
+        FROM TB_MC_Collection AS c 
+        JOIN `TB_MB_Models` AS m ON c.`Source_ID`=m.`ID`
+        WHERE c.User_ID=@@User_ID@@ AND c.`Status`=TRUE AND m.`Status`=TRUE AND c.`Source_Type`=1 <%= AND c.`Source_Type`=@@Source_Type@@ %>  ORDER BY c.CollectionTime DESC
+        <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  <!--添加收藏-->
+  <Data name="BackWeb_AddCollection">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        UPDATE TB_MC_Collection SET `Status`=TRUE,`ModificationUser`=@@UserAccount@@,`ModificationDate`=NOW() 
+        WHERE User_ID=@@User_ID@@ AND Source_ID = @@Source_ID@@ AND Source_Type=@@Source_Type@@;
+        INSERT INTO `TB_MC_Collection` (`User_ID`,`Source_ID`,Source_Type,`CreationDate`,`CreationUser`) 
+        SELECT @@User_ID@@,@@Source_ID@@,@@Source_Type@@,now(),@@UserAccount@@
+        FROM `TB_MB_MemberInfo` WHERE NOT EXISTS (SELECT ID FROM TB_MC_Collection WHERE User_ID=@@User_ID@@ AND Source_ID = @@Source_ID@@ AND Source_Type=@@Source_Type@@ AND `Status`=TRUE)
+        AND (@@Source_Type@@=1 AND EXISTS (SELECT ID FROM `TB_MB_Models` WHERE `ID`=@@Source_ID@@ AND `Status`=TRUE)) LIMIT 0,1;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  <!--取消收藏-->
+  <Data name="BackWeb_CancelCollection">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        UPDATE TB_MC_Collection SET `Status`=FALSE,`ModificationUser`=@@UserAccount@@,`ModificationDate`=NOW() 
+        WHERE User_ID=@@User_ID@@ AND Source_ID = @@Source_ID@@ AND Source_Type=@@Source_Type@@;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+
+</HCIP.AjaxDataSetting>
