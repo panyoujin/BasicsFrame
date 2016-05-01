@@ -98,5 +98,18 @@ namespace BF.BackWebAPI.Controllers.Front
             apiResult.data = true;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+
+        [HttpGet]
+        public HttpResponseMessage DeleteKettle(int KettleID)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("MemberID", MemberInfo.ID);
+            dic.Add("KettleID", KettleID);
+            int result = DBBaseFactory.DALBase.ExecuteNonQuery("Delete_MyKettleByID", dic);
+            apiResult.data = true;
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+
     }
 }
