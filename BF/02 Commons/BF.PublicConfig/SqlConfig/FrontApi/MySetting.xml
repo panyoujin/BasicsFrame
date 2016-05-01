@@ -58,4 +58,18 @@ VALUES(@@MemberID@@,@@KettleID@@,@@Default@@,@@CreationUser@@,Now());
       </SqlCommand>
     </SqlDefinition>
   </Data>
+  <Data name="Get_QueryMyKettles">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+SELECT rel.`Default`,ke.`ID`,ke.`Name`,ke.`Description`,ke.`Version` FROM TB_MB_MyKettleRel rel
+JOIN TB_MB_Kettle ke ON rel.`KettleID`=ke.ID
+WHERE ke.`Status`=TRUE
+AND rel.MemberID=@@MemberID@@
+ORDER BY rel.`Default` DESC;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  
 </HCIP.AjaxDataSetting>

@@ -11,5 +11,6 @@ namespace BF.BackWebAPI.Models.Front.Request
         public string Name { set; get; }
         public string Description { set; get; }
         public string Version { set; get; }
+        public bool Default { set; get; }
     }
 }
