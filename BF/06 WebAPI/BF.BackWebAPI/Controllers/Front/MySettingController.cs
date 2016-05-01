@@ -1,4 +1,6 @@
 ﻿using BF.BackWebAPI.Models.Front;
+using BF.BackWebAPI.Models.Front.Request;
+using BF.BackWebAPI.Models.Front.Response;
 using BF.Common.CommonEntities;
 using BF.Common.DataAccess;
 using BF.Common.Helper;
@@ -36,6 +38,43 @@ namespace BF.BackWebAPI.Controllers.Front
 
             apiResult.data = DBBaseFactory.DALBase.QueryForList<MyShopResponse>("Get_MyShoppings", dic);
 
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+        [HttpPost]
+        public HttpResponseMessage NewKettle([FromBody]KettleModel param)
+        {
+            ApiResult<bool> apiResult = new ApiResult<bool>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("Name", param.Name);
+            dic.Add("Version", param.Version);
+            dic.Add("Description", param.Description);
+            dic.Add("CreationUser", MemberInfo.Account);
+            //
+            //通过接口检查水壶是否符合产品标准
+            //
+            var kettles = DBBaseFactory.DALBase.QueryForObject<KettleModel>("Get_CheckKettle", dic);
+            if (kettles == null)
+            {
+                int result = DBBaseFactory.DALBase.ExecuteNonQuery("Insert_Kettle", dic);
+                kettles = DBBaseFactory.DALBase.QueryForObject<KettleModel>("Get_CheckKettle", dic);
+            }
+            if (kettles != null)
+            {
+                dic.Add("MemberID", MemberInfo.ID);
+                dic.Add("KettleID", kettles.ID);
+                var kettleRel = DBBaseFactory.DALBase.QueryForObject<MyKettleRelResponse>("Get_CheckMyKettleRel", dic);
+                if (kettleRel == null)
+                {
+
+                    dic.Add("Default", false);
+                    DBBaseFactory.DALBase.ExecuteNonQuery("Insert_MyKettleRel", dic);
+                }
+                else
+                {
+                    apiResult.msg = "水壶已经绑定过！";
+                }
+            }
+            apiResult.data = true;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
     }

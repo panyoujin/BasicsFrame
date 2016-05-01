@@ -194,9 +194,11 @@
     <Compile Include="Models\Back\InParam\CommonModel.cs" />
     <Compile Include="Models\Back\User.cs" />
     <Compile Include="Models\Front\MemberInfo.cs" />
+    <Compile Include="Models\Front\Request\KettleModel.cs" />
     <Compile Include="Models\Front\Request\RegisterModel.cs" />
     <Compile Include="Models\Front\Request\UpdateMemberInfoModel.cs" />
     <Compile Include="Models\Front\Request\UpdatePasswdModel.cs" />
+    <Compile Include="Models\Front\Response\MyKettleRelResponse.cs" />
     <Compile Include="Models\Front\Response\MyShopResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

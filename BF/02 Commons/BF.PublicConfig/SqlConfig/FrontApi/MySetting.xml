@@ -15,5 +15,47 @@ ORDER BY `CreationDate` DESC
 			</SqlCommand>
 		</SqlDefinition>
 	</Data>
-
+  
+  <Data name="Get_CheckKettle">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+SELECT `ID`,`Name`,`Description`,`Version` FROM `TB_MB_Kettle`
+WHERE `Status`=TRUE AND NAME=@@Name@@ And `Version`=@@Version@@;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  
+  <Data name="Insert_Kettle">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+INSERT INTO `TB_MB_Kettle`(`Name`,`Description`,`Version`,`CreationUser`,`CreationDate`)
+VALUES(@@Name@@,@@Description@@,@@Version@@,@@CreationUser@@,NOW());
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  
+  <Data name="Get_CheckMyKettleRel">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+SELECT `ID`,`MemberID`,`KettleID`,`Default`,`CreationUser`,`CreationDate` FROM TB_MB_MyKettleRel
+WHERE MemberID=@@MemberID@@ and KettleID=@@KettleID@@;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  <Data name="Insert_MyKettleRel">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+INSERT INTO `TB_MB_MyKettleRel`(`MemberID`,`KettleID`,`Default`,`CreationUser`,`CreationDate`)
+VALUES(@@MemberID@@,@@KettleID@@,@@Default@@,@@CreationUser@@,Now());
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
 </HCIP.AjaxDataSetting>
