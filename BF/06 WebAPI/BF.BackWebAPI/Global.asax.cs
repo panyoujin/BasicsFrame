@@ -3,6 +3,9 @@ using BF.Common.SQLAnalytical;
 using System;
 using System.Web;
 using System.Web.Http;
+using System.Web.Mvc;
+using System.Web.Optimization;
+using System.Web.Routing;
 
 namespace BF.BackWebAPI
 {
@@ -11,10 +14,10 @@ namespace BF.BackWebAPI
         protected void Application_Start()
         {
             //AreaRegistration.RegisterAllAreas();
-            //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            //RouteConfig.RegisterRoutes(RouteTable.Routes);
-            //BundleConfig.RegisterBundles(BundleTable.Bundles);
             WebApiConfig.Register(GlobalConfiguration.Configuration);
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
             CacheSqlConfig.Instance.SqlConfigPath = Server.MapPath("/bin/SqlConfig");
         }
 

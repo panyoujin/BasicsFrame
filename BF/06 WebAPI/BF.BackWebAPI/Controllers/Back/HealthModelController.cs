@@ -1,4 +1,5 @@
 ﻿using BF.BackWebAPI.Authorize;
+using BF.BackWebAPI.Models.Back.InParam;
 using BF.Common.CommonEntities;
 using BF.Common.CustomException;
 using BF.Common.DataAccess;
@@ -22,7 +23,7 @@ namespace BF.BackWebAPI.Controllers.Back
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
-        [BFAuthorizeAttribute(IsLogin = true)]
+        [BFAuthorizeAttribute(IsLogin = true)] 
         public HttpResponseMessage GetHealthModelList(int type = 0, int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
@@ -68,81 +69,134 @@ namespace BF.BackWebAPI.Controllers.Back
         /// </summary>
         /// <param name="modelID"></param>
         /// <returns></returns>
-        [HttpGet]
-        public HttpResponseMessage AddHealthModel(string model_Name, string icoUrl = "", string imageUrl = "", string introduce = "", string describe = "", string remarks = "", int sort = 0, bool isBubble = false, int bubble_Time = 0, int bubble_Temperature = 0, int cook_Time = 0, int cook_Temperature = 0, bool is_Heat_Preservation = false, int heat_Preservation_Time = 0, int heat_Preservation_Temperature = 0, int removal_Chlorine_Time = 0, int final_Temperature = 0, bool isFerv = false)
+        [HttpPost]
+        public HttpResponseMessage AddHealthModel([FromBody]HealthModel healthModel)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
-            if (string.IsNullOrWhiteSpace(model_Name) || cook_Time <= 0 || final_Temperature <= 0)
+            if (string.IsNullOrWhiteSpace(healthModel.model_Name) || healthModel.cook_Time <= 0 || healthModel.final_Temperature <= 0)
             {
                 throw new BusinessException("请填写完整数据在提交");
             }
-            if (cook_Temperature <= 0)
+            if (healthModel.cook_Temperature <= 0)
             {
-                cook_Temperature = final_Temperature;
+                healthModel.cook_Temperature = healthModel.final_Temperature;
             }
             //需要生成对应的信息
-            if (string.IsNullOrEmpty(introduce))
+            if (string.IsNullOrEmpty(healthModel.introduce))
             {
-                introduce = string.Format("目标温度:{0}、", final_Temperature);
-                if (isFerv)
+                healthModel.introduce = string.Format("目标温度:{0}、", healthModel.final_Temperature);
+                if (healthModel.isFerv)
                 {
-                    introduce = string.Format("{0}需要煮沸、", introduce);
+                    healthModel.introduce = string.Format("{0}需要煮沸、", healthModel.introduce);
                 }
-                if (removal_Chlorine_Time > 0)
+                if (healthModel.removal_Chlorine_Time > 0)
                 {
-                    introduce = string.Format("{0}除氯{1}分钟、", introduce, removal_Chlorine_Time);
+                    healthModel.introduce = string.Format("{0}除氯{1}分钟、", healthModel.introduce, healthModel.removal_Chlorine_Time);
                 }
-                if (isBubble)
+                if (healthModel.isBubble)
                 {
-                    introduce = string.Format("{0}{1}度下泡料{2}分钟、", introduce, bubble_Temperature, bubble_Time);
+                    healthModel.introduce = string.Format("{0}{1}度下泡料{2}分钟、", healthModel.introduce, healthModel.bubble_Temperature, healthModel.bubble_Time);
                 }
-                introduce = string.Format("{0}煮料{1}分钟到{2}度、", introduce, cook_Time, cook_Temperature);
-                if (heat_Preservation_Temperature > 0)
+                healthModel.introduce = string.Format("{0}煮料{1}分钟到{2}度、", healthModel.introduce, healthModel.cook_Time, healthModel.cook_Temperature);
+                if (healthModel.heat_Preservation_Temperature > 0)
                 {
-                    introduce = string.Format("保温在{0}度、", heat_Preservation_Temperature);
+                    healthModel.introduce = string.Format("保温在{0}度、", healthModel.heat_Preservation_Temperature);
                 }
-                introduce = introduce.Substring(0, introduce.Length - 1);
+                healthModel.introduce = healthModel.introduce.Substring(0, healthModel.introduce.Length - 1);
             }
             //需要生成对应的信息
-            if (string.IsNullOrEmpty(remarks))
+            if (string.IsNullOrEmpty(healthModel.remarks))
             {
                
             }
-            if (!isBubble && (bubble_Time > 0 || bubble_Temperature > 0))
+            if (!healthModel.isBubble && (healthModel.bubble_Time > 0 || healthModel.bubble_Temperature > 0))
             {
-                isBubble = true;
+                healthModel.isBubble = true;
             }
-            if (!is_Heat_Preservation && (heat_Preservation_Time > 0 || heat_Preservation_Temperature > 0))
+            if (!healthModel.is_Heat_Preservation && (healthModel.heat_Preservation_Time > 0 || healthModel.heat_Preservation_Temperature > 0))
             {
-                is_Heat_Preservation = true;
+                healthModel.is_Heat_Preservation = true;
             }
             Dictionary<string, object> dic = new Dictionary<string, object>();
-            dic.Add("Model_Name", model_Name);
+            dic.Add("Model_Name", healthModel.model_Name);
             dic.Add("User_ID", UserInfo.ID);
-            dic.Add("IcoUrl", string.IsNullOrWhiteSpace(icoUrl) ? "" : icoUrl);
-            dic.Add("ImageUrl", string.IsNullOrWhiteSpace(imageUrl) ? "" : imageUrl);
-            dic.Add("Introduce", introduce);
-            dic.Add("Describe", string.IsNullOrWhiteSpace(describe) ? "" : describe);
-            dic.Add("Remarks", remarks);
-            dic.Add("Sort", sort);
-            dic.Add("IsBubble", isBubble);
-            dic.Add("Bubble_Time", bubble_Time);
-            dic.Add("Bubble_Temperature", bubble_Temperature);
-            dic.Add("Cook_Time", cook_Time);
-            dic.Add("Cook_Temperature", cook_Temperature);
-            dic.Add("Is_Heat_Preservation", is_Heat_Preservation);
-            dic.Add("Heat_Preservation_Time", heat_Preservation_Time);
-            dic.Add("Heat_Preservation_Temperature", heat_Preservation_Temperature);
-            dic.Add("Removal_Chlorine_Time", removal_Chlorine_Time);
-            dic.Add("Final_Temperature", final_Temperature);
-            dic.Add("IsFerv", isFerv);
+            dic.Add("IcoUrl", string.IsNullOrWhiteSpace(healthModel.icoUrl) ? "" : healthModel.icoUrl);
+            dic.Add("ImageUrl", string.IsNullOrWhiteSpace(healthModel.imageUrl) ? "" : healthModel.imageUrl);
+            dic.Add("Introduce", healthModel.introduce);
+            dic.Add("Describe", string.IsNullOrWhiteSpace(healthModel.describe) ? "" : healthModel.describe);
+            dic.Add("Remarks", healthModel.remarks);
+            dic.Add("Sort", healthModel.sort);
+            dic.Add("IsBubble", healthModel.isBubble);
+            dic.Add("Bubble_Time", healthModel.bubble_Time);
+            dic.Add("Bubble_Temperature", healthModel.bubble_Temperature);
+            dic.Add("Cook_Time", healthModel.cook_Time);
+            dic.Add("Cook_Temperature", healthModel.cook_Temperature);
+            dic.Add("Is_Heat_Preservation", healthModel.is_Heat_Preservation);
+            dic.Add("Heat_Preservation_Time", healthModel.heat_Preservation_Time);
+            dic.Add("Heat_Preservation_Temperature", healthModel.heat_Preservation_Temperature);
+            dic.Add("Removal_Chlorine_Time", healthModel.removal_Chlorine_Time);
+            dic.Add("Final_Temperature", healthModel.final_Temperature);
+            dic.Add("IsFerv", healthModel.isFerv);
             dic.Add("Model_Type", UserInfo.IsAdmin ? (int)Model_Type.System : (int)Model_Type.Custom);
             dic.Add("Model_Status", UserInfo.IsAdmin ? (int)Model_Status.Public : (int)Model_Status.Private);
-            dic.Add("CreationUser", UserInfo.UserAccount ?? UserInfo.ID + "");
+            dic.Add("CreationUser", UserInfo.Account ?? UserInfo.ID + "");
             apiResult.data = DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_AddHealthModel", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+        /// <summary>
+        /// 设置常用
+        /// </summary>
+        /// <param name="modelID"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public HttpResponseMessage SetCommonModel([FromBody]CommonModel model)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            if(model==null)
+            {
+                model = new CommonModel();
+            }
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("ModelID", model.modelID);
+            dic.Add("UserAccount", UserInfo.Account ?? UserInfo.ID + "");
+            dic.Add("User_ID", UserInfo.ID);
+            DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_SetCommonModel", dic);
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
 
+        /// <summary>
+        /// 取消常用
+        /// </summary>
+        /// <param name="modelID"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public HttpResponseMessage CancelCommonModel([FromBody]CommonModel model)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            if (model == null)
+            {
+                model = new CommonModel();
+            }
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("ModelID", model.modelID);
+            dic.Add("UserAccount", UserInfo.Account ?? UserInfo.ID + "");
+            dic.Add("User_ID", UserInfo.ID);
+            DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_CancelCommonModel", dic);
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
 
+        /// <summary>
+        /// 获取常用模式列表
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetCommonHealthModelList()
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("User_ID", UserInfo.ID);
+            apiResult.data = DBBaseFactory.DALBase.QueryForDataTable("BackWeb_GetCommonHealthModelList", dic);
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
     }
 }

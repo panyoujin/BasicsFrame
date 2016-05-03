@@ -43,7 +43,7 @@ namespace BF.BackWebAPI.Controllers
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public void Login_Cache(MemberInfo user)
+        public string Login_Cache(MemberInfo user)
         {
             #region 添加缓存
             var sessionID = Guid.NewGuid().ToString();
@@ -65,11 +65,26 @@ namespace BF.BackWebAPI.Controllers
             HttpCookie cook = new HttpCookie("CACHED_SESSION_ID", sessionID);
             HttpContext.Current.Response.AppendCookie(cook);
             #endregion
+            return sessionID;
         }
         public void Update_Cache(MemberInfo user)
         {
             HttpContext.Current.Cache.Remove(RequestInfo.SessionID);
             HttpContext.Current.Cache.Insert(RequestInfo.SessionID, user);
+        }
+
+        public void Delete_Cache()
+        {
+            HttpContext.Current.Cache.Remove(RequestInfo.SessionID);
+        }
+        /// <summary>
+        /// 获取开始页
+        /// </summary>
+        /// <param name="page"></param>
+        /// <returns></returns>
+        public int GetStartSize(int page, int pageSize)
+        {
+            return (page > 1 ? (page - 1) * pageSize : 0);
         }
     }
 }

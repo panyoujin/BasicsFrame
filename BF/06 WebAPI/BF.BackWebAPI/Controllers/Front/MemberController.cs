@@ -43,8 +43,8 @@ namespace BF.BackWebAPI.Controllers
                 apiResult.msg = "帐号或密码错误！";
                 return JsonHelper.SerializeObjectToWebApi(apiResult);
             }
-            Login_Cache(user);
-            apiResult.data = new { Account = user.Account, ImageUrl = user.ImageUrl };
+            var sessionID = Login_Cache(user);
+            apiResult.data = new { Account = user.Account, Name = user.Name, ImageUrl = user.ImageUrl, SessionID = sessionID };
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
         /// <summary>
@@ -144,6 +144,14 @@ namespace BF.BackWebAPI.Controllers
                 apiResult.msg = "修改密码失败！";
             }
 
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+        [HttpGet]
+        public HttpResponseMessage LogOut()
+        {
+            ApiResult<bool> apiResult = new ApiResult<bool>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Delete_Cache();
+            apiResult.data = true;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
     }

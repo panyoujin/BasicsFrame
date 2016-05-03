@@ -1,5 +1,7 @@
 ﻿using BF.BackWebAPI.Models.Back;
+using BF.BackWebAPI.Models.Front;
 using BF.Common.CommonEntities;
+using BF.Common.CustomException;
 using BF.Common.DataAccess;
 using BF.Common.Helper;
 using BF.Common.StaticConstant;
@@ -37,30 +39,37 @@ namespace BF.BackWebAPI.Authorize
             if (IsLogin)
             {
 
-                if(UserInfo==null || UserInfo.ID<=0)
+                if (UserInfo == null || UserInfo.ID <= 0)
                 {
                     apiResult.code = ResultCode.CODE_ERROR_USER_NOT_LOGIN;
                     apiResult.msg = ResultMsg.CODE_ERROR_USER_NOT_LOGIN;
                     actionContext.Response = JsonHelper.SerializeObjectToWebApi(apiResult);
                 }
-                
+
             }
         }
 
-        public UserModel UserInfo
+        public MemberInfo UserInfo
         {
             get
             {
-                var user = RequestInfo.UserInfo<UserModel>();
-                if (user == null || user.ID <= 0)
+                var user = RequestInfo.UserInfo<MemberInfo>();
+                if (user == null || user.ID <= 0 && !string.IsNullOrWhiteSpace(RequestInfo.SessionID))
                 {
                     Dictionary<string, object> dic = new Dictionary<string, object>();
                     dic.Add("SessionID", RequestInfo.SessionID);
                     //从数据看获取
-                    user = DBBaseFactory.DALBase.QueryForObject<UserModel>("BackWeb_GetLoginUser", dic);
-                    user.IsAdmin = true;
-                    HttpContext.Current.Cache.Remove(RequestInfo.SessionID);
-                    HttpContext.Current.Cache.Insert(RequestInfo.SessionID, user);
+                    user = DBBaseFactory.DALBase.QueryForObject<MemberInfo>("BackWeb_GetLoginUser", dic);
+                    if (user != null)
+                    {
+                        user.IsAdmin = true;
+                        HttpContext.Current.Cache.Remove(RequestInfo.SessionID);
+                        HttpContext.Current.Cache.Insert(RequestInfo.SessionID, user);
+                    }
+                }
+                if (user == null || user.ID <= 0)
+                {
+                    throw new NotLoginException(ResultMsg.CODE_ERROR_USER_NOT_LOGIN);
                 }
                 return user;
             }

@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+
+    <title>接口测试页面</title>
+
+    <style>
+        div table {
+            text-align: right;
+        }
+
+        td {
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="text-align: center">
+        <table>
+            <tr>
+                <td>地址：</td>
+                <td colspan="2">
+                    <textarea cols="3" id="url" style="width: 1000px">http://localhost:61033/znsh/Account/Login</textarea><br />
+                </td>
+            </tr>
+            <tr>
+                <td>Param：</td>
+                <td>
+                    <textarea cols="1" id="ParamP" style="width: 780px;">account|admin,password|e10adc3949ba59abbe56e057f20f883e</textarea>
+                </td>
+                <td>(格式：name|param,name|param)</td>
+            </tr>
+            <tr>
+                <td>COOKIE：</td>
+                <td>
+                    <textarea cols="1" id="COOKIEP" style="width: 780px">CACHED_SESSION_ID|eb393dc6-b4c5-4aff-9f65-4d9baf0b807d</textarea></td>
+                <td>(格式：name|path,name|path)</td>
+            </tr>
+            <tr>
+                <td>Header：</td>
+                <td>
+                    <textarea cols="1" id="HeaderP" style="width: 780px"></textarea></td>
+                <td>(格式：name|path,name|path)</td>
+            </tr>
+            <tr>
+                <td>FILE：</td>
+                <td>
+                    <textarea cols="1" id="FILEP" style="width: 780px"></textarea></td>
+                <td>(格式：name|path,name|path)</td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align: center;">
+                    <input type="button" onclick="getData(0)" value="GET请求" style="margin-left: 300px;" />
+
+                    <input type="button" onclick="getData(1)" value="POST请求" style="margin-right: 300px;" />
+
+                </td>
+            </tr>
+            <tr>
+                <td>返回值：</td>
+                <td colspan="2">
+                    <textarea cols="20" id="htmlData" style="width: 1000px; height: 200px;"></textarea></td>
+            </tr>
+        </table>
+
+    </div>
+    <script src="Scripts/common.js"></script>
+    <script src="Scripts/jquery-1.7.1.js"></script>
+    <script>
+
+
+        $(function () {
+            hello();
+        });
+
+        function getData(type) {
+
+            var url = escape($("#url").val());
+            var CookieP = $("#COOKIEP").val();
+            var HeaderP = $("#HeaderP").val();
+            var fileP = $("#FILEP").val();
+            var ParamP = $("#ParamP").val();
+            $.ajax({
+                type: "GET",
+                url: "/Home/ApiTest?url=" + url + "&type=" + (type||0) + "&HeaderP=" + HeaderP + "&CookieP=" + CookieP + "&fileParam=" + fileP + "&ParamP=" + ParamP,
+                success: function (data) {
+                    //alert(data);
+                    $("#htmlData").val(data);
+
+                },
+                error: function (xhr, errorText, errorType) {
+                    //alert(xhr + "    " + errorText + "    " + errorType);
+                    $("#htmlData").val("xhr：" + xhr + " errorText：" + errorText + " errorType：" + errorType + " data：" + data);
+                }
+            });
+        }
+        function postData2() {
+
+            $.ajax({
+                type: "POST",
+                url: "jkyzx-ys/user_center/login",
+                data: JSON.stringify({ memberAccount: "18933100639", password: "82273a6ba2126d3af24ce2d0cb0af515" }),
+                success: function (data) {
+
+                    //alert(data);
+                    $("#htmlData").val(data);
+                },
+                error: function (xhr, errorText, errorType) {
+                    //alert(data);
+                    $("#htmlData").val("xhr：" + xhr + " errorText：" + errorText + " errorType：" + errorType + " data：" + data);
+                }
+            });
+        }
+
+        function hello()
+        {
+            console.log("Hello, world");
+        }
+
+        function postData() {
+            var url = escape($("#url").val());
+            var fileP = $("#FILEP").val();
+            var CookieP = $("#COOKIEP").val();
+            var HeaderP = $("#HeaderP").val();
+            var ParamP = $("#ParamP").val();
+            $.ajax({
+                type: "POST",
+                url: "/Home/ApiTest?url=" + url + "&type=1" + "&HeaderP=" + HeaderP + "&CookieP=" + CookieP + "&fileParam=" + fileP + "&ParamP=" + ParamP,
+                success: function (data) {
+
+                    //alert(data);
+                    $("#htmlData").val(data);
+                },
+                error: function (xhr, errorText, errorType) {
+                    //alert(data);
+                    $("#htmlData").val("xhr：" + xhr + " errorText：" + errorText + " errorType：" + errorType + " data：" + data);
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

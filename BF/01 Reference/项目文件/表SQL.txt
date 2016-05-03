@@ -1,109 +1,243 @@
+/*
+SQLyog Ultimate v11.27 (32 bit)
+MySQL - 5.7.11-log : Database - znsh_dev
+*********************************************************************
+*/
+
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`znsh_dev` /*!40100 DEFAULT CHARACTER SET utf8 */;
+
+USE `znsh_dev`;
+
+/*Table structure for table `TB_CM_Menu` */
+
+DROP TABLE IF EXISTS `TB_CM_Menu`;
+
 CREATE TABLE `TB_CM_Menu` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一标识',
-  `MenuName` varchar(50) NOT NULL COMMENT '菜单名称',
-  `IsRoot` tinyint(1) NOT NULL COMMENT '是否根节点',
-  `IsFunction` tinyint(1) NOT NULL DEFAULT '0' COMMENT '用于权限控制, 指示这个是"菜单"还是"功能".',
-  `ParentMenuID` int(11) DEFAULT NULL COMMENT '父节点',
-  `Description` varchar(1000) DEFAULT NULL COMMENT '描述',
-  `MenuUrl` varchar(300) DEFAULT NULL COMMENT '菜单地址',
-  `IConUrl` varchar(50) DEFAULT NULL COMMENT '菜单图标地址',
-  `Sort` int(11) DEFAULT NULL COMMENT '排序',
-  `Status` bit(1) DEFAULT b'1' COMMENT '是否有效',
-  `CreationUser` varchar(50) DEFAULT NULL COMMENT '创建人账号',
-  `CreationDate` datetime DEFAULT NULL COMMENT '创建时间',
-  `ModificationUser` varchar(50) DEFAULT NULL COMMENT '修改人账号',
-  `ModificationDate` datetime DEFAULT NULL COMMENT '修改时间',
+  `ID` INT(11) NOT NULL AUTO_INCREMENT COMMENT '唯一标识',
+  `MenuName` VARCHAR(50) NOT NULL COMMENT '菜单名称',
+  `IsRoot` TINYINT(1) NOT NULL COMMENT '是否根节点',
+  `IsFunction` TINYINT(1) NOT NULL DEFAULT '0' COMMENT '用于权限控制, 指示这个是"菜单"还是"功能".',
+  `ParentMenuID` INT(11) DEFAULT NULL COMMENT '父节点',
+  `Description` VARCHAR(1000) DEFAULT NULL COMMENT '描述',
+  `MenuUrl` VARCHAR(300) DEFAULT NULL COMMENT '菜单地址',
+  `IConUrl` VARCHAR(50) DEFAULT NULL COMMENT '菜单图标地址',
+  `Sort` INT(11) DEFAULT NULL COMMENT '排序',
+  `Status` BIT(1) DEFAULT b'1' COMMENT '是否有效',
+  `CreationUser` VARCHAR(50) DEFAULT NULL COMMENT '创建人账号',
+  `CreationDate` DATETIME DEFAULT NULL COMMENT '创建时间',
+  `ModificationUser` VARCHAR(50) DEFAULT NULL COMMENT '修改人账号',
+  `ModificationDate` DATETIME DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='[后台权限] 后台菜单';
+) ENGINE=MYISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='[后台权限] 后台菜单';
+
+/*Table structure for table `TB_CM_Role` */
+
+DROP TABLE IF EXISTS `TB_CM_Role`;
 
 CREATE TABLE `TB_CM_Role` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一标识',
-  `RoleName` varchar(50) NOT NULL COMMENT '角色名称',
-  `Description` varchar(1000) DEFAULT NULL COMMENT '描述',
-  `Status` bit(1) NOT NULL DEFAULT b'1' COMMENT '是否有效',
-  `CreationUser` varchar(50) DEFAULT NULL COMMENT '创建人账号',
-  `CreationDate` datetime DEFAULT NULL COMMENT '创建时间',
-  `ModificationUser` varchar(50) DEFAULT NULL COMMENT '修改人账号',
-  `ModificationDate` datetime DEFAULT NULL COMMENT '修改时间',
+  `ID` INT(11) NOT NULL AUTO_INCREMENT COMMENT '唯一标识',
+  `RoleName` VARCHAR(50) NOT NULL COMMENT '角色名称',
+  `Description` VARCHAR(1000) DEFAULT NULL COMMENT '描述',
+  `Status` BIT(1) NOT NULL DEFAULT b'1' COMMENT '是否有效',
+  `CreationUser` VARCHAR(50) DEFAULT NULL COMMENT '创建人账号',
+  `CreationDate` DATETIME DEFAULT NULL COMMENT '创建时间',
+  `ModificationUser` VARCHAR(50) DEFAULT NULL COMMENT '修改人账号',
+  `ModificationDate` DATETIME DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='[后台权限] 管理员角色';
+) ENGINE=MYISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='[后台权限] 管理员角色';
+
+/*Table structure for table `TB_CM_Rolemenu` */
+
+DROP TABLE IF EXISTS `TB_CM_Rolemenu`;
 
 CREATE TABLE `TB_CM_Rolemenu` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一标识',
-  `RoleID` int(11) NOT NULL COMMENT '角色ID',
-  `MenuID` int(11) NOT NULL COMMENT '菜单ID',
-  `CreationUser` varchar(50) DEFAULT NULL COMMENT '创建人账号',
-  `Status` bit(1) DEFAULT b'1' COMMENT '是否有效',
-  `CreationDate` datetime DEFAULT NULL COMMENT '创建时间',
-  `ModificationUser` varchar(50) DEFAULT NULL COMMENT '修改人账号',
-  `ModificationDate` datetime DEFAULT NULL COMMENT '修改时间',
+  `ID` INT(11) NOT NULL AUTO_INCREMENT COMMENT '唯一标识',
+  `RoleID` INT(11) NOT NULL COMMENT '角色ID',
+  `MenuID` INT(11) NOT NULL COMMENT '菜单ID',
+  `CreationUser` VARCHAR(50) DEFAULT NULL COMMENT '创建人账号',
+  `Status` BIT(1) DEFAULT b'1' COMMENT '是否有效',
+  `CreationDate` DATETIME DEFAULT NULL COMMENT '创建时间',
+  `ModificationUser` VARCHAR(50) DEFAULT NULL COMMENT '修改人账号',
+  `ModificationDate` DATETIME DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='[后台权限] 管理员角色与菜单关系';
+) ENGINE=MYISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='[后台权限] 管理员角色与菜单关系';
+
+/*Table structure for table `TB_CM_User` */
+
+DROP TABLE IF EXISTS `TB_CM_User`;
 
 CREATE TABLE `TB_CM_User` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一标识',
-  `UserAccount` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '用户账号',
-  `UserName` varchar(50) NOT NULL COMMENT '用户名称',
-  `PhoneNum` varchar(50) DEFAULT NULL COMMENT '电话号码',
-  `EMail` varchar(50) DEFAULT NULL COMMENT '邮箱',
-  `UserPassword` varchar(50) DEFAULT NULL COMMENT '密码',
-  `Sex` int(11) DEFAULT NULL COMMENT '性别',
-  `Status` bit(1) NOT NULL DEFAULT b'1' COMMENT '是否有效',
-  `SessionID` varchar(50) DEFAULT NULL COMMENT '登录标识',
-  `LoginTime` datetime DEFAULT NULL COMMENT '登录时间',
-  `CreationUser` varchar(50) DEFAULT NULL COMMENT '创建人账号',
-  `CreationDate` datetime DEFAULT NULL COMMENT '创建时间',
-  `ModificationUser` varchar(50) DEFAULT NULL COMMENT '修改人账号',
-  `ModificationDate` datetime DEFAULT NULL COMMENT '修改时间',
+  `ID` INT(11) NOT NULL AUTO_INCREMENT COMMENT '唯一标识',
+  `UserAccount` VARCHAR(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '用户账号',
+  `UserName` VARCHAR(50) NOT NULL COMMENT '用户名称',
+  `PhoneNum` VARCHAR(50) DEFAULT NULL COMMENT '电话号码',
+  `EMail` VARCHAR(50) DEFAULT NULL COMMENT '邮箱',
+  `UserPassword` VARCHAR(50) DEFAULT NULL COMMENT '密码',
+  `Sex` INT(11) DEFAULT NULL COMMENT '性别',
+  `Status` BIT(1) NOT NULL DEFAULT b'1' COMMENT '是否有效',
+  `SessionID` VARCHAR(50) DEFAULT NULL COMMENT '登录标识',
+  `LoginTime` DATETIME DEFAULT NULL COMMENT '登录时间',
+  `CreationUser` VARCHAR(50) DEFAULT NULL COMMENT '创建人账号',
+  `CreationDate` DATETIME DEFAULT NULL COMMENT '创建时间',
+  `ModificationUser` VARCHAR(50) DEFAULT NULL COMMENT '修改人账号',
+  `ModificationDate` DATETIME DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='[后台权限] 管理员信息';
+) ENGINE=MYISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='[后台权限] 管理员信息'
+/*!50100 PARTITION BY RANGE (ID)
+(PARTITION p0 VALUES LESS THAN (500000) ENGINE = MyISAM,
+ PARTITION p1 VALUES LESS THAN (1000000) ENGINE = MyISAM,
+ PARTITION p2 VALUES LESS THAN (1500000) ENGINE = MyISAM,
+ PARTITION p3 VALUES LESS THAN (2000000) ENGINE = MyISAM,
+ PARTITION p4 VALUES LESS THAN (2500000) ENGINE = MyISAM,
+ PARTITION p5 VALUES LESS THAN (3000000) ENGINE = MyISAM,
+ PARTITION p6 VALUES LESS THAN (3500000) ENGINE = MyISAM,
+ PARTITION p7 VALUES LESS THAN (4000000) ENGINE = MyISAM,
+ PARTITION p8 VALUES LESS THAN (4500000) ENGINE = MyISAM,
+ PARTITION p9 VALUES LESS THAN (5000000) ENGINE = MyISAM,
+ PARTITION p10 VALUES LESS THAN (5500000) ENGINE = MyISAM,
+ PARTITION p11 VALUES LESS THAN (6000000) ENGINE = MyISAM,
+ PARTITION p12 VALUES LESS THAN (6500000) ENGINE = MyISAM,
+ PARTITION p13 VALUES LESS THAN (7000000) ENGINE = MyISAM,
+ PARTITION p14 VALUES LESS THAN (7500000) ENGINE = MyISAM,
+ PARTITION p15 VALUES LESS THAN (8000000) ENGINE = MyISAM,
+ PARTITION p16 VALUES LESS THAN (8500000) ENGINE = MyISAM,
+ PARTITION p17 VALUES LESS THAN (9000000) ENGINE = MyISAM,
+ PARTITION p18 VALUES LESS THAN (9500000) ENGINE = MyISAM,
+ PARTITION p19 VALUES LESS THAN MAXVALUE ENGINE = MyISAM) */;
 
-CREATE TABLE `TB_CM_User` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一标识',
-  `UserAccount` varchar(50) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '用户账号',
-  `UserName` varchar(50) NOT NULL COMMENT '用户名称',
-  `PhoneNum` varchar(50) DEFAULT NULL COMMENT '电话号码',
-  `EMail` varchar(50) DEFAULT NULL COMMENT '邮箱',
-  `UserPassword` varchar(50) DEFAULT NULL COMMENT '密码',
-  `Sex` int(11) DEFAULT NULL COMMENT '性别',
-  `Status` bit(1) NOT NULL DEFAULT b'1' COMMENT '是否有效',
-  `SessionID` varchar(50) DEFAULT NULL COMMENT '登录标识',
-  `LoginTime` datetime DEFAULT NULL COMMENT '登录时间',
-  `CreationUser` varchar(50) DEFAULT NULL COMMENT '创建人账号',
-  `CreationDate` datetime DEFAULT NULL COMMENT '创建时间',
-  `ModificationUser` varchar(50) DEFAULT NULL COMMENT '修改人账号',
-  `ModificationDate` datetime DEFAULT NULL COMMENT '修改时间',
+/*Table structure for table `TB_CM_Userrole` */
+
+DROP TABLE IF EXISTS `TB_CM_Userrole`;
+
+CREATE TABLE `TB_CM_Userrole` (
+  `ID` INT(11) NOT NULL AUTO_INCREMENT COMMENT '唯一标识',
+  `UserID` INT(11) NOT NULL COMMENT '用户ID',
+  `Status` BIT(1) DEFAULT b'1' COMMENT '是否有效',
+  `RoleID` INT(11) NOT NULL COMMENT '角色ID',
+  `CreationUser` VARCHAR(50) DEFAULT NULL COMMENT '创建人账号',
+  `CreationDate` DATETIME DEFAULT NULL COMMENT '创建时间',
+  `ModificationUser` VARCHAR(50) DEFAULT NULL COMMENT '修改人账号',
+  `ModificationDate` DATETIME DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='[后台权限] 管理员信息';
+) ENGINE=MYISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='[后台权限] 管理员与角色关系';
+
+/*Table structure for table `TB_MB_CommonModel` */
+
+DROP TABLE IF EXISTS `TB_MB_CommonModel`;
+
+CREATE TABLE `TB_MB_CommonModel` (
+  `ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `User_ID` INT(11) NOT NULL COMMENT '用户ID',
+  `Model_ID` INT(11) DEFAULT NULL COMMENT '模式ID',
+  `Status` BIT(1) DEFAULT b'1' COMMENT '是否有效，默认有效',
+  `CreationDate` DATETIME DEFAULT NULL,
+  `CreationUser` VARCHAR(50) DEFAULT NULL,
+  `ModificationUser` VARCHAR(50) DEFAULT NULL,
+  `ModificationDate` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+/*Table structure for table `TB_MB_MemberInfo` */
+
+DROP TABLE IF EXISTS `TB_MB_MemberInfo`;
+
+CREATE TABLE `TB_MB_MemberInfo` (
+  `ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `Account` VARCHAR(50) NOT NULL COMMENT '账号',
+  `Passwd` VARCHAR(50) NOT NULL COMMENT '密码',
+  `Name` VARCHAR(50) DEFAULT NULL COMMENT '昵称',
+  `Age` INT(4) DEFAULT NULL COMMENT '年龄',
+  `Birthday` DATE DEFAULT NULL COMMENT '生日',
+  `Sex` BIT(1) DEFAULT NULL COMMENT 'true:男；false:女',
+  `Email` VARCHAR(80) DEFAULT NULL COMMENT '邮箱',
+  `Phone` VARCHAR(20) DEFAULT NULL COMMENT '电话',
+  `Remark` VARCHAR(200) DEFAULT NULL COMMENT '备注',
+  `QQ` VARCHAR(20) DEFAULT NULL,
+  `CreationDate` DATETIME DEFAULT NULL,
+  `CreationUser` VARCHAR(50) DEFAULT NULL,
+  `ModificationUser` VARCHAR(50) DEFAULT NULL,
+  `ModificationDate` DATETIME DEFAULT NULL,
+  `Status` BIT(1) DEFAULT b'1' COMMENT '是否删除',
+  `IsAuto` BIT(1) DEFAULT NULL COMMENT '是否自动创建',
+  `ImageUrl` VARCHAR(500) DEFAULT NULL COMMENT '头像',
+  PRIMARY KEY (`ID`)
+) ENGINE=INNODB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+/*Table structure for table `TB_MB_Models` */
+
+DROP TABLE IF EXISTS `TB_MB_Models`;
 
 CREATE TABLE `TB_MB_Models` (
-  `ID` int(11) NOT NULL AUTO_INCREMENT,
-  `User_ID` int(11) NOT NULL DEFAULT '0' COMMENT '如果是后台管理添加，该字段为0',
-  `Model_Name` varchar(50) NOT NULL COMMENT '模式名称，养生品名称',
-  `IcoUrl` varchar(256) DEFAULT NULL COMMENT '图标地址',
-  `ImageUrl` varchar(256) DEFAULT NULL COMMENT '图片地址',
-  `Introduce` varchar(200) DEFAULT NULL COMMENT '简单介绍，用户自定义的需要动态生成',
-  `Describe` varchar(1000) DEFAULT NULL COMMENT '材料描述',
-  `Remarks` varchar(1000) DEFAULT NULL COMMENT '注意事项',
-  `Sort` int(11) DEFAULT '0' COMMENT '排序，越大越前',
-  `IsBubble` bit(1) DEFAULT b'0' COMMENT '是否泡料，默认不泡',
-  `Bubble_Time` int(11) DEFAULT NULL COMMENT '泡料时长，单位分钟',
-  `Bubble_Temperature` int(11) DEFAULT NULL COMMENT '泡料温度，单位摄氏度，最小单位1摄氏度',
-  `Cook_Time` int(11) DEFAULT NULL COMMENT '煮料时长，单位分钟',
-  `Cook_Temperature` int(11) DEFAULT NULL COMMENT '煮料温度，单位摄氏度，最小单位1摄氏度',
-  `Is_Heat_Preservation` bit(1) DEFAULT b'0' COMMENT '是否保温，默认不保温',
-  `Heat_Preservation_Time` int(11) DEFAULT NULL COMMENT '保温时长，单位分钟',
-  `Heat_Preservation_Temperature` int(11) DEFAULT NULL COMMENT '保温温度，单位摄氏度，最小单位1摄氏度',
-  `Removal_Chlorine_Time` int(11) DEFAULT NULL COMMENT '除氯时长，单位分钟',
-  `Final_Temperature` int(11) DEFAULT NULL COMMENT '最终温度',
-  `IsFerv` bit(1) DEFAULT b'0' COMMENT '是否煮沸,默认不煮沸',
-  `Model_Type` int(2) DEFAULT '0' COMMENT '类型：0.系统提供;1.自定义',
-  `Model_Status` int(2) DEFAULT '1' COMMENT '状态：0.公开;1.私密主要是给自定义的模式使用',
-  `Status` bit(1) DEFAULT b'1' COMMENT '是否有效，默认有效',
-  `CreationUser` varchar(50) DEFAULT NULL,
-  `CreationDate` datetime DEFAULT NULL,
-  `ModificationUser` varchar(50) DEFAULT NULL,
-  `ModificationDate` datetime DEFAULT NULL,
+  `ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `User_ID` INT(11) NOT NULL DEFAULT '0' COMMENT '如果是后台管理添加，该字段为0',
+  `Model_Name` VARCHAR(50) NOT NULL COMMENT '模式名称，养生品名称',
+  `IcoUrl` VARCHAR(256) DEFAULT NULL COMMENT '图标地址',
+  `ImageUrl` VARCHAR(256) DEFAULT NULL COMMENT '图片地址',
+  `Introduce` VARCHAR(200) DEFAULT NULL COMMENT '简单介绍，用户自定义的需要动态生成',
+  `Describe` VARCHAR(1000) DEFAULT NULL COMMENT '材料描述',
+  `Remarks` VARCHAR(1000) DEFAULT NULL COMMENT '注意事项',
+  `Sort` INT(11) DEFAULT '0' COMMENT '排序，越大越前',
+  `IsBubble` BIT(1) DEFAULT b'0' COMMENT '是否泡料，默认不泡',
+  `Bubble_Time` INT(11) DEFAULT NULL COMMENT '泡料时长，单位分钟',
+  `Bubble_Temperature` INT(11) DEFAULT NULL COMMENT '泡料温度，单位摄氏度，最小单位1摄氏度',
+  `Cook_Time` INT(11) DEFAULT NULL COMMENT '煮料时长，单位分钟',
+  `Cook_Temperature` INT(11) DEFAULT NULL COMMENT '煮料温度，单位摄氏度，最小单位1摄氏度',
+  `Is_Heat_Preservation` BIT(1) DEFAULT b'0' COMMENT '是否保温，默认不保温',
+  `Heat_Preservation_Time` INT(11) DEFAULT NULL COMMENT '保温时长，单位分钟',
+  `Heat_Preservation_Temperature` INT(11) DEFAULT NULL COMMENT '保温温度，单位摄氏度，最小单位1摄氏度',
+  `Removal_Chlorine_Time` INT(11) DEFAULT NULL COMMENT '除氯时长，单位分钟',
+  `Final_Temperature` INT(11) DEFAULT NULL COMMENT '最终温度',
+  `IsFerv` BIT(1) DEFAULT b'0' COMMENT '是否煮沸,默认不煮沸',
+  `Model_Type` INT(2) DEFAULT '0' COMMENT '类型：0.系统提供;1.自定义,枚举：Model_Type',
+  `Model_Status` INT(2) DEFAULT '1' COMMENT '状态：0.公开;1.私密主要是给自定义的模式使用',
+  `Status` BIT(1) DEFAULT b'1' COMMENT '是否有效，默认有效',
+  `CreationUser` VARCHAR(50) DEFAULT NULL,
+  `CreationDate` DATETIME DEFAULT NULL,
+  `ModificationUser` VARCHAR(50) DEFAULT NULL,
+  `ModificationDate` DATETIME DEFAULT NULL,
   PRIMARY KEY (`ID`),
   KEY `Index_UserAndName` (`User_ID`,`Model_Name`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='养生品,养生宝典,模式';
+) ENGINE=INNODB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='养生品,养生宝典,模式';
+
+/*Table structure for table `TB_MB_Shopping` */
+
+DROP TABLE IF EXISTS `TB_MB_Shopping`;
+
+CREATE TABLE `TB_MB_Shopping` (
+  `ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `Name` VARCHAR(50) DEFAULT NULL,
+  `Description` VARCHAR(50) DEFAULT NULL,
+  `Url` VARCHAR(100) DEFAULT NULL,
+  `Price` DECIMAL(11,2) DEFAULT '0.00',
+  `NowPrice` DECIMAL(11,2) DEFAULT '0.00',
+  `CreationDate` DATETIME DEFAULT NULL,
+  `CreationUser` VARCHAR(50) DEFAULT NULL,
+  `ModificationUser` VARCHAR(50) DEFAULT NULL,
+  `ModificationDate` DATETIME DEFAULT NULL,
+  `Status` BIT(1) NOT NULL DEFAULT b'1',
+  PRIMARY KEY (`ID`)
+) ENGINE=INNODB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+DROP TABLE IF EXISTS `TB_MB_CommonModel`;
+CREATE TABLE `TB_MB_CommonModel` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `User_ID` int(11) NOT NULL COMMENT '用户ID',
+  `Model_ID` int(11) DEFAULT NULL COMMENT '模式ID',
+  `Status` bit(1) DEFAULT b'1' COMMENT '是否有效，默认有效',
+  `CreationDate` datetime DEFAULT NULL,
+  `CreationUser` varchar(50) DEFAULT NULL,
+  `ModificationUser` varchar(50) DEFAULT NULL,
+  `ModificationDate` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

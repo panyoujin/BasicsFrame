@@ -1,6 +1,9 @@
 ﻿using BF.BackWebAPI.Models.Back;
+using BF.BackWebAPI.Models.Front;
+using BF.Common.CustomException;
 using BF.Common.DataAccess;
 using BF.Common.Helper;
+using BF.Common.StaticConstant;
 using System;
 using System.Collections.Generic;
 using System.Web;
@@ -17,20 +20,27 @@ namespace BF.BackWebAPI.Controllers.Back
         }
 
 
-        public UserModel UserInfo
+        public MemberInfo UserInfo
         {
             get
             {
-                var user = RequestInfo.UserInfo<UserModel>();
-                if (user == null || user.ID <= 0)
+                var user = RequestInfo.UserInfo<MemberInfo>();
+                if (user == null || user.ID <= 0 && !string.IsNullOrWhiteSpace(RequestInfo.SessionID))
                 {
                     Dictionary<string, object> dic = new Dictionary<string, object>();
                     dic.Add("SessionID", RequestInfo.SessionID);
                     //从数据看获取
-                    user = DBBaseFactory.DALBase.QueryForObject<UserModel>("BackWeb_GetLoginUser", dic);
-                    user.IsAdmin = true;
-                    HttpContext.Current.Cache.Remove(RequestInfo.SessionID);
-                    HttpContext.Current.Cache.Insert(RequestInfo.SessionID, user);
+                    user = DBBaseFactory.DALBase.QueryForObject<MemberInfo>("BackWeb_GetLoginUser", dic);
+                    if (user != null)
+                    {
+                        user.IsAdmin = true;
+                        HttpContext.Current.Cache.Remove(RequestInfo.SessionID);
+                        HttpContext.Current.Cache.Insert(RequestInfo.SessionID, user);
+                    }
+                }
+                if (user == null || user.ID <= 0)
+                {
+                    throw new NotLoginException(ResultMsg.CODE_ERROR_USER_NOT_LOGIN);
                 }
                 return user;
             }
@@ -55,7 +65,7 @@ namespace BF.BackWebAPI.Controllers.Back
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public void Login_Cache(UserModel user)
+        public string Login_Cache(MemberInfo user)
         {
             #region 添加缓存
             var sessionID = Guid.NewGuid().ToString();
@@ -76,6 +86,7 @@ namespace BF.BackWebAPI.Controllers.Back
             }
             HttpCookie cook = new HttpCookie("CACHED_SESSION_ID", sessionID);
             HttpContext.Current.Response.AppendCookie(cook);
+            return sessionID;
             #endregion
         }
 
