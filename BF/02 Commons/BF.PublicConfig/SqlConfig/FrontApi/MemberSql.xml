@@ -5,7 +5,10 @@
 		<SqlDefinition type="sql">
 			<SqlCommand>
 				<![CDATA[
-SELECT `ID`,`Account`,`Passwd`,`Name`,`Age`,`Birthday`,`Sex`,`Email`,`Phone`,`Remark`,`QQ`,`ImageUrl` FROM `TB_MB_MemberInfo` WHERE `Account`=@@Account@@ AND `Status`=TRUE;
+SELECT `ID`,`Account`,`Passwd`,`Name`,`Age`,`Birthday`,`Sex`,`Email`,`Phone`,`Remark`,`QQ`,`ImageUrl` FROM `TB_MB_MemberInfo`
+WHERE `Status`=TRUE
+<%= AND `Account`=@@Account@@ %>  
+<%= AND `SessionID`=@@SessionID@@ %>;
       ]]>
 			</SqlCommand>
 		</SqlDefinition>
@@ -39,6 +42,16 @@ WHERE `ID`=@@ID@@ and `Status`=TRUE;
 				<![CDATA[
 UPDATE TB_MB_MemberInfo SET Passwd=@@NewPasswd@@, `ModificationDate`=NOW(),`ModificationUser`=@@ModifyUser@@
 WHERE `ID`=@@ID@@ AND `Status`=TRUE AND `Passwd`=@@OldPasswd@@;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	<Data name="FrontApi_UpdateSessionID">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+UPDATE  `TB_MB_MemberInfo` SET `SessionID`=@@SessionID@@, `ModificationDate`=NOW(),`ModificationUser`=@@ModifyUser@@ 
+WHERE`ID`=@@MemberID@@
       ]]>
 			</SqlCommand>
 		</SqlDefinition>

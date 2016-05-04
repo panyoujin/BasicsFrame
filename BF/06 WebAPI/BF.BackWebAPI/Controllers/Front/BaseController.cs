@@ -1,6 +1,8 @@
 ﻿using BF.BackWebAPI.Models.Front;
+using BF.Common.DataAccess;
 using BF.Common.Helper;
 using System;
+using System.Collections.Generic;
 using System.Web;
 using System.Web.Http;
 
@@ -15,12 +17,13 @@ namespace BF.BackWebAPI.Controllers
                 var user = RequestInfo.UserInfo<MemberInfo>();
                 if (user == null || user.ID <= 0)
                 {
-                    //Dictionary<string, object> dic = new Dictionary<string, object>();
-                    //dic.Add("SessionID", RequestInfo.SessionID);
-                    ////从数据看获取
-                    //user = DBBaseFactory.DALBase.QueryForObject<UserModel>("BackWeb_GetLoginUser", dic);
-                    //HttpContext.Current.Cache.Remove(RequestInfo.SessionID);
-                    //HttpContext.Current.Cache.Insert(RequestInfo.SessionID, user);
+                    Dictionary<string, object> dic = new Dictionary<string, object>();
+
+                    dic.Add("SessionID", RequestInfo.SessionID);
+                    //从数据看获取
+                    user = DBBaseFactory.DALBase.QueryForObject<MemberInfo>("FrontApi_GetMemberInfoByAccount", dic);
+                    HttpContext.Current.Cache.Remove(RequestInfo.SessionID);
+                    HttpContext.Current.Cache.Insert(RequestInfo.SessionID, user);
                 }
                 return user;
             }
@@ -49,19 +52,19 @@ namespace BF.BackWebAPI.Controllers
             var sessionID = Guid.NewGuid().ToString();
             HttpContext.Current.Cache.Remove(sessionID);
             HttpContext.Current.Cache.Insert(sessionID, user);
-            //Dictionary<string, object> dic = new Dictionary<string, object>();
-            //dic.Add("ID", user.ID);
-            //dic.Add("SessionID", sessionID);
-            //从数据看获取
-            //try
-            //{
-            //    //更新数据库登录标识字段，这样一个帐号只能在一台机器常登录
-            //    DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_UpdateLoginUserSessionID", dic);
-            //}
-            //catch
-            //{
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("MemberID", user.ID);
+            dic.Add("SessionID", sessionID);
+            dic.Add("ModifyUser", user.Account);
+            try
+            {
+                //更新数据库登录标识字段，这样一个帐号只能在一台机器常登录
+                DBBaseFactory.DALBase.ExecuteNonQuery("FrontApi_UpdateSessionID", dic);
+            }
+            catch
+            {
 
-            //}
+            }
             HttpCookie cook = new HttpCookie("CACHED_SESSION_ID", sessionID);
             HttpContext.Current.Response.AppendCookie(cook);
             #endregion
