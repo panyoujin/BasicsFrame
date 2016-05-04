@@ -89,5 +89,16 @@ namespace BF.BackWebAPI.Controllers
         {
             return (page > 1 ? (page - 1) * pageSize : 0);
         }
+
+        /// <summary>
+        /// 附件地址
+        /// </summary>
+        protected string AttmntUrl
+        {
+            get
+            {
+                return Global.AttmntServer.ServerDomain;
+            }
+        }
     }
 }

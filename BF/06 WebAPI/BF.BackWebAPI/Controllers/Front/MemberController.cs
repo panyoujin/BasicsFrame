@@ -2,10 +2,12 @@
 using BF.BackWebAPI.Models.Front.Request;
 using BF.Common.CommonEntities;
 using BF.Common.DataAccess;
+using BF.Common.FileProcess;
 using BF.Common.Helper;
 using BF.Common.StaticConstant;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace BF.BackWebAPI.Controllers
@@ -152,6 +154,32 @@ namespace BF.BackWebAPI.Controllers
             ApiResult<bool> apiResult = new ApiResult<bool>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             Delete_Cache();
             apiResult.data = true;
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+        /// <summary>
+        /// 上传头像
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public HttpResponseMessage ChangeMemberIcon()
+        {
+            ApiResult<string> apiResult = new ApiResult<string> { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            //try
+            //{
+            Dictionary<string, object> paramInsert = new Dictionary<string, object>();
+            paramInsert = FileProcessHelp.Save(HttpContext.Current.Request.Files[0], Global.AttmntServer);
+            paramInsert.Add("MemberID", MemberInfo.ID + "");
+
+            DBBaseFactory.DALBase.ExecuteNonQuery("FrontApi_UpdateHeadImage", paramInsert);
+
+            apiResult.data = this.AttmntUrl + paramInsert["AttachmentUrl"];
+            //}
+            //catch (Exception ex)
+            //{
+            //    apiResult.code = ResultCode.CODE_EXCEPTION;
+            //    apiResult.msg = ResultCode.OPERATION_SYS_SO_BUSY;
+            //    LogHelper.AnsyncLog(new ParaLog { text = ex.Message, ip = "", messageType = (int)OperatorLogType.Error, source = (int)APISourcesType, moduleType = (int)ModTypes.InterfaceRequest, logType = (int)LogType.DbLog });
+            //}
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
     }

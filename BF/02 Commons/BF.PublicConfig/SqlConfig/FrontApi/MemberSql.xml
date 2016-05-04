@@ -56,4 +56,26 @@ WHERE`ID`=@@MemberID@@
 			</SqlCommand>
 		</SqlDefinition>
 	</Data>
+	
+	<Data name="FrontApi_GetAttmntServer">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+SELECT `ID`,`ServerName`,`ServerIP`,`ServerDomain`,`RelativePath`,`RemoteFolder`,`ServerAccount`,`ServerPassword`
+FROM `TB_MB_AttmntServer` WHERE `Status`=TRUE;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	
+	<Data name="FrontApi_UpdateHeadImage">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+UPDATE TB_MB_MemberInfo SET `ImageUrl`=@@ImageUrl@@
+ WHERE `ID`=@@MemberID@@;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
 </HCIP.AjaxDataSetting>

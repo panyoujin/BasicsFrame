@@ -240,6 +240,10 @@
       <Project>{2e62b7aa-4b14-4af6-b362-82ae7824a2dc}</Project>
       <Name>BF.PublicConfig</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\03Models\BF.Model\BF.Model.csproj">
+      <Project>{7302dd0f-3274-4307-b075-7251accfb7e6}</Project>
+      <Name>BF.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="log4net.config" />

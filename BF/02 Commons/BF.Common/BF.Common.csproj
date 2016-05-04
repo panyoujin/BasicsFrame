@@ -88,6 +88,7 @@
     <Compile Include="Extensions\EnumExtension.cs" />
     <Compile Include="Extensions\JsonExtends.cs" />
     <Compile Include="Extensions\ObjectContextExtension.cs" />
+    <Compile Include="FileProcess\FileProcessHelp.cs" />
     <Compile Include="Helper\ConfigHelper.cs" />
     <Compile Include="Helper\JsonHelper.cs" />
     <Compile Include="Helper\LogHelper.cs" />
@@ -108,7 +109,12 @@
     <Compile Include="Tools\Upload.cs" />
     <Compile Include="Utilities\XmlUtility.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\03Models\BF.Model\BF.Model.csproj">
+      <Project>{7302dd0f-3274-4307-b075-7251accfb7e6}</Project>
+      <Name>BF.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
