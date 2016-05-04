@@ -1,4 +1,7 @@
-﻿using BF.Common.Helper;
+﻿using BF.BackWebAPI.Models.Front;
+using BF.Common.DataAccess;
+using BF.Common.Helper;
+using BF.Common.Models;
 using BF.Common.SQLAnalytical;
 using System;
 using System.Web;
@@ -19,6 +22,8 @@ namespace BF.BackWebAPI
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             CacheSqlConfig.Instance.SqlConfigPath = Server.MapPath("/bin/SqlConfig");
+
+            Global.InitSettings();//加载附件服务器地址
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
@@ -58,5 +63,18 @@ namespace BF.BackWebAPI
             //HttpContext.Current.User = principal;
         }
         
+    }
+
+    public class Global
+    {
+        public static AttmntServer AttmntServer
+        {
+            get;
+            set;
+        }
+        internal static void InitSettings()
+        {
+            AttmntServer = DBBaseFactory.DALBase.QueryForObject<AttmntServer>("FrontApi_GetAttmntServer", null);
+        }
     }
 }
