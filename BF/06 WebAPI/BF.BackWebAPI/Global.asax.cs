@@ -1,8 +1,8 @@
 ﻿using BF.BackWebAPI.Models.Front;
 using BF.Common.DataAccess;
 using BF.Common.Helper;
+using BF.Common.Models;
 using BF.Common.SQLAnalytical;
-using BF.Model;
 using System;
 using System.Web;
 using System.Web.Http;
