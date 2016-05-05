@@ -5,6 +5,7 @@ using BF.Common.DataAccess;
 using BF.Common.FileProcess;
 using BF.Common.Helper;
 using BF.Common.StaticConstant;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Web;
@@ -27,7 +28,7 @@ namespace BF.BackWebAPI.Controllers
             if (string.IsNullOrWhiteSpace(account) || string.IsNullOrWhiteSpace(passwd))
             {
                 apiResult.code = ResultCode.CODE_BUSINESS_ERROR;
-                apiResult.msg = "帐号或密码不能为空！";
+                apiResult.msg = "手机或密码不能为空！";
                 return JsonHelper.SerializeObjectToWebApi(apiResult);
             }
             Dictionary<string, object> dic = new Dictionary<string, object>();
@@ -36,17 +37,17 @@ namespace BF.BackWebAPI.Controllers
             if (user == null || user.ID <= 0)
             {
                 apiResult.code = ResultCode.CODE_BUSINESS_ERROR;
-                apiResult.msg = "帐号不存在！";
+                apiResult.msg = "手机不存在！";
                 return JsonHelper.SerializeObjectToWebApi(apiResult);
             }
             if (user.Passwd != passwd)
             {
                 apiResult.code = ResultCode.CODE_BUSINESS_ERROR;
-                apiResult.msg = "帐号或密码错误！";
+                apiResult.msg = "手机或密码错误！";
                 return JsonHelper.SerializeObjectToWebApi(apiResult);
             }
             var sessionID = Login_Cache(user);
-            apiResult.data = new { Account = user.Account, Name = user.Name, ImageUrl = user.ImageUrl, SessionID = sessionID };
+            apiResult.data = new { Account = user.Account, Name = user.Name, ImageUrl = this.AttmntUrl + user.ImageUrl, SessionID = sessionID };
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
         /// <summary>
@@ -61,17 +62,20 @@ namespace BF.BackWebAPI.Controllers
             if (string.IsNullOrWhiteSpace(param.Account) || string.IsNullOrWhiteSpace(param.Passwd))
             {
                 apiResult.code = ResultCode.CODE_BUSINESS_ERROR;
-                apiResult.msg = "帐号或密码不能为空！";
+                apiResult.msg = "手机或密码不能为空！";
                 return JsonHelper.SerializeObjectToWebApi(apiResult);
             }
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("Account", param.Account);
             dic.Add("Passwd", param.Passwd);
+            dic.Add("Name", param.Name);
+            dic.Add("Email", param.Email);
+            dic.Add("ImageUrl", param.ImageUrl);
             var user = DBBaseFactory.DALBase.QueryForObject<MemberInfo>("FrontApi_GetMemberInfoByAccount", dic);
             if (user != null)
             {
                 apiResult.code = ResultCode.CODE_BUSINESS_ERROR;
-                apiResult.msg = "帐号已存在！";
+                apiResult.msg = "手机已存在！";
                 return JsonHelper.SerializeObjectToWebApi(apiResult);
             }
             int result = DBBaseFactory.DALBase.ExecuteNonQuery("FrontApi_InsertMemberInfo", dic);
@@ -112,7 +116,7 @@ namespace BF.BackWebAPI.Controllers
             {
                 MemberInfo user = new MemberInfo() { Account = param.Account, ID = MemberInfo.ID, Passwd = param.Passwd, Phone = param.Phone, Name = param.Name, Email = param.Email, QQ = param.QQ, ImageUrl = param.ImageUrl };
                 Update_Cache(user);
-                apiResult.data = new { Account = user.Account, ImageUrl = user.ImageUrl };
+                apiResult.data = new { Account = user.Account, ImageUrl = this.AttmntUrl + user.ImageUrl };
             }
             else
             {
@@ -163,23 +167,23 @@ namespace BF.BackWebAPI.Controllers
         [HttpPost]
         public HttpResponseMessage ChangeMemberIcon()
         {
-            ApiResult<string> apiResult = new ApiResult<string> { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
-            //try
-            //{
+            ApiResult<object> apiResult = new ApiResult<object> { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+
             Dictionary<string, object> paramInsert = new Dictionary<string, object>();
             paramInsert = FileProcessHelp.Save(HttpContext.Current.Request.Files[0], Global.AttmntServer);
-            //paramInsert.Add("MemberID", MemberInfo.ID + "");
+            try
+            {
+                paramInsert.Add("MemberID", MemberInfo.ID + "");
 
-            //DBBaseFactory.DALBase.ExecuteNonQuery("FrontApi_UpdateHeadImage", paramInsert);
+                DBBaseFactory.DALBase.ExecuteNonQuery("FrontApi_UpdateHeadImage", paramInsert);
+            }
+            catch (Exception ex)
+            {
 
-            apiResult.data = this.AttmntUrl + paramInsert["AttachmentUrl"];
-            //}
-            //catch (Exception ex)
-            //{
-            //    apiResult.code = ResultCode.CODE_EXCEPTION;
-            //    apiResult.msg = ResultCode.OPERATION_SYS_SO_BUSY;
-            //    LogHelper.AnsyncLog(new ParaLog { text = ex.Message, ip = "", messageType = (int)OperatorLogType.Error, source = (int)APISourcesType, moduleType = (int)ModTypes.InterfaceRequest, logType = (int)LogType.DbLog });
-            //}
+            }
+
+            apiResult.data = new { FullUrl = this.AttmntUrl + paramInsert["AttachmentUrl"], ImageUrl = paramInsert["AttachmentUrl"] };
+
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
     }

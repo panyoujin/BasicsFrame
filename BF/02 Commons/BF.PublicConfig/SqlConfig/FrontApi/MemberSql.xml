@@ -18,7 +18,8 @@ WHERE `Status`=TRUE
 		<SqlDefinition type="sql">
 			<SqlCommand>
 				<![CDATA[
-INSERT INTO  `TB_MB_MemberInfo`(`Account`,`Passwd`,`Status`,`IsAuto`,`CreationDate`,`CreationUser`) VALUES(@@Account@@,@@Passwd@@,TRUE,FALSE,NOW(),@@Account@@);
+INSERT INTO  `TB_MB_MemberInfo`(`Account`,`Passwd`,`Status`,`IsAuto`,`CreationDate`,`CreationUser`,`Name`,`Email`,`ImageUrl`) 
+VALUES(@@Account@@,@@Passwd@@,TRUE,FALSE,NOW(),@@Account@@,@@Name@@,@@Email@@,@@ImageUrl@@);
       ]]>
 			</SqlCommand>
 		</SqlDefinition>
