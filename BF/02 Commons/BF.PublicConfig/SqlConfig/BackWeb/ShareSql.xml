@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HCIP.AjaxDataSetting>
+
+  <!--获取分享-->
+  <Data name="BackWeb_GetShareListByID">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT s.`ID`,s.`User_ID`,s.`Source_ID`,s.`Source_Type`,s.ShareUrl,s.`ShareTitle`,s.`ShareContent`
+        ,s.`PraiseCount`,s.`CommentCount`,IFNULL(m.`Name`,m.`Account`) AS User_Name
+        FROM `TB_MB_Share` AS s
+        JOIN `TB_MB_MemberInfo` AS m ON s.`User_ID`=m.`ID`
+        WHERE s.`Status`=TRUE AND m.`Status`=TRUE <%= AND s.`ID`> @@MaxID@@%> <%= AND s.`ID`< @@MinID@@0%>
+        ORDER BY s.CreationDate DESC
+        <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  <!--添加分享-->
+  <Data name="BackWeb_AddShare">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        INSERT INTO `TB_MB_Share` (`User_ID`,`Source_ID`,`Source_Type`,`ShareTitle`,`ShareContent`,`ShareUrl`,`CreationUser`,`CreationDate`) 
+        VALUES(@@User_ID@@,@@Source_ID@@,@@Source_Type@@,@@ShareTitle@@,@@ShareContent@@,@@ShareUrl@@,@@UserAccount@@,NOW()) ;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  <!--删除分享-->
+  <Data name="BackWeb_DeleteShare">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        UPDATE TB_MC_Collection SET `Status`=FALSE,`ModificationUser`=@@UserAccount@@,`ModificationDate`=NOW() 
+        WHERE User_ID=@@User_ID@@ AND Source_ID = @@Source_ID@@ AND Source_Type=@@Source_Type@@;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+
+</HCIP.AjaxDataSetting>
