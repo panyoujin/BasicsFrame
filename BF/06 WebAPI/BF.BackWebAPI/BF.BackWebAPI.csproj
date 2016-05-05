@@ -181,7 +181,7 @@
     <Compile Include="Controllers\Back\BackBaseController.cs" />
     <Compile Include="Controllers\Back\CollectionController.cs" />
     <Compile Include="Controllers\Back\HealthModelController.cs" />
-    <Compile Include="Controllers\Front\BaseController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\Front\MemberController.cs" />
     <Compile Include="Controllers\Front\MySettingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

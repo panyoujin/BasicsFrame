@@ -13,7 +13,7 @@ using System.Web.Http;
 
 namespace BF.BackWebAPI.Controllers.Back
 {
-    public class CollectionController : BackBaseController
+    public class CollectionController : BaseController
     {
         /// <summary>
         /// 添加收藏
@@ -28,8 +28,8 @@ namespace BF.BackWebAPI.Controllers.Back
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("Source_ID", model.source_ID);
             dic.Add("Source_Type", model.source_Type);
-            dic.Add("UserAccount", UserInfo.Account ?? UserInfo.ID + "");
-            dic.Add("User_ID", UserInfo.ID);
+            dic.Add("UserAccount", this.MemberInfo.Account ?? this.MemberInfo.ID + "");
+            dic.Add("User_ID", this.MemberInfo.ID);
             DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_AddCollection", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
@@ -47,8 +47,8 @@ namespace BF.BackWebAPI.Controllers.Back
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("Source_ID", model.source_ID);
             dic.Add("Source_Type", model.source_Type);
-            dic.Add("UserAccount", UserInfo.Account ?? UserInfo.ID + "");
-            dic.Add("User_ID", UserInfo.ID);
+            dic.Add("UserAccount", this.MemberInfo.Account ?? this.MemberInfo.ID + "");
+            dic.Add("User_ID", this.MemberInfo.ID);
             DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_CancelCollection", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
@@ -78,7 +78,7 @@ namespace BF.BackWebAPI.Controllers.Back
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("StartSize", startSize);
             dic.Add("PageSize", pageSize);
-            dic.Add("User_ID", UserInfo.ID);
+            dic.Add("User_ID", this.MemberInfo.ID);
             if (type>0)
             {
                 dic.Add("Source_Tye", type);

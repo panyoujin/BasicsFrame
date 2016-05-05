@@ -5,7 +5,7 @@
 		<SqlDefinition type="sql">
 			<SqlCommand>
 				<![CDATA[
-SELECT `ID`,`Account`,`Passwd`,`Name`,`Age`,`Birthday`,`Sex`,`Email`,`Phone`,`Remark`,`QQ`,`ImageUrl` FROM `TB_MB_MemberInfo`
+SELECT `ID`,`Account`,`Passwd`,`Name`,`Age`,`Birthday`,`Sex`,`Email`,`Phone`,`Remark`,`QQ`,`ImageUrl`,IsAdmin FROM `TB_MB_MemberInfo`
 WHERE `Status`=TRUE
 <%= AND `Account`=@@Account@@ %>  
 <%= AND `SessionID`=@@SessionID@@ %>;
