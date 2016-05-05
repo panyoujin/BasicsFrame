@@ -10,9 +10,9 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace BF.BackWebAPI.Controllers.Back
+namespace BF.BackWebAPI.Controllers
 {
-    public class HealthModelController : BackBaseController
+    public class HealthModelController : BaseController
     {
 
         /// <summary>
@@ -56,9 +56,9 @@ namespace BF.BackWebAPI.Controllers.Back
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("ModelID", modelID);
-            if (!UserInfo.IsAdmin)
+            if (!this.MemberInfo.IsAdmin)
             {
-                dic.Add("User_ID", UserInfo.ID);
+                dic.Add("User_ID", this.MemberInfo.ID);
             }
             apiResult.data = DBBaseFactory.DALBase.QueryForDataTable("BackWeb_GetHealthModelInfoByModelID", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
@@ -119,7 +119,7 @@ namespace BF.BackWebAPI.Controllers.Back
             }
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("Model_Name", healthModel.model_Name);
-            dic.Add("User_ID", UserInfo.ID);
+            dic.Add("User_ID", this.MemberInfo.ID);
             dic.Add("IcoUrl", string.IsNullOrWhiteSpace(healthModel.icoUrl) ? "" : healthModel.icoUrl);
             dic.Add("ImageUrl", string.IsNullOrWhiteSpace(healthModel.imageUrl) ? "" : healthModel.imageUrl);
             dic.Add("Introduce", healthModel.introduce);
@@ -137,9 +137,9 @@ namespace BF.BackWebAPI.Controllers.Back
             dic.Add("Removal_Chlorine_Time", healthModel.removal_Chlorine_Time);
             dic.Add("Final_Temperature", healthModel.final_Temperature);
             dic.Add("IsFerv", healthModel.isFerv);
-            dic.Add("Model_Type", UserInfo.IsAdmin ? (int)Model_Type.System : (int)Model_Type.Custom);
-            dic.Add("Model_Status", UserInfo.IsAdmin ? (int)Model_Status.Public : (int)Model_Status.Private);
-            dic.Add("CreationUser", UserInfo.Account ?? UserInfo.ID + "");
+            dic.Add("Model_Type", this.MemberInfo.IsAdmin ? (int)Model_Type.System : (int)Model_Type.Custom);
+            dic.Add("Model_Status", this.MemberInfo.IsAdmin ? (int)Model_Status.Public : (int)Model_Status.Private);
+            dic.Add("CreationUser", this.MemberInfo.Account ?? this.MemberInfo.ID + "");
             apiResult.data = DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_AddHealthModel", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
@@ -158,8 +158,8 @@ namespace BF.BackWebAPI.Controllers.Back
             }
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("ModelID", model.modelID);
-            dic.Add("UserAccount", UserInfo.Account ?? UserInfo.ID + "");
-            dic.Add("User_ID", UserInfo.ID);
+            dic.Add("UserAccount", this.MemberInfo.Account ?? this.MemberInfo.ID + "");
+            dic.Add("User_ID", this.MemberInfo.ID);
             DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_SetCommonModel", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
@@ -179,8 +179,8 @@ namespace BF.BackWebAPI.Controllers.Back
             }
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("ModelID", model.modelID);
-            dic.Add("UserAccount", UserInfo.Account ?? UserInfo.ID + "");
-            dic.Add("User_ID", UserInfo.ID);
+            dic.Add("UserAccount", this.MemberInfo.Account ?? this.MemberInfo.ID + "");
+            dic.Add("User_ID", this.MemberInfo.ID);
             DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_CancelCommonModel", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
@@ -194,7 +194,7 @@ namespace BF.BackWebAPI.Controllers.Back
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             Dictionary<string, object> dic = new Dictionary<string, object>();
-            dic.Add("User_ID", UserInfo.ID);
+            dic.Add("User_ID", this.MemberInfo.ID);
             apiResult.data = DBBaseFactory.DALBase.QueryForDataTable("BackWeb_GetCommonHealthModelList", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }

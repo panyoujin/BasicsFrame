@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace BF.BackWebAPI.Controllers.Back
+namespace BF.BackWebAPI.Controllers
 {
-    public class AccountController : BackBaseController
+    public class AccountController : BaseController
     {
         [HttpPost]
         public HttpResponseMessage Login([FromBody]Login login)
@@ -47,7 +47,7 @@ namespace BF.BackWebAPI.Controllers.Back
         public HttpResponseMessage GetUserInfo()
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
-            apiResult.data = UserInfo;
+            apiResult.data = this.MemberInfo;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
 
