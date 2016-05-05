@@ -168,9 +168,9 @@ namespace BF.BackWebAPI.Controllers
             //{
             Dictionary<string, object> paramInsert = new Dictionary<string, object>();
             paramInsert = FileProcessHelp.Save(HttpContext.Current.Request.Files[0], Global.AttmntServer);
-            paramInsert.Add("MemberID", MemberInfo.ID + "");
+            //paramInsert.Add("MemberID", MemberInfo.ID + "");
 
-            DBBaseFactory.DALBase.ExecuteNonQuery("FrontApi_UpdateHeadImage", paramInsert);
+            //DBBaseFactory.DALBase.ExecuteNonQuery("FrontApi_UpdateHeadImage", paramInsert);
 
             apiResult.data = this.AttmntUrl + paramInsert["AttachmentUrl"];
             //}
