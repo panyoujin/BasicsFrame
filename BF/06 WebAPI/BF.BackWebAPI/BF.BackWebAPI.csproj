@@ -177,13 +177,13 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Authorize\BFAuthorizeAttribute.cs" />
     <Compile Include="Authorize\ExceptionAttribute.cs" />
-    <Compile Include="Controllers\Back\AccountController.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Back\BackBaseController.cs" />
-    <Compile Include="Controllers\Back\CollectionController.cs" />
-    <Compile Include="Controllers\Back\HealthModelController.cs" />
+    <Compile Include="Controllers\CollectionController.cs" />
+    <Compile Include="Controllers\HealthModelController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\Front\MemberController.cs" />
-    <Compile Include="Controllers\Front\MySettingController.cs" />
+    <Compile Include="Controllers\MemberController.cs" />
+    <Compile Include="Controllers\MySettingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -223,6 +223,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Controllers\Front\" />
     <Folder Include="Views\Account\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Collection\" />
