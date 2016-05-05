@@ -24,8 +24,11 @@ namespace BF.BackWebAPI.Controllers
                     dic.Add("SessionID", RequestInfo.SessionID);
                     //从数据看获取
                     user = DBBaseFactory.DALBase.QueryForObject<MemberInfo>("FrontApi_GetMemberInfoByAccount", dic);
-                    HttpContext.Current.Cache.Remove(RequestInfo.SessionID);
-                    HttpContext.Current.Cache.Insert(RequestInfo.SessionID, user);
+                    if (user != null)
+                    {
+                        HttpContext.Current.Cache.Remove(RequestInfo.SessionID);
+                        HttpContext.Current.Cache.Insert(RequestInfo.SessionID, user);
+                    }
                 }
                 if (user == null || user.ID <= 0)
                 {
