@@ -66,7 +66,7 @@ namespace BF.BackWebAPI.Controllers
             apiResult.data = new { ShareList = spList, MaxID = maxID, MinID = minID };
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
-        [HttpGet]
+        [HttpPost]
         public HttpResponseMessage AddShare([FromBody]AddShareRequest share)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };

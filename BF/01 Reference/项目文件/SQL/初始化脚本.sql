@@ -232,6 +232,7 @@ CREATE TABLE `TB_MB_Share` (
   `Source_Type` int(2) NOT NULL DEFAULT '0' COMMENT '0:自定义; 1:养生品; 2:养生堂',
   `ShareTitle` varchar(256) DEFAULT NULL COMMENT '标题',
   `ShareContent` text COMMENT '内容',
+  `ShareUrl` varchar(256) DEFAULT NULL COMMENT '分享的URL',
   `PraiseCount` int(11) DEFAULT NULL COMMENT '赞数量',
   `CommentCount` int(11) DEFAULT NULL COMMENT '评论数量',
   `Status` bit(1) NOT NULL DEFAULT b'1',
