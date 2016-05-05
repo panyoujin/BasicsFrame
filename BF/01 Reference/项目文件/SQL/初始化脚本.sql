@@ -221,4 +221,59 @@ CREATE TABLE `TB_MB_AttmntServer` (
   `ModificationUser` VARCHAR(50) DEFAULT NULL COMMENT '修改人账号',
   `ModificationDate` DATETIME DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`ID`)
-) ENGINE=MYISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='附件服务器配置表';
+) ENGINE=MYISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='附件服务器配置表';
+
+DROP TABLE IF EXISTS `TB_MB_Share`;
+
+CREATE TABLE `TB_MB_Share` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `User_ID` int(11) NOT NULL,
+  `Source_ID` int(11) NOT NULL DEFAULT '0',
+  `Source_Type` int(2) NOT NULL DEFAULT '0' COMMENT '0:自定义; 1:养生品; 2:养生堂',
+  `ShareTitle` varchar(256) DEFAULT NULL COMMENT '标题',
+  `ShareContent` text COMMENT '内容',
+  `PraiseCount` int(11) DEFAULT NULL COMMENT '赞数量',
+  `CommentCount` int(11) DEFAULT NULL COMMENT '评论数量',
+  `Status` bit(1) NOT NULL DEFAULT b'1',
+  `CreationUser` varchar(50) DEFAULT NULL,
+  `CreationDate` datetime DEFAULT NULL,
+  `ModificationUser` varchar(50) DEFAULT NULL,
+  `ModificationDate` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='分享表';
+
+DROP TABLE IF EXISTS `TB_MB_Comment`;
+
+CREATE TABLE `TB_MB_Comment` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Comment_User_ID` int(11) NOT NULL COMMENT '评论人ID',
+  `Comment_Content` varchar(1000) DEFAULT NULL COMMENT '评论内容',
+  `Accept_Comment_User_ID` int(11) NOT NULL COMMENT '被评论人ID',
+  `Source_ID` int(11) DEFAULT NULL COMMENT '评论源ID',
+  `Source_Type` int(2) DEFAULT '3' COMMENT '评论类型 1.模式;2.文章;3.分享',
+  `Comment_Type` int(2) NOT NULL DEFAULT '1' COMMENT '评论类型 1.图文 2:赞',
+  `Status` bit(1) DEFAULT b'1',
+  `CreationUser` varchar(50) DEFAULT NULL,
+  `CreationDate` datetime DEFAULT NULL,
+  `ModificationUser` varchar(50) DEFAULT NULL,
+  `ModificationDate` datetime DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='评论表';
+
+DROP TABLE IF EXISTS `TB_MB_ShareAttmnt`;
+
+CREATE TABLE `TB_MB_ShareAttmnt` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一标识',
+  `Source_ID` int(11) NOT NULL COMMENT '分享ID',
+  `Attmnt_Type` int(1) NOT NULL DEFAULT '0' COMMENT '0:分享; 1:分享-评论',
+  `FileName` varchar(30) DEFAULT NULL COMMENT '附件名',
+  `FileSize` float DEFAULT NULL COMMENT '附件大小',
+  `FileExtName` varchar(10) DEFAULT NULL COMMENT '附件扩展名',
+  `AttachmentUrl` varchar(200) DEFAULT NULL COMMENT '附件相对路径',
+  `Status` bit(1) DEFAULT b'1' COMMENT '逻辑删除',
+  `CreationUser` varchar(50) DEFAULT NULL COMMENT '创建人账号',
+  `CreationDate` datetime DEFAULT NULL COMMENT '创建时间',
+  `ModificaitonUser` varchar(50) DEFAULT NULL COMMENT '修改人账号',
+  `ModificationDate` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='分享附件'
