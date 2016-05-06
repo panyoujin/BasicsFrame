@@ -24,20 +24,34 @@
         <![CDATA[
         INSERT INTO `TB_MB_Share` (`User_ID`,`Source_ID`,`Source_Type`,`ShareTitle`,`ShareContent`,`ShareUrl`,`CreationUser`,`CreationDate`) 
         VALUES(@@User_ID@@,@@Source_ID@@,@@Source_Type@@,@@ShareTitle@@,@@ShareContent@@,@@ShareUrl@@,@@UserAccount@@,NOW()) ;
+        SELECT LAST_INSERT_ID() into @SID;
+        SELECT @SID;
       ]]>
       </SqlCommand>
     </SqlDefinition>
   </Data>
+  <!--添加分享附件-->
+  <Data name="BackWeb_AddShareAttmnt">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        INSERT INTO `TB_MB_ShareAttmnt` (`Source_ID`,`Attmnt_Type`,`FileName`,`FileSize`,`FileExtName`,`AttachmentUrl`,`CreationUser`,`CreationDate`) 
+        VALUES(@@Source_ID@@,@@Attmnt_Type@@,@@FileName@@,@@FileSize@@,@@FileExtName@@,@@AttachmentUrl@@,@@UserAccount@@,NOW()) ;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+
   <!--删除分享-->
   <Data name="BackWeb_DeleteShare">
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        UPDATE TB_MC_Collection SET `Status`=FALSE,`ModificationUser`=@@UserAccount@@,`ModificationDate`=NOW() 
-        WHERE User_ID=@@User_ID@@ AND Source_ID = @@Source_ID@@ AND Source_Type=@@Source_Type@@;
+        UPDATE `TB_MB_Share` SET `Status`=FALSE,`ModificationUser`=@@UserAccount@@,`ModificationDate`=NOW() WHERE `ID`=@@ID@@ AND `User_ID`=@@User_ID@@;
       ]]>
       </SqlCommand>
     </SqlDefinition>
   </Data>
+
 
 </HCIP.AjaxDataSetting>

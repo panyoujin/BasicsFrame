@@ -1,13 +1,16 @@
 ﻿using BF.BackWebAPI.Models.Request;
 using BF.BackWebAPI.Models.Response;
 using BF.Common.CommonEntities;
+using BF.Common.CustomException;
 using BF.Common.DataAccess;
+using BF.Common.Enums;
+using BF.Common.FileProcess;
 using BF.Common.Helper;
 using BF.Common.StaticConstant;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace BF.BackWebAPI.Controllers
@@ -15,7 +18,7 @@ namespace BF.BackWebAPI.Controllers
     public class ShareController : BaseController
     {
         /// <summary>
-        /// 
+        /// 获取动态
         /// </summary>
         /// <param name="maxID">已经获取的最大ID</param>
         /// <param name="minID">已经获取的最小ID</param>
@@ -66,6 +69,12 @@ namespace BF.BackWebAPI.Controllers
             apiResult.data = new { ShareList = spList, MaxID = maxID, MinID = minID };
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+
+        /// <summary>
+        /// 添加分享
+        /// </summary>
+        /// <param name="share"></param>
+        /// <returns></returns>
         [HttpPost]
         public HttpResponseMessage AddShare([FromBody]AddShareRequest share)
         {
@@ -78,8 +87,49 @@ namespace BF.BackWebAPI.Controllers
             dic.Add("ShareUrl", share.ShareUrl);
             dic.Add("User_ID", this.MemberInfo.ID);
             dic.Add("UserAccount", this.MemberInfo.Account ?? this.MemberInfo.ID + "");
-            DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_AddShare", dic);
+            var obj = DBBaseFactory.DALBase.ExecuteScalar("BackWeb_AddShare", dic);
+            int sID = 0;
+            if (!int.TryParse(obj.ToString(), out sID) || sID <= 0)
+            {
+                throw new BusinessException("分享失败，请重试！");
+            }
+            //如果失败需要回滚
+            for (int i = 0; i < HttpContext.Current.Request.Files.Count; i++)
+            {
+                Dictionary<string, object> paramInsert = new Dictionary<string, object>();
+                paramInsert = FileProcessHelp.Save(HttpContext.Current.Request.Files[i], Global.AttmntServer);
+                paramInsert.Add("Source_ID", sID);
+                paramInsert.Add("Attmnt_Type", (int)Share_Attmnt_Type.Share);
+                paramInsert.Add("UserAccount", this.MemberInfo.Account ?? this.MemberInfo.ID + "");
+                DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_AddShareAttmnt", paramInsert);
+            }
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+
+        /// <summary>
+        /// 删除分享
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public HttpResponseMessage DeleteShare()
+        {
+            var shareID = HttpContext.Current.Request.Form["shareID"];
+            if (string.IsNullOrWhiteSpace(shareID))
+            {
+                throw new BusinessException("请选择需要删除的分享信息！");
+            }
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("ID", shareID);
+            dic.Add("User_ID", this.MemberInfo.ID);
+            dic.Add("UserAccount", this.MemberInfo.Account ?? this.MemberInfo.ID + "");
+            var executeCount = DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_DeleteShare", dic);
+            if (executeCount <= 0)
+            {
+                throw new BusinessException("删除失败，请确认该分享是否已删除！");
+            }
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+
     }
 }

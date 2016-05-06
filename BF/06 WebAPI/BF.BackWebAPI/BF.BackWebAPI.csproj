@@ -185,6 +185,7 @@
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\MySettingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PraiseAndCommentController.cs" />
     <Compile Include="Controllers\ShareController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -202,6 +203,7 @@
     <Compile Include="Models\Front\Response\MyKettleRelResponse.cs" />
     <Compile Include="Models\Front\Response\MyShopResponse.cs" />
     <Compile Include="Models\Request\AddShareRequest.cs" />
+    <Compile Include="Models\Request\CommentAndPraise.cs" />
     <Compile Include="Models\Response\ShareResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

@@ -84,6 +84,7 @@
     <Compile Include="Encrypt\DESEncrypt.cs" />
     <Compile Include="Encrypt\HashSignature.cs" />
     <Compile Include="Encrypt\MD5Encrypt.cs" />
+    <Compile Include="Enums\Share_Enums.cs" />
     <Compile Include="Extensions\EntityObjectJsonExtensions.cs" />
     <Compile Include="Extensions\EnumExtension.cs" />
     <Compile Include="Extensions\JsonExtends.cs" />
