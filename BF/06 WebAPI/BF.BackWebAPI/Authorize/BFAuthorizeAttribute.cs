@@ -59,7 +59,7 @@ namespace BF.BackWebAPI.Authorize
                     Dictionary<string, object> dic = new Dictionary<string, object>();
                     dic.Add("SessionID", RequestInfo.SessionID);
                     //从数据看获取
-                    user = DBBaseFactory.DALBase.QueryForObject<MemberInfo>("BackWeb_GetLoginUser", dic);
+                    user = DBBaseFactory.DALBase.QueryForObject<MemberInfo>("FrontApi_GetMemberInfoByAccount", dic);
                     if (user != null)
                     {
                         user.IsAdmin = true;
