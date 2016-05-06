@@ -6,17 +6,38 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        SELECT s.`ID`,s.`User_ID`,s.`Source_ID`,s.`Source_Type`,s.ShareUrl,s.`ShareTitle`,s.`ShareContent`
+        SELECT s.`ID` AS ShareID,s.`User_ID`,s.`Source_ID`,s.`Source_Type`,s.ShareUrl,s.`ShareTitle`,s.`ShareContent`
         ,s.`PraiseCount`,s.`CommentCount`,IFNULL(m.`Name`,m.`Account`) AS User_Name
+        <%= ,(SELECT COUNT(0) FROM `TB_MB_Comment` c  WHERE c.`Source_ID`=s.ID AND c.`Source_Type`=1 AND c.`Comment_Type`=2 AND c.`Status`=TRUE AND c.`Comment_User_ID`=@@User_ID@@) AS MyPraiseCount  %>
         FROM `TB_MB_Share` AS s
         JOIN `TB_MB_MemberInfo` AS m ON s.`User_ID`=m.`ID`
-        WHERE s.`Status`=TRUE AND m.`Status`=TRUE <%= AND s.`ID`> @@MaxID@@%> <%= AND s.`ID`< @@MinID@@0%>
+        WHERE s.`Status`=TRUE AND m.`Status`=TRUE <%= AND s.`ID`> @@MaxID@@%> <%= AND s.`ID`< @@MinID@@%>
         ORDER BY s.CreationDate DESC
         <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
       ]]>
       </SqlCommand>
     </SqlDefinition>
   </Data>
+
+  <!--获取分享详情 评论详情，图片列表，当前用户是否赞-->
+  <Data name="BackWeb_GetShareInfoByID">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT c.ID as CommentID,c.`Comment_Content`,c.`Comment_User_ID`,c.`Accept_Comment_User_ID`,c.`CreationDate`,c.`Source_Type`,c.`Source_ID`,IFNULL(m.`Name`,m.`Account`) AS User_Name 
+        FROM `TB_MB_Comment` c 
+        JOIN `TB_MB_MemberInfo` AS m ON c.`Comment_User_ID` = m.`ID`
+        WHERE c.`Source_ID`=@@Source_ID@@ AND c.`Source_Type`=1 AND c.`Comment_Type`=1 AND c.`Status`=TRUE AND m.`Status`=TRUE;
+        
+        SELECT sa.ID AS AttachID,sa.`Source_ID`,sa.`Attmnt_Type`,sa.`FileName`,sa.`AttachmentUrl` FROM `TB_MB_ShareAttmnt` AS sa WHERE sa.Attmnt_Type=1 AND sa.`Source_ID`=@@Source_ID@@;
+        
+        <%= SELECT COUNT(0) AS MyPraiseCount FROM `TB_MB_Comment` c  WHERE c.`Source_ID`=@@Source_ID@@ AND c.`Source_Type`=1 AND c.`Comment_Type`=2 AND c.`Status`=TRUE AND c.`Comment_User_ID`=@@User_ID@@;%>
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  
+  
   <!--添加分享-->
   <Data name="BackWeb_AddShare">
     <SqlDefinition type="sql">

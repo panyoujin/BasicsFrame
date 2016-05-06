@@ -11,7 +11,7 @@ namespace BF.BackWebAPI.Models.Response
         /// <summary>
         /// 分享ID
         /// </summary>
-        public int ID { get; set; }
+        public int ShareID { get; set; }
 
         /// <summary>
         /// 用户ID
@@ -57,5 +57,7 @@ namespace BF.BackWebAPI.Models.Response
         /// 用户名称
         /// </summary>
         public string User_Name { get; set; }
+
+        public int MyPraiseCount { get; set; }
     }
 }
