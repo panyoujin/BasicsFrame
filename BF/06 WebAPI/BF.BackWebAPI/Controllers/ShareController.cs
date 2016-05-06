@@ -30,7 +30,7 @@ namespace BF.BackWebAPI.Controllers
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetShareListByID(int maxID, int minID, string request_type = "next", int pageSize = CommonConstant.PAGE_SIZE)
+        public HttpResponseMessage GetShareListByID(int maxID=0, int minID=0, string request_type = "next", int pageSize = CommonConstant.PAGE_SIZE)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
 

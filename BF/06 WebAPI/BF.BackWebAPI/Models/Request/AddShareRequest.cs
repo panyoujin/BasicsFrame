@@ -1,17 +1,27 @@
 ﻿using BF.Common.Enums;
+using System.Web;
 
 namespace BF.BackWebAPI.Models.Request
 {
     public class AddShareRequest
     {
-
-
+        public AddShareRequest()
+        {
+            int temp = 0;
+            int.TryParse(HttpContext.Current.Request.Form["Source_ID"], out temp);
+            this.Source_ID = temp;
+            if(int.TryParse(HttpContext.Current.Request.Form["Source_Type"], out temp))
+            {
+                Source_Type= (int)Share_Source_Type.Custom;
+            }
+            this.Source_Type = temp;
+        }
         /// <summary>
         /// 源ID
         /// </summary>
         public int Source_ID { get; set; }
-
         private int _source_Type = -1;
+
         /// <summary>
         /// 源类型0:自定义; 1:养生品; 2:养生堂
         /// </summary>
@@ -64,10 +74,10 @@ namespace BF.BackWebAPI.Models.Request
             }
             set { _source_Type = value; }
         }
-        
+
         public int Accept_Comment_User_ID { get; set; }
     }
 
 
-    
+
 }
