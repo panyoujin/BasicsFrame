@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HCIP.AjaxDataSetting>
+
+  <!--赞或评论，防止存在多条数据-->
+  <Data name="BackWeb_PraiseAndComment">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        UPDATE `TB_MB_Comment` SET `Status`=TRUE,`ModificationUser`=@@UserAccount@@,`ModificationDate`=NOW() 
+        WHERE `Comment_User_ID`=@@Comment_User_ID@@ AND`Source_ID`=@@Source_ID@@ AND `Source_Type`=@@Source_Type@@ AND `Comment_Type`=@@Comment_Type@@ AND Accept_Comment_User_ID=@@Accept_Comment_User_ID@@;
+        INSERT INTO `TB_MB_Comment` (`Comment_User_ID`,`Comment_Content`,`Accept_Comment_User_ID`,`Source_ID`,`Source_Type`,`Comment_Type`,`CreationUser`,`CreationDate`) 
+        SELECT @@Comment_User_ID@@, @@Comment_Content@@, @@Accept_Comment_User_ID@@, @@Source_ID@@, @@Source_Type@@, @@Comment_Type@@, @@UserAccount@@,  NOW()
+        FROM `TB_MB_MemberInfo` WHERE NOT EXISTS (SELECT ID FROM TB_MB_Comment WHERE `Comment_User_ID`=@@Comment_User_ID@@ 
+        AND`Source_ID`=@@Source_ID@@ AND `Source_Type`=@@Source_Type@@ AND `Comment_Type`=@@Comment_Type@@ AND Accept_Comment_User_ID=@@Accept_Comment_User_ID@@)  LIMIT 0,1; 
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+
+
+  <!--取消赞和删除评论-->
+  <Data name="BackWeb_CancelPraiseAndDeleteComment">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        UPDATE `TB_MB_Comment` SET `Status`=FALSE,`ModificationUser`=@@UserAccount@@,`ModificationDate`=NOW() 
+        WHERE `Comment_User_ID`=@@Comment_User_ID@@ AND`Source_ID`=@@Source_ID@@ AND `Source_Type`=@@Source_Type@@ AND `Comment_Type`=@@Comment_Type@@ AND Accept_Comment_User_ID=@@Accept_Comment_User_ID@@;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  
+  <!--修改分享和评论数量-->
+  <Data name="BackWeb_UpdateSharePraiseCountAndCommentCount">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        UPDATE `TB_MB_Share` SET `ModificationUser`=@@UserAccount@@ <%= ,`PraiseCount`=PraiseCount+@@PraiseCount@@ %> <%= ,`CommentCount`=CommentCount+@@CommentCount@@ %>,`ModificationDate`=NOW() WHERE `ID`=@@ID@@ AND `User_ID`=@@User_ID@@;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+</HCIP.AjaxDataSetting>
