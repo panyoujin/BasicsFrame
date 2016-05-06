@@ -23,20 +23,20 @@ namespace BF.BackWebAPI.Controllers
         /// <param name="maxID">已经获取的最大ID</param>
         /// <param name="minID">已经获取的最小ID</param>
         /// <param name="request_type">获取类型：
-        /// new：获取当前没获取过的新动态
-        ///  next：获取当前获取后的下一页
+        /// 1：获取当前没获取过的新动态
+        ///  0：获取当前获取后的下一页
         /// </param>
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetShareListByID(int maxID=0, int minID=0, string request_type = "next", int pageSize = CommonConstant.PAGE_SIZE)
+        public HttpResponseMessage GetShareListByID(int maxID=0, int minID=0, int request_type = 0, int pageSize = CommonConstant.PAGE_SIZE)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
 
             Dictionary<string, object> dic = new Dictionary<string, object>();
             //dic.Add("User_ID", this.MemberInfo.ID);
-            if (request_type.ToLower() == "new")
+            if (request_type == 1)
             {
                 if (maxID > 0)
                 {
@@ -79,7 +79,7 @@ namespace BF.BackWebAPI.Controllers
         public HttpResponseMessage AddShare()
         {
             AddShareRequest share = new AddShareRequest();
-            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS, data = true };
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("Source_ID", share.Source_ID);
             dic.Add("Source_Type", share.Source_Type);
@@ -119,7 +119,7 @@ namespace BF.BackWebAPI.Controllers
             {
                 throw new BusinessException("请选择需要删除的分享信息！");
             }
-            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS, data = true };
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("ID", shareID);
             dic.Add("User_ID", this.MemberInfo.ID);

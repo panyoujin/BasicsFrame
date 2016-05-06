@@ -13,7 +13,7 @@ namespace BF.BackWebAPI.Controllers
 {
     public class PraiseAndCommentController : BaseController
     {
-         
+
         /// <summary>
         /// 赞
         /// </summary>
@@ -26,7 +26,7 @@ namespace BF.BackWebAPI.Controllers
             {
                 throw new BusinessException("请选择赞的信息！");
             }
-            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS, data = true };
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("Source_ID", praise.Source_ID);
             dic.Add("Source_Type", praise.Source_Type);
@@ -62,7 +62,7 @@ namespace BF.BackWebAPI.Controllers
             {
                 throw new BusinessException("请选择赞的信息！");
             }
-            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS, data = true };
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("Source_ID", praise.Source_ID);
             dic.Add("Source_Type", praise.Source_Type);
@@ -96,7 +96,7 @@ namespace BF.BackWebAPI.Controllers
             {
                 throw new BusinessException("请选择赞的信息！");
             }
-            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS, data = true };
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("Source_ID", comment.Source_ID);
             dic.Add("Source_Type", comment.Source_Type);
@@ -132,7 +132,7 @@ namespace BF.BackWebAPI.Controllers
             {
                 throw new BusinessException("请选择需要删除的信息！");
             }
-            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS, data = true };
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("Source_ID", comment.Source_ID);
             dic.Add("Source_Type", comment.Source_Type);

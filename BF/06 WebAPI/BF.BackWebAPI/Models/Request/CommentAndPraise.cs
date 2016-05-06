@@ -10,7 +10,7 @@ namespace BF.BackWebAPI.Models.Request
             int temp = 0;
             int.TryParse(HttpContext.Current.Request.Form["Source_ID"], out temp);
             this.Source_ID = temp;
-            if (string.IsNullOrWhiteSpace(HttpContext.Current.Request.Form["Source_Type"]) || int.TryParse(HttpContext.Current.Request.Form["Source_Type"], out temp))
+            if (string.IsNullOrWhiteSpace(HttpContext.Current.Request.Form["Source_Type"]) || !int.TryParse(HttpContext.Current.Request.Form["Source_Type"], out temp))
             {
                 temp = (int)Share_Source_Type.Custom;
             }
@@ -23,13 +23,13 @@ namespace BF.BackWebAPI.Models.Request
 
         private int _source_Type = -1;
         /// <summary>
-        /// 评论源类型  0:分享; 1:养生品; 2:养生堂
+        /// 评论源类型  1:分享; 2:养生品; 3:养生堂
         /// </summary>
         public int Source_Type
         {
             get
             {
-                if (_source_Type < 0)
+                if (_source_Type <= 0)
                 {
                     _source_Type = (int)Comment_Source_Type.Share;
                 }
