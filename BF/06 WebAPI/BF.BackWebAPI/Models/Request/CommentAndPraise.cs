@@ -7,6 +7,9 @@ namespace BF.BackWebAPI.Models.Request
     {
         public CommentAndPraise()
         {
+        }
+        public CommentAndPraise(int requer)
+        {
             int temp = 0;
             int.TryParse(HttpContext.Current.Request.Form["Source_ID"], out temp);
             this.Source_ID = temp;

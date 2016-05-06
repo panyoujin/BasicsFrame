@@ -65,14 +65,14 @@ namespace BF.Common.Enums
 
 
     /// <summary>
-    /// 评论类型 1.图文 2:赞
+    /// 评论类型 1.图文（评论） 2:赞
     /// </summary>
     public enum Comment_Type
     {
         /// <summary>
-        /// 图文
+        /// 图文（评论）
         /// </summary>
-        [Description("图文")]
+        [Description("图文（评论）")]
         ImageText = 1,
         /// <summary>
         /// 赞
