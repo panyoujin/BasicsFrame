@@ -47,7 +47,7 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        UPDATE `TB_MB_Share` SET `Status`=FALSE,`ModificationUser`=@@UserAccount@@,`ModificationDate`=NOW() WHERE `ID`=@@ID@@ AND `User_ID`=@@User_ID@@;
+        UPDATE `TB_MB_Share` SET `Status`=FALSE,`ModificationUser`=@@UserAccount@@,`ModificationDate`=NOW() WHERE `ID`=@@ID@@ AND `User_ID`=@@User_ID@@ AND `Status`=TRUE;
       ]]>
       </SqlCommand>
     </SqlDefinition>

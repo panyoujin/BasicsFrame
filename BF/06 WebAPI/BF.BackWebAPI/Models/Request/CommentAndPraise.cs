@@ -1,9 +1,24 @@
 ﻿using BF.Common.Enums;
+using System.Web;
 
 namespace BF.BackWebAPI.Models.Request
 {
     public class CommentAndPraise
     {
+        public CommentAndPraise()
+        {
+            int temp = 0;
+            int.TryParse(HttpContext.Current.Request.Form["Source_ID"], out temp);
+            this.Source_ID = temp;
+            if (string.IsNullOrWhiteSpace(HttpContext.Current.Request.Form["Source_Type"]) || int.TryParse(HttpContext.Current.Request.Form["Source_Type"], out temp))
+            {
+                temp = (int)Share_Source_Type.Custom;
+            }
+            this.Source_Type = temp;
+            this.Comment_Content = HttpContext.Current.Request.Form["Comment_Content"] ?? "";
+            int.TryParse(HttpContext.Current.Request.Form["Accept_Comment_User_ID"], out temp);
+            this.Accept_Comment_User_ID = temp;
+        }
         public int Source_ID { get; set; }
 
         private int _source_Type = -1;

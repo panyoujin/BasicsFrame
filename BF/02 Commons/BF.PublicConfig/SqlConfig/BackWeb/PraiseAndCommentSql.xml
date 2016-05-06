@@ -24,7 +24,7 @@
       <SqlCommand>
         <![CDATA[
         UPDATE `TB_MB_Comment` SET `Status`=FALSE,`ModificationUser`=@@UserAccount@@,`ModificationDate`=NOW() 
-        WHERE `Comment_User_ID`=@@Comment_User_ID@@ AND`Source_ID`=@@Source_ID@@ AND `Source_Type`=@@Source_Type@@ AND `Comment_Type`=@@Comment_Type@@ AND Accept_Comment_User_ID=@@Accept_Comment_User_ID@@;
+        WHERE `Comment_User_ID`=@@Comment_User_ID@@ AND`Source_ID`=@@Source_ID@@ AND `Source_Type`=@@Source_Type@@ AND `Comment_Type`=@@Comment_Type@@ AND Accept_Comment_User_ID=@@Accept_Comment_User_ID@@ AND `Status`=TRUE;
       ]]>
       </SqlCommand>
     </SqlDefinition>
@@ -35,7 +35,7 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        UPDATE `TB_MB_Share` SET `ModificationUser`=@@UserAccount@@ <%= ,`PraiseCount`=PraiseCount+@@PraiseCount@@ %> <%= ,`CommentCount`=CommentCount+@@CommentCount@@ %>,`ModificationDate`=NOW() WHERE `ID`=@@ID@@ AND `User_ID`=@@User_ID@@;
+        UPDATE `TB_MB_Share` SET `ModificationUser`=@@UserAccount@@ <%= ,`PraiseCount`=PraiseCount+@@PraiseCount@@ %> <%= ,`CommentCount`=CommentCount+@@CommentCount@@ %>,`ModificationDate`=NOW() WHERE `ID`=@@Source_ID@@;
       ]]>
       </SqlCommand>
     </SqlDefinition>

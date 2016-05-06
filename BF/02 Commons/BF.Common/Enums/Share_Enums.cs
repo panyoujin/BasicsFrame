@@ -3,7 +3,7 @@
 namespace BF.Common.Enums
 {
     /// <summary>
-    /// 分享源类型 0:自定义; 1:养生品; 2:养生堂
+    /// 分享源类型 1:自定义; 2:养生品; 3:养生堂
     /// </summary>
     public enum Share_Source_Type
     {
@@ -11,21 +11,21 @@ namespace BF.Common.Enums
         /// 自定义分享
         /// </summary>
         [Description("自定义分享")]
-        Custom = 0,
+        Custom = 1,
         /// <summary>
         /// 养生品
         /// </summary>
         [Description("养生品")]
-        Model = 1,
+        Model = 2,
         /// <summary>
         /// 养生堂
         /// </summary>
         [Description("养生堂")]
-        Honyaradoh = 2,
+        Honyaradoh = 3,
     }
 
     /// <summary>
-    ///分享评论附件类型 0:分享; 1:评论
+    ///分享评论附件类型 1:分享; 2:评论
     /// </summary>
     public enum Share_Attmnt_Type
     {
@@ -33,16 +33,16 @@ namespace BF.Common.Enums
         /// 分享
         /// </summary>
         [Description("分享")]
-        Share = 0,
+        Share = 1,
         /// <summary>
         /// 评论
         /// </summary>
         [Description("评论")]
-        Comment = 1,
+        Comment = 2,
     }
 
     /// <summary>
-    /// 评论源类型  0:分享; 1:养生品; 2:养生堂
+    /// 评论源类型  1:分享; 2:养生品; 3:养生堂
     /// </summary>
     public enum Comment_Source_Type
     {
@@ -50,17 +50,17 @@ namespace BF.Common.Enums
         /// 分享
         /// </summary>
         [Description("分享")]
-        Share = 0,
+        Share = 1,
         /// <summary>
         /// 养生品
         /// </summary>
         [Description("养生品")]
-        Model = 1,
+        Model = 2,
         /// <summary>
         /// 养生堂
         /// </summary>
         [Description("养生堂")]
-        Honyaradoh = 2,
+        Honyaradoh = 3,
     }
 
 

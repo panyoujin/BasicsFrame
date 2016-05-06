@@ -76,8 +76,9 @@ namespace BF.BackWebAPI.Controllers
         /// <param name="share"></param>
         /// <returns></returns>
         [HttpPost]
-        public HttpResponseMessage AddShare([FromBody]AddShareRequest share)
+        public HttpResponseMessage AddShare()
         {
+            AddShareRequest share = new AddShareRequest();
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("Source_ID", share.Source_ID);

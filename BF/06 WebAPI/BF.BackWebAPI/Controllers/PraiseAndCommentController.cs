@@ -19,8 +19,9 @@ namespace BF.BackWebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public HttpResponseMessage AddPraise([FromBody]CommentAndPraise praise)
+        public HttpResponseMessage AddPraise()
         {
+            CommentAndPraise praise = new CommentAndPraise();
             if (praise.Source_ID <= 0)
             {
                 throw new BusinessException("请选择赞的信息！");
@@ -54,8 +55,9 @@ namespace BF.BackWebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public HttpResponseMessage CancelPraise([FromBody]CommentAndPraise praise)
+        public HttpResponseMessage CancelPraise()
         {
+            CommentAndPraise praise = new CommentAndPraise();
             if (praise.Source_ID <= 0)
             {
                 throw new BusinessException("请选择赞的信息！");
@@ -87,8 +89,9 @@ namespace BF.BackWebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public HttpResponseMessage AddComment([FromBody]CommentAndPraise comment)
+        public HttpResponseMessage AddComment()
         {
+            CommentAndPraise comment = new CommentAndPraise();
             if (comment.Source_ID <= 0)
             {
                 throw new BusinessException("请选择赞的信息！");
@@ -98,7 +101,7 @@ namespace BF.BackWebAPI.Controllers
             dic.Add("Source_ID", comment.Source_ID);
             dic.Add("Source_Type", comment.Source_Type);
             dic.Add("Accept_Comment_User_ID", comment.Accept_Comment_User_ID);
-            dic.Add("Comment_Type", (int)Comment_Type.Praise);
+            dic.Add("Comment_Type", (int)Comment_Type.ImageText);
             dic.Add("Comment_User_ID", this.MemberInfo.ID);
             dic.Add("Comment_Content", comment.Comment_Content);
             dic.Add("UserAccount", this.MemberInfo.Account ?? this.MemberInfo.ID + "");
@@ -122,8 +125,9 @@ namespace BF.BackWebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public HttpResponseMessage DeleteComment([FromBody]CommentAndPraise comment)
+        public HttpResponseMessage DeleteComment()
         {
+            CommentAndPraise comment = new CommentAndPraise();
             if (comment.Source_ID <= 0)
             {
                 throw new BusinessException("请选择需要删除的信息！");
@@ -133,7 +137,7 @@ namespace BF.BackWebAPI.Controllers
             dic.Add("Source_ID", comment.Source_ID);
             dic.Add("Source_Type", comment.Source_Type);
             dic.Add("Accept_Comment_User_ID", comment.Accept_Comment_User_ID);
-            dic.Add("Comment_Type", (int)Comment_Type.Praise);
+            dic.Add("Comment_Type", (int)Comment_Type.ImageText);
             dic.Add("Comment_User_ID", this.MemberInfo.ID);
             dic.Add("UserAccount", this.MemberInfo.Account ?? this.MemberInfo.ID + "");
             var executeCount = DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_CancelPraiseAndDeleteComment", dic);
