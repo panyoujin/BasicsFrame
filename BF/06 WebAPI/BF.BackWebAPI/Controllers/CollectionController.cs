@@ -11,7 +11,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 
-namespace BF.BackWebAPI.Controllers.Back
+namespace BF.BackWebAPI.Controllers
 {
     public class CollectionController : BaseController
     {

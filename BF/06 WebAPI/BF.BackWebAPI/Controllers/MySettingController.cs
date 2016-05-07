@@ -12,7 +12,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace BF.BackWebAPI.Controllers.Front
+namespace BF.BackWebAPI.Controllers
 {
     public class MySettingController : BaseController
     {

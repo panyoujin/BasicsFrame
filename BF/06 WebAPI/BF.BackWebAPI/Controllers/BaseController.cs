@@ -1,6 +1,8 @@
 ﻿using BF.BackWebAPI.Models.Front;
+using BF.Common.CustomException;
 using BF.Common.DataAccess;
 using BF.Common.Helper;
+using BF.Common.StaticConstant;
 using System;
 using System.Collections.Generic;
 using System.Web;
@@ -22,8 +24,15 @@ namespace BF.BackWebAPI.Controllers
                     dic.Add("SessionID", RequestInfo.SessionID);
                     //从数据看获取
                     user = DBBaseFactory.DALBase.QueryForObject<MemberInfo>("FrontApi_GetMemberInfoByAccount", dic);
-                    HttpContext.Current.Cache.Remove(RequestInfo.SessionID);
-                    HttpContext.Current.Cache.Insert(RequestInfo.SessionID, user);
+                    if (user != null)
+                    {
+                        HttpContext.Current.Cache.Remove(RequestInfo.SessionID);
+                        HttpContext.Current.Cache.Insert(RequestInfo.SessionID, user);
+                    }
+                }
+                if (user == null || user.ID <= 0)
+                {
+                    throw new NotLoginException(ResultMsg.CODE_ERROR_USER_NOT_LOGIN);
                 }
                 return user;
             }

@@ -8,6 +8,7 @@
 SELECT `ID`,`Account`,`Passwd`,`Name`,`Age`,`Birthday`,`Sex`,`Email`,`Phone`,`Remark`,`QQ`,`ImageUrl`,IsAdmin FROM `TB_MB_MemberInfo`
 WHERE `Status`=TRUE
 <%= AND `Account`=@@Account@@ %>  
+<%= AND `Passwd`=@@Passwd@@ %>  
 <%= AND `SessionID`=@@SessionID@@ %>;
       ]]>
 			</SqlCommand>
@@ -18,7 +19,8 @@ WHERE `Status`=TRUE
 		<SqlDefinition type="sql">
 			<SqlCommand>
 				<![CDATA[
-INSERT INTO  `TB_MB_MemberInfo`(`Account`,`Passwd`,`Status`,`IsAuto`,`CreationDate`,`CreationUser`) VALUES(@@Account@@,@@Passwd@@,TRUE,FALSE,NOW(),@@Account@@);
+INSERT INTO  `TB_MB_MemberInfo`(`Account`,`Passwd`,`Status`,`IsAuto`,`CreationDate`,`CreationUser`,`Name`,`Email`,`ImageUrl`) 
+VALUES(@@Account@@,@@Passwd@@,TRUE,FALSE,NOW(),@@Account@@,@@Name@@,@@Email@@,@@ImageUrl@@);
       ]]>
 			</SqlCommand>
 		</SqlDefinition>
