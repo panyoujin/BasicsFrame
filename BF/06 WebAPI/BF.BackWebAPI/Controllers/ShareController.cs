@@ -8,6 +8,7 @@ using BF.Common.FileProcess;
 using BF.Common.Helper;
 using BF.Common.StaticConstant;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net.Http;
 using System.Web;
@@ -23,20 +24,20 @@ namespace BF.BackWebAPI.Controllers
         /// <param name="maxID">已经获取的最大ID</param>
         /// <param name="minID">已经获取的最小ID</param>
         /// <param name="request_type">获取类型：
-        /// new：获取当前没获取过的新动态
-        ///  next：获取当前获取后的下一页
+        /// 1：获取当前没获取过的新动态
+        ///  0：获取当前获取后的下一页
         /// </param>
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetShareListByID(int maxID=0, int minID=0, string request_type = "next", int pageSize = CommonConstant.PAGE_SIZE)
+        public HttpResponseMessage GetShareListByID(int maxID = 0, int minID = 0, int request_type = 0, int pageSize = CommonConstant.PAGE_SIZE)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
 
             Dictionary<string, object> dic = new Dictionary<string, object>();
-            //dic.Add("User_ID", this.MemberInfo.ID);
-            if (request_type.ToLower() == "new")
+            dic.Add("User_ID", this.MemberInfo.ID);
+            if (request_type == 1)
             {
                 if (maxID > 0)
                 {
@@ -59,26 +60,60 @@ namespace BF.BackWebAPI.Controllers
             var spList = DBBaseFactory.DALBase.QueryForList<ShareResponse>("BackWeb_GetShareListByID", dic) ?? new List<ShareResponse>();
             if (spList != null && spList.Count > 0)
             {
-                var tempID = spList.Max(s => s.ID);
+                var tempID = spList.Max(s => s.ShareID);
                 maxID = maxID > tempID ? maxID : tempID;
 
-                tempID = spList.Min(s => s.ID);
+                tempID = spList.Min(s => s.ShareID);
                 minID = minID > 0 && minID < tempID ? minID : tempID;
             }
 
             apiResult.data = new { ShareList = spList, MaxID = maxID, MinID = minID };
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+        /// <summary>
+        /// 获取动态
+        /// </summary>
+        /// <param name="maxID">已经获取的最大ID</param>
+        /// <param name="minID">已经获取的最小ID</param>
+        /// <param name="request_type">获取类型：
+        /// 1：获取当前没获取过的新动态
+        ///  0：获取当前获取后的下一页
+        /// </param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetShareInfoByID(int shareID)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
 
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+
+            dic.Add("User_ID", this.MemberInfo.ID);
+            dic.Add("Source_ID", shareID);
+
+
+            var ds = DBBaseFactory.DALBase.QueryForDataSet("BackWeb_GetShareInfoByID", dic);
+            var myPraiseCount = 0;
+            if (ds != null && ds.Tables.Count > 2 && ds.Tables[2].Rows.Count > 0)
+            {
+                var obj = ds.Tables[2].Rows[0][0];
+                int.TryParse(obj.ToString(), out myPraiseCount);
+            }
+            apiResult.data = new { CommentList = ds.Tables[0], ShareImageList = ds.Tables[1], MyPraiseCount = myPraiseCount };
+
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
         /// <summary>
         /// 添加分享
         /// </summary>
         /// <param name="share"></param>
         /// <returns></returns>
         [HttpPost]
-        public HttpResponseMessage AddShare([FromBody]AddShareRequest share)
+        public HttpResponseMessage AddShare()
         {
-            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            AddShareRequest share = new AddShareRequest();
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS, data = true };
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("Source_ID", share.Source_ID);
             dic.Add("Source_Type", share.Source_Type);
@@ -118,7 +153,7 @@ namespace BF.BackWebAPI.Controllers
             {
                 throw new BusinessException("请选择需要删除的分享信息！");
             }
-            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS, data = true };
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("ID", shareID);
             dic.Add("User_ID", this.MemberInfo.ID);

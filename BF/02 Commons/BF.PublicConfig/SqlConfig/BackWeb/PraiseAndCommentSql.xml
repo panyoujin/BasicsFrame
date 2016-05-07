@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HCIP.AjaxDataSetting>
+
+  <!--赞，防止存在多条数据-->
+  <Data name="BackWeb_AddPraise">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        UPDATE `TB_MB_Comment` SET `Status`=TRUE,`ModificationUser`=@@UserAccount@@,`ModificationDate`=NOW() 
+        WHERE `Comment_User_ID`=@@Comment_User_ID@@ AND`Source_ID`=@@Source_ID@@ AND `Source_Type`=@@Source_Type@@ AND `Comment_Type`=@@Comment_Type@@ AND Accept_Comment_User_ID=@@Accept_Comment_User_ID@@ AND `Status`=FALSE;
+        INSERT INTO `TB_MB_Comment` (`Comment_User_ID`,`Comment_Content`,`Accept_Comment_User_ID`,`Source_ID`,`Source_Type`,`Comment_Type`,`CreationUser`,`CreationDate`) 
+        SELECT @@Comment_User_ID@@, @@Comment_Content@@, @@Accept_Comment_User_ID@@, @@Source_ID@@, @@Source_Type@@, @@Comment_Type@@, @@UserAccount@@,  NOW()
+        FROM `TB_MB_MemberInfo` WHERE NOT EXISTS (SELECT ID FROM TB_MB_Comment WHERE `Comment_User_ID`=@@Comment_User_ID@@ 
+        AND`Source_ID`=@@Source_ID@@ AND `Source_Type`=@@Source_Type@@ AND `Comment_Type`=@@Comment_Type@@ AND Accept_Comment_User_ID=@@Accept_Comment_User_ID@@)  LIMIT 0,1; 
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+
+  <!--取消赞-->
+  <Data name="BackWeb_CancelPraise">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        UPDATE `TB_MB_Comment` SET `Status`=FALSE,`ModificationUser`=@@UserAccount@@,`ModificationDate`=NOW() 
+        WHERE `Comment_User_ID`=@@Comment_User_ID@@ AND`Source_ID`=@@Source_ID@@ AND `Source_Type`=@@Source_Type@@ AND `Comment_Type`=@@Comment_Type@@ AND Accept_Comment_User_ID=@@Accept_Comment_User_ID@@ AND `Status`=TRUE;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+
+  <!--30秒内同一用户相同内容评论相当于重复评论-->
+  <Data name="BackWeb_AddComment">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        INSERT INTO `TB_MB_Comment` (`Comment_User_ID`,`Comment_Content`,`Accept_Comment_User_ID`,`Source_ID`,`Source_Type`,`Comment_Type`,`CreationUser`,`CreationDate`) 
+        SELECT @@Comment_User_ID@@, @@Comment_Content@@, @@Accept_Comment_User_ID@@, @@Source_ID@@, @@Source_Type@@, @@Comment_Type@@, @@UserAccount@@,  NOW()
+        FROM `TB_MB_MemberInfo` WHERE NOT EXISTS (SELECT ID FROM TB_MB_Comment WHERE `Comment_User_ID`=@@Comment_User_ID@@ 
+        AND`Source_ID`=@@Source_ID@@ AND `Source_Type`=@@Source_Type@@ AND `Comment_Type`=@@Comment_Type@@ AND Accept_Comment_User_ID=@@Accept_Comment_User_ID@@ AND Comment_Content=@@Comment_Content@@ AND CreationDate > DATE_SUB(NOW(),INTERVAL 30 SECOND))  LIMIT 0,1; 
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+
+  <!--删除评论-->
+  <Data name="BackWeb_DeleteComment">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT Source_ID,`Source_Type` FROM `TB_MB_Comment` WHERE ID = @@Comment_ID@@ AND `Comment_User_ID`=@@Comment_User_ID@@ AND `Comment_Type`=@@Comment_Type@@ AND `Status`=TRUE;
+        UPDATE `TB_MB_Comment` SET `Status`=FALSE,`ModificationUser`=@@UserAccount@@,`ModificationDate`=NOW() 
+        WHERE ID = @@Comment_ID@@ AND `Comment_User_ID`=@@Comment_User_ID@@ AND `Comment_Type`=@@Comment_Type@@ AND `Status`=TRUE;
+        
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  
+  <!--修改分享和评论数量-->
+  <Data name="BackWeb_UpdateSharePraiseCountAndCommentCount">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        UPDATE `TB_MB_Share` SET `ModificationUser`=@@UserAccount@@ <%= ,`PraiseCount`=PraiseCount+@@PraiseCount@@ %> <%= ,`CommentCount`=CommentCount+@@CommentCount@@ %>,`ModificationDate`=NOW() WHERE `ID`=@@Source_ID@@;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+</HCIP.AjaxDataSetting>
