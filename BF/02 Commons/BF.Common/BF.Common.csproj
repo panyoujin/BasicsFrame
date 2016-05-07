@@ -91,6 +91,7 @@
     <Compile Include="Extensions\ObjectContextExtension.cs" />
     <Compile Include="FileProcess\FileProcessHelp.cs" />
     <Compile Include="Helper\ConfigHelper.cs" />
+    <Compile Include="Helper\HttpRequestHelper.cs" />
     <Compile Include="Helper\JsonHelper.cs" />
     <Compile Include="Helper\LogHelper.cs" />
     <Compile Include="Helper\RequestHelper.cs" />

@@ -182,6 +182,7 @@
     <Compile Include="Controllers\CollectionController.cs" />
     <Compile Include="Controllers\HealthModelController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\HTSmartController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
     <Compile Include="Controllers\MySettingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
