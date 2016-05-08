@@ -72,9 +72,19 @@ namespace BF.BackWebAPI
             get;
             set;
         }
+        public static APPInfo APPInfo
+        {
+            get;
+            set;
+        }
         internal static void InitSettings()
         {
             AttmntServer = DBBaseFactory.DALBase.QueryForObject<AttmntServer>("FrontApi_GetAttmntServer", null);
+            APPInfo = DBBaseFactory.DALBase.QueryForObject<APPInfo>("HTSmart_GetAPPInfo", null);
         }
+
+
     }
+
+
 }

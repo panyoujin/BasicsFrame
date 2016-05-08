@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HCIP.AjaxDataSetting>
+
+	<Data name="HTSmart_GetAPPInfo">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+ SELECT `HTAccount`,`HTPasswd`,`AppName`,`AppID`,`SecretID`,`Scopes`,`CallbackUrl`,`AuthorizeRequest`,
+ `TokenRequest`,`Access_Token`,`Expires_in`,`Created_at`, `Token_Type`
+  FROM `TB_MB_APPInfo`
+  WHERE STATUS=TRUE;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+  <Data name="HTSmart_UpdateAPPInfoToken">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+  UPDATE TB_MB_APPInfo SET`Access_Token`=@@Access_Token@@,`Expires_in`=@@Expires_in@@,`Created_at`=@@Created_at@@,`Token_Type`=@@Token_Type@@
+  WHERE `ID`=@@ID@@;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+</HCIP.AjaxDataSetting>
