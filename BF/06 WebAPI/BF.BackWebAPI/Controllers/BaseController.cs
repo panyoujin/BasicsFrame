@@ -14,7 +14,7 @@ namespace BF.BackWebAPI.Controllers
     {
         public MemberInfo MemberInfo
         {
-            get
+            get 
             {
                 var user = RequestInfo.UserInfo<MemberInfo>();
                 if (user == null || user.ID <= 0)
