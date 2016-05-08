@@ -112,5 +112,21 @@ namespace BF.BackWebAPI.Controllers
         }
         #endregion
 
+
+        #region --- Operation ---
+        [HttpGet]
+        public HttpResponseMessage AddDevice(string qr_code)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+
+            string url = string.Format("http://huantengsmart.com:80/api/devices?qr_code={0}", qr_code);
+            Dictionary<string, string> headers = new Dictionary<string, string>();
+            headers.Add("Authorization", "bearer " + Access_Token);
+
+            string result = HttpRequestHelper.Request("http://huantengsmart.com:80/api/generic_modules", "GET", 10, headers);
+
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+        #endregion
     }
 }
