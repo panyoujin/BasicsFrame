@@ -2,6 +2,7 @@
 using BF.Common.DataAccess;
 using BF.Common.Helper;
 using BF.Common.StaticConstant;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,13 +28,16 @@ namespace BF.BackWebAPI.Controllers
                 string returnStr = HttpRequestHelper.Request(address, "POST", 10);
                 if (!string.IsNullOrEmpty(returnStr))
                 {
-                    Access_TokenJson tokenJson = JsonHelper.DeserializeObject<Access_TokenJson>(returnStr);
+                    Access_TokenJson tokenJson = JsonConvert.DeserializeObject<Access_TokenJson>(returnStr);
+                    //Access_TokenJson tokenJson = JsonHelper.Deserialize<Access_TokenJson>(returnStr);
                     if (tokenJson != null)
                     {
                         Global.APPInfo.Access_Token = tokenJson.access_token;
                         Global.APPInfo.Expires_in = tokenJson.expires_in;
                         Global.APPInfo.Created_at = tokenJson.created_at;
                         Global.APPInfo.Token_Type = tokenJson.token_type;
+                        Global.APPInfo.Refresh_Token = tokenJson.refresh_token;
+
                     }
                     Dictionary<string, object> dic = new Dictionary<string, object>();
                     dic.Add("ID", Global.APPInfo.ID);
@@ -41,6 +45,8 @@ namespace BF.BackWebAPI.Controllers
                     dic.Add("Expires_in", Global.APPInfo.Expires_in);
                     dic.Add("Created_at", Global.APPInfo.Created_at);
                     dic.Add("Token_Type", Global.APPInfo.Token_Type);
+                    dic.Add("Refresh_Token", Global.APPInfo.Refresh_Token);
+
                     DBBaseFactory.DALBase.ExecuteNonQuery("HTSmart_UpdateAPPInfoToken", dic);
                     apiResult.data = tokenJson;
                 }
@@ -58,7 +64,44 @@ namespace BF.BackWebAPI.Controllers
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
 
-        class Access_TokenJson
+        [HttpGet]
+        public HttpResponseMessage Refresh_Token()
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            string address = string.Format("https://huantengsmart.com/oauth2/token?grant_type=refresh_token&refresh_token={1}", Global.APPInfo.Refresh_Token);
+
+            string returnStr = HttpRequestHelper.Request(address, "POST", 10);
+            if (!string.IsNullOrEmpty(returnStr))
+            {
+                Access_TokenJson tokenJson = JsonConvert.DeserializeObject<Access_TokenJson>(returnStr);
+                if (tokenJson != null)
+                {
+                    Global.APPInfo.Access_Token = tokenJson.access_token;
+                    Global.APPInfo.Expires_in = tokenJson.expires_in;
+                    Global.APPInfo.Created_at = tokenJson.created_at;
+                    Global.APPInfo.Token_Type = tokenJson.token_type;
+                    Global.APPInfo.Refresh_Token = tokenJson.refresh_token;
+
+                }
+                Dictionary<string, object> dic = new Dictionary<string, object>();
+                dic.Add("ID", Global.APPInfo.ID);
+                dic.Add("Access_Token", Global.APPInfo.Access_Token);
+                dic.Add("Expires_in", Global.APPInfo.Expires_in);
+                dic.Add("Created_at", Global.APPInfo.Created_at);
+                dic.Add("Token_Type", Global.APPInfo.Token_Type);
+                dic.Add("Refresh_Token", Global.APPInfo.Refresh_Token);
+
+                DBBaseFactory.DALBase.ExecuteNonQuery("HTSmart_UpdateAPPInfoToken", dic);
+                apiResult.data = tokenJson;
+            }
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+
+
+
+        #region --- model ---
+        [Serializable]
+        public class Access_TokenJson
         {
             public string access_token { set; get; }
             public string token_type { set; get; }
@@ -67,6 +110,7 @@ namespace BF.BackWebAPI.Controllers
             public string scope { set; get; }
             public int created_at { set; get; }
         }
-        //, string error = "", string error_description = "",string access_token="",string token_type="",int expires_in=0,string refresh_token="",string scope="",string created_at=""
+        #endregion
+
     }
 }

@@ -3,6 +3,7 @@ using BF.Common.CustomException;
 using BF.Common.DataAccess;
 using BF.Common.Helper;
 using BF.Common.StaticConstant;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Web;
@@ -14,7 +15,7 @@ namespace BF.BackWebAPI.Controllers
     {
         public MemberInfo MemberInfo
         {
-            get 
+            get
             {
                 var user = RequestInfo.UserInfo<MemberInfo>();
                 if (user == null || user.ID <= 0)
@@ -107,6 +108,47 @@ namespace BF.BackWebAPI.Controllers
             get
             {
                 return Global.AttmntServer.ServerDomain;
+            }
+        }
+
+        /// <summary>
+        /// 换取幻腾接口的access_token
+        /// </summary>
+        public string Access_Token
+        {
+            get
+            {
+                string token = Global.APPInfo.Access_Token;
+                if (string.IsNullOrEmpty(token))
+                {
+                    string address = string.Format("https://huantengsmart.com/oauth2/token?grant_type=refresh_token&refresh_token={1}", Global.APPInfo.Refresh_Token);
+
+                    string returnStr = HttpRequestHelper.Request(address, "POST", 10);
+                    if (!string.IsNullOrEmpty(returnStr))
+                    {
+                        BF.BackWebAPI.Controllers.HTSmartController.Access_TokenJson tokenJson = JsonConvert.DeserializeObject<BF.BackWebAPI.Controllers.HTSmartController.Access_TokenJson>(returnStr);
+                        if (tokenJson != null)
+                        {
+                            Global.APPInfo.Access_Token = tokenJson.access_token;
+                            Global.APPInfo.Expires_in = tokenJson.expires_in;
+                            Global.APPInfo.Created_at = tokenJson.created_at;
+                            Global.APPInfo.Token_Type = tokenJson.token_type;
+                            Global.APPInfo.Refresh_Token = tokenJson.refresh_token;
+
+                        }
+                        Dictionary<string, object> dic = new Dictionary<string, object>();
+                        dic.Add("ID", Global.APPInfo.ID);
+                        dic.Add("Access_Token", Global.APPInfo.Access_Token);
+                        dic.Add("Expires_in", Global.APPInfo.Expires_in);
+                        dic.Add("Created_at", Global.APPInfo.Created_at);
+                        dic.Add("Token_Type", Global.APPInfo.Token_Type);
+                        dic.Add("Refresh_Token", Global.APPInfo.Refresh_Token);
+
+                        DBBaseFactory.DALBase.ExecuteNonQuery("HTSmart_UpdateAPPInfoToken", dic);
+                        token = Global.APPInfo.Access_Token;
+                    }
+                }
+                return token;
             }
         }
     }

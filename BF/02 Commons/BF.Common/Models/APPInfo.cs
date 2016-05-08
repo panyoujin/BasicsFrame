@@ -24,10 +24,34 @@ namespace BF.Common.Models
         public string AuthorizeRequest { get; set; }
 
         public string TokenRequest { get; set; }
-        public string Access_Token { get; set; }
+
+        private string _access_token = string.Empty;
+        public string Access_Token
+        {
+            get
+            {
+                if (Created_at > 0)
+                {
+                    DateTime DateStart = new DateTime(1970, 1, 1, 8, 0, 0);
+                    int timeInt = Convert.ToInt32((DateTime.Now - DateStart).TotalSeconds);
+                    if (timeInt - this.Created_at + 86400 <= Expires_in)
+                    {
+                        return _access_token;
+                    }
+                }
+                return "";
+
+            }
+            set
+            {
+                this._access_token = value;
+            }
+        }
 
         public int Expires_in { get; set; }
         public int Created_at { get; set; }
+
         public string Token_Type { set; get; }
+        public string Refresh_Token { set; get; }
     }
 }

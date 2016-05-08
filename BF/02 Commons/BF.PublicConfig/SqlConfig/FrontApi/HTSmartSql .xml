@@ -5,8 +5,8 @@
 		<SqlDefinition type="sql">
 			<SqlCommand>
 				<![CDATA[
- SELECT `HTAccount`,`HTPasswd`,`AppName`,`AppID`,`SecretID`,`Scopes`,`CallbackUrl`,`AuthorizeRequest`,
- `TokenRequest`,`Access_Token`,`Expires_in`,`Created_at`, `Token_Type`
+ SELECT `ID`,`HTAccount`,`HTPasswd`,`AppName`,`AppID`,`SecretID`,`Scopes`,`CallbackUrl`,`AuthorizeRequest`,
+ `TokenRequest`,`Access_Token`,`Expires_in`,`Created_at`, `Token_Type`,`Refresh_Token`
   FROM `TB_MB_APPInfo`
   WHERE STATUS=TRUE;
       ]]>
@@ -17,7 +17,7 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-  UPDATE TB_MB_APPInfo SET`Access_Token`=@@Access_Token@@,`Expires_in`=@@Expires_in@@,`Created_at`=@@Created_at@@,`Token_Type`=@@Token_Type@@
+  UPDATE TB_MB_APPInfo SET `Access_Token`=@@Access_Token@@,`Expires_in`=@@Expires_in@@,`Created_at`=@@Created_at@@,`Token_Type`=@@Token_Type@@,`Refresh_Token`=@@Refresh_Token@@
   WHERE `ID`=@@ID@@;
       ]]>
       </SqlCommand>
