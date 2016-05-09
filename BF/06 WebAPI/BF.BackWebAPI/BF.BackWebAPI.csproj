@@ -205,6 +205,7 @@
     <Compile Include="Models\Front\Response\MyShopResponse.cs" />
     <Compile Include="Models\Request\AddShareRequest.cs" />
     <Compile Include="Models\Request\CommentAndPraise.cs" />
+    <Compile Include="Models\Response\DeviceResponse.cs" />
     <Compile Include="Models\Response\ShareInfoResponse.cs" />
     <Compile Include="Models\Response\ShareListResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

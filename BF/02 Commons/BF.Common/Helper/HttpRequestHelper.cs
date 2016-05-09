@@ -32,8 +32,6 @@ namespace BF.Common.Helper
             // 构建Head
             request.Method = method;
 
-
-
             Encoding myEncoding = Encoding.GetEncoding("utf-8");
             request.Timeout = timeOut * 1000;
             using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
