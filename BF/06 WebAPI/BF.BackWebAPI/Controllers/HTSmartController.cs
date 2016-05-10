@@ -131,6 +131,7 @@ namespace BF.BackWebAPI.Controllers
 
             try
             {
+                string memberAccount = MemberInfo.Account;
                 string returnStr = HttpRequestHelper.Request(url, "POST", 10, headers);
                 if (!string.IsNullOrEmpty(returnStr))
                 {
@@ -142,7 +143,9 @@ namespace BF.BackWebAPI.Controllers
                         dic.Add("device_identifier", deviceJson[0].device_identifier);
                         dic.Add("name", deviceJson[0].name);
                         dic.Add("device_type", deviceJson[0].device_type);
-                        dic.Add("CreationUser", MemberInfo.Account);
+                        dic.Add("CreationUser", memberAccount);
+                        dic.Add("MemberID", MemberInfo.ID);
+
                         DBBaseFactory.DALBase.ExecuteNonQuery("HTSmart_Add_Devices", dic);
                     }
 
@@ -157,6 +160,47 @@ namespace BF.BackWebAPI.Controllers
                     apiResult.msg = "该二维码已经添加过";
                 }
             }
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+        /// <summary>
+        /// 幻腾删除设备接口
+        /// </summary>
+        /// <param name="device_identifier"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage DeleteDevice(string device_identifier)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+
+            dic.Add("device_identifier", device_identifier);
+            dic.Add("MemberID", MemberInfo.ID);
+
+            DeviceResponse device = DBBaseFactory.DALBase.QueryForObject<DeviceResponse>("HTSmart_Get_Devices", dic);
+            if (device != null)
+            {
+                string url = string.Format("http://huantengsmart.com:80/api/devices/{0}", device_identifier);
+                Dictionary<string, string> headers = new Dictionary<string, string>();
+                headers.Add("Authorization", "bearer " + Access_Token);
+
+                string returnStr = HttpRequestHelper.Request(url, "DELETE", 10, headers);
+
+                if (!string.IsNullOrEmpty(returnStr))
+                {
+                    DerviceCodeResponse deviceJson = JsonConvert.DeserializeObject<DerviceCodeResponse>(returnStr);
+                    if (deviceJson != null && deviceJson.success == true)
+                    {
+                        dic.Add("death_qr_code", deviceJson.qr_code);
+                        dic.Add("User", MemberInfo.Account);
+
+                        DBBaseFactory.DALBase.ExecuteNonQuery("HTSmart_Delete_Devices", dic);
+                    }
+
+                    apiResult.data = deviceJson;
+                }
+
+            }
+
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
         #endregion

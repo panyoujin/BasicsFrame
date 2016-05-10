@@ -27,10 +27,38 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-INSERT INTO `TB_DV_Devices`(`device_id`,`device_identifier`,`name`,`device_type`,`CreationUser`,`CreationDate`)
-VALUES(@@device_id@@,@@device_identifier@@,@@name@@,@@device_type@@,@@CreationUser@@,now());
+INSERT INTO `TB_DV_Devices`(`device_id`,`device_identifier`,`name`,`device_type`,`CreationUser`,`CreationDate`,`MemberID`)
+VALUES(@@device_id@@,@@device_identifier@@,@@name@@,@@device_type@@,@@CreationUser@@,now(),@@MemberID@@);
       ]]>
       </SqlCommand>
     </SqlDefinition>
   </Data>
+	
+	<Data name="HTSmart_Get_Devices">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+SELECT `ID`,`device_id`,`device_identifier`, `death_qr_code`,`device_type`,`name` 
+FROM `TB_DV_Devices`
+WHERE  `Status`=FALSE
+AND `device_identifier`=@@device_identifier@@
+AND `MemberID`=@@MemberID@@
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+
+	<Data name="HTSmart_Delete_Devices">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+UPDATE `TB_DV_Devices` SET death_qr_code=@@death_qr_code@@,`ModificationUser`=@@User@@,`ModificationDate`=NOW(),`Status`=TRUE
+WHERE  `Status`=FALSE
+AND `device_identifier`=@@device_identifier@@
+AND `MemberID`=@@MemberID@@
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	
 </HCIP.AjaxDataSetting>
