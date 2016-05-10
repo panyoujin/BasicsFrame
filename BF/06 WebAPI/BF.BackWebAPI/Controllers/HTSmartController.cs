@@ -216,7 +216,22 @@ namespace BF.BackWebAPI.Controllers
             dic.Add("MemberID", MemberInfo.ID);
 
             List<MyDevices> devices = DBBaseFactory.DALBase.QueryForList<MyDevices>("HTSmart_Query_MyDevices", dic);
-
+            if (devices != null && devices.Count > 0)
+            {
+                string url = string.Format("http://huantengsmart.com:80/api/devices/{0}", devices[0].device_identifier);
+                Dictionary<string, string> headers = new Dictionary<string, string>();
+                headers.Add("Authorization", "bearer " + Access_Token);
+                string returnStr = HttpRequestHelper.Request(url, "GET", 10, headers);
+                if (!string.IsNullOrEmpty(returnStr))
+                {
+                    MyDevices device = JsonConvert.DeserializeObject<MyDevices>(returnStr);
+                    if (device != null)
+                    {
+                        devices[0].turned_on = device.turned_on;
+                        devices[0].connectivity = device.connectivity;
+                    }
+                }
+            }
             //添加接口判断 默认设备是否在线状态
             apiResult.data = devices;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
@@ -234,6 +249,36 @@ namespace BF.BackWebAPI.Controllers
                 apiResult.data = true;
             else
                 apiResult.data = false;
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+
+        /// <summary>
+        /// 查询设备是否在线状态
+        /// </summary>
+        /// <param name="device_identifier"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage QueryDeviceStatus(string device_identifier)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            MyDevices device = null;
+            try
+            {
+                string url = string.Format("http://huantengsmart.com:80/api/devices/{0}", device_identifier);
+                Dictionary<string, string> headers = new Dictionary<string, string>();
+                headers.Add("Authorization", "bearer " + Access_Token);
+                string returnStr = HttpRequestHelper.Request(url, "GET", 10, headers);
+                if (!string.IsNullOrEmpty(returnStr))
+                {
+                    device = JsonConvert.DeserializeObject<MyDevices>(returnStr);
+                }
+            }
+            catch (Exception ex)
+            {
+                apiResult.code = ResultCode.CODE_EXCEPTION;
+                apiResult.msg = ex.Message;
+            }
+            apiResult.data = device;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
         #endregion

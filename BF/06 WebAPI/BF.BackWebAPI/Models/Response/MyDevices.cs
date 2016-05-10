@@ -15,7 +15,7 @@ namespace BF.BackWebAPI.Models.Response
 
         public string connectivity { set; get; }
 
-        public int death_qr_code { set; get; }
+        public string death_qr_code { set; get; }
         public string device_type { set; get; }
 
         public bool is_default { set; get; }
