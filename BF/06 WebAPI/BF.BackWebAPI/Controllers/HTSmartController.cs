@@ -203,6 +203,39 @@ namespace BF.BackWebAPI.Controllers
 
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+
+        /// <summary>
+        /// 获取我的设备
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage QueryMyDevices()
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("MemberID", MemberInfo.ID);
+
+            List<MyDevices> devices = DBBaseFactory.DALBase.QueryForList<MyDevices>("HTSmart_Query_MyDevices", dic);
+
+            //添加接口判断 默认设备是否在线状态
+            apiResult.data = devices;
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+
+        [HttpGet]
+        public HttpResponseMessage SetDefaultMyDevices(int ID)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("MemberID", MemberInfo.ID);
+            dic.Add("ID", ID);
+            int result = DBBaseFactory.DALBase.ExecuteNonQuery("HTSmart_Set_MyDevicesDefault", dic);
+            if (result > 0)
+                apiResult.data = true;
+            else
+                apiResult.data = false;
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
         #endregion
     }
 }

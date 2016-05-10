@@ -60,5 +60,28 @@ AND `MemberID`=@@MemberID@@
 			</SqlCommand>
 		</SqlDefinition>
 	</Data>
-	
+
+	<Data name="HTSmart_Query_MyDevices">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+SELECT `ID`,`device_id`,`device_identifier`, `death_qr_code`,`device_type`,`name`,`Default` AS 'is_default',turned_on,connectivity
+FROM `TB_DV_Devices`
+WHERE  `Status`=FALSE
+AND `MemberID`=@@MemberID@@
+ORDER BY `Default` DESC,`ID` DESC;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	<Data name="HTSmart_Set_MyDevicesDefault">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+UPDATE `TB_DV_Devices` SET `Default`=FALSE WHERE `MemberID`=@@MemberID@@ AND `Default`=TRUE;
+UPDATE `TB_DV_Devices` SET `Default`=TRUE WHERE `MemberID`=@@MemberID@@ and `ID`=@@ID@@;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
 </HCIP.AjaxDataSetting>
