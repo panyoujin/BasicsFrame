@@ -80,6 +80,7 @@
     <Compile Include="DataAccess\Helper\MySqlHelper.cs" />
     <Compile Include="DataAccess\MySqlDBBase.cs" />
     <Compile Include="DataAccess\SqlConfig.cs" />
+    <Compile Include="Enums\AftermarketEnums.cs" />
     <Compile Include="Enums\Model_Enums.cs" />
     <Compile Include="Encrypt\DESEncrypt.cs" />
     <Compile Include="Encrypt\HashSignature.cs" />
