@@ -238,12 +238,12 @@ namespace BF.BackWebAPI.Controllers
         }
 
         [HttpGet]
-        public HttpResponseMessage SetDefaultMyDevices(int ID)
+        public HttpResponseMessage SetDefaultMyDevices(int uuid)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("MemberID", MemberInfo.ID);
-            dic.Add("ID", ID);
+            dic.Add("ID", uuid);
             int result = DBBaseFactory.DALBase.ExecuteNonQuery("HTSmart_Set_MyDevicesDefault", dic);
             if (result > 0)
                 apiResult.data = true;
