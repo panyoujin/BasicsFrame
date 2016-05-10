@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HCIP.AjaxDataSetting>
+
+  <Data name="BackWeb_AddAftermarket">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        INSERT INTO `TB_MB_Plan` (User_ID,`Model_ID`,`Plan_Time`,`CreationUser`,`CreationDate`) 
+        VALUES(@@User_ID@@,@@Model_ID@@,@@Plan_Time@@,@@UserAccount@@,NOW());
+        SELECT LAST_INSERT_ID() INTO @SID;
+        SELECT @SID;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+	
+
+</HCIP.AjaxDataSetting>

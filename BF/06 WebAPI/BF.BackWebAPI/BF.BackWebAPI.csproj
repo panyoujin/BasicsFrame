@@ -178,6 +178,7 @@
     <Compile Include="Authorize\BFAuthorizeAttribute.cs" />
     <Compile Include="Authorize\ExceptionAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\PlanController.cs" />
     <Compile Include="Controllers\Back\BackBaseController.cs" />
     <Compile Include="Controllers\AftermarketController.cs" />
     <Compile Include="Controllers\CollectionController.cs" />
@@ -204,6 +205,7 @@
     <Compile Include="Models\Front\Request\UpdatePasswdModel.cs" />
     <Compile Include="Models\Front\Response\MyKettleRelResponse.cs" />
     <Compile Include="Models\Front\Response\MyShopResponse.cs" />
+    <Compile Include="Models\Request\AddPlanRequest.cs" />
     <Compile Include="Models\Request\AddAftermarketRequest.cs" />
     <Compile Include="Models\Request\AddShareRequest.cs" />
     <Compile Include="Models\Request\CommentAndPraise.cs" />

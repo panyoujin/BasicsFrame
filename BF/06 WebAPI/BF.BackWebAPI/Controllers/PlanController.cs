@@ -16,24 +16,23 @@ using System.Web.Http;
 
 namespace BF.BackWebAPI.Controllers
 {
-    public class AftermarketController : BaseController
+    public class PlanController : BaseController
     {
         /// <summary>
-        /// 添加售后
+        /// 添加计划
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public HttpResponseMessage AddAftermarket([FromBody]AddAftermarketRequest model)
+        public HttpResponseMessage AddPlan([FromBody]AddPlanRequest model)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
-            if (model == null || string.IsNullOrWhiteSpace(model.ProductCode) || model.QuestionType <= 0 || string.IsNullOrWhiteSpace(model.QuestionDescribe))
+            if (model == null || model.Plan_Time<DateTime.Now || model.Model_ID <= 0 )
             {
                 throw new BusinessException("请填写完整数据在提交");
             }
             Dictionary<string, object> dic = new Dictionary<string, object>();
-            dic.Add("QuestionType", model.QuestionType);
-            dic.Add("ProductCode", model.ProductCode);
-            dic.Add("QuestionDescribe", model.QuestionDescribe);
+            dic.Add("Plan_Time", model.Plan_Time);
+            dic.Add("Model_ID", model.Model_ID);
             //dic.Add("AftermarketStatus", (int)AftermarketStatus.Wait);
             dic.Add("UserAccount", this.MemberInfo.Account ?? this.MemberInfo.ID + "");
             dic.Add("User_ID", this.MemberInfo.ID);
