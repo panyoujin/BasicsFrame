@@ -28,7 +28,14 @@ namespace BF.BackWebAPI.Authorize
             {
                 this._httpContext = context;
                 string msg = string.Format("IP：{0},错误信息：{1}", RequestInfo.RequestIP, context.Exception.Message);
-                LogHelper.Info(msg, context.Exception);
+                if (context.Exception is NotLoginException || context.Exception is BusinessException)
+                {
+                    LogHelper.Info(msg);
+                }
+                else
+                {
+                    LogHelper.Info(msg, context.Exception);
+                }
             }
             catch
             {
