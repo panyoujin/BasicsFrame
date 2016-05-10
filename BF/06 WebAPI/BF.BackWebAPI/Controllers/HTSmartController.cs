@@ -1,4 +1,5 @@
-﻿using BF.Common.CommonEntities;
+﻿using BF.BackWebAPI.Models.Response;
+using BF.Common.CommonEntities;
 using BF.Common.DataAccess;
 using BF.Common.Helper;
 using BF.Common.StaticConstant;
@@ -112,5 +113,52 @@ namespace BF.BackWebAPI.Controllers
         }
         #endregion
 
+
+        #region --- Operation ---
+        /// <summary>
+        /// 幻腾添加设备接口
+        /// </summary>
+        /// <param name="qr_code"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage AddDevice(string qr_code)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+
+            string url = string.Format("http://huantengsmart.com:80/api/devices?qr_code={0}", qr_code);
+            Dictionary<string, string> headers = new Dictionary<string, string>();
+            headers.Add("Authorization", "bearer " + Access_Token);
+
+            try
+            {
+                string returnStr = HttpRequestHelper.Request(url, "POST", 10, headers);
+                if (!string.IsNullOrEmpty(returnStr))
+                {
+                    List<DeviceResponse> deviceJson = JsonConvert.DeserializeObject<List<DeviceResponse>>(returnStr);
+                    if (deviceJson != null && deviceJson.Count > 0)
+                    {
+                        Dictionary<string, object> dic = new Dictionary<string, object>();
+                        dic.Add("device_id", deviceJson[0].id);
+                        dic.Add("device_identifier", deviceJson[0].device_identifier);
+                        dic.Add("name", deviceJson[0].name);
+                        dic.Add("device_type", deviceJson[0].device_type);
+                        dic.Add("CreationUser", MemberInfo.Account);
+                        DBBaseFactory.DALBase.ExecuteNonQuery("HTSmart_Add_Devices", dic);
+                    }
+
+                    apiResult.data = deviceJson;
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message == "远程服务器返回错误: (400) 错误的请求。")
+                {
+                    apiResult.code = ResultCode.CODE_EXCEPTION;
+                    apiResult.msg = "该二维码已经添加过";
+                }
+            }
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+        #endregion
     }
 }

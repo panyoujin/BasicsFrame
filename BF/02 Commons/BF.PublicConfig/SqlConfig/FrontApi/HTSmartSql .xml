@@ -23,4 +23,14 @@
       </SqlCommand>
     </SqlDefinition>
   </Data>
+  <Data name="HTSmart_Add_Devices">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+INSERT INTO `TB_DV_Devices`(`device_id`,`device_identifier`,`name`,`device_type`,`CreationUser`,`CreationDate`)
+VALUES(@@device_id@@,@@device_identifier@@,@@name@@,@@device_type@@,@@CreationUser@@,now());
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
 </HCIP.AjaxDataSetting>

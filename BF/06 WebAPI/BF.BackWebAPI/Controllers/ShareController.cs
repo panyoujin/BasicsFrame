@@ -57,7 +57,7 @@ namespace BF.BackWebAPI.Controllers
                 dic.Add("StartSize", 0);
                 dic.Add("PageSize", pageSize);
             }
-            var spList = DBBaseFactory.DALBase.QueryForList<ShareResponse>("BackWeb_GetShareListByID", dic) ?? new List<ShareResponse>();
+            var spList = DBBaseFactory.DALBase.QueryForList<ShareListResponse>("BackWeb_GetShareListByID", dic) ?? new List<ShareListResponse>();
             if (spList != null && spList.Count > 0)
             {
                 var tempID = spList.Max(s => s.ShareID);
@@ -66,7 +66,6 @@ namespace BF.BackWebAPI.Controllers
                 tempID = spList.Min(s => s.ShareID);
                 minID = minID > 0 && minID < tempID ? minID : tempID;
             }
-
             apiResult.data = new { ShareList = spList, MaxID = maxID, MinID = minID };
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
@@ -95,12 +94,13 @@ namespace BF.BackWebAPI.Controllers
 
             var ds = DBBaseFactory.DALBase.QueryForDataSet("BackWeb_GetShareInfoByID", dic);
             var myPraiseCount = 0;
-            if (ds != null && ds.Tables.Count > 2 && ds.Tables[2].Rows.Count > 0)
+            if (ds != null && ds.Tables.Count > 1 && ds.Tables[1].Rows.Count > 0)
             {
-                var obj = ds.Tables[2].Rows[0][0];
+                var obj = ds.Tables[1].Rows[0][0];
                 int.TryParse(obj.ToString(), out myPraiseCount);
             }
-            apiResult.data = new { CommentList = ds.Tables[0], ShareImageList = ds.Tables[1], MyPraiseCount = myPraiseCount };
+            var commentList = DBBaseFactory.DALBase.TableToList<ShareInfoResponse>(ds.Tables[0]);
+            apiResult.data = new { CommentList = commentList, MyPraiseCount = myPraiseCount };
 
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }

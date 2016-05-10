@@ -1,12 +1,13 @@
-﻿using System;
+﻿using BF.Common.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
 namespace BF.BackWebAPI.Models.Response
 {
-    
-    public class ShareResponse
+
+    public class ShareListResponse
     {
         /// <summary>
         /// 分享ID
@@ -36,7 +37,7 @@ namespace BF.BackWebAPI.Models.Response
         /// <summary>
         /// 标题
         /// </summary>
-        public string ShareTitle { get; set; }
+        //public string ShareTitle { get; set; }
 
         /// <summary>
         /// 内容
@@ -57,7 +58,39 @@ namespace BF.BackWebAPI.Models.Response
         /// 用户名称
         /// </summary>
         public string User_Name { get; set; }
-
+        /// <summary>
+        /// 我赞的数量,用于判断我是否赞过
+        /// </summary>
         public int MyPraiseCount { get; set; }
+
+        public string AttachUrls { get; set; }
+
+        private List<string> _imgUrlList;
+        /// <summary>
+        /// 图片地址
+        /// </summary>
+        public List<string> ImgUrlList
+        {
+            get
+            {
+                if(!string.IsNullOrWhiteSpace(AttachUrls))
+                {
+                    var urls = AttachUrls.Split(',');
+                    return AttachUrls.Split(',').ToList();
+                }
+                return new List<string>();
+            }
+        }
+
+        //public DateTime CreationDate { get; set; }
+
+        public long CreationDateTicks { get; set; }
+        //public long _creationDateTicks
+        //{
+        //    get
+        //    {
+        //        return this.CreationDate.UnixDateTicks();
+        //    }
+        //}
     }
 }
