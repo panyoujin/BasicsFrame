@@ -7,7 +7,7 @@ namespace BF.BackWebAPI.Models.Response
 {
     public class MyDevices
     {
-        public string ID { set; get; }
+        public string uuid { set; get; }
         public string device_id { set; get; }
         public string device_identifier { set; get; }
         public string name { set; get; }

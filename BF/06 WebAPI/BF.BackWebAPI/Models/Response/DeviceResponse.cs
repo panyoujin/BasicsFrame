@@ -19,5 +19,13 @@ namespace BF.BackWebAPI.Models.Response
         public DateTime created_at { set; get; }
         public int death_qr_code { set; get; }
         public string device_type { set; get; }
+
+        public string device_id
+        {
+            get
+            {
+                return this.id;
+            }
+        }
     }
 }

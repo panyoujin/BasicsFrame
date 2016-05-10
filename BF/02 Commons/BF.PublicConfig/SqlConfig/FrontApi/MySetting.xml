@@ -5,7 +5,7 @@
 		<SqlDefinition type="sql">
 			<SqlCommand>
 				<![CDATA[
-SELECT `ID`,`Name`,`Description`,`Url`,`Price`,`NowPrice` FROM `TB_MB_Shopping`
+SELECT `ID` as uuid,`Name`,`Description`,`Url`,`Price`,`NowPrice` FROM `TB_MB_Shopping`
 WHERE `Status`=TRUE
 <%=AND `Name` LIKE @@Name@@%>
 <%=AND `Description` LIKE @@Description@@%>
