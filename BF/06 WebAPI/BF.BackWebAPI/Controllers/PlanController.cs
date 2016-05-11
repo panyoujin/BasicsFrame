@@ -26,7 +26,7 @@ namespace BF.BackWebAPI.Controllers
         public HttpResponseMessage AddPlan([FromBody]AddPlanRequest model)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
-            if (model == null || model.Plan_Time<DateTime.Now || model.Model_ID <= 0 )
+            if (model == null || model.Plan_Time < DateTime.Now || model.Model_ID <= 0)
             {
                 throw new BusinessException("请填写完整数据在提交");
             }
@@ -36,9 +36,26 @@ namespace BF.BackWebAPI.Controllers
             //dic.Add("AftermarketStatus", (int)AftermarketStatus.Wait);
             dic.Add("UserAccount", this.MemberInfo.Account ?? this.MemberInfo.ID + "");
             dic.Add("User_ID", this.MemberInfo.ID);
-            DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_AddAftermarket", dic);
+            DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_AddPlan", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
 
+        /// <summary>
+        /// 获取计划
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetPlanList(DateTime startTime, DateTime endTime)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("StartPlan_Time", startTime);
+            dic.Add("EndPlan_Time", endTime);
+            var ds = DBBaseFactory.DALBase.QueryForDataSet("BackWeb_GetPlanListByPlanTime", dic);
+            var planList = ds.Tables[0];
+            var planGroupeList = ds.Tables[1];
+            apiResult.data = new { PlanList = planList, PlanGroupList = planGroupeList };
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
     }
 }

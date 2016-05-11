@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <HCIP.AjaxDataSetting>
-
-  <Data name="BackWeb_AddAftermarket">
+<!--添加计划-->
+  <Data name="BackWeb_AddPlan">
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
@@ -13,6 +13,25 @@
       </SqlCommand>
     </SqlDefinition>
   </Data>
-	
+
+<!--获取计划列表和分类-->
+  <Data name="BackWeb_GetPlanListByPlanTime">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT p.`Model_ID`,m.Introduce AS sIntroduce,m.Model_Name AS sName,m.IcoUrl AS sIcoUrl,DATE_FORMAT(p.`Plan_Time`,'%Y-%m-%d %H:%i:%s') AS Plan_Time,p.`Plan_Status`,UNIX_TIMESTAMP(p.`Plan_Time`) AS Plan_TimeTicks
+        FROM TB_MB_Plan AS p
+        JOIN `TB_MB_Models` AS m ON p.`Model_ID`=m.`ID`
+        WHERE p.`Plan_Time`>=@@StartPlan_Time@@ AND p.`Plan_Time`<@@EndPlan_Time@@ AND m.`Status`=TRUE AND p.`Status`=TRUE ORDER BY p.`Plan_Time`;
+        
+        SELECT p.`Model_ID`,m.Introduce AS sIntroduce,m.Model_Name AS sName,m.IcoUrl AS sIcoUrl,DATE_FORMAT(MIN(p.`Plan_Time`),'%Y-%m-%d %H:%i:%s') AS Plan_Time,UNIX_TIMESTAMP(MIN(p.`Plan_Time`)) AS Plan_TimeTicks 
+        FROM TB_MB_Plan AS p
+        JOIN `TB_MB_Models` AS m ON p.`Model_ID`=m.`ID`
+        WHERE p.`Plan_Time`>=@@StartPlan_Time@@ AND p.`Plan_Time`<@@EndPlan_Time@@ AND m.`Status`=TRUE AND p.`Status`=TRUE GROUP BY p.`Model_ID` ORDER BY p.`Plan_Time`;
+
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
 
 </HCIP.AjaxDataSetting>

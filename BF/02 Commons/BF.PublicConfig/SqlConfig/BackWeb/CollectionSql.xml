@@ -6,7 +6,7 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        SELECT m.`ID` AS sID,1 AS sType,m.Introduce AS sIntroduce,m.Model_Name AS sName,m.IcoUrl AS sIcoUrl
+        SELECT m.`ID` AS sID,1 AS sType,m.Introduce AS sIntroduce,m.Model_Name AS sName,m.IcoUrl AS sIcoUrl,c.CollectionTime,UNIX_TIMESTAMP(c.CollectionTime) AS CollectionTimeTicks
         FROM TB_MC_Collection AS c 
         JOIN `TB_MB_Models` AS m ON c.`Source_ID`=m.`ID`
         WHERE c.User_ID=@@User_ID@@ AND c.`Status`=TRUE AND m.`Status`=TRUE AND c.`Source_Type`=1 <%= AND c.`Source_Type`=@@Source_Type@@ %>  ORDER BY c.CollectionTime DESC
