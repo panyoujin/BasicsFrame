@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HCIP.AjaxDataSetting>
+<!--获取文章分类-->
+  <Data name="BackWeb_GetArticleTypeList">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT t.`ID` AS tID,t.`Name`,t.`TypeDescribe` FROM TB_MB_ArticleType AS t WHERE t.`Status`=TRUE ORDER BY t.`TypeSort`;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+
+  <!--获取文章分类-->
+  <Data name="BackWeb_GetArticleListByTypeID">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT a.`ID` AS aID,a.`ArticleTitle`,a.`ArticleContent`,a.`ImageUrl`,a.`BitImageUrl`,a.`ArticleSource`
+        ,a.`ArticleSourceUrl`,a.`PublishDate`,UNIX_TIMESTAMP(a.`PublishDate`) AS PublishDateTicks,a.`PraiseCount`,a.`CommentCount`,a.`CreationDate`,UNIX_TIMESTAMP(a.`CreationDate`) AS CreationDateTicks
+        FROM TB_MB_Article AS a 
+        WHERE a.`Status`=TRUE <%= AND a.`ArticleType_ID`=@@ArticleType_ID@@ %> ORDER BY a.`ArticleSort`;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+
+
+  <!--获取文章分类-->
+  <Data name="BackWeb_GetArticleInfoByID">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT a.`ID` AS aID,a.`ArticleTitle`,a.`ArticleContent`,a.`ImageUrl`,a.`BitImageUrl`,a.`ArticleSource`
+        ,a.`ArticleSourceUrl`,a.`PublishDate`,UNIX_TIMESTAMP(a.`PublishDate`) AS PublishDateTicks,a.`PraiseCount`,a.`CommentCount`,a.`CreationDate`,UNIX_TIMESTAMP(a.`CreationDate`) AS CreationDateTicks
+        FROM TB_MB_Article AS a 
+        WHERE a.`Status`=TRUE <%= AND a.`ID`=@@Article_ID@@ %> LIMIT 0,1;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+</HCIP.AjaxDataSetting>

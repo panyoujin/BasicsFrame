@@ -18,17 +18,17 @@ namespace BF.BackWebAPI.Models.Request
         }
 
         /// <summary>
-        /// 源类型1:自定义; 2:养生品; 3:养生堂
+        /// 问题类型 1.维修 2:换货 3:退货
         /// </summary>
         public int QuestionType { get; set; }
 
         /// <summary>
-        /// 源Url
+        /// 编码
         /// </summary>
         public string ProductCode { get; set; }
 
         /// <summary>
-        /// 内容
+        /// 描述
         /// </summary>
         public string QuestionDescribe { get; set; }
     }
