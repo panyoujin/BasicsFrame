@@ -19,7 +19,7 @@ namespace BF.BackWebAPI.Controllers
         [HttpPost]
         public HttpResponseMessage AddAftermarket([FromBody]AddAftermarketRequest model)
         {
-            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS, data = true };
             if (model == null || string.IsNullOrWhiteSpace(model.ProductCode) || model.QuestionType <= 0 || string.IsNullOrWhiteSpace(model.QuestionDescribe))
             {
                 throw new BusinessException("请填写完整数据在提交");

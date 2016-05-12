@@ -20,7 +20,7 @@ namespace BF.BackWebAPI.Controllers
         [HttpPost]
         public HttpResponseMessage AddPlan([FromBody]AddPlanRequest model)
         {
-            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS ,data=true};
             if (model == null || model.Plan_Time < DateTime.Now || model.Model_ID <= 0)
             {
                 throw new BusinessException("请填写完整数据在提交");

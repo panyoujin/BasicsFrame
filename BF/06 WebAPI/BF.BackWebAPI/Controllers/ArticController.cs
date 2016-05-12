@@ -38,7 +38,7 @@ namespace BF.BackWebAPI.Controllers
             {
                 dic.Add("ArticleType_ID", typeID);
             }
-            var articleList = DBBaseFactory.DALBase.QueryForList<ArticleListResponse>("BackWeb_GetArticleListByTypeID", null);
+            var articleList = DBBaseFactory.DALBase.QueryForList<ArticleListResponse>("BackWeb_GetArticleListByTypeID", dic);
             apiResult.data = articleList;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
