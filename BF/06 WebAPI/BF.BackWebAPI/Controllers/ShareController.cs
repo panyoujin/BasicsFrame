@@ -1,5 +1,5 @@
-﻿using BF.BackWebAPI.Models.Request;
-using BF.BackWebAPI.Models.Response;
+﻿using BF.BackWebAPI.Models.RequestModels;
+using BF.BackWebAPI.Models.ResponseModel;
 using BF.Common.CommonEntities;
 using BF.Common.CustomException;
 using BF.Common.DataAccess;
@@ -8,7 +8,6 @@ using BF.Common.FileProcess;
 using BF.Common.Helper;
 using BF.Common.StaticConstant;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Net.Http;
 using System.Web;

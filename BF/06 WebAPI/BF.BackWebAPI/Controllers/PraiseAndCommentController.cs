@@ -1,4 +1,4 @@
-﻿using BF.BackWebAPI.Models.Request;
+﻿using BF.BackWebAPI.Models.RequestModels;
 using BF.Common.CommonEntities;
 using BF.Common.CustomException;
 using BF.Common.DataAccess;

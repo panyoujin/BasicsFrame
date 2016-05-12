@@ -1,7 +1,7 @@
 ﻿using BF.Common.Enums;
 using System.Web;
 
-namespace BF.BackWebAPI.Models.Request
+namespace BF.BackWebAPI.Models.RequestModels
 {
     public class AddAftermarketRequest
     {

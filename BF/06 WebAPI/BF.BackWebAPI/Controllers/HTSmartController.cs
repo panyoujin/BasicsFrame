@@ -1,4 +1,4 @@
-﻿using BF.BackWebAPI.Models.Response;
+﻿using BF.BackWebAPI.Models.ResponseModel;
 using BF.Common.CommonEntities;
 using BF.Common.DataAccess;
 using BF.Common.Helper;

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace BF.BackWebAPI.Models.Response
+namespace BF.BackWebAPI.Models.ResponseModel
 {
 
     public class ShareListResponse

@@ -2,7 +2,7 @@
 using System;
 using System.Web;
 
-namespace BF.BackWebAPI.Models.Request
+namespace BF.BackWebAPI.Models.RequestModels
 {
     public class AddPlanRequest
     {

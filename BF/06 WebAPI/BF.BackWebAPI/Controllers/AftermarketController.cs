@@ -1,17 +1,11 @@
-﻿using BF.BackWebAPI.Authorize;
-using BF.BackWebAPI.Models.Back.InParam;
-using BF.BackWebAPI.Models.Request;
+﻿using BF.BackWebAPI.Models.RequestModels;
 using BF.Common.CommonEntities;
 using BF.Common.CustomException;
 using BF.Common.DataAccess;
-using BF.Common.Enums;
 using BF.Common.Helper;
 using BF.Common.StaticConstant;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http;
 
 namespace BF.BackWebAPI.Controllers

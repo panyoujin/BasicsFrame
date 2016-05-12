@@ -1,17 +1,11 @@
-﻿using BF.BackWebAPI.Authorize;
-using BF.BackWebAPI.Models.Back.InParam;
-using BF.BackWebAPI.Models.Request;
+﻿using BF.BackWebAPI.Models.ResponseModel;
 using BF.Common.CommonEntities;
 using BF.Common.CustomException;
 using BF.Common.DataAccess;
-using BF.Common.Enums;
 using BF.Common.Helper;
 using BF.Common.StaticConstant;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Web;
 using System.Web.Http;
 
 namespace BF.BackWebAPI.Controllers
@@ -44,8 +38,8 @@ namespace BF.BackWebAPI.Controllers
             {
                 dic.Add("ArticleType_ID", typeID);
             }
-            var dt = DBBaseFactory.DALBase.QueryForDataTable("BackWeb_GetArticleListByTypeID", null);
-            apiResult.data = dt;
+            var articleList = DBBaseFactory.DALBase.QueryForList<ArticleListResponse>("BackWeb_GetArticleListByTypeID", null);
+            apiResult.data = articleList;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
 
@@ -55,17 +49,17 @@ namespace BF.BackWebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetArticleInfoByID(int id)
+        public HttpResponseMessage GetArticleInfoByID(int articleID)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
-            if (id <= 0)
+            if (articleID <= 0)
             {
                 throw new BusinessException("文章不存在");
             }
             Dictionary<string, object> dic = new Dictionary<string, object>();
-            dic.Add("Article_ID", id);
-            var dt = DBBaseFactory.DALBase.QueryForDataTable("BackWeb_GetArticleInfoByID", dic);
-            apiResult.data = dt;
+            dic.Add("Article_ID", articleID);
+            var obj = DBBaseFactory.DALBase.QueryForObject<ArticleInfoResponse>("BackWeb_GetArticleInfoByID", dic);
+            apiResult.data = obj;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
     }

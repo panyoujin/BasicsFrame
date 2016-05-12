@@ -206,15 +206,17 @@
     <Compile Include="Models\Front\Request\UpdatePasswdModel.cs" />
     <Compile Include="Models\Front\Response\MyKettleRelResponse.cs" />
     <Compile Include="Models\Front\Response\MyShopResponse.cs" />
-    <Compile Include="Models\Request\AddPlanRequest.cs" />
-    <Compile Include="Models\Request\AddAftermarketRequest.cs" />
-    <Compile Include="Models\Request\AddShareRequest.cs" />
-    <Compile Include="Models\Request\CommentAndPraise.cs" />
-    <Compile Include="Models\Response\DerviceCodeResponse.cs" />
-    <Compile Include="Models\Response\DeviceResponse.cs" />
-    <Compile Include="Models\Response\MyDevices.cs" />
-    <Compile Include="Models\Response\ShareInfoResponse.cs" />
-    <Compile Include="Models\Response\ShareListResponse.cs" />
+    <Compile Include="Models\RequestModels\AddPlanRequest.cs" />
+    <Compile Include="Models\RequestModels\AddAftermarketRequest.cs" />
+    <Compile Include="Models\RequestModels\AddShareRequest.cs" />
+    <Compile Include="Models\RequestModels\CommentAndPraise.cs" />
+    <Compile Include="Models\ResponseModel\ArticleListResponse.cs" />
+    <Compile Include="Models\ResponseModel\ArticleInfoResponse.cs" />
+    <Compile Include="Models\ResponseModel\DerviceCodeResponse.cs" />
+    <Compile Include="Models\ResponseModel\DeviceResponse.cs" />
+    <Compile Include="Models\ResponseModel\MyDevices.cs" />
+    <Compile Include="Models\ResponseModel\ShareInfoResponse.cs" />
+    <Compile Include="Models\ResponseModel\ShareListResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -235,6 +237,7 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="WebPage\ArticleDetails.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

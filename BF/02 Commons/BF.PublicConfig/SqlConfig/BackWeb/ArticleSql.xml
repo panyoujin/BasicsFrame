@@ -11,13 +11,14 @@
     </SqlDefinition>
   </Data>
 
-  <!--获取文章分类-->
+  <!--根据类型获取文章列表-->
   <Data name="BackWeb_GetArticleListByTypeID">
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
         SELECT a.`ID` AS aID,a.`ArticleTitle`,a.`ArticleContent`,a.`ImageUrl`,a.`BitImageUrl`,a.`ArticleSource`
-        ,a.`ArticleSourceUrl`,a.`PublishDate`,UNIX_TIMESTAMP(a.`PublishDate`) AS PublishDateTicks,a.`PraiseCount`,a.`CommentCount`,a.`CreationDate`,UNIX_TIMESTAMP(a.`CreationDate`) AS CreationDateTicks
+        ,a.`ArticleSourceUrl`,a.`PublishDate`,UNIX_TIMESTAMP(a.`PublishDate`) AS PublishDateTicks,a.`PraiseCount`,a.`CommentCount`,a.ReadCount,a.`CreationDate`,UNIX_TIMESTAMP(a.`CreationDate`) AS CreationDateTicks
+        <%= ,(SELECT COUNT(0) FROM `TB_MB_Comment` c  WHERE c.`Source_ID`=a.ID AND c.`Source_Type`=3 AND c.`Comment_Type`=2 AND c.`Status`=TRUE AND c.`Comment_User_ID`=@@User_ID@@) AS MyPraiseCount  %>
         FROM TB_MB_Article AS a 
         WHERE a.`Status`=TRUE <%= AND a.`ArticleType_ID`=@@ArticleType_ID@@ %> ORDER BY a.`ArticleSort`;
       ]]>
@@ -31,8 +32,10 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
+        <%= UPDATE TB_MB_Article SET ReadCount=ReadCount+1 WHERE `ID`=@@Article_ID@@; %>
         SELECT a.`ID` AS aID,a.`ArticleTitle`,a.`ArticleContent`,a.`ImageUrl`,a.`BitImageUrl`,a.`ArticleSource`
-        ,a.`ArticleSourceUrl`,a.`PublishDate`,UNIX_TIMESTAMP(a.`PublishDate`) AS PublishDateTicks,a.`PraiseCount`,a.`CommentCount`,a.`CreationDate`,UNIX_TIMESTAMP(a.`CreationDate`) AS CreationDateTicks
+        ,a.`ArticleSourceUrl`,a.`PublishDate`,UNIX_TIMESTAMP(a.`PublishDate`) AS PublishDateTicks,a.`PraiseCount`,a.`CommentCount`,a.ReadCount,a.`CreationDate`,UNIX_TIMESTAMP(a.`CreationDate`) AS CreationDateTicks
+        <%= ,(SELECT COUNT(0) FROM `TB_MB_Comment` c  WHERE c.`Source_ID`=a.ID AND c.`Source_Type`=3 AND  c.`Comment_Type`=2 AND c.`Status`=TRUE AND c.`Comment_User_ID`=@@User_ID@@) AS MyPraiseCount  %>
         FROM TB_MB_Article AS a 
         WHERE a.`Status`=TRUE <%= AND a.`ID`=@@Article_ID@@ %> LIMIT 0,1;
       ]]>
