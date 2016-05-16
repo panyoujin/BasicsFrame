@@ -65,6 +65,7 @@ namespace BF.BackWebAPI.Models.ResponseModel
 
         public string AttachUrls { get; set; }
 
+        public string BaseAttmntUrl { get; set; }
         private List<string> _imgUrlList;
         /// <summary>
         /// 图片地址
@@ -73,12 +74,23 @@ namespace BF.BackWebAPI.Models.ResponseModel
         {
             get
             {
-                if(!string.IsNullOrWhiteSpace(AttachUrls))
+                _imgUrlList = new List<string>();
+                if (!string.IsNullOrWhiteSpace(AttachUrls))
                 {
                     var urls = AttachUrls.Split(',');
-                    return AttachUrls.Split(',').ToList();
+                    foreach (var item in urls)
+                    {
+                        if(item.IndexOf("http://")==0|| item.IndexOf("https://") == 0)
+                        {
+                            _imgUrlList.Add(item);
+                        }
+                        else
+                        {
+                            _imgUrlList.Add(BaseAttmntUrl + item);
+                        }
+                    }
                 }
-                return new List<string>();
+                return _imgUrlList;
             }
         }
 

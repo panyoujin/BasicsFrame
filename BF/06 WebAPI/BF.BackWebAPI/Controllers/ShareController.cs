@@ -65,20 +65,13 @@ namespace BF.BackWebAPI.Controllers
                 tempID = spList.Min(s => s.ShareID);
                 minID = minID > 0 && minID < tempID ? minID : tempID;
             }
+            spList.ForEach(sp => sp.BaseAttmntUrl = this.AttmntUrl);
             apiResult.data = new { ShareList = spList, MaxID = maxID, MinID = minID };
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
         /// <summary>
-        /// 获取动态
+        /// 获取分享详情-评价列表和是否点赞
         /// </summary>
-        /// <param name="maxID">已经获取的最大ID</param>
-        /// <param name="minID">已经获取的最小ID</param>
-        /// <param name="request_type">获取类型：
-        /// 1：获取当前没获取过的新动态
-        ///  0：获取当前获取后的下一页
-        /// </param>
-        /// <param name="page"></param>
-        /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage GetShareInfoByID(int shareID)
