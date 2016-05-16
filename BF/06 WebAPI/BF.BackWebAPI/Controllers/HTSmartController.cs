@@ -281,6 +281,27 @@ namespace BF.BackWebAPI.Controllers
             apiResult.data = device;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+        /// <summary>
+        /// 获取某个通用模块的当前信息
+        /// </summary>
+        /// <param name="deviceID"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GenericModulesByID(int deviceID)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            GenericModules module = null;
+            string url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}", deviceID);
+            Dictionary<string, string> headers = new Dictionary<string, string>();
+            headers.Add("Authorization", "bearer " + Access_Token);
+            string returnStr = HttpRequestHelper.Request(url, "GET", 10, headers);
+            if (!string.IsNullOrEmpty(returnStr))
+            {
+                module = JsonConvert.DeserializeObject<GenericModules>(returnStr);
+            }
+            apiResult.data = module;
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
         #endregion
     }
 }
