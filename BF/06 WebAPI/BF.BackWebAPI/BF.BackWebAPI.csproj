@@ -214,6 +214,7 @@
     <Compile Include="Models\ResponseModel\ArticleInfoResponse.cs" />
     <Compile Include="Models\ResponseModel\DerviceCodeResponse.cs" />
     <Compile Include="Models\ResponseModel\DeviceResponse.cs" />
+    <Compile Include="Models\ResponseModel\GenericContent.cs" />
     <Compile Include="Models\ResponseModel\GenericModules.cs" />
     <Compile Include="Models\ResponseModel\GenericSuccess.cs" />
     <Compile Include="Models\ResponseModel\MyDevices.cs" />

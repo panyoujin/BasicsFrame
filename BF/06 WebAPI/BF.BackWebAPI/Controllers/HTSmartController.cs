@@ -325,6 +325,23 @@ namespace BF.BackWebAPI.Controllers
             apiResult.data = module;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+        [HttpGet]
+        public HttpResponseMessage GetWaterTemperature(int deviceID)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            GenericContent module = null;
+            string url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/data/0", deviceID);
+            Dictionary<string, string> headers = new Dictionary<string, string>();
+            headers.Add("Authorization", "bearer " + Access_Token);
+            string returnStr = HttpRequestHelper.Request(url, "GET", 10, headers);
+            if (!string.IsNullOrEmpty(returnStr))
+            {
+                module = JsonConvert.DeserializeObject<GenericContent>(returnStr);
+            }
+            apiResult.data = module;
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+
         #endregion
     }
 }
