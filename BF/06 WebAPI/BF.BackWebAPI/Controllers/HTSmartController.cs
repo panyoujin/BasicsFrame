@@ -138,6 +138,28 @@ namespace BF.BackWebAPI.Controllers
                     List<DeviceResponse> deviceJson = JsonConvert.DeserializeObject<List<DeviceResponse>>(returnStr);
                     if (deviceJson != null && deviceJson.Count > 0)
                     {
+                        #region --- 查询 device_ip跟 router_id---
+                        try
+                        {
+                            string url1 = string.Format("http://huantengsmart.com:80/api/devices/{0}", deviceJson[0].device_identifier);
+
+                            string returnStr1 = HttpRequestHelper.Request(url1, "GET", 10, headers);
+                            if (!string.IsNullOrEmpty(returnStr1))
+                            {
+                                MyDevices device1 = JsonConvert.DeserializeObject<MyDevices>(returnStr1);
+                                if (device1 != null)
+                                {
+                                    deviceJson[0].device_ip = device1.device_ip;
+                                    deviceJson[0].router_id = device1.router_id;
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        { 
+                        
+                        }
+                        #endregion
+
                         Dictionary<string, object> dic = new Dictionary<string, object>();
                         dic.Add("device_id", deviceJson[0].id);
                         dic.Add("device_identifier", deviceJson[0].device_identifier);
@@ -146,6 +168,8 @@ namespace BF.BackWebAPI.Controllers
                         dic.Add("CreationUser", memberAccount);
                         dic.Add("MemberID", MemberInfo.ID);
 
+                        dic.Add("device_ip", deviceJson[0].device_ip);
+                        dic.Add("router_id", deviceJson[0].router_id);
                         DBBaseFactory.DALBase.ExecuteNonQuery("HTSmart_Add_Devices", dic);
                     }
 

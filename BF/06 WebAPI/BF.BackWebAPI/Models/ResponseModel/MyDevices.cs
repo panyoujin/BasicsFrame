@@ -19,5 +19,8 @@ namespace BF.BackWebAPI.Models.ResponseModel
         public string device_type { set; get; }
 
         public bool is_default { set; get; }
+
+        public int device_ip { set; get; }
+        public int router_id { set; get; }
     }
 }

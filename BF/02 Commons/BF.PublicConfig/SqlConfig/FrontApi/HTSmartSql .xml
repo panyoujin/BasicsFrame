@@ -27,8 +27,8 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-INSERT INTO `TB_DV_Devices`(`device_id`,`device_identifier`,`name`,`device_type`,`CreationUser`,`CreationDate`,`MemberID`)
-VALUES(@@device_id@@,@@device_identifier@@,@@name@@,@@device_type@@,@@CreationUser@@,now(),@@MemberID@@);
+INSERT INTO `TB_DV_Devices`(`device_id`,`device_identifier`,`name`,`device_type`,`CreationUser`,`CreationDate`,`MemberID`,`device_ip`,`router_id`)
+VALUES(@@device_id@@,@@device_identifier@@,@@name@@,@@device_type@@,@@CreationUser@@,now(),@@MemberID@@,@@device_ip@@,@@router_id@@);
       ]]>
       </SqlCommand>
     </SqlDefinition>
@@ -65,7 +65,7 @@ AND `MemberID`=@@MemberID@@
 		<SqlDefinition type="sql">
 			<SqlCommand>
 				<![CDATA[
-SELECT `ID` as uuid,`device_id`,`device_identifier`, `death_qr_code`,`device_type`,`name`,`Default` AS 'is_default',turned_on,connectivity
+SELECT `ID` as uuid,`device_id`,`device_identifier`, `death_qr_code`,`device_type`,`name`,`Default` AS 'is_default',turned_on,connectivity,`device_ip`,`router_id`
 FROM `TB_DV_Devices`
 WHERE  `Status`=FALSE
 AND `MemberID`=@@MemberID@@
