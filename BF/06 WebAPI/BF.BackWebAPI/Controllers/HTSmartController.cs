@@ -325,6 +325,11 @@ namespace BF.BackWebAPI.Controllers
             apiResult.data = module;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+        /// <summary>
+        /// 获取当前设备的水温
+        /// </summary>
+        /// <param name="deviceID"></param>
+        /// <returns></returns>
         [HttpGet]
         public HttpResponseMessage GetWaterTemperature(int deviceID)
         {
@@ -341,7 +346,29 @@ namespace BF.BackWebAPI.Controllers
             apiResult.data = module;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
-
+        /// <summary>
+        /// 更新设备的操作
+        /// </summary>
+        /// <param name="deviceID"></param>
+        /// <param name="n"></param>
+        /// <param name="flag"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage UpdateGenericModuleStatus(int deviceID, int n, bool flag = false)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            GenericSuccess module = null;
+            string url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/bools/{1}?bool={2}", deviceID, n, flag);
+            Dictionary<string, string> headers = new Dictionary<string, string>();
+            headers.Add("Authorization", "bearer " + Access_Token);
+            string returnStr = HttpRequestHelper.Request(url, "PUT", 10, headers);
+            if (!string.IsNullOrEmpty(returnStr))
+            {
+                module = JsonConvert.DeserializeObject<GenericSuccess>(returnStr);
+            }
+            apiResult.data = module;
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
         #endregion
     }
 }
