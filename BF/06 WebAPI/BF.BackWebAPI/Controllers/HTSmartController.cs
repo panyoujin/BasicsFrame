@@ -18,6 +18,7 @@ namespace BF.BackWebAPI.Controllers
     /// </summary>
     public class HTSmartController : BaseController
     {
+        #region ---base---
         [HttpGet]
         public HttpResponseMessage RegisterAppCallBack(string code = "")
         {
@@ -97,7 +98,7 @@ namespace BF.BackWebAPI.Controllers
             }
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
-
+        #endregion
 
 
         #region --- model ---
@@ -308,6 +309,11 @@ namespace BF.BackWebAPI.Controllers
                     {
                         module = JsonConvert.DeserializeObject<GenericSuccess>(returnStr);
                     }
+                }
+                else
+                {
+                    apiResult.code = ResultCode.CODE_BUSINESS_ERROR;
+                    apiResult.msg = "水壶已关";
                 }
             }
             else
