@@ -27,8 +27,8 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-INSERT INTO `TB_DV_Devices`(`device_id`,`device_identifier`,`name`,`device_type`,`CreationUser`,`CreationDate`,`MemberID`,`device_ip`,`router_id`)
-VALUES(@@device_id@@,@@device_identifier@@,@@name@@,@@device_type@@,@@CreationUser@@,now(),@@MemberID@@,@@device_ip@@,@@router_id@@);
+INSERT INTO `TB_DV_Devices`(`device_id`,`device_identifier`,`name`,`device_type`,`CreationUser`,`CreationDate`,`MemberID`)
+VALUES(@@device_id@@,@@device_identifier@@,@@name@@,@@device_type@@,@@CreationUser@@,now(),@@MemberID@@);
       ]]>
       </SqlCommand>
     </SqlDefinition>

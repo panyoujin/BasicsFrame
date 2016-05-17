@@ -138,27 +138,6 @@ namespace BF.BackWebAPI.Controllers
                     List<DeviceResponse> deviceJson = JsonConvert.DeserializeObject<List<DeviceResponse>>(returnStr);
                     if (deviceJson != null && deviceJson.Count > 0)
                     {
-                        #region --- 查询 device_ip跟 router_id---
-                        try
-                        {
-                            string url1 = string.Format("http://huantengsmart.com:80/api/devices/{0}", deviceJson[0].device_identifier);
-
-                            string returnStr1 = HttpRequestHelper.Request(url1, "GET", 10, headers);
-                            if (!string.IsNullOrEmpty(returnStr1))
-                            {
-                                MyDevices device1 = JsonConvert.DeserializeObject<MyDevices>(returnStr1);
-                                if (device1 != null)
-                                {
-                                    deviceJson[0].device_ip = device1.device_ip;
-                                    deviceJson[0].router_id = device1.router_id;
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        { 
-                        
-                        }
-                        #endregion
 
                         Dictionary<string, object> dic = new Dictionary<string, object>();
                         dic.Add("device_id", deviceJson[0].id);
@@ -167,9 +146,6 @@ namespace BF.BackWebAPI.Controllers
                         dic.Add("device_type", deviceJson[0].device_type);
                         dic.Add("CreationUser", memberAccount);
                         dic.Add("MemberID", MemberInfo.ID);
-
-                        dic.Add("device_ip", deviceJson[0].device_ip);
-                        dic.Add("router_id", deviceJson[0].router_id);
                         DBBaseFactory.DALBase.ExecuteNonQuery("HTSmart_Add_Devices", dic);
                     }
 
@@ -242,21 +218,14 @@ namespace BF.BackWebAPI.Controllers
             List<MyDevices> devices = DBBaseFactory.DALBase.QueryForList<MyDevices>("HTSmart_Query_MyDevices", dic);
             if (devices != null && devices.Count > 0)
             {
-                string url = string.Format("http://huantengsmart.com:80/api/devices/{0}", devices[0].device_identifier);
-                Dictionary<string, string> headers = new Dictionary<string, string>();
-                headers.Add("Authorization", "bearer " + Access_Token);
-                string returnStr = HttpRequestHelper.Request(url, "GET", 10, headers);
-                if (!string.IsNullOrEmpty(returnStr))
+                //获取设备当前的状态
+                MyDevices device = GetDeviceStatus(devices[0].device_identifier);
+                if (device != null)
                 {
-                    MyDevices device = JsonConvert.DeserializeObject<MyDevices>(returnStr);
-                    if (device != null)
-                    {
-                        devices[0].turned_on = device.turned_on;
-                        devices[0].connectivity = device.connectivity;
-                    }
+                    devices[0].turned_on = device.turned_on;
+                    devices[0].connectivity = device.connectivity;
                 }
             }
-            //添加接口判断 默认设备是否在线状态
             apiResult.data = devices;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
@@ -288,14 +257,8 @@ namespace BF.BackWebAPI.Controllers
             MyDevices device = null;
             try
             {
-                string url = string.Format("http://huantengsmart.com:80/api/devices/{0}", device_identifier);
-                Dictionary<string, string> headers = new Dictionary<string, string>();
-                headers.Add("Authorization", "bearer " + Access_Token);
-                string returnStr = HttpRequestHelper.Request(url, "GET", 10, headers);
-                if (!string.IsNullOrEmpty(returnStr))
-                {
-                    device = JsonConvert.DeserializeObject<MyDevices>(returnStr);
-                }
+                //获取设备当前的状态
+                device = GetDeviceStatus(device_identifier);
             }
             catch (Exception ex)
             {
@@ -314,15 +277,8 @@ namespace BF.BackWebAPI.Controllers
         public HttpResponseMessage GenericModulesByID(int deviceID)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
-            GenericModules module = null;
-            string url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}", deviceID);
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", "bearer " + Access_Token);
-            string returnStr = HttpRequestHelper.Request(url, "GET", 10, headers);
-            if (!string.IsNullOrEmpty(returnStr))
-            {
-                module = JsonConvert.DeserializeObject<GenericModules>(returnStr);
-            }
+            GenericModules module = GetGenericModules(deviceID);
+
             apiResult.data = module;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
@@ -338,13 +294,33 @@ namespace BF.BackWebAPI.Controllers
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             GenericSuccess module = null;
-            string url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/modes/0?mode={1}", deviceID, model);
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", "bearer " + Access_Token);
-            string returnStr = HttpRequestHelper.Request(url, "PUT", 10, headers);
-            if (!string.IsNullOrEmpty(returnStr))
+            GenericModules shuihu = GetGenericModules(deviceID);
+            if (shuihu != null && shuihu.connectivity == "在线" && shuihu.basics != null && shuihu.basics.bools.Count >= 4)
             {
-                module = JsonConvert.DeserializeObject<GenericSuccess>(returnStr);
+                //水壶开关打开状态
+                if (shuihu.basics.bools[0] == 1)
+                {
+                    string url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/modes/0?mode={1}", deviceID, model);
+                    Dictionary<string, string> headers = new Dictionary<string, string>();
+                    headers.Add("Authorization", "bearer " + Access_Token);
+                    string returnStr = HttpRequestHelper.Request(url, "PUT", 10, headers);
+                    if (!string.IsNullOrEmpty(returnStr))
+                    {
+                        module = JsonConvert.DeserializeObject<GenericSuccess>(returnStr);
+                    }
+                }
+            }
+            else
+            {
+                apiResult.code = ResultCode.CODE_BUSINESS_ERROR;
+                if (shuihu == null)
+                {
+                    apiResult.msg = "获取状态失败";
+                }
+                else if (shuihu.connectivity == "离线")
+                {
+                    apiResult.msg = "设备离线";
+                }
             }
             apiResult.data = module;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
@@ -359,14 +335,19 @@ namespace BF.BackWebAPI.Controllers
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             GenericContent module = null;
-            string url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/data/0", deviceID);
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", "bearer " + Access_Token);
-            string returnStr = HttpRequestHelper.Request(url, "GET", 10, headers);
-            if (!string.IsNullOrEmpty(returnStr))
+            GenericModules shuihu = GetGenericModules(deviceID);
+            if (shuihu != null && shuihu.connectivity == "在线" && shuihu.basics != null && shuihu.basics.bools.Count >= 4)
             {
-                module = JsonConvert.DeserializeObject<GenericContent>(returnStr);
+                string url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/data/0", deviceID);
+                Dictionary<string, string> headers = new Dictionary<string, string>();
+                headers.Add("Authorization", "bearer " + Access_Token);
+                string returnStr = HttpRequestHelper.Request(url, "GET", 10, headers);
+                if (!string.IsNullOrEmpty(returnStr))
+                {
+                    module = JsonConvert.DeserializeObject<GenericContent>(returnStr);
+                }
             }
+
             apiResult.data = module;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
@@ -382,16 +363,94 @@ namespace BF.BackWebAPI.Controllers
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             GenericSuccess module = null;
-            string url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/bools/{1}?bool={2}", deviceID, n, flag);
-            Dictionary<string, string> headers = new Dictionary<string, string>();
-            headers.Add("Authorization", "bearer " + Access_Token);
-            string returnStr = HttpRequestHelper.Request(url, "PUT", 10, headers);
-            if (!string.IsNullOrEmpty(returnStr))
+            GenericModules shuihu = GetGenericModules(deviceID);
+            if (shuihu != null && shuihu.connectivity == "在线" && shuihu.basics != null && shuihu.basics.bools.Count >= 4)
             {
-                module = JsonConvert.DeserializeObject<GenericSuccess>(returnStr);
+                string url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/bools/{1}?bool={2}", deviceID, n, flag);
+                Dictionary<string, string> headers = new Dictionary<string, string>();
+                headers.Add("Authorization", "bearer " + Access_Token);
+                string returnStr = HttpRequestHelper.Request(url, "PUT", 10, headers);
+                if (!string.IsNullOrEmpty(returnStr))
+                {
+                    module = JsonConvert.DeserializeObject<GenericSuccess>(returnStr);
+                }
+            }
+            else
+            {
+                apiResult.code = ResultCode.CODE_BUSINESS_ERROR;
+                if (shuihu == null)
+                {
+                    apiResult.msg = "获取状态失败";
+                }
+                else if (shuihu.connectivity == "离线")
+                {
+                    apiResult.msg = "设备离线";
+                }
             }
             apiResult.data = module;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+        #endregion
+
+
+        #region ---方法---
+        /// <summary>
+        /// 判断设备是否在线
+        /// </summary>
+        /// <param name="device_identifier"></param>
+        /// <returns></returns>
+        private MyDevices GetDeviceStatus(string device_identifier)
+        {
+            MyDevices device = null;
+
+            string url = string.Format("http://huantengsmart.com:80/api/devices/{0}", device_identifier);
+            Dictionary<string, string> headers = new Dictionary<string, string>();
+            headers.Add("Authorization", "bearer " + Access_Token);
+            string returnStr = HttpRequestHelper.Request(url, "GET", 10, headers);
+            if (!string.IsNullOrEmpty(returnStr))
+            {
+                device = JsonConvert.DeserializeObject<MyDevices>(returnStr);
+            }
+            return device;
+        }
+
+        /// <summary>
+        /// 判断设备是否在线
+        /// </summary>
+        /// <param name="device_identifier"></param>
+        /// <returns></returns>
+        private MyDevices GetRouterStatus(string router_id)
+        {
+            MyDevices device = null;
+
+            string url = string.Format("http://huantengsmart.com:80/api/routers/{0}", router_id);
+            Dictionary<string, string> headers = new Dictionary<string, string>();
+            headers.Add("Authorization", "bearer " + Access_Token);
+            string returnStr = HttpRequestHelper.Request(url, "GET", 10, headers);
+            if (!string.IsNullOrEmpty(returnStr))
+            {
+                device = JsonConvert.DeserializeObject<MyDevices>(returnStr);
+            }
+            return device;
+        }
+
+        /// <summary>
+        /// 查询水壶当前状态
+        /// </summary>
+        /// <param name="deviceID"></param>
+        /// <returns></returns>
+        private GenericModules GetGenericModules(int deviceID)
+        {
+            GenericModules module = null;
+            string url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}", deviceID);
+            Dictionary<string, string> headers = new Dictionary<string, string>();
+            headers.Add("Authorization", "bearer " + Access_Token);
+            string returnStr = HttpRequestHelper.Request(url, "GET", 10, headers);
+            if (!string.IsNullOrEmpty(returnStr))
+            {
+                module = JsonConvert.DeserializeObject<GenericModules>(returnStr);
+            }
+            return module;
         }
         #endregion
     }
