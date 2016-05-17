@@ -302,6 +302,29 @@ namespace BF.BackWebAPI.Controllers
             apiResult.data = module;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+
+        /// <summary>
+        /// 设置水壶的保温温度
+        /// </summary>
+        /// <param name="deviceID"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage SetGenericModulesModel(int deviceID, int model)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            GenericSuccess module = null;
+            string url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/modes/0?mode={1}", deviceID, model);
+            Dictionary<string, string> headers = new Dictionary<string, string>();
+            headers.Add("Authorization", "bearer " + Access_Token);
+            string returnStr = HttpRequestHelper.Request(url, "PUT", 10, headers);
+            if (!string.IsNullOrEmpty(returnStr))
+            {
+                module = JsonConvert.DeserializeObject<GenericSuccess>(returnStr);
+            }
+            apiResult.data = module;
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
         #endregion
     }
 }
