@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>ModelsMamager</title>
+	<meta charset="utf-8" />
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" type="text/css" href="js/bootstrap/css/bootstrap.css">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/theme.css">
+    <script src="js/base.js"></script>
+</head>
+<!--[if lt IE 7 ]> <body class="ie ie6"> <![endif]-->
+<!--[if IE 7 ]> <body class="ie ie7 "> <![endif]-->
+<!--[if IE 8 ]> <body class="ie ie8 "> <![endif]-->
+<!--[if IE 9 ]> <body class="ie ie9 "> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> 
+<body>
+    <!--<div class="header">
+
+        <h1 class="page-title">Users</h1>
+    </div>-->
+
+    <!--<ul class="breadcrumb">
+        <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+        <li class="active">Users</li>
+    </ul>-->
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="btn-toolbar">
+                <button class="btn btn-primary"><i class="icon-plus"></i> New User</button>
+                <button class="btn">Import</button>
+                <button class="btn">Export</button>
+                <div class="btn-group">
+                </div>
+            </div>
+            <div class="well">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Model_Name</th>
+                            <th>Introduce</th>
+                            <th>CreationDate</th>
+                            <th style="width: 26px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody am-repeat="info.models" style="display: none;">
+                        <tr>
+                            <td>{{MID}}</td>
+                            <td>{{Model_Name}}</td>
+                            <td>{{Introduce}}</td>
+                            <td>{{CreationDate}}</td>
+                            <td>
+                                <a href="user.html"><i class="icon-pencil"></i></a>
+                                <a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                <ul>
+                    <li><a href="#">Prev</a></li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">Next</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script src="js/require.js" data-main="js/config.js"></script>
+    <script>
+        require(['../modules/ModelsMamager']);
+    </script>
+</body>
+
+</html>
