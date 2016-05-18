@@ -6,7 +6,7 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        SELECT `ID` AS MID,Introduce,Model_Name,IcoUrl,ImageUrl,Sort,UNIX_TIMESTAMP(CreationDate) AS CreationDateTicks,DATE_FORMAT(CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate FROM `TB_MB_Models` WHERE `Status` AND Model_Type = @@Model_Type@@ order BY Sort DESC <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
+        SELECT `ID` AS MID,Introduce,Model_Name,IcoUrl,ImageUrl,Sort,Model_Type,UNIX_TIMESTAMP(CreationDate) AS CreationDateTicks,DATE_FORMAT(CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate FROM `TB_MB_Models` WHERE `Status`<%=  AND Model_Type = @@Model_Type@@ %><%= AND Model_Name LIKE @@Model_Name@@ %> order BY Sort DESC <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
       ]]>
       </SqlCommand>
     </SqlDefinition>

@@ -64,8 +64,7 @@ namespace BF.BackWebAPI.Models.ResponseModel
         public int MyPraiseCount { get; set; }
 
         public string AttachUrls { get; set; }
-
-        public string BaseAttmntUrl { get; set; }
+        
         private List<string> _imgUrlList;
         /// <summary>
         /// 图片地址
@@ -86,7 +85,7 @@ namespace BF.BackWebAPI.Models.ResponseModel
                         }
                         else
                         {
-                            _imgUrlList.Add(BaseAttmntUrl + item);
+                            _imgUrlList.Add(Global.AttmntUrl + item);
                         }
                     }
                 }

@@ -7,18 +7,30 @@
     var height = Screen.ViewHeight();
     var info = {}
     //0.系统提供;1.自定义
-    var type = 0;
+    var type = -1;
     var page = 0;
     var pagesize = 10;
     function bindEvent() {
         $('body').show();
         loading(0);
+        
+        $('#btn_Search').off('click')
 
+        $('#btn_Search').on('click', function () {
+            page = 0;
+            init_data($("#model_name").val());
+        });
 
+        $('#new_model').off('click')
+
+        $('#new_model').on('click', function () {
+            alert(window.webroot+"/new-model.html")
+            window.location.href = window.webroot+"/new-model.html";
+        });
     }
-    function init_data() {
+    function init_data(name) {
         page = page + 1;
-        m.GetHealthModelList(type, page, pagesize, function (data) {
+        m.GetHealthModelList(type, name, page, pagesize, function (data) {
             info.models = data.data;
             angular.set('info', info, bindEvent);
         })

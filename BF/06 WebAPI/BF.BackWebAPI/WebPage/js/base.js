@@ -1,13 +1,19 @@
 ;
 window.base = "http://115.29.49.135:1010/";
 window.apibase = '/znsh';
+window.webroot = '/WebPage';
 window.webbase = window.base+window.apibase;
 
-window.wxlocation = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxbbc400d237bf5ef7&redirect_uri=http%3a%2f%2fwx.bosjk.com%2fjkyzx-hz%2fWeChatApi%2fAuthorize_CallBack&response_type=code&scope=snsapi_base&state=123456#wechat_redirect"
-	//window.wxlocation="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa345e2e7bb583729&redirect_uri=http%3a%2f%2fwxtest.bosjk.com%2fjkyzx-hz%2fWeChatApi%2fAuthorize_CallBack&response_type=code&scope=snsapi_base&state=123456#wechat_redirect"
 
 var isScroll = true;
-
+function is_gethospital() {
+    var session = Cookies.Get("CACHED_SESSION_ID");
+    //alert(session);
+    if (session.length <= 0) {
+        window.location.href = window.webroot + "/sign-in.html";
+    }
+    return 1;
+}
 document.addEventListener("touchmove", function(e) {
 	if (!isScroll) {
 		e.preventDefault();
@@ -56,7 +62,7 @@ function defaultImg(e) {
 }
 
 window.onload = function() {
-
+    is_gethospital();
 	//$('body').hide();
 	var notloading = ['static-service-intro.html'];
 	var isloading = true;

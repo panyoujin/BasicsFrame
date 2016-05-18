@@ -67,6 +67,16 @@ namespace BF.BackWebAPI
 
     public class Global
     {
+        /// <summary>
+        /// 附件地址
+        /// </summary>
+        public static string AttmntUrl
+        {
+            get
+            {
+                return Global.AttmntServer.ServerDomain;
+            }
+        }
         public static AttmntServer AttmntServer
         {
             get;

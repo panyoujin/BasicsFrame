@@ -65,7 +65,6 @@ namespace BF.BackWebAPI.Controllers
                 tempID = spList.Min(s => s.ShareID);
                 minID = minID > 0 && minID < tempID ? minID : tempID;
             }
-            spList.ForEach(sp => sp.BaseAttmntUrl = this.AttmntUrl);
             apiResult.data = new { ShareList = spList, MaxID = maxID, MinID = minID };
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }

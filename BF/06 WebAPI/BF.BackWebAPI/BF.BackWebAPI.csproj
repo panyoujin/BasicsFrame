@@ -217,6 +217,7 @@
     <Compile Include="Models\ResponseModel\GenericContent.cs" />
     <Compile Include="Models\ResponseModel\GenericModules.cs" />
     <Compile Include="Models\ResponseModel\GenericSuccess.cs" />
+    <Compile Include="Models\ResponseModel\HealthModelList.cs" />
     <Compile Include="Models\ResponseModel\MyDevices.cs" />
     <Compile Include="Models\ResponseModel\ShareInfoResponse.cs" />
     <Compile Include="Models\ResponseModel\ShareListResponse.cs" />
@@ -240,11 +241,10 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="WebPage\ArticleDetails.html" />
-    <Content Include="WebPage\family-list.html" />
+    <Content Include="WebPage\modules\new-model.js" />
+    <Content Include="WebPage\new-model.html" />
     <Content Include="WebPage\home.html" />
     <Content Include="WebPage\index.html" />
-    <Content Include="WebPage\index2.html" />
     <Content Include="WebPage\js\angular.js" />
     <Content Include="WebPage\js\base.js" />
     <Content Include="WebPage\js\bootstrap.min.js" />
@@ -273,7 +273,6 @@
     <Content Include="WebPage\sign-in.html" />
     <Content Include="WebPage\stylesheets\elements.css" />
     <Content Include="WebPage\stylesheets\theme.css" />
-    <Content Include="WebPage\users.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
