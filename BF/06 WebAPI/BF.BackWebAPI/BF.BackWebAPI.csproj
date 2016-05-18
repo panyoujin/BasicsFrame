@@ -210,6 +210,7 @@
     <Compile Include="Models\RequestModels\AddAftermarketRequest.cs" />
     <Compile Include="Models\RequestModels\AddShareRequest.cs" />
     <Compile Include="Models\RequestModels\CommentAndPraise.cs" />
+    <Compile Include="Models\RequestModels\HealthModelInfo.cs" />
     <Compile Include="Models\ResponseModel\ArticleListResponse.cs" />
     <Compile Include="Models\ResponseModel\ArticleInfoResponse.cs" />
     <Compile Include="Models\ResponseModel\DerviceCodeResponse.cs" />
