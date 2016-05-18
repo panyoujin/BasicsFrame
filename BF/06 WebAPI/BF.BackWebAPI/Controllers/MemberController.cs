@@ -1,5 +1,6 @@
 ﻿using BF.BackWebAPI.Models.Front;
 using BF.BackWebAPI.Models.Front.Request;
+using BF.BackWebAPI.Models.ResponseModel;
 using BF.Common.CommonEntities;
 using BF.Common.DataAccess;
 using BF.Common.FileProcess;
@@ -187,6 +188,26 @@ namespace BF.BackWebAPI.Controllers
 
             apiResult.data = new { FullUrl = Global.AttmntUrl + paramInsert["AttachmentUrl"], ImageUrl = paramInsert["AttachmentUrl"] };
 
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+
+        /// <summary>
+        /// 获取我的资料接口
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetMyInfo()
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("MemberID", MemberInfo.ID);
+
+            MyInfoResponse info = DBBaseFactory.DALBase.QueryForObject<MyInfoResponse>("FrontApi_GetMyInfo", dic);
+            if (info != null)
+            {
+                info.ImageUrl = string.IsNullOrEmpty(info.ImageUrl) ? "" : Global.AttmntUrl + info.ImageUrl;
+            }
+            apiResult.data = info;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
     }
