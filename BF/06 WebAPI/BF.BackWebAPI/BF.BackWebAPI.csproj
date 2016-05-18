@@ -244,7 +244,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="WebPage\modules\new-model.js" />
-    <Content Include="WebPage\new-model.html" />
     <Content Include="WebPage\home.html" />
     <Content Include="WebPage\index.html" />
     <Content Include="WebPage\js\angular.js" />
@@ -272,6 +271,7 @@
     <Content Include="WebPage\modules\index.js" />
     <Content Include="WebPage\modules\ModelsMamager.js" />
     <Content Include="WebPage\modules\sign-in.js" />
+    <Content Include="WebPage\new-model.html" />
     <Content Include="WebPage\sign-in.html" />
     <Content Include="WebPage\stylesheets\elements.css" />
     <Content Include="WebPage\stylesheets\theme.css" />
