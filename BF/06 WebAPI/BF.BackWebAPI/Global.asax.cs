@@ -74,6 +74,10 @@ namespace BF.BackWebAPI
         {
             get
             {
+                if (Global.AttmntServer==null)
+                {
+                    return "";
+                }
                 return Global.AttmntServer.ServerDomain;
             }
         }
