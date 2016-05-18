@@ -35,12 +35,22 @@ namespace BF.BackWebAPI.Controllers
             dic.Add("PageSize", pageSize);
             dic.Add("Name", Name);
             dic.Add("Description", Description);
-
+            List<MyShopResponse> shops = DBBaseFactory.DALBase.QueryForList<MyShopResponse>("Get_MyShoppings", dic);
+            if (shops != null && shops.Count > 0)
+            {
+                foreach (var item in shops)
+                {
+                    if (!string.IsNullOrEmpty(item.Url))
+                    {
+                        item.Url = string.IsNullOrEmpty(item.Url) ? "" : Global.AttmntUrl + item.Url;
+                    }
+                }
+            }
             apiResult.data = DBBaseFactory.DALBase.QueryForList<MyShopResponse>("Get_MyShoppings", dic);
 
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
-        
+
 
     }
 }
