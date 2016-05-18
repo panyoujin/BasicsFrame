@@ -80,4 +80,15 @@ UPDATE TB_MB_MemberInfo SET `ImageUrl`=@@ImageUrl@@
 			</SqlCommand>
 		</SqlDefinition>
 	</Data>
+
+  <Data name="FrontApi_GetMyInfo">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+SELECT ID AS 'uuid',Account,`Email`,`Passwd`,`ImageUrl`,`Name` FROM `TB_MB_MemberInfo`
+WHERE Id=@@MemberID@@;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
 </HCIP.AjaxDataSetting>

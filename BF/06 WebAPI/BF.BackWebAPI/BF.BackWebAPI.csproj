@@ -219,6 +219,7 @@
     <Compile Include="Models\ResponseModel\GenericSuccess.cs" />
     <Compile Include="Models\ResponseModel\HealthModelList.cs" />
     <Compile Include="Models\ResponseModel\MyDevices.cs" />
+    <Compile Include="Models\ResponseModel\MyInfoResponse.cs" />
     <Compile Include="Models\ResponseModel\PlanGroupList.cs" />
     <Compile Include="Models\ResponseModel\PlanList.cs" />
     <Compile Include="Models\ResponseModel\ShareInfoResponse.cs" />
