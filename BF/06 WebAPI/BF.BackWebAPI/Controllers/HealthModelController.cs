@@ -1,5 +1,6 @@
 ﻿using BF.BackWebAPI.Authorize;
 using BF.BackWebAPI.Models.Back.InParam;
+using BF.BackWebAPI.Models.RequestModels;
 using BF.BackWebAPI.Models.ResponseModel;
 using BF.Common.CommonEntities;
 using BF.Common.CustomException;
@@ -49,6 +50,10 @@ namespace BF.BackWebAPI.Controllers
                 dic.Add("Model_Name", "%" + model_name + "%");
             }
 
+            if (!this.MemberInfo.IsAdmin)
+            {
+                dic.Add("User_ID", this.MemberInfo.ID);
+            }
             apiResult.data = DBBaseFactory.DALBase.QueryForList<HealthModelList>("BackWeb_GetHealthModelListByType", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
@@ -68,7 +73,7 @@ namespace BF.BackWebAPI.Controllers
             {
                 dic.Add("User_ID", this.MemberInfo.ID);
             }
-            apiResult.data = DBBaseFactory.DALBase.QueryForDataTable("BackWeb_GetHealthModelInfoByModelID", dic);
+            apiResult.data = DBBaseFactory.DALBase.QueryForList<HealthModelInfo>("BackWeb_GetHealthModelInfoByModelID", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
 
@@ -206,7 +211,7 @@ namespace BF.BackWebAPI.Controllers
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("User_ID", this.MemberInfo.ID);
-            apiResult.data = DBBaseFactory.DALBase.QueryForDataTable("BackWeb_GetCommonHealthModelList", dic);
+            apiResult.data = DBBaseFactory.DALBase.QueryForList<HealthModelList>("BackWeb_GetCommonHealthModelList", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
     }

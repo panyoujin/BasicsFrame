@@ -5,9 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BF.Common.Extensions;
-namespace BF.BackWebAPI.Models.ResponseModel
+
+namespace BF.BackWebAPI.Models.RequestModels
 {
-    public class HealthModelList
+    public class HealthModelInfo
     {
         public int MID { get; set; }
 
@@ -99,5 +100,22 @@ namespace BF.BackWebAPI.Models.ResponseModel
         /// 
         /// </summary>
         public string Plan_RGB { get; set; }
+
+        public int User_ID { get; set; }
+
+        public string Describe { get; set; }
+        public string Remarks { get; set; }
+        public bool IsBubble { get; set; }
+        public int Bubble_Time { get; set; }
+        public int Bubble_Temperature { get; set; }
+        public int Cook_Time { get; set; }
+        public int Cook_Temperature { get; set; }
+        public bool Is_Heat_Preservation { get; set; }
+        public int Heat_Preservation_Time { get; set; }
+        public int Heat_Preservation_Temperature { get; set; }
+        public int Removal_Chlorine_Time { get; set; }
+        public int Final_Temperature { get; set; }
+        public bool IsFerv { get; set; }
+        public int Model_Status { get; set; }
     }
 }

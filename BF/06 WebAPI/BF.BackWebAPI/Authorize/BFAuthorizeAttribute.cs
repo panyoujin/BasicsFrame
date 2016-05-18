@@ -62,7 +62,7 @@ namespace BF.BackWebAPI.Authorize
                     user = DBBaseFactory.DALBase.QueryForObject<MemberInfo>("FrontApi_GetMemberInfoByAccount", dic);
                     if (user != null)
                     {
-                        user.IsAdmin = true;
+                        //user.IsAdmin = true;
                         HttpContext.Current.Cache.Remove(RequestInfo.SessionID);
                         HttpContext.Current.Cache.Insert(RequestInfo.SessionID, user);
                     }
