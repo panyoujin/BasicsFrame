@@ -361,25 +361,47 @@ namespace BF.BackWebAPI.Controllers
         /// 更新设备的操作
         /// </summary>
         /// <param name="deviceID"></param>
+        /// <param name="model">如果参数不是-1 那就是设置水壶的温度</param>
         /// <param name="n"></param>
         /// <param name="flag"></param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage UpdateGenericModuleStatus(int deviceID, int n, bool flag = false)
+        public HttpResponseMessage UpdateGenericModuleStatus(int deviceID, int model = -1, int n = -1, bool flag = false)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             GenericSuccess module = null;
             GenericModules shuihu = GetGenericModules(deviceID);
             if (shuihu != null && shuihu.connectivity == "在线" && shuihu.basics != null && shuihu.basics.bools.Count >= 4)
             {
-                string url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/bools/{1}?bool={2}", deviceID, n, flag);
+                string url = string.Empty;
                 Dictionary<string, string> headers = new Dictionary<string, string>();
                 headers.Add("Authorization", "bearer " + Access_Token);
+
+                if (model > -1 && model <= 9)//设置保温温度
+                { 
+                    //水壶开关打开状态
+                    if (shuihu.basics.bools[0] == 1)
+                    {
+                        url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/modes/0?mode={1}", deviceID, model);
+
+                    }
+                    else
+                    {
+                        apiResult.code = ResultCode.CODE_BUSINESS_ERROR;
+                        apiResult.msg = "水壶已关";
+                    }
+                }
+                else if (n > -1 && n <= 3)//操作水壶
+                { 
+                    url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/bools/{1}?bool={2}", deviceID, n, flag);
+                }
+
                 string returnStr = HttpRequestHelper.Request(url, "PUT", 10, headers);
                 if (!string.IsNullOrEmpty(returnStr))
                 {
                     module = JsonConvert.DeserializeObject<GenericSuccess>(returnStr);
                 }
+
             }
             else
             {
