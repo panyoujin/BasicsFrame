@@ -378,7 +378,7 @@ namespace BF.BackWebAPI.Controllers
                 headers.Add("Authorization", "bearer " + Access_Token);
 
                 if (model > -1 && model <= 9)//设置保温温度
-                { 
+                {
                     //水壶开关打开状态
                     if (shuihu.basics.bools[0] == 1)
                     {
@@ -392,7 +392,11 @@ namespace BF.BackWebAPI.Controllers
                     }
                 }
                 else if (n > -1 && n <= 3)//操作水壶
-                { 
+                {
+                    if (n == 1 || n == 2)
+                    { //如果是煮水或者保温 默认调一次开启水壶接口
+                        HttpRequestHelper.Request(string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/bools/{1}?bool={2}", deviceID, 0, true), "PUT", 10, headers);
+                    }
                     url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/bools/{1}?bool={2}", deviceID, n, flag);
                 }
 
