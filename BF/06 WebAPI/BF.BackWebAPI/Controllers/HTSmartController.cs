@@ -376,36 +376,36 @@ namespace BF.BackWebAPI.Controllers
                 string url = string.Empty;
                 Dictionary<string, string> headers = new Dictionary<string, string>();
                 headers.Add("Authorization", "bearer " + Access_Token);
+                if (n == 0 && flag == false)
+                {//关闭水壶开关
+                    url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/bools/{1}?bool={2}", deviceID, n, flag);
+                    HttpRequestHelper.Request(url, "PUT", 10, headers);
+                }
+                else
+                {
+                    //默认启动水壶开关
+                    url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/bools/{1}?bool={2}", deviceID, 0, true);
+                    HttpRequestHelper.Request(url, "PUT", 10, headers);
+                }
+
 
                 if (model > -1 && model <= 9)//设置保温温度
                 {
-                    //水壶开关打开状态
-                    if (shuihu.basics.bools[0] == 1)
-                    {
-                        url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/modes/0?mode={1}", deviceID, model);
-
-                    }
-                    else
-                    {
-                        apiResult.code = ResultCode.CODE_BUSINESS_ERROR;
-                        apiResult.msg = "水壶已关";
-                    }
+                    url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/modes/0?mode={1}", deviceID, model);
                 }
-                else if (n > -1 && n <= 3)//操作水壶
+                else if (n > 0 && n <= 3)//操作水壶
                 {
-                    if (n == 1 || n == 2)
-                    { //如果是煮水或者保温 默认调一次开启水壶接口
-                        HttpRequestHelper.Request(string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/bools/{1}?bool={2}", deviceID, 0, true), "PUT", 10, headers);
-                    }
                     url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/bools/{1}?bool={2}", deviceID, n, flag);
                 }
 
-                string returnStr = HttpRequestHelper.Request(url, "PUT", 10, headers);
-                if (!string.IsNullOrEmpty(returnStr))
+                if (!string.IsNullOrEmpty(url))
                 {
-                    module = JsonConvert.DeserializeObject<GenericSuccess>(returnStr);
+                    string returnStr = HttpRequestHelper.Request(url, "PUT", 10, headers);
+                    if (!string.IsNullOrEmpty(returnStr))
+                    {
+                        module = JsonConvert.DeserializeObject<GenericSuccess>(returnStr);
+                    }
                 }
-
             }
             else
             {
