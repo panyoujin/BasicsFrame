@@ -6,7 +6,9 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        SELECT `ID` AS MID,Introduce,Model_Name,IcoUrl,ImageUrl,Sort,UNIX_TIMESTAMP(CreationDate) AS CreationDateTicks,DATE_FORMAT(CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate FROM `TB_MB_Models` WHERE `Status` AND Model_Type = @@Model_Type@@ order BY Sort DESC <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
+        SELECT `ID` AS MID,Introduce,Model_Name,IcoUrl,ImageUrl,Sort,Model_Type,UNIX_TIMESTAMP(CreationDate) AS CreationDateTicks,DATE_FORMAT(CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate 
+        <%=,(SELECT p.Plan_RGB FROM TB_MB_Plan AS p WHERE  p.`Status`=TRUE AND p.`Model_ID`=m.ID AND p.`User_ID`=@@User_ID@@ LIMIT 0,1) AS Plan_RGB %>
+        FROM `TB_MB_Models` m WHERE `Status`<%=  AND Model_Type = @@Model_Type@@ %><%= AND Model_Name LIKE @@Model_Name@@ %> order BY Sort DESC <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
       ]]>
       </SqlCommand>
     </SqlDefinition>
@@ -19,7 +21,8 @@
         SELECT  `ID` AS MID, `User_ID`, `Model_Name`, `IcoUrl`, `ImageUrl`, `Introduce`, `Describe`, `Remarks`, `Sort`, `IsBubble`, `Bubble_Time`, `Bubble_Temperature`
         , `Cook_Time`, `Cook_Temperature`, `Is_Heat_Preservation`, `Heat_Preservation_Time`, `Heat_Preservation_Temperature`, `Removal_Chlorine_Time`
         , `Final_Temperature`, `IsFerv`, `Model_Type`, `Model_Status`,UNIX_TIMESTAMP(CreationDate) AS CreationDateTicks,DATE_FORMAT(CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate
-        FROM `TB_MB_Models` WHERE `Status` AND ID=@@ModelID@@ <%= AND (Model_Type=0 OR (Model_Type=1 AND User_ID=@@User_ID@@)) %>;
+        <%=,(SELECT p.Plan_RGB FROM TB_MB_Plan AS p WHERE  p.`Status`=TRUE AND p.`Model_ID`=m.ID AND p.`User_ID`=@@User_ID@@ LIMIT 0,1) AS Plan_RGB %>
+        FROM `TB_MB_Models` m WHERE `Status` AND ID=@@ModelID@@ <%= AND (Model_Type=0 OR (Model_Type=1 AND User_ID=@@User_ID@@)) %>;
       ]]>
       </SqlCommand>
     </SqlDefinition>
@@ -73,6 +76,7 @@
       <SqlCommand>
         <![CDATA[
         SELECT m.`ID` AS MID,m.Introduce,m.Model_Name,m.IcoUrl,m.ImageUrl,m.Sort,UNIX_TIMESTAMP(cm.CreationDate) AS CreationDateTicks,DATE_FORMAT(cm.CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate 
+        <%=,(SELECT p.Plan_RGB FROM TB_MB_Plan AS p WHERE  p.`Status`=TRUE AND p.`Model_ID`=m.ID AND p.`User_ID`=@@User_ID@@ LIMIT 0,1) AS Plan_RGB %>
         FROM `TB_MB_CommonModel` AS cm
         JOIN `TB_MB_Models` AS m ON m.`ID`=cm.`Model_ID`
         WHERE cm.`User_ID`=@@User_ID@@ AND cm.`Status`=TRUE AND m.`Status`=TRUE ORDER BY m.Sort DESC,cm.`CreationDate` DESC;

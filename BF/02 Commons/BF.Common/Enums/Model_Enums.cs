@@ -5,7 +5,7 @@ namespace BF.Common.Enums
     /// <summary>
     /// 类型：0.系统提供;1.自定义
     /// </summary>
-    public enum Model_Type
+    public enum Model_Types
     {
         /// <summary>
         /// 系统定义

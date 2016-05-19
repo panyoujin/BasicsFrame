@@ -25,6 +25,12 @@ namespace BF.BackWebAPI.Models.RequestModels
         /// 计划时间
         /// </summary>
         public DateTime Plan_Time { get; set; }
+
+
+        /// <summary>
+        /// 计划颜色值
+        /// </summary>
+        public string Plan_RGB { get; set; }
     }
 
 

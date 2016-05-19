@@ -6,6 +6,7 @@
         $('#sign').off('click')
 
         $('#sign').on('click', function () {
+            alert(0);
             var _account = $("#txt-account").val();
             var _password = $("#txt-password").val();
             if (_account == "") {

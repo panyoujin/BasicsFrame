@@ -100,16 +100,7 @@ namespace BF.BackWebAPI.Controllers
             return (page > 1 ? (page - 1) * pageSize : 0);
         }
 
-        /// <summary>
-        /// 附件地址
-        /// </summary>
-        protected string AttmntUrl
-        {
-            get
-            {
-                return Global.AttmntServer.ServerDomain;
-            }
-        }
+       
 
         /// <summary>
         /// 换取幻腾接口的access_token

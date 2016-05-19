@@ -1,5 +1,7 @@
 ﻿using BF.BackWebAPI.Authorize;
 using BF.BackWebAPI.Models.Back.InParam;
+using BF.BackWebAPI.Models.RequestModels;
+using BF.BackWebAPI.Models.ResponseModel;
 using BF.Common.CommonEntities;
 using BF.Common.CustomException;
 using BF.Common.DataAccess;
@@ -23,8 +25,8 @@ namespace BF.BackWebAPI.Controllers
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
-        [BFAuthorizeAttribute(IsLogin = true)] 
-        public HttpResponseMessage GetHealthModelList(int type = 0, int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
+        [BFAuthorizeAttribute(IsLogin = true)]
+        public HttpResponseMessage GetHealthModelList(int type = 0, string model_name = "", int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             if (page <= 0)
@@ -39,9 +41,20 @@ namespace BF.BackWebAPI.Controllers
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("StartSize", startSize);
             dic.Add("PageSize", pageSize);
-            dic.Add("Model_Type", type);
+            if (type >= 0)
+            {
+                dic.Add("Model_Type", type);
+            }
+            if (!string.IsNullOrWhiteSpace(model_name))
+            {
+                dic.Add("Model_Name", "%" + model_name + "%");
+            }
 
-            apiResult.data = DBBaseFactory.DALBase.QueryForDataTable("BackWeb_GetHealthModelListByType", dic);
+            if (!this.MemberInfo.IsAdmin)
+            {
+                dic.Add("User_ID", this.MemberInfo.ID);
+            }
+            apiResult.data = DBBaseFactory.DALBase.QueryForList<HealthModelList>("BackWeb_GetHealthModelListByType", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
 
@@ -60,7 +73,7 @@ namespace BF.BackWebAPI.Controllers
             {
                 dic.Add("User_ID", this.MemberInfo.ID);
             }
-            apiResult.data = DBBaseFactory.DALBase.QueryForDataTable("BackWeb_GetHealthModelInfoByModelID", dic);
+            apiResult.data = DBBaseFactory.DALBase.QueryForList<HealthModelInfo>("BackWeb_GetHealthModelInfoByModelID", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
 
@@ -84,30 +97,33 @@ namespace BF.BackWebAPI.Controllers
             //需要生成对应的信息
             if (string.IsNullOrEmpty(healthModel.introduce))
             {
-                healthModel.introduce = string.Format("目标温度:{0}、", healthModel.final_Temperature);
-                if (healthModel.isFerv)
+                if (healthModel.isFerv || healthModel.final_Temperature >= 100 || healthModel.cook_Temperature >= 100)
                 {
                     healthModel.introduce = string.Format("{0}需要煮沸、", healthModel.introduce);
                 }
+                else
+                {
+                    healthModel.introduce = string.Format("{0}目标温度:{1}度、", healthModel.introduce, healthModel.final_Temperature);
+                }
                 if (healthModel.removal_Chlorine_Time > 0)
                 {
-                    healthModel.introduce = string.Format("{0}除氯{1}分钟、", healthModel.introduce, healthModel.removal_Chlorine_Time);
+                    healthModel.introduce = string.Format("{0}需要除氯{1}分钟、", healthModel.introduce, healthModel.removal_Chlorine_Time);
                 }
                 if (healthModel.isBubble)
                 {
-                    healthModel.introduce = string.Format("{0}{1}度下泡料{2}分钟、", healthModel.introduce, healthModel.bubble_Temperature, healthModel.bubble_Time);
+                    healthModel.introduce = string.Format("{0}在{1}度下泡料{2}分钟、", healthModel.introduce, healthModel.bubble_Temperature, healthModel.bubble_Time);
                 }
                 healthModel.introduce = string.Format("{0}煮料{1}分钟到{2}度、", healthModel.introduce, healthModel.cook_Time, healthModel.cook_Temperature);
                 if (healthModel.heat_Preservation_Temperature > 0)
                 {
-                    healthModel.introduce = string.Format("保温在{0}度、", healthModel.heat_Preservation_Temperature);
+                    healthModel.introduce = string.Format("{0}保温在{1}度、", healthModel.introduce, healthModel.heat_Preservation_Temperature);
                 }
                 healthModel.introduce = healthModel.introduce.Substring(0, healthModel.introduce.Length - 1);
             }
             //需要生成对应的信息
             if (string.IsNullOrEmpty(healthModel.remarks))
             {
-               
+
             }
             if (!healthModel.isBubble && (healthModel.bubble_Time > 0 || healthModel.bubble_Temperature > 0))
             {
@@ -137,7 +153,7 @@ namespace BF.BackWebAPI.Controllers
             dic.Add("Removal_Chlorine_Time", healthModel.removal_Chlorine_Time);
             dic.Add("Final_Temperature", healthModel.final_Temperature);
             dic.Add("IsFerv", healthModel.isFerv);
-            dic.Add("Model_Type", this.MemberInfo.IsAdmin ? (int)Model_Type.System : (int)Model_Type.Custom);
+            dic.Add("Model_Type", this.MemberInfo.IsAdmin ? (int)Model_Types.System : (int)Model_Types.Custom);
             dic.Add("Model_Status", this.MemberInfo.IsAdmin ? (int)Model_Status.Public : (int)Model_Status.Private);
             dic.Add("CreationUser", this.MemberInfo.Account ?? this.MemberInfo.ID + "");
             apiResult.data = DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_AddHealthModel", dic);
@@ -152,7 +168,7 @@ namespace BF.BackWebAPI.Controllers
         public HttpResponseMessage SetCommonModel([FromBody]CommonModel model)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
-            if(model==null)
+            if (model == null)
             {
                 model = new CommonModel();
             }
@@ -195,7 +211,7 @@ namespace BF.BackWebAPI.Controllers
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("User_ID", this.MemberInfo.ID);
-            apiResult.data = DBBaseFactory.DALBase.QueryForDataTable("BackWeb_GetCommonHealthModelList", dic);
+            apiResult.data = DBBaseFactory.DALBase.QueryForList<HealthModelList>("BackWeb_GetCommonHealthModelList", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
     }

@@ -1,5 +1,6 @@
 ﻿using BF.BackWebAPI.Models.Front;
 using BF.BackWebAPI.Models.Front.Request;
+using BF.BackWebAPI.Models.ResponseModel;
 using BF.Common.CommonEntities;
 using BF.Common.DataAccess;
 using BF.Common.FileProcess;
@@ -47,7 +48,7 @@ namespace BF.BackWebAPI.Controllers
                 return JsonHelper.SerializeObjectToWebApi(apiResult);
             }
             var sessionID = Login_Cache(user);
-            apiResult.data = new { Account = user.Account, Name = user.Name, ImageUrl = string.IsNullOrEmpty(user.ImageUrl) ? "" : this.AttmntUrl + user.ImageUrl, SessionID = sessionID };
+            apiResult.data = new { Account = user.Account, Name = user.Name, ImageUrl = string.IsNullOrEmpty(user.ImageUrl) ? "" : Global.AttmntUrl + user.ImageUrl, SessionID = sessionID };
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
         /// <summary>
@@ -83,7 +84,7 @@ namespace BF.BackWebAPI.Controllers
             {
                 var userInfo = DBBaseFactory.DALBase.QueryForObject<MemberInfo>("FrontApi_GetMemberInfoByAccount", dic);
                 var sessionID = Login_Cache(userInfo);
-                apiResult.data = new { Account = userInfo.Account, Name = userInfo.Name, ImageUrl = string.IsNullOrEmpty(userInfo.ImageUrl) ? "" : this.AttmntUrl + userInfo.ImageUrl, SessionID = sessionID };
+                apiResult.data = new { Account = userInfo.Account, Name = userInfo.Name, ImageUrl = string.IsNullOrEmpty(userInfo.ImageUrl) ? "" : Global.AttmntUrl + userInfo.ImageUrl, SessionID = sessionID };
 
             }
             else
@@ -119,7 +120,7 @@ namespace BF.BackWebAPI.Controllers
             {
                 MemberInfo user = new MemberInfo() { Account = param.Account, ID = MemberInfo.ID, Passwd = param.Passwd, Phone = param.Phone, Name = param.Name, Email = param.Email, QQ = param.QQ, ImageUrl = param.ImageUrl };
                 Update_Cache(user);
-                apiResult.data = new { Account = user.Account, ImageUrl = string.IsNullOrEmpty(user.ImageUrl) ? "" : this.AttmntUrl + user.ImageUrl };
+                apiResult.data = new { Account = user.Account, ImageUrl = string.IsNullOrEmpty(user.ImageUrl) ? "" : Global.AttmntUrl + user.ImageUrl };
             }
             else
             {
@@ -185,8 +186,28 @@ namespace BF.BackWebAPI.Controllers
 
             }
 
-            apiResult.data = new { FullUrl = this.AttmntUrl + paramInsert["AttachmentUrl"], ImageUrl = paramInsert["AttachmentUrl"] };
+            apiResult.data = new { FullUrl = Global.AttmntUrl + paramInsert["AttachmentUrl"], ImageUrl = paramInsert["AttachmentUrl"] };
 
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+
+        /// <summary>
+        /// 获取我的资料接口
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetMyInfo()
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("MemberID", MemberInfo.ID);
+
+            MyInfoResponse info = DBBaseFactory.DALBase.QueryForObject<MyInfoResponse>("FrontApi_GetMyInfo", dic);
+            if (info != null)
+            {
+                info.ImageUrl = string.IsNullOrEmpty(info.ImageUrl) ? "" : Global.AttmntUrl + info.ImageUrl;
+            }
+            apiResult.data = info;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
     }
