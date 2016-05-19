@@ -366,8 +366,9 @@ namespace BF.BackWebAPI.Controllers
         /// <param name="flag"></param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage UpdateGenericModuleStatus(int deviceID, int model = -1, int n = -1, bool flag = false)
+        public HttpResponseMessage UpdateGenericModuleStatus(int deviceID, int model = -1, int n = -1, int flagInt = 0)
         {
+            bool flag = flagInt == 0 ? false : true;
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             GenericSuccess module = null;
             GenericModules shuihu = GetGenericModules(deviceID);
