@@ -204,7 +204,7 @@
     <Compile Include="Models\Front\Request\RegisterModel.cs" />
     <Compile Include="Models\Front\Request\UpdateMemberInfoModel.cs" />
     <Compile Include="Models\Front\Request\UpdatePasswdModel.cs" />
-    <Compile Include="Models\Front\Response\MyKettleRelResponse.cs" />
+    <Compile Include="Models\Front\Response\AppVersionResponse.cs" />
     <Compile Include="Models\Front\Response\MyShopResponse.cs" />
     <Compile Include="Models\RequestModels\AddPlanRequest.cs" />
     <Compile Include="Models\RequestModels\AddAftermarketRequest.cs" />

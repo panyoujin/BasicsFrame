@@ -15,79 +15,18 @@ ORDER BY `CreationDate` DESC
 			</SqlCommand>
 		</SqlDefinition>
 	</Data>
-  
-  <Data name="Get_CheckKettle">
-    <SqlDefinition type="sql">
-      <SqlCommand>
-        <![CDATA[
-SELECT `ID`,`Name`,`Description`,`Version` FROM `TB_MB_Kettle`
-WHERE `Status`=TRUE AND NAME=@@Name@@ And `Version`=@@Version@@;
+	
+	<Data name="Get_AppVersion">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+         SELECT `Version`,`InnerVersion` ,`target_url` AS TargetUrl,`UpdateContent` ,`update_status` AS UpdateStatus,`LowestVersion`
+         FROM TB_MB_AppVersion a
+         WHERE `AppType`=@@AppType@@ AND `Status`=FALSE AND a.update_status IN(1,2)
+         AND a.`Version`>=@@Version@@
+         ORDER BY a.`Version` DESC LIMIT 1;
       ]]>
-      </SqlCommand>
-    </SqlDefinition>
-  </Data>
-  
-  <Data name="Insert_Kettle">
-    <SqlDefinition type="sql">
-      <SqlCommand>
-        <![CDATA[
-INSERT INTO `TB_MB_Kettle`(`Name`,`Description`,`Version`,`CreationUser`,`CreationDate`)
-VALUES(@@Name@@,@@Description@@,@@Version@@,@@CreationUser@@,NOW());
-      ]]>
-      </SqlCommand>
-    </SqlDefinition>
-  </Data>
-  
-  <Data name="Get_CheckMyKettleRel">
-    <SqlDefinition type="sql">
-      <SqlCommand>
-        <![CDATA[
-SELECT `ID`,`MemberID`,`KettleID`,`Default`,`CreationUser`,`CreationDate` FROM TB_MB_MyKettleRel
-WHERE MemberID=@@MemberID@@ and KettleID=@@KettleID@@;
-      ]]>
-      </SqlCommand>
-    </SqlDefinition>
-  </Data>
-  <Data name="Insert_MyKettleRel">
-    <SqlDefinition type="sql">
-      <SqlCommand>
-        <![CDATA[
-INSERT INTO `TB_MB_MyKettleRel`(`MemberID`,`KettleID`,`Default`,`CreationUser`,`CreationDate`)
-VALUES(@@MemberID@@,@@KettleID@@,@@Default@@,@@CreationUser@@,Now());
-      ]]>
-      </SqlCommand>
-    </SqlDefinition>
-  </Data>
-  <Data name="Get_QueryMyKettles">
-    <SqlDefinition type="sql">
-      <SqlCommand>
-        <![CDATA[
-SELECT rel.`Default`,ke.`ID`,ke.`Name`,ke.`Description`,ke.`Version` FROM TB_MB_MyKettleRel rel
-JOIN TB_MB_Kettle ke ON rel.`KettleID`=ke.ID
-WHERE ke.`Status`=TRUE
-AND rel.MemberID=@@MemberID@@
-ORDER BY rel.`Default` DESC;
-      ]]>
-      </SqlCommand>
-    </SqlDefinition>
-  </Data>
-  <Data name="Set_MyKettleDefault">
-    <SqlDefinition type="sql">
-      <SqlCommand>
-        <![CDATA[
-UPDATE `TB_MB_MyKettleRel` SET `Default`=FALSE WHERE `MemberID`= @@MemberID@@ and `Default`=TRUE;
-UPDATE `TB_MB_MyKettleRel` SET `Default`=TRUE WHERE `MemberID`= @@MemberID@@ and `KettleID`=@@KettleID@@;
-      ]]>
-      </SqlCommand>
-    </SqlDefinition>
-  </Data>
-  <Data name="Delete_MyKettleByID">
-    <SqlDefinition type="sql">
-      <SqlCommand>
-        <![CDATA[
-DELETE FROM `TB_MB_MyKettleRel` WHERE `MemberID`=@@MemberID@@ and `KettleID`=@@KettleID@@
-      ]]>
-      </SqlCommand>
-    </SqlDefinition>
-  </Data>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
 </HCIP.AjaxDataSetting>

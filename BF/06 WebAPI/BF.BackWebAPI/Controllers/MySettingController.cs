@@ -51,6 +51,30 @@ namespace BF.BackWebAPI.Controllers
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
 
+        /// <summary>
+        /// 获取版本号
+        /// </summary>
+        /// <param name="version">当前app版本</param>
+        /// <param name="appType">0:android  1:ios</param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetAppVersion(decimal version, int appType = 0)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("Version", version + "");
+            dic.Add("AppType", appType + "");
 
+            AppVersionResponse app = DBBaseFactory.DALBase.QueryForObject<AppVersionResponse>("Get_AppVersion", dic);
+            if (app != null)
+            {
+                if (!string.IsNullOrEmpty(app.TargetUrl))
+                {
+                    app.TargetUrl = Global.AttmntUrl + app.TargetUrl;
+                }
+            }
+            apiResult.data = app;
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
     }
 }
