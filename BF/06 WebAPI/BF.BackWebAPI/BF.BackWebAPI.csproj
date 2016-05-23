@@ -187,7 +187,6 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HTSmartController.cs" />
     <Compile Include="Controllers\MemberController.cs" />
-    <Compile Include="Controllers\MySettingController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PraiseAndCommentController.cs" />
     <Compile Include="Controllers\ShareController.cs" />
@@ -204,7 +203,6 @@
     <Compile Include="Models\Front\Request\RegisterModel.cs" />
     <Compile Include="Models\Front\Request\UpdateMemberInfoModel.cs" />
     <Compile Include="Models\Front\Request\UpdatePasswdModel.cs" />
-    <Compile Include="Models\Front\Response\AppVersionResponse.cs" />
     <Compile Include="Models\Front\Response\MyShopResponse.cs" />
     <Compile Include="Models\RequestModels\AddPlanRequest.cs" />
     <Compile Include="Models\RequestModels\AddAftermarketRequest.cs" />
@@ -213,6 +211,7 @@
     <Compile Include="Models\RequestModels\HealthModelInfo.cs" />
     <Compile Include="Models\ResponseModel\ArticleListResponse.cs" />
     <Compile Include="Models\ResponseModel\ArticleInfoResponse.cs" />
+    <Compile Include="Models\ResponseModel\CollectionListResponse.cs" />
     <Compile Include="Models\ResponseModel\DerviceCodeResponse.cs" />
     <Compile Include="Models\ResponseModel\DeviceResponse.cs" />
     <Compile Include="Models\ResponseModel\GenericContent.cs" />
