@@ -25,7 +25,7 @@
         INSERT INTO `TB_MC_Collection` (`User_ID`,`Source_ID`,Source_Type,`CreationDate`,`CreationUser`) 
         SELECT @@User_ID@@,@@Source_ID@@,@@Source_Type@@,now(),@@UserAccount@@
         FROM `TB_MB_MemberInfo` WHERE NOT EXISTS (SELECT ID FROM TB_MC_Collection WHERE User_ID=@@User_ID@@ AND Source_ID = @@Source_ID@@ AND Source_Type=@@Source_Type@@ AND `Status`=TRUE)
-        AND (@@Source_Type@@=1 AND EXISTS (SELECT ID FROM `TB_MB_Models` WHERE `ID`=@@Source_ID@@ AND `Status`=TRUE)) LIMIT 0,1;
+        AND (@@Source_Type@@=2 OR (@@Source_Type@@=1 AND EXISTS (SELECT ID FROM `TB_MB_Models` WHERE `ID`=@@Source_ID@@ AND `Status`=TRUE))) LIMIT 0,1;
       ]]>
       </SqlCommand>
     </SqlDefinition>
