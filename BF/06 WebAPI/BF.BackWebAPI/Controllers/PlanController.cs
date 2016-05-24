@@ -55,5 +55,20 @@ namespace BF.BackWebAPI.Controllers
             apiResult.data = new { planList = planList, planGroupeList = planGroupeList };
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+
+        /// <summary>
+        /// 获取计划
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetPlanListByDate(DateTime startTime, DateTime endTime)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("StartPlan_Time", startTime);
+            dic.Add("EndPlan_Time", endTime);
+            apiResult.data = DBBaseFactory.DALBase.QueryForList<PlanGroupList>("BackWeb_GetPlanListByPlanTime", dic);
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
     }
 }
