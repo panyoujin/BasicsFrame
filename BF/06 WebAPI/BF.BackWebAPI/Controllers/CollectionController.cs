@@ -1,7 +1,9 @@
 ﻿using BF.BackWebAPI.Authorize;
 using BF.BackWebAPI.Models.Back.InParam;
+using BF.BackWebAPI.Models.ResponseModel;
 using BF.Common.CommonEntities;
 using BF.Common.DataAccess;
+using BF.Common.Enums;
 using BF.Common.Helper;
 using BF.Common.StaticConstant;
 using System;
@@ -79,11 +81,12 @@ namespace BF.BackWebAPI.Controllers
             dic.Add("StartSize", startSize);
             dic.Add("PageSize", pageSize);
             dic.Add("User_ID", this.MemberInfo.ID);
-            if (type>0)
+            string key = "BackWeb_GetCollectionListByModels";
+            if (type == (int)Collection_Source_Type.Honyaradoh)
             {
-                dic.Add("Source_Tye", type);
+                key = "BackWeb_GetCollectionListByHonyaradoh";
             }
-            apiResult.data = DBBaseFactory.DALBase.QueryForDataTable("BackWeb_GetCollectionListByType", dic);
+            apiResult.data = DBBaseFactory.DALBase.QueryForList<CollectionListResponse>(key, dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
     }

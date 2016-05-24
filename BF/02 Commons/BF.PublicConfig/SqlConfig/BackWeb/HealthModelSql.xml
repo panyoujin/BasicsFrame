@@ -22,6 +22,8 @@
         , `Cook_Time`, `Cook_Temperature`, `Is_Heat_Preservation`, `Heat_Preservation_Time`, `Heat_Preservation_Temperature`, `Removal_Chlorine_Time`
         , `Final_Temperature`, `IsFerv`, `Model_Type`, `Model_Status`,UNIX_TIMESTAMP(CreationDate) AS CreationDateTicks,DATE_FORMAT(CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate
         <%=,(SELECT p.Plan_RGB FROM TB_MB_Plan AS p WHERE  p.`Status`=TRUE AND p.`Model_ID`=m.ID AND p.`User_ID`=@@User_ID@@ LIMIT 0,1) AS Plan_RGB %>
+        <%= ,(SELECT COUNT(0) FROM TB_MC_Collection AS c  WHERE c.User_ID=@@User_ID@@ and c.`Source_ID`=@@ModelID@@ AND c.`Status`=TRUE AND c.`Source_Type`=1 LIMIT 0,1) AS IsCollection %>
+        <%= ,(SELECT COUNT(0) FROM TB_MB_CommonModel AS c  WHERE c.User_ID=@@User_ID@@ and c.`Model_ID`=@@ModelID@@ AND c.`Status`=TRUE LIMIT 0,1) AS IsCommonModel %>
         FROM `TB_MB_Models` m WHERE `Status` AND ID=@@ModelID@@ <%= AND (Model_Type=0 OR (Model_Type=1 AND User_ID=@@User_ID@@)) %>;
       ]]>
       </SqlCommand>

@@ -12,7 +12,7 @@ namespace BF.BackWebAPI.Models.ResponseModel
         {
             get
             {
-                return  string.Format("http://{0}/WebPage/ArticleDetails.html?articleID={1}", HttpContext.Current.Request.Url.Authority, aID);
+                return string.Format("http://{0}/WebPage/ArticleDetails.html?articleID={1}", HttpContext.Current.Request.Url.Authority, aID);
             }
         }
         public string ImageUrl { get; set; }
@@ -27,5 +27,10 @@ namespace BF.BackWebAPI.Models.ResponseModel
         //public DateTime CreationDate { get; set; }
         //public long CreationDateTicks { get; set; }
         public int MyPraiseCount { get; set; }
+
+        /// <summary>
+        /// 是否收藏
+        /// </summary>
+        public int IsCollection { get; set; }
     }
 }

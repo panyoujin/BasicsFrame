@@ -117,5 +117,14 @@ namespace BF.BackWebAPI.Models.RequestModels
         public int Final_Temperature { get; set; }
         public bool IsFerv { get; set; }
         public int Model_Status { get; set; }
+        /// <summary>
+        /// 是否收藏
+        /// </summary>
+        public int IsCollection { get; set; }
+
+        /// <summary>
+        /// 是否常用
+        /// </summary>
+        public int IsCommonModel { get; set; }
     }
 }
