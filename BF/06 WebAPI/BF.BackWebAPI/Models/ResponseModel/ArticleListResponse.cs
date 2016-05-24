@@ -15,7 +15,23 @@ namespace BF.BackWebAPI.Models.ResponseModel
                 return string.Format("http://{0}/WebPage/ArticleDetails.html?articleID={1}", HttpContext.Current.Request.Url.Authority, aID);
             }
         }
-        public string ImageUrl { get; set; }
+        private string _imgUrl;
+        public string ImageUrl
+        {
+            get
+            {
+                if (_imgUrl == null || _imgUrl.IndexOf("http://") == 0 || _imgUrl.IndexOf("https://") == 0)
+                {
+
+                    return _imgUrl;
+                }
+                return Global.AttmntUrl + _imgUrl;
+            }
+            set
+            {
+                _imgUrl = value;
+            }
+        }
         public DateTime PublishDate { get; set; }
         public long PublishDateTicks { get; set; }
         public int PraiseCount { get; set; }

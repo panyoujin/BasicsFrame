@@ -45,7 +45,7 @@ namespace BF.BackWebAPI.Controllers
 
 
         /// <summary>
-        /// 获取文章分类
+        /// 获取文章详情
         /// </summary>
         /// <returns></returns>
         [HttpGet]

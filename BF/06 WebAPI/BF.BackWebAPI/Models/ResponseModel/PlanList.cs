@@ -22,11 +22,26 @@ namespace BF.BackWebAPI.Models.ResponseModel
         /// 
         /// </summary>
         public string sName { get; set; }
-
+        private string _iocUrl;
         /// <summary>
         /// 
         /// </summary>
-        public string sIcoUrl { get; set; }
+        public string sIcoUrl
+        {
+            get
+            {
+                if (_iocUrl == null || _iocUrl.IndexOf("http://") == 0 || _iocUrl.IndexOf("https://") == 0)
+                {
+
+                    return _iocUrl;
+                }
+                return Global.AttmntUrl + _iocUrl;
+            }
+            set
+            {
+                _iocUrl = value;
+            }
+        }
 
         /// <summary>
         /// 

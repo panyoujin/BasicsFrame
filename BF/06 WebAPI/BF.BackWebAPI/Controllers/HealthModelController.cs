@@ -82,6 +82,20 @@ namespace BF.BackWebAPI.Controllers
         /// </summary>
         /// <param name="modelID"></param>
         /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetHealthModelInfoToHtml(int modelID)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("ModelID", modelID);
+            apiResult.data = DBBaseFactory.DALBase.QueryForObject<HealthModelInfo>("BackWeb_GetHealthModelInfoByModelID", dic);
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+        /// <summary>
+        /// 根据模式ID 获取模式，需要检验当前用户是否有权限访问该模式
+        /// </summary>
+        /// <param name="modelID"></param>
+        /// <returns></returns>
         [HttpPost]
         public HttpResponseMessage AddHealthModel([FromBody]HealthModel healthModel)
         {
