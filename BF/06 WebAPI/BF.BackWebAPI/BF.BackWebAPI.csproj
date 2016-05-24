@@ -213,6 +213,7 @@
     <Compile Include="Models\RequestModels\HealthModelInfo.cs" />
     <Compile Include="Models\ResponseModel\ArticleListResponse.cs" />
     <Compile Include="Models\ResponseModel\ArticleInfoResponse.cs" />
+    <Compile Include="Models\ResponseModel\DeleteDerviceCodeResponse.cs" />
     <Compile Include="Models\ResponseModel\DerviceCodeResponse.cs" />
     <Compile Include="Models\ResponseModel\DeviceResponse.cs" />
     <Compile Include="Models\ResponseModel\GenericContent.cs" />

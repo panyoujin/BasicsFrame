@@ -172,35 +172,32 @@ namespace BF.BackWebAPI.Controllers
         public HttpResponseMessage DeleteDevice(string device_identifier)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
-            Dictionary<string, object> dic = new Dictionary<string, object>();
-
-            dic.Add("device_identifier", device_identifier);
-            dic.Add("MemberID", MemberInfo.ID);
-
-            DeviceResponse device = DBBaseFactory.DALBase.QueryForObject<DeviceResponse>("HTSmart_Get_Devices", dic);
-            if (device != null)
+            //DerviceCodeResponse wangguanCode = null;
+            DerviceCodeResponse shuihuCode = null;
+            MyDevices shuihu = GetDeviceStatus(device_identifier);
+            if (shuihu != null)
             {
-                string url = string.Format("http://huantengsmart.com:80/api/devices/{0}", device_identifier);
-                Dictionary<string, string> headers = new Dictionary<string, string>();
-                headers.Add("Authorization", "bearer " + Access_Token);
+                //MyDevices wangguan = GetRouterStatus(shuihu.router_id);
+                //if (wangguan != null)
+                //{
+                //    wangguanCode = DeleteDeviceByIdentifier(wangguan.device_identifier);
 
-                string returnStr = HttpRequestHelper.Request(url, "DELETE", 10, headers);
-
-                if (!string.IsNullOrEmpty(returnStr))
-                {
-                    DerviceCodeResponse deviceJson = JsonConvert.DeserializeObject<DerviceCodeResponse>(returnStr);
-                    if (deviceJson != null && deviceJson.success == true)
-                    {
-                        dic.Add("death_qr_code", deviceJson.qr_code);
-                        dic.Add("User", MemberInfo.Account);
-
-                        DBBaseFactory.DALBase.ExecuteNonQuery("HTSmart_Delete_Devices", dic);
-                    }
-
-                    apiResult.data = deviceJson;
-                }
-
+                shuihuCode = DeleteDeviceByIdentifier(shuihu.device_identifier);
+                //}
             }
+
+            //DeleteDerviceCodeResponse result = new DeleteDerviceCodeResponse();
+            //if (wangguanCode != null)
+            //{
+            //    result.success = true;
+            //    result.wangguan_qr_code = wangguanCode.qr_code;
+            //}
+            //if (shuihuCode != null)
+            //{
+            //    result.success = true;
+            //    result.shuihu_qr_code = shuihuCode.qr_code;
+            //}
+            apiResult.data = shuihuCode;
 
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
@@ -428,6 +425,43 @@ namespace BF.BackWebAPI.Controllers
 
         #region ---方法---
         /// <summary>
+        /// 删除设备
+        /// </summary>
+        /// <param name="device_identifier"></param>
+        /// <returns></returns>
+        private DerviceCodeResponse DeleteDeviceByIdentifier(string device_identifier)
+        {
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            DerviceCodeResponse deviceJson = null;
+            dic.Add("device_identifier", device_identifier);
+            dic.Add("MemberID", MemberInfo.ID);
+
+            DeviceResponse device = DBBaseFactory.DALBase.QueryForObject<DeviceResponse>("HTSmart_Get_Devices", dic);
+            if (device != null)
+            {
+
+                string url = string.Format("http://huantengsmart.com:80/api/devices/{0}", device_identifier);
+                Dictionary<string, string> headers = new Dictionary<string, string>();
+                headers.Add("Authorization", "bearer " + Access_Token);
+
+                string returnStr = HttpRequestHelper.Request(url, "DELETE", 10, headers);
+
+                if (!string.IsNullOrEmpty(returnStr))
+                {
+                    deviceJson = JsonConvert.DeserializeObject<DerviceCodeResponse>(returnStr);
+                    if (deviceJson != null && deviceJson.success == true)
+                    {
+                        dic.Add("death_qr_code", deviceJson.qr_code);
+                        dic.Add("User", MemberInfo.Account);
+
+                        DBBaseFactory.DALBase.ExecuteNonQuery("HTSmart_Delete_Devices", dic);
+                    }
+                }
+
+            }
+            return deviceJson;
+        }
+        /// <summary>
         /// 判断设备是否在线
         /// </summary>
         /// <param name="device_identifier"></param>
@@ -452,7 +486,7 @@ namespace BF.BackWebAPI.Controllers
         /// </summary>
         /// <param name="device_identifier"></param>
         /// <returns></returns>
-        private MyDevices GetRouterStatus(string router_id)
+        private MyDevices GetRouterStatus(int router_id)
         {
             MyDevices device = null;
 
