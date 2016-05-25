@@ -13,5 +13,6 @@ namespace BF.BackWebAPI.Models.ResponseModel
         //public string Passwd { set; get; }
         public string ImageUrl { set; get; }
         public string Name { set; get; }
+        public string QQ { set; get; }
     }
 }
