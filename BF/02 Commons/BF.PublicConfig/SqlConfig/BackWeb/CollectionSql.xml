@@ -2,7 +2,7 @@
 <HCIP.AjaxDataSetting>
 
   <!--根据类型获取收藏列表  后面还需要添加养生堂的收藏-->
-  <Data name="BackWeb_GetCollectionListByModels">
+  <!--<Data name="BackWeb_GetCollectionListByModels">
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
@@ -15,11 +15,11 @@
       ]]>
       </SqlCommand>
     </SqlDefinition>
-  </Data>
+  </Data>-->
 
 
   <!--根据类型获取收藏列表  后面还需要添加养生堂的收藏-->
-  <Data name="BackWeb_GetCollectionListByHonyaradoh">
+  <!--<Data name="BackWeb_GetCollectionListByHonyaradoh">
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
@@ -27,6 +27,27 @@
         FROM TB_MC_Collection AS c 
         JOIN `TB_MB_Article` AS m ON c.`Source_ID`=m.`ID`
         WHERE c.User_ID=@@User_ID@@ AND c.`Status`=TRUE AND m.`Status`=TRUE AND c.`Source_Type`=2  ORDER BY c.CollectionTime DESC
+        <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>-->
+  
+  <!--根据类型获取收藏列表  后面还需要添加养生堂的收藏-->
+  <Data name="BackWeb_GetAllCollectionList">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT m.`ID` AS sID,c.`Source_Type` AS sType,m.Introduce AS sIntroduce,m.Model_Name AS sName,m.IcoUrl AS sIcoUrl,c.CollectionTime,UNIX_TIMESTAMP(c.CollectionTime) AS CollectionTimeTicks,m.WeChatUrl
+        FROM TB_MC_Collection AS c 
+        JOIN `TB_MB_Models` AS m ON c.`Source_ID`=m.`ID`
+        WHERE c.User_ID=@@User_ID@@ AND c.`Status`=TRUE AND m.`Status`=TRUE AND c.`Source_Type`=1 AND (@@Source_Type@@=0 OR @@Source_Type@@=1)
+        UNION ALL
+        SELECT m.`ID` AS sID,c.`Source_Type` AS sType,m.`ArticleContent` AS sIntroduce,m.`ArticleTitle` AS sName,m.`ImageUrl` AS sIcoUrl,c.CollectionTime,UNIX_TIMESTAMP(c.CollectionTime) AS CollectionTimeTicks,m.WeChatUrl
+        FROM TB_MC_Collection AS c 
+        JOIN `TB_MB_Article` AS m ON c.`Source_ID`=m.`ID`
+        WHERE c.User_ID=@@User_ID@@ AND c.`Status`=TRUE AND m.`Status`=TRUE AND c.`Source_Type`=2 AND (@@Source_Type@@=0 OR @@Source_Type@@=2)
+        ORDER BY CollectionTime DESC
         <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
       ]]>
       </SqlCommand>

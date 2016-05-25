@@ -81,11 +81,20 @@ namespace BF.BackWebAPI.Controllers
             dic.Add("StartSize", startSize);
             dic.Add("PageSize", pageSize);
             dic.Add("User_ID", this.MemberInfo.ID);
-            string key = "BackWeb_GetCollectionListByModels";
-            if (type == (int)Collection_Source_Type.Honyaradoh)
-            {
-                key = "BackWeb_GetCollectionListByHonyaradoh";
-            }
+            dic.Add("Source_Type", type);
+            string key = "BackWeb_GetAllCollectionList";
+            //switch (type)
+            //{
+            //    case (int)Collection_Source_Type.Model:
+            //        key = "BackWeb_GetCollectionListByModels";
+            //        break;
+            //    case (int)Collection_Source_Type.Honyaradoh:
+            //        key = "BackWeb_GetCollectionListByHonyaradoh";
+            //        break;
+            //    default:
+            //        key = "BackWeb_GetAllCollectionList";
+            //        break;
+            //}
             apiResult.data = DBBaseFactory.DALBase.QueryForList<CollectionListResponse>(key, dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }

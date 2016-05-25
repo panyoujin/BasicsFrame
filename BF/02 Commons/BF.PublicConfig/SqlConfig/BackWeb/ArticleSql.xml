@@ -17,7 +17,7 @@
       <SqlCommand>
         <![CDATA[
         SELECT a.`ID` AS aID,a.`ArticleTitle`,a.`ArticleContent`,a.`ImageUrl`,a.`BitImageUrl`,a.`ArticleSource`
-        ,a.`ArticleSourceUrl`,a.`PublishDate`,UNIX_TIMESTAMP(a.`PublishDate`) AS PublishDateTicks,a.`PraiseCount`,a.`CommentCount`,a.ReadCount,a.`CreationDate`,UNIX_TIMESTAMP(a.`CreationDate`) AS CreationDateTicks
+        ,a.`ArticleSourceUrl`,a.`PublishDate`,UNIX_TIMESTAMP(a.`PublishDate`) AS PublishDateTicks,a.`PraiseCount`,a.`CommentCount`,a.ReadCount,a.`CreationDate`,UNIX_TIMESTAMP(a.`CreationDate`) AS CreationDateTicks,a.WeChatUrl
         <%= ,(SELECT COUNT(0) FROM `TB_MB_Comment` c  WHERE c.`Source_ID`=a.ID AND c.`Source_Type`=3 AND c.`Comment_Type`=2 AND c.`Status`=TRUE AND c.`Comment_User_ID`=@@User_ID@@) AS MyPraiseCount  %>
         FROM TB_MB_Article AS a 
         WHERE a.`Status`=TRUE <%= AND a.`ArticleType_ID`=@@ArticleType_ID@@ %> ORDER BY a.`ArticleSort`;
@@ -34,7 +34,7 @@
         <![CDATA[
         <%= UPDATE TB_MB_Article SET ReadCount=ReadCount+1 WHERE `ID`=@@Article_ID@@; %>
         SELECT a.`ID` AS aID,a.`ArticleTitle`,a.`ArticleContent`,a.`ImageUrl`,a.`BitImageUrl`,a.`ArticleSource`
-        ,a.`ArticleSourceUrl`,a.`PublishDate`,UNIX_TIMESTAMP(a.`PublishDate`) AS PublishDateTicks,a.`PraiseCount`,a.`CommentCount`,a.ReadCount,a.`CreationDate`,UNIX_TIMESTAMP(a.`CreationDate`) AS CreationDateTicks
+        ,a.`ArticleSourceUrl`,a.`PublishDate`,UNIX_TIMESTAMP(a.`PublishDate`) AS PublishDateTicks,a.`PraiseCount`,a.`CommentCount`,a.ReadCount,a.`CreationDate`,UNIX_TIMESTAMP(a.`CreationDate`) AS CreationDateTicks,a.WeChatUrl
         <%= ,(SELECT COUNT(0) FROM `TB_MB_Comment` c  WHERE c.`Source_ID`=a.ID AND c.`Source_Type`=3 AND  c.`Comment_Type`=2 AND c.`Status`=TRUE AND c.`Comment_User_ID`=@@User_ID@@) AS MyPraiseCount  %>
         <%= ,(SELECT COUNT(0) FROM TB_MC_Collection AS c  WHERE c.User_ID=@@User_ID@@ and c.`Source_ID`=@@Article_ID@@ AND c.`Status`=TRUE AND c.`Source_Type`=2 LIMIT 0,1) AS IsCollection %>
         FROM TB_MB_Article AS a 

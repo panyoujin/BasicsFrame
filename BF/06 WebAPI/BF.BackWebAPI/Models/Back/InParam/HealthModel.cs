@@ -27,5 +27,8 @@ namespace BF.BackWebAPI.Models.Back.InParam
         public int removal_Chlorine_Time { get; set; }
         public int final_Temperature { get; set; }
         public bool isFerv { get; set; }
+
+
+        public string WeChatUrl { get; set; }
     }
 }

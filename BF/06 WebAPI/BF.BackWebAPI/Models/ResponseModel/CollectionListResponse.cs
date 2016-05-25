@@ -37,5 +37,6 @@ namespace BF.BackWebAPI.Models.ResponseModel
         public string CollectionTime { get; set; }
 
         public long CollectionTimeTicks { get; set; }
+        public string WeChatUrl { get; set; }
     }
 }

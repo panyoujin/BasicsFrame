@@ -48,5 +48,6 @@ namespace BF.BackWebAPI.Models.ResponseModel
         /// 是否收藏
         /// </summary>
         public int IsCollection { get; set; }
+        public string WeChatUrl { get; set; }
     }
 }

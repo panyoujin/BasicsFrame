@@ -8,6 +8,7 @@ using BF.Common.DataAccess;
 using BF.Common.Enums;
 using BF.Common.Helper;
 using BF.Common.StaticConstant;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Http;
@@ -25,7 +26,6 @@ namespace BF.BackWebAPI.Controllers
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
-        [BFAuthorizeAttribute(IsLogin = true)]
         public HttpResponseMessage GetHealthModelList(int type = 0, string model_name = "", int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
@@ -45,14 +45,28 @@ namespace BF.BackWebAPI.Controllers
             {
                 dic.Add("Model_Type", type);
             }
+            if(type==(int)Model_Types.Custom)
+            {
+                dic.Add("User_ID", this.MemberInfo.ID);
+            }
+            else
+            {
+                dic.Add("User_ID", 0);
+            }
+            try
+            {
+                if (!this.MemberInfo.IsAdmin)
+                {
+                    dic["User_ID"] = this.MemberInfo.ID;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
             if (!string.IsNullOrWhiteSpace(model_name))
             {
                 dic.Add("Model_Name", "%" + model_name + "%");
-            }
-
-            if (!this.MemberInfo.IsAdmin)
-            {
-                dic.Add("User_ID", this.MemberInfo.ID);
             }
             apiResult.data = DBBaseFactory.DALBase.QueryForList<HealthModelList>("BackWeb_GetHealthModelListByType", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
@@ -69,9 +83,17 @@ namespace BF.BackWebAPI.Controllers
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("ModelID", modelID);
-            if (!this.MemberInfo.IsAdmin)
+
+            try
             {
-                dic.Add("User_ID", this.MemberInfo.ID);
+                if (!this.MemberInfo.IsAdmin)
+                {
+                    dic.Add("User_ID", this.MemberInfo.ID);
+                }
+            }
+            catch (Exception ex)
+            {
+
             }
             apiResult.data = DBBaseFactory.DALBase.QueryForList<HealthModelInfo>("BackWeb_GetHealthModelInfoByModelID", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
@@ -170,6 +192,7 @@ namespace BF.BackWebAPI.Controllers
             dic.Add("Model_Type", this.MemberInfo.IsAdmin ? (int)Model_Types.System : (int)Model_Types.Custom);
             dic.Add("Model_Status", this.MemberInfo.IsAdmin ? (int)Model_Status.Public : (int)Model_Status.Private);
             dic.Add("CreationUser", this.MemberInfo.Account ?? this.MemberInfo.ID + "");
+            dic.Add("WeChatUrl", healthModel.WeChatUrl);
             apiResult.data = DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_AddHealthModel", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }

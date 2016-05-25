@@ -135,5 +135,6 @@ namespace BF.BackWebAPI.Models.RequestModels
                 return string.Format("http://{0}/WebPage/ModelDetails.html?modelID={1}", HttpContext.Current.Request.Url.Authority, MID);
             }
         }
+        public string WeChatUrl { get; set; }
     }
 }
