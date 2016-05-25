@@ -22,24 +22,24 @@ document.addEventListener("touchmove", function(e) {
 }, false);
 
 function loading(isshow, msg) {
-	msg = msg ? msg : "页面加载中...";
-	if (isshow == undefined || isshow == null) {
-		var div = document.getElementById('wxloading');
-		if (div) {
-			document.getElementById('loadingMsg').innerHTML = msg;
-		} else {
-			div = document.createElement('div');
-			div.setAttribute('class', 'wx_loading');
-			div.setAttribute('id', 'wxloading');
-			div.innerHTML = '<div class="wx_loading_inner"><i class="wx_loading_icon"></i><span id="loadingMsg">' + msg + '</span></div>';
-			document.body.appendChild(div);
-		}
-		isScroll = false;
-	} else {
-		var loading = document.getElementById('wxloading');
-		loading && loading.parentNode && loading.parentNode.removeChild(loading);
-		isScroll = true;
-	}
+	//msg = msg ? msg : "页面加载中...";
+	//if (isshow == undefined || isshow == null) {
+	//	var div = document.getElementById('wxloading');
+	//	if (div) {
+	//		document.getElementById('loadingMsg').innerHTML = msg;
+	//	} else {
+	//		div = document.createElement('div');
+	//		div.setAttribute('class', 'wx_loading');
+	//		div.setAttribute('id', 'wxloading');
+	//		div.innerHTML = '<div class="wx_loading_inner"><i class="wx_loading_icon"></i><span id="loadingMsg">' + msg + '</span></div>';
+	//		document.body.appendChild(div);
+	//	}
+	//	isScroll = false;
+	//} else {
+	//	var loading = document.getElementById('wxloading');
+	//	loading && loading.parentNode && loading.parentNode.removeChild(loading);
+	//	isScroll = true;
+	//}
 }
 
 function defaultImg(e) {

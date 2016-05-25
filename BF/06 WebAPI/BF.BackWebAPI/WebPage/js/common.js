@@ -9,29 +9,29 @@ define(['zepto'], function () {
     }
 
     
-    (function () {
-        /*alert(Cookies.Get("WECHAT_OPENID_SAFE"));*/
-        //is_gethospital();
-        //alert(document.cookie);
-        $('div[template]').each(function () {
-            var obj = $(this);
-            var tempurl = window.webbase + $(obj).attr('template');
-            $.ajax({
-                type: 'get',
-                url: tempurl,
-                data: null,
-                async: true,
-                dataType: 'html',
-                success: function (d) {
-                    $(obj).html(d.toString())
-                },
-                error: function (e) {
-                    alert(e)
-                }
-            })
-        })
+    //(function () {
+    //    /*alert(Cookies.Get("WECHAT_OPENID_SAFE"));*/
+    //    //is_gethospital();
+    //    //alert(document.cookie);
+    //    $('div[template]').each(function () {
+    //        var obj = $(this);
+    //        var tempurl = window.webbase + $(obj).attr('template');
+    //        $.ajax({
+    //            type: 'get',
+    //            url: tempurl,
+    //            data: null,
+    //            async: true,
+    //            dataType: 'html',
+    //            success: function (d) {
+    //                $(obj).html(d.toString())
+    //            },
+    //            error: function (e) {
+    //                alert(e)
+    //            }
+    //        })
+    //    })
 
-    })()
+    //})()
 
     function FormPage() {
         $('input,textare').attr('dir', 'rtl');
@@ -115,7 +115,7 @@ define(['zepto'], function () {
             if (height + 100 >= totalheight) {
                 //alert(pmaxindex)
                 if (pindex < pmaxindex && pmaxindex != 0) {
-                    loading();
+                    //loading();
                     pindex += 1;
                     callback(pindex, psize);
                 }
@@ -134,7 +134,7 @@ define(['zepto'], function () {
             if (height <= 0) {
                 //alert(pmaxindex)
                 if (pindex < pmaxindex && pmaxindex != 0) {
-                    loading();
+                    //loading();
                     pindex += 1;
                     callback(pindex, psize);
                 }
@@ -203,7 +203,7 @@ define(['zepto'], function () {
             },
             error: function (err) {
                 err(err);
-                loading(0);
+                //loading(0);
             }
         })
     }
@@ -240,7 +240,7 @@ define(['zepto'], function () {
             },
             error: function (err) {
                 err(err);
-                loading(0);
+                //loading(0);
             }
         })
     }
