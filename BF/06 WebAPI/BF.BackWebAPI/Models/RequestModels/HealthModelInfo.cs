@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BF.Common.Extensions;
+using System.Web;
 
 namespace BF.BackWebAPI.Models.RequestModels
 {
@@ -126,5 +127,13 @@ namespace BF.BackWebAPI.Models.RequestModels
         /// 是否常用
         /// </summary>
         public int IsCommonModel { get; set; }
+
+        public string ModelUrl
+        {
+            get
+            {
+                return string.Format("http://{0}/WebPage/ModelDetails.html?modelID={1}", HttpContext.Current.Request.Url.Authority, MID);
+            }
+        }
     }
 }

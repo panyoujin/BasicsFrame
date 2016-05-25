@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BF.Common.Extensions;
+using System.Web;
+
 namespace BF.BackWebAPI.Models.ResponseModel
 {
     public class HealthModelList
@@ -99,5 +101,13 @@ namespace BF.BackWebAPI.Models.ResponseModel
         /// 
         /// </summary>
         public string Plan_RGB { get; set; }
+
+        public string ModelUrl
+        {
+            get
+            {
+                return string.Format("http://{0}/WebPage/ModelDetails.html?modelID={1}", HttpContext.Current.Request.Url.Authority, MID);
+            }
+        }
     }
 }

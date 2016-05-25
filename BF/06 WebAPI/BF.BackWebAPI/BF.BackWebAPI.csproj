@@ -179,6 +179,7 @@
     <Compile Include="Authorize\ExceptionAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArticController.cs" />
+    <Compile Include="Controllers\MySettingController.cs" />
     <Compile Include="Controllers\PlanController.cs" />
     <Compile Include="Controllers\Back\BackBaseController.cs" />
     <Compile Include="Controllers\AftermarketController.cs" />
@@ -203,6 +204,7 @@
     <Compile Include="Models\Front\Request\RegisterModel.cs" />
     <Compile Include="Models\Front\Request\UpdateMemberInfoModel.cs" />
     <Compile Include="Models\Front\Request\UpdatePasswdModel.cs" />
+    <Compile Include="Models\Front\Response\AppVersionResponse.cs" />
     <Compile Include="Models\Front\Response\MyShopResponse.cs" />
     <Compile Include="Models\RequestModels\AddPlanRequest.cs" />
     <Compile Include="Models\RequestModels\AddAftermarketRequest.cs" />
@@ -245,6 +247,8 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="WebPage\ModelDetails.html" />
+    <Content Include="WebPage\ArticleDetails.html" />
     <Content Include="WebPage\modules\new-model.js" />
     <Content Include="WebPage\home.html" />
     <Content Include="WebPage\index.html" />

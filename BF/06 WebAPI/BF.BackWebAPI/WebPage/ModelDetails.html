@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Expires" content="-1">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Pragma" content="no-cache">
+    <title>养生宝典</title>
+    <style type="text/css">
+        p {
+            text-indent: 2em; /*em是相对单位，2em即现在一个字大小的两倍*/
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <!--<div>
+            <p class="tit" id="pTitle" style="text-align: center;font-size:18px;font-weight:bold;"></p>
+            <p class="date" id="pDate" style="text-align: center;color:#888888;font-size:17px;"></p>
+            <div style="border-bottom:1px dashed #CCCCCC"></div>
+        </div>
+        <div class="text-content" id="divSummary" style="background-color:#F2FAFD;margin-top:20px;">
+        </div>-->
+
+        <p class="text-content" id="divContent">
+        </p>
+    </div>
+
+    <script src="js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script>
+
+        //获取页面参数
+        var request = {
+            QueryString: function (val) {
+                var uri = window.location.search;
+                var re = new RegExp("" + val + "=([^&?]*)", "ig");
+                return ((uri.match(re)) ? (uri.match(re)[0].substr(val.length + 1)) : null);
+            }
+        }
+
+        var ID = request.QueryString("modelID");
+
+        $(function () {
+
+            $.ajax({
+                type: "GET",
+                url: "/znsh/HealthModel/GetHealthModelInfoToHtml?modelID=" + ID,
+                success: function (data) {
+                    console.debug(data);
+                    if (data.code == "200") {
+                        //$("#divSummary").html(data.data.Summary);
+                        $("#divContent").html((data.data.Describe || data.data.Introduce));
+                        //$("#pTitle").html(data.data.Title);
+                        //var date = new Date(data.data.PublishTime);
+                        //$("#pDate").html(data.data.PublishTime);
+                    }
+
+                },
+                error: function (xhr, errorText, errorType) {
+                    //alert(xhr + "    " + errorText + "    " + errorType);
+                    //$("#htmlData").val("xhr：" + xhr + " errorText：" + errorText + " errorType：" + errorType + " data：" + data);
+                }
+            });
+
+        });
+
+
+
+    </script>
+</body>
+
+</html>
