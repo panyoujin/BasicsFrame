@@ -71,7 +71,7 @@ namespace BF.BackWebAPI.Controllers
             dic.Add("Passwd", param.Passwd);
             dic.Add("Name", param.Name);
             dic.Add("Email", param.Email);
-            dic.Add("ImageUrl", SaveIcon());
+            dic.Add("ImageUrl", param.ImageUrl);
             var user = DBBaseFactory.DALBase.QueryForObject<MemberInfo>("FrontApi_GetMemberInfoByAccount", dic);
             if (user != null)
             {
@@ -113,7 +113,7 @@ namespace BF.BackWebAPI.Controllers
             dic.Add("Email", param.Email);
             dic.Add("Phone", param.Phone);
             dic.Add("QQ", param.QQ);
-            dic.Add("ImageUrl", SaveIcon());
+            //dic.Add("ImageUrl", param.ImageUrl);
             dic.Add("ModifyUser", MemberInfo.Account);
             int result = DBBaseFactory.DALBase.ExecuteNonQuery("FrontApi_UpdateMemberInfo", dic);
             if (result > 0)
