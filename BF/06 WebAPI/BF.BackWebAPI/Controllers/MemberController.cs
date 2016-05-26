@@ -71,7 +71,7 @@ namespace BF.BackWebAPI.Controllers
             dic.Add("Passwd", param.Passwd);
             dic.Add("Name", param.Name);
             dic.Add("Email", param.Email);
-            dic.Add("ImageUrl", param.ImageUrl);
+            dic.Add("ImageUrl", SaveIcon());
             var user = DBBaseFactory.DALBase.QueryForObject<MemberInfo>("FrontApi_GetMemberInfoByAccount", dic);
             if (user != null)
             {
@@ -113,7 +113,7 @@ namespace BF.BackWebAPI.Controllers
             dic.Add("Email", param.Email);
             dic.Add("Phone", param.Phone);
             dic.Add("QQ", param.QQ);
-            dic.Add("ImageUrl", param.ImageUrl);
+            dic.Add("ImageUrl", SaveIcon());
             dic.Add("ModifyUser", MemberInfo.Account);
             int result = DBBaseFactory.DALBase.ExecuteNonQuery("FrontApi_UpdateMemberInfo", dic);
             if (result > 0)
@@ -129,6 +129,24 @@ namespace BF.BackWebAPI.Controllers
             }
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+
+        #region --- 方法 ---
+        private string SaveIcon()
+        {
+            string url = "";
+            Dictionary<string, object> paramInsert = new Dictionary<string, object>();
+            if (HttpContext.Current.Request.Files.Count > 0)
+            {
+
+                paramInsert = FileProcessHelp.Save(HttpContext.Current.Request.Files[0], Global.AttmntServer);
+            }
+            if (paramInsert.Count > 0 && paramInsert.ContainsKey("AttachmentUrl"))
+            {
+                url = paramInsert["AttachmentUrl"].ToString();
+            }
+            return url;
+        }
+        #endregion
         /// <summary>
         /// 修改密码接口
         /// </summary>
