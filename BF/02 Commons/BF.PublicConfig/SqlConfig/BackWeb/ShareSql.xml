@@ -10,6 +10,7 @@
         ,s.`PraiseCount`,s.`CommentCount`,IFNULL(m.`Name`,m.`Account`) AS User_Name,s.`CreationDate`,UNIX_TIMESTAMP(s.`CreationDate`) AS CreationDateTicks
         <%= ,(SELECT COUNT(0) FROM `TB_MB_Comment` c  WHERE c.`Source_ID`=s.ID AND c.`Source_Type`=1 AND c.`Comment_Type`=2 AND c.`Status`=TRUE AND c.`Comment_User_ID`=@@User_ID@@) AS MyPraiseCount  %>
          ,(SELECT GROUP_CONCAT(a.`AttachmentUrl`) FROM `TB_MB_ShareAttmnt` AS a WHERE a.`Source_ID`=s.`ID` AND a.`Status`=TRUE AND a.`Attmnt_Type`=1) AS AttachUrls
+         ,m.`ImageUrl` AS User_Image
         FROM `TB_MB_Share` AS s
         JOIN `TB_MB_MemberInfo` AS m ON s.`User_ID`=m.`ID`
         WHERE s.`Status`=TRUE AND m.`Status`=TRUE <%= AND s.`ID`> @@MaxID@@%> <%= AND s.`ID`< @@MinID@@%>
@@ -27,6 +28,7 @@
         <![CDATA[
         SELECT c.ID as CommentID,c.`Comment_Content`,c.`Comment_User_ID`,c.`Accept_Comment_User_ID`,IFNULL(m.`Name`,m.`Account`) AS User_Name ,UNIX_TIMESTAMP(c.`CreationDate`) AS CreationDateTicks
         ,(SELECT GROUP_CONCAT(a.`AttachmentUrl`) FROM `TB_MB_ShareAttmnt` AS a WHERE a.`Source_ID`=c.`ID` AND a.`Status`=TRUE AND a.`Attmnt_Type`=2) AS AttachUrls
+        ,m.`ImageUrl` AS Comment_User_Image
         FROM `TB_MB_Comment` c 
         JOIN `TB_MB_MemberInfo` AS m ON c.`Comment_User_ID` = m.`ID`
         WHERE c.`Source_ID`=@@Source_ID@@ AND c.`Source_Type`=1 AND c.`Comment_Type`=1 AND c.`Status`=TRUE AND m.`Status`=TRUE;
