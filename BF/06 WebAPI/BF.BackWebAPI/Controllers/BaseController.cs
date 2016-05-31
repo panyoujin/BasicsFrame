@@ -71,9 +71,9 @@ namespace BF.BackWebAPI.Controllers
                 //更新数据库登录标识字段，这样一个帐号只能在一台机器常登录
                 DBBaseFactory.DALBase.ExecuteNonQuery("FrontApi_UpdateSessionID", dic);
             }
-            catch
+            catch (Exception ex)
             {
-
+                LogHelper.Info(string.Format("更新数据库登录标识字段失败：", ex.Message));
             }
             HttpCookie cook = new HttpCookie("CACHED_SESSION_ID", sessionID);
             HttpContext.Current.Response.AppendCookie(cook);
@@ -100,7 +100,7 @@ namespace BF.BackWebAPI.Controllers
             return (page > 1 ? (page - 1) * pageSize : 0);
         }
 
-       
+
 
         /// <summary>
         /// 换取幻腾接口的access_token

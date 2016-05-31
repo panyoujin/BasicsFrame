@@ -179,6 +179,7 @@
     <Compile Include="Authorize\ExceptionAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArticController.cs" />
+    <Compile Include="Controllers\Back\Bask_HealthModelController.cs" />
     <Compile Include="Controllers\MySettingController.cs" />
     <Compile Include="Controllers\PlanController.cs" />
     <Compile Include="Controllers\Back\BackBaseController.cs" />
@@ -195,6 +196,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Back\InParam\Collection.cs" />
+    <Compile Include="Models\Back\InParam\Bask_HealthModel.cs" />
     <Compile Include="Models\Back\InParam\HealthModel.cs" />
     <Compile Include="Models\Back\InParam\Login.cs" />
     <Compile Include="Models\Back\InParam\CommonModel.cs" />

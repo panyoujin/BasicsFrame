@@ -32,6 +32,15 @@
         page = page + 1;
         m.GetHealthModelList(type, name, page, pagesize, function (data) {
             info.models = data.data;
+            $.each(info.models, function (index, obj) {
+                obj.model_hide = "none";
+                obj.edit_url = "";
+                if (obj.Model_Type == 0)
+                {
+                    obj.model_hide = "inline-block";
+                    obj.edit_url = window.webroot + "/new-model.html?modelID=" + obj.MID;
+                }
+            })
             angular.set('info', info, bindEvent);
         })
     }
