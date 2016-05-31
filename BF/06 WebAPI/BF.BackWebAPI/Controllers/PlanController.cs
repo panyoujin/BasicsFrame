@@ -22,9 +22,13 @@ namespace BF.BackWebAPI.Controllers
         public HttpResponseMessage AddPlan([FromBody]AddPlanRequest model)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS, data = true };
-            if (model == null || model.Plan_Time < DateTime.Now || model.Model_ID <= 0)
+            if (model == null || model.Model_ID <= 0)
             {
                 throw new BusinessException("请填写完整数据在提交");
+            }
+            if (model.Plan_Time < DateTime.Now)
+            {
+                throw new BusinessException("计划时间需要大于当前时间");
             }
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("Plan_Time", model.Plan_Time);
@@ -46,8 +50,10 @@ namespace BF.BackWebAPI.Controllers
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             Dictionary<string, object> dic = new Dictionary<string, object>();
+            endTime = endTime.AddDays(1);
             dic.Add("StartPlan_Time", startTime);
             dic.Add("EndPlan_Time", endTime);
+            dic.Add("User_ID", this.MemberInfo.ID);
             var planList = DBBaseFactory.DALBase.QueryForList<PlanList>("BackWeb_GetPlanListByPlanTime", dic);
             var planGroupeList = DBBaseFactory.DALBase.QueryForList<PlanGroupList>("BackWeb_GetPlanGroupListByPlanTime", dic);
             //var planList = DBBaseFactory.DALBase.TableToList< PlanList>(ds.Tables[0]);
@@ -67,6 +73,7 @@ namespace BF.BackWebAPI.Controllers
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("StartPlan_Time", startTime);
             dic.Add("EndPlan_Time", endTime);
+            dic.Add("User_ID", this.MemberInfo.ID);
             apiResult.data = DBBaseFactory.DALBase.QueryForList<PlanGroupList>("BackWeb_GetPlanListByPlanTime", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
