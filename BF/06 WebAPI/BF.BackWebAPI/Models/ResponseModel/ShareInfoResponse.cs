@@ -19,6 +19,36 @@ namespace BF.BackWebAPI.Models.ResponseModel
         /// </summary>
         public int Comment_User_ID { get; set; }
 
+        private string _user_Image;
+        /// <summary>
+        /// 图片地址
+        /// </summary>
+        public string Comment_User_Image
+        {
+            get
+            {
+                if (!string.IsNullOrWhiteSpace(_user_Image))
+                {
+
+                    if (_user_Image.IndexOf("http://") == 0 || _user_Image.IndexOf("https://") == 0)
+                    {
+                        return _user_Image;
+                    }
+                    else
+                    {
+                        return Global.AttmntUrl + _user_Image;
+                    }
+
+                }
+                return _user_Image;
+            }
+            set
+            {
+                _user_Image = value;
+            }
+        }
+
+
         /// <summary>
         /// 被评论的用户ID
         /// </summary>

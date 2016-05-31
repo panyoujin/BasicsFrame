@@ -58,6 +58,7 @@ namespace BF.BackWebAPI.Controllers
             }
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("Article_ID", articleID);
+            dic.Add("User_ID", this.MemberInfo.ID);
             var obj = DBBaseFactory.DALBase.QueryForObject<ArticleInfoResponse>("BackWeb_GetArticleInfoByID", dic);
             apiResult.data = obj;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
