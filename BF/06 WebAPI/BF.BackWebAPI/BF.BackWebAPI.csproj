@@ -249,6 +249,7 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="WebPage\js\jquery.pagination.js" />
     <Content Include="WebPage\ModelDetails.html" />
     <Content Include="WebPage\ArticleDetails.html" />
     <Content Include="WebPage\modules\new-model.js" />
@@ -282,6 +283,7 @@
     <Content Include="WebPage\new-model.html" />
     <Content Include="WebPage\sign-in.html" />
     <Content Include="WebPage\stylesheets\elements.css" />
+    <Content Include="WebPage\stylesheets\pager.css" />
     <Content Include="WebPage\stylesheets\theme.css" />
   </ItemGroup>
   <ItemGroup>
@@ -326,7 +328,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61033</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

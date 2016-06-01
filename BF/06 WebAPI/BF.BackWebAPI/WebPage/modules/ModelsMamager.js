@@ -28,8 +28,10 @@
             window.location.href = window.webroot+"/new-model.html";
         });
     }
-    function init_data(name) {
-        page = page + 1;
+    function init_data(page, name) {
+        if (page < 0) {
+            page = page + 1;
+        }
         m.GetHealthModelList(type, name, page, pagesize, function (data) {
             info.models = data.data;
             $.each(info.models, function (index, obj) {
@@ -41,6 +43,14 @@
                     obj.edit_url = window.webroot + "/new-model.html?modelID=" + obj.MID;
                 }
             })
+            //alert($("#Pagination"));
+            //$("#Pagination").pagination(1000, {
+            //    items_per_page: pagesize,//每页显示多少条
+            //    callback: function (idx) {
+            //        init_data();
+            //    }
+            //});
+
             angular.set('info', info, bindEvent);
         })
     }
