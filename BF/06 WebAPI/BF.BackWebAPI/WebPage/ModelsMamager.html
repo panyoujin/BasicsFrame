@@ -47,13 +47,13 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>#</th>
-                            <th>图片</th>
-                            <th>模式名称</th>
-                            <th>介绍</th>
-                            <th>类型</th>
-                            <th>创建时间</th>
-                            <th style="width: 26px;"></th>
+                            <th style="width:5%;">ID</th>
+                            <th style="width:15%;">图片</th>
+                            <th style="width:10%;">模式名称</th>
+                            <th style="width:30%;">介绍</th>
+                            <th style="width:10%;">类型</th>
+                            <th style="width:15%;">创建时间</th>
+                            <th style="width:15%;">操作</th>
                         </tr>
                     </thead>
                     <tbody am-repeat="info.models" style="display: none;">
@@ -65,8 +65,8 @@
                             <td>{{Model_TypeStr}}</td>
                             <td>{{CreationDate}}</td>
                             <td>
-                                <a href="user.html"><i class="icon-pencil"></i></a>
-                                <a href="#myModal" role="button" data-toggle="modal"><i class="icon-remove"></i></a>
+                                <a style="display:{{model_hide}};" href="{{edit_url}}"><i class="icon-pencil">编辑</i></a>
+                                <a style="display:{{model_hide}};" href="#myModal" role="button" data-toggle="modal"><i class="icon-remove">删除</i></a>
                             </td>
                         </tr>
                     </tbody>

@@ -21,6 +21,7 @@
             }
             m.login(_account, _password, function (data) {
                 console.log(data);
+                alert(data.data.SessionID);
                 Cookies.Set("CACHED_SESSION_ID",data.data.SessionID);
                 window.location.href = c.ReturnUrl;
             });
