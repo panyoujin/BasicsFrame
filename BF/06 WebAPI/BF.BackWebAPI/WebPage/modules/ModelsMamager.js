@@ -1,4 +1,4 @@
-﻿define(['domready!', 'zepto', 'common', 'angular', 'server_data/models_data'], function (doc, $, c, angular, m) {
+﻿define(['domready!', 'zepto', 'common', 'angular', 'server_data/models_data','pagination'], function (doc, $, c, angular, m,p) {
 
     loading(0);
     //$('body').hide();
@@ -42,6 +42,9 @@
                     obj.model_hide = "inline-block";
                     obj.edit_url = window.webroot + "/new-model.html?modelID=" + obj.MID;
                 }
+            })
+            p.paging(100, 10, function (pindex, psize) {
+                init_data(pindex,name);
             })
             //alert($("#Pagination"));
             //$("#Pagination").pagination(1000, {
