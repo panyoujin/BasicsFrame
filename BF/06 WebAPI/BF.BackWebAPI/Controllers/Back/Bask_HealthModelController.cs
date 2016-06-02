@@ -50,7 +50,10 @@ namespace BF.BackWebAPI.Controllers
             {
                 dic.Add("Model_Name", "%" + model_name + "%");
             }
-            apiResult.data = DBBaseFactory.DALBase.QueryForList<HealthModelList>("BackWeb_GetHealthModelListByType", dic);
+            var ds = DBBaseFactory.DALBase.QueryForDataSet("BackWeb_GetHealthModelListByType", dic);
+            int total = 0;
+            int.TryParse(ds.Tables[1].Rows[0][0].ToString(), out total);
+            apiResult.data = new { modelList =  DBBaseFactory.DALBase.TableToList<HealthModelList>(ds.Tables[0]),total= total };
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
         

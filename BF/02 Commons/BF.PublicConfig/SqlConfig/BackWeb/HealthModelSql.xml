@@ -2,6 +2,23 @@
 <HCIP.AjaxDataSetting>
 
   <!--通过类型获取养生模式-->
+  <Data name="FrontWeb_GetHealthModelListByType">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT `ID` AS MID,Introduce,Model_Name,IcoUrl,ImageUrl,Sort,Model_Type,UNIX_TIMESTAMP(CreationDate) AS CreationDateTicks,DATE_FORMAT(CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate,m.WeChatUrl 
+        <%=,(SELECT p.Plan_RGB FROM TB_MB_Plan AS p WHERE  p.`Status`=TRUE AND p.`Model_ID`=m.ID AND p.`User_ID`=@@User_ID@@ LIMIT 0,1) AS Plan_RGB %>
+        FROM `TB_MB_Models` m WHERE `Status` AND Model_Type =0 <%=  AND @@Model_Type@@=0 %><%= AND Model_Name LIKE @@Model_Name@@ %>
+        UNION ALL
+        SELECT `ID` AS MID,Introduce,Model_Name,IcoUrl,ImageUrl,Sort,Model_Type,UNIX_TIMESTAMP(CreationDate) AS CreationDateTicks,DATE_FORMAT(CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate,m.WeChatUrl 
+        <%=,(SELECT p.Plan_RGB FROM TB_MB_Plan AS p WHERE  p.`Status`=TRUE AND p.`Model_ID`=m.ID AND p.`User_ID`=@@User_ID@@ LIMIT 0,1) AS Plan_RGB %>
+        FROM `TB_MB_Models` m WHERE `Status` AND Model_Type =1<%= AND 1 = @@Model_Type@@ %><%= AND Model_Name LIKE @@Model_Name@@ %><%= AND m.User_ID=@@User_ID@@ %> 
+        order BY Sort DESC <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  <!--通过类型获取养生模式-->
   <Data name="BackWeb_GetHealthModelListByType">
     <SqlDefinition type="sql">
       <SqlCommand>
@@ -14,6 +31,10 @@
         <%=,(SELECT p.Plan_RGB FROM TB_MB_Plan AS p WHERE  p.`Status`=TRUE AND p.`Model_ID`=m.ID AND p.`User_ID`=@@User_ID@@ LIMIT 0,1) AS Plan_RGB %>
         FROM `TB_MB_Models` m WHERE `Status` AND Model_Type =1<%= AND 1 = @@Model_Type@@ %><%= AND Model_Name LIKE @@Model_Name@@ %><%= AND m.User_ID=@@User_ID@@ %> 
         order BY Sort DESC <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
+        SELECT COUNT(0) AS total FROM(
+        SELECT ID FROM `TB_MB_Models` m WHERE `Status` AND Model_Type =0 <%=  AND @@Model_Type@@=0 %><%= AND Model_Name LIKE @@Model_Name@@ %>
+        UNION ALL
+        SELECT ID FROM `TB_MB_Models` m WHERE `Status` AND Model_Type =1<%= AND 1 = @@Model_Type@@ %><%= AND Model_Name LIKE @@Model_Name@@ %><%= AND m.User_ID=@@User_ID@@ %>) AS temp ;
       ]]>
       </SqlCommand>
     </SqlDefinition>
