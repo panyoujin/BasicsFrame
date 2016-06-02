@@ -2,6 +2,7 @@
 using BF.BackWebAPI.Models.Back.OutParam;
 using BF.Common.CommonEntities;
 using BF.Common.DataAccess;
+using BF.Common.FileProcess;
 using BF.Common.Helper;
 using BF.Common.StaticConstant;
 using System;
@@ -10,6 +11,7 @@ using System.Data;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace BF.BackWebAPI.Controllers.Back
@@ -94,5 +96,23 @@ namespace BF.BackWebAPI.Controllers.Back
             apiResult.data = result;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+
+        /// <summary>
+        /// 上传图片
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public HttpResponseMessage UploadImage()
+        {
+            ApiResult<object> apiResult = new ApiResult<object> { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+
+            Dictionary<string, object> paramInsert = new Dictionary<string, object>();
+            paramInsert = FileProcessHelp.Save(HttpContext.Current.Request.Files[0], Global.AttmntServer);
+
+            apiResult.data = new { FullUrl = Global.AttmntUrl + paramInsert["AttachmentUrl"], ImageUrl = paramInsert["AttachmentUrl"] };
+
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+
     }
 }
