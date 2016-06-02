@@ -265,6 +265,7 @@
     <Content Include="js\zepto.js" />
     <Content Include="ModelDetails.html" />
     <Content Include="ModelsMamager.html" />
+    <Content Include="modules\ArticleType.js" />
     <Content Include="modules\index.js" />
     <Content Include="modules\ModelsMamager.js" />
     <Content Include="modules\new-model.js" />
@@ -288,12 +289,10 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="WebPage\Article_TypeDetail.html" />
-    <Content Include="WebPage\Article_TypeManage.html" />
+    <Content Include="Article_TypeDetail.html" />
     <Content Include="WebPage\js\pagination.js" />
     <Content Include="WebPage\ModelDetails.html" />
     <Content Include="WebPage\ArticleDetails.html" />
-    <Content Include="WebPage\modules\ArticleType.js" />
     <Content Include="WebPage\modules\new-model.js" />
     <Content Include="WebPage\home.html" />
     <Content Include="WebPage\index.html" />
