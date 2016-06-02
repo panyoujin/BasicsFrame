@@ -14,7 +14,6 @@ namespace BF.BackWebAPI.Authorize
 {
     public class BFAuthorizeAttribute : AuthorizationFilterAttribute
     {
-        private HttpActionContext _httpContext;
         public bool IsLogin { get; set; }
         public bool IsAdmin { get; set; }
 
@@ -25,16 +24,20 @@ namespace BF.BackWebAPI.Authorize
             {
                 if (_requestInfo == null)
                 {
-                    _requestInfo = new RequestHelper(_httpContext.Request);
+                    _requestInfo = new RequestHelper();
                 }
                 return _requestInfo;
+            }
+            set
+            {
+                _requestInfo = value;
             }
         }
 
 
         public override void OnAuthorization(HttpActionContext actionContext)
         {
-            this._httpContext = actionContext;
+            RequestInfo = new RequestHelper(actionContext.Request);
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             if (IsLogin)
             {
@@ -54,21 +57,23 @@ namespace BF.BackWebAPI.Authorize
             get
             {
                 var user = RequestInfo.UserInfo<MemberInfo>();
+                LogHelper.Info(string.Format("开始:{0}", RequestInfo.SessionID));
                 if (user == null || user.ID <= 0 && !string.IsNullOrWhiteSpace(RequestInfo.SessionID))
                 {
                     Dictionary<string, object> dic = new Dictionary<string, object>();
                     dic.Add("SessionID", RequestInfo.SessionID);
                     //从数据看获取
-                    LogHelper.Info(string.Format("从数据库中获取登录信息开始"));
+                    LogHelper.Info(string.Format("从数据库中获取登录信息开始:{0}", RequestInfo.SessionID));
                     user = DBBaseFactory.DALBase.QueryForObject<MemberInfo>("FrontApi_GetMemberInfoByAccount", dic);
+                    LogHelper.Info(string.Format("从数据库中获取登录信息,:SessionID：{0},userID:{1}", RequestInfo.SessionID, user != null ? user.ID : 0));
                     if (user != null)
                     {
                         //user.IsAdmin = true;
                         HttpContext.Current.Cache.Remove(RequestInfo.SessionID);
                         HttpContext.Current.Cache.Insert(RequestInfo.SessionID, user);
-                        LogHelper.Info(string.Format("从数据库中获取登录信息并重新缓存起来"));
+                        LogHelper.Info(string.Format("从数据库中获取登录信息并重新缓存起来:{0}", RequestInfo.SessionID));
                     }
-                    LogHelper.Info(string.Format("从数据库中获取登录信息结束"));
+                    LogHelper.Info(string.Format("从数据库中获取登录信息结束:{0}", RequestInfo.SessionID));
                 }
                 if (user == null || user.ID <= 0)
                 {

@@ -38,6 +38,7 @@ namespace BF.BackWebAPI.Controllers
             {
                 pageSize = 10;
             }
+            var m = this.MemberInfo;
             var startSize = this.GetStartSize(page, pageSize);
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("StartSize", startSize);
