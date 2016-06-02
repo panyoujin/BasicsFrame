@@ -179,6 +179,7 @@
     <Compile Include="Authorize\ExceptionAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArticController.cs" />
+    <Compile Include="Controllers\Back\ArticleController.cs" />
     <Compile Include="Controllers\Back\Bask_HealthModelController.cs" />
     <Compile Include="Controllers\MySettingController.cs" />
     <Compile Include="Controllers\PlanController.cs" />
@@ -200,6 +201,7 @@
     <Compile Include="Models\Back\InParam\HealthModel.cs" />
     <Compile Include="Models\Back\InParam\Login.cs" />
     <Compile Include="Models\Back\InParam\CommonModel.cs" />
+    <Compile Include="Models\Back\OutParam\ArticleType.cs" />
     <Compile Include="Models\Back\User.cs" />
     <Compile Include="Models\Front\MemberInfo.cs" />
     <Compile Include="Models\Front\Request\KettleModel.cs" />
@@ -249,6 +251,7 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="WebPage\Article_TypeManage.html" />
     <Content Include="WebPage\js\pagination.js" />
     <Content Include="WebPage\ModelDetails.html" />
     <Content Include="WebPage\ArticleDetails.html" />
