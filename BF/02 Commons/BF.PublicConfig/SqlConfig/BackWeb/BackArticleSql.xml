@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HCIP.AjaxDataSetting>
+<!--获取文章分类-->
+  <Data name="Back_GetArticleTypeList">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+SELECT ID, `Name` AS 'Name',TypeDescribe,ImageUrl,TypeSort, DATE_FORMAT(IFNULL(`ModificationDate`,`CreationDate`),'%Y-%c-%d %h:%i:%s')  AS OperatioinDate
+FROM `TB_MB_ArticleType`
+WHERE `Status`=TRUE
+<%= AND NAME LIKE @@Type_Name@@%>
+ORDER BY OperatioinDate DESC
+<%= LIMIT @@StartSize@@ , @@PageSize@@%>;
+SELECT COUNT(1) AS total
+FROM `TB_MB_ArticleType`
+WHERE `Status`=TRUE
+<%= AND NAME LIKE @@Type_Name@@%>;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+
+
+</HCIP.AjaxDataSetting>
