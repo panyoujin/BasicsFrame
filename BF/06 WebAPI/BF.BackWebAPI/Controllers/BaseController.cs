@@ -68,8 +68,10 @@ namespace BF.BackWebAPI.Controllers
             dic.Add("ModifyUser", user.Account);
             try
             {
+                LogHelper.Info(string.Format("更新数据库登录标识字段开始："));
                 //更新数据库登录标识字段，这样一个帐号只能在一台机器常登录
-                DBBaseFactory.DALBase.ExecuteNonQuery("FrontApi_UpdateSessionID", dic);
+                var count = DBBaseFactory.DALBase.ExecuteNonQuery("FrontApi_UpdateSessionID", dic);
+                LogHelper.Info(string.Format("更新数据库登录标识字段开始：{0}", count));
             }
             catch (Exception ex)
             {

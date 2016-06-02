@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Bootstrap Admin</title>
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" type="text/css" href="js/bootstrap/css/bootstrap.css">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/theme.css">
+    <script src="js/base.js"></script>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!-- Le fav and touch icons -->
+</head>
+
+<!--[if lt IE 7 ]> <body class="ie ie6"> <![endif]-->
+<!--[if IE 7 ]> <body class="ie ie7 "> <![endif]-->
+<!--[if IE 8 ]> <body class="ie ie8 "> <![endif]-->
+<!--[if IE 9 ]> <body class="ie ie9 "> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<body class="">
+    <!--<![endif]-->
+
+
+    <ul class="breadcrumb">
+        <li class="active">模式列表 <span class="divider">/</span></li>
+        <li class="active">新增模式</li>
+    </ul>
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+
+            <div class="btn-toolbar"> 
+                <button class="btn btn-primary" id="save_model"><i class="icon-save"></i> 保存</button>
+                <div class="btn-group">
+                </div>
+            </div>
+            <div class="well">
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane active in" id="home">
+                        <form id="tab">
+                            <label>名称</label>
+                            <input type="text" value="" class="input-xlarge" placeholder="请输入名称" am-bind="info.Model_Name" maxlength="50" />
+                            <label>最终温度</label>
+                            <input type="text" value="" class="input-xlarge" placeholder="单位：摄氏度" am-bind="info.Final_Temperature" />
+                            <label>煮料时长</label>
+                            <input type="text" value="" class="input-xlarge" placeholder="单位：分钟" am-bind="info.Cook_Time" />
+                            <label>除氯时间</label>
+                            <input type="text" value="" class="input-xlarge" placeholder="单位：分钟" am-bind="info.Removal_Chlorine_Time" />
+                            <label>保温时间</label>
+                            <input type="text" value="" class="input-xlarge" placeholder="单位：摄氏度" am-bind="info.Heat_Preservation_Time" />
+                            <label>保温温度</label>
+                            <input type="text" value="" class="input-xlarge" placeholder="单位：摄氏度" am-bind="info.Heat_Preservation_Temperature" />
+                            <label>简单介绍</label>
+                            <input type="text" value="" class="input-xlarge" placeholder="如:煮沸除氯五分钟，保温在50度" am-bind="info.Introduce" maxlength="200" />
+                            <label>材料描述</label>
+                            <input type="text" value="" class="input-xlarge" placeholder="填写材料的描述" am-bind="info.Describe" maxlength="1000" />
+                            <label>注意事项</label>
+                            <input type="text" value="" class="input-xlarge" placeholder="填写一些煮料的注意事项" am-bind="info.Remarks" maxlength="1000" />
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            
+
+
+        </div>
+    </div>
+    <script src="js/require.js" data-main="js/config.js"></script>
+    <script>
+        require(['../modules/new-model']);
+    </script>
+</body>
+</html>
+
+
