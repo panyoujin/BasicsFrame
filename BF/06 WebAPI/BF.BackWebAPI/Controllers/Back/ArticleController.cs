@@ -1,4 +1,6 @@
-﻿using BF.Common.CommonEntities;
+﻿using BF.BackWebAPI.Models.Back.InParam;
+using BF.BackWebAPI.Models.Back.OutParam;
+using BF.Common.CommonEntities;
 using BF.Common.DataAccess;
 using BF.Common.Helper;
 using BF.Common.StaticConstant;
@@ -14,6 +16,13 @@ namespace BF.BackWebAPI.Controllers.Back
 {
     public class ArticleController : ApiController
     {
+        /// <summary>
+        /// 获取列表
+        /// </summary>
+        /// <param name="type_name"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         public HttpResponseMessage GetArticleTypes(string type_name = "", int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
@@ -41,6 +50,48 @@ namespace BF.BackWebAPI.Controllers.Back
                 apiResult.data = result;
             }
 
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+
+        [HttpPost]
+        public HttpResponseMessage InsertArticleType([FromBody]InsertArticleType param)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            string key = "Back_InsertArticleType";
+            if (param.ID > 0)
+            {
+                key = "Back_UpdateArticleType";
+                dic.Add("ModificationUser", "admin");
+                dic.Add("ID", param.ID + "");
+            }
+            else
+            {
+                dic.Add("CreationUser", "admin");
+            }
+            dic.Add("Name", param.Name);
+            dic.Add("TypeDescribe", param.TypeDescribe);
+            dic.Add("ImageUrl", param.ImageUrl);
+            dic.Add("TypeSort", param.TypeSort + "");
+
+            int result = DBBaseFactory.DALBase.ExecuteNonQuery(key, dic);
+            if (result <= 0)
+            {
+                apiResult.code = ResultCode.CODE_UPDATE_FAIL;
+            }
+
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+        
+        [HttpGet]
+        public HttpResponseMessage QueryArticleTypeByID(int ID)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            string key = "Back_QueryArticleTypeByID";
+            dic.Add("ID", ID + "");
+            var result = DBBaseFactory.DALBase.QueryForObject<ArticleType>(key, dic);
+            apiResult.data = result;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
     }

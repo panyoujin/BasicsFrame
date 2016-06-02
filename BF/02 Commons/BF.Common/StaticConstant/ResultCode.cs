@@ -27,6 +27,11 @@ namespace BF.Common.StaticConstant
         /// 未登陆！600
         /// </summary>
         public static String CODE_ERROR_USER_NOT_LOGIN = "600";
+
+        /// <summary>
+        /// 更新失败！201
+        /// </summary>
+        public static String CODE_UPDATE_FAIL = "201";
     }
 
     public class ResultMsg

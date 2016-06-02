@@ -199,6 +199,7 @@
     <Compile Include="Models\Back\InParam\Collection.cs" />
     <Compile Include="Models\Back\InParam\Bask_HealthModel.cs" />
     <Compile Include="Models\Back\InParam\HealthModel.cs" />
+    <Compile Include="Models\Back\InParam\InsertArticleType.cs" />
     <Compile Include="Models\Back\InParam\Login.cs" />
     <Compile Include="Models\Back\InParam\CommonModel.cs" />
     <Compile Include="Models\Back\OutParam\ArticleType.cs" />
@@ -246,6 +247,7 @@
     <Content Include="js\bootstrap.min.js" />
     <Content Include="js\bootstrap\css\bootstrap.css" />
     <Content Include="js\bootstrap\css\bootstrap.min.css" />
+    <Content Include="js\bootstrap\img\default.png" />
     <Content Include="js\bootstrap\img\glyphicons-halflings-white.png" />
     <Content Include="js\bootstrap\img\glyphicons-halflings.png" />
     <Content Include="js\bootstrap\js\bootstrap.js" />
@@ -265,6 +267,7 @@
     <Content Include="js\zepto.js" />
     <Content Include="ModelDetails.html" />
     <Content Include="ModelsMamager.html" />
+    <Content Include="modules\ArticleTypeDetail.js" />
     <Content Include="modules\ArticleType.js" />
     <Content Include="modules\index.js" />
     <Content Include="modules\ModelsMamager.js" />

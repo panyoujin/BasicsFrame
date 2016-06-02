@@ -19,6 +19,36 @@ WHERE `Status`=TRUE
       </SqlCommand>
     </SqlDefinition>
   </Data>
-
-
+	
+	<Data name="Back_InsertArticleType">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+INSERT INTO  `TB_MB_ArticleType`(`Name`,`TypeDescribe`,`ImageUrl`,`TypeSort`,`CreationDate`,`CreationUser`)
+VALUE(@@Name@@,@@TypeDescribe@@,@@ImageUrl@@,@@TypeSort@@,now(),@@CreationUser@@);
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	<Data name="Back_UpdateArticleType">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+UPDATE `TB_MB_ArticleType` SET NAME= @@NAME@@,TypeDescribe=@@TypeDescribe@@,ImageUrl=@@ImageUrl@@,TypeSort=@@TypeSort@@,`ModificationUser`=@@ModificationUser@@,`ModificationDate`=NOW()
+WHERE ID=@@ID@@
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	<Data name="Back_QueryArticleTypeByID">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+SELECT `ID`,`Name`,`TypeDescribe`,`ImageUrl`,`TypeSort`,`CreationDate`,`CreationUser` 
+FROM `TB_MB_ArticleType`
+WHERE ID=@@ID@@
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
 </HCIP.AjaxDataSetting>
