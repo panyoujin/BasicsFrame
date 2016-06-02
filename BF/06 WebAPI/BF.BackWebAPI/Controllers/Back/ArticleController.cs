@@ -34,7 +34,12 @@ namespace BF.BackWebAPI.Controllers.Back
                 dic.Add("Type_Name", "%" + type_name + "%");
             }
             DataSet ds = DBBaseFactory.DALBase.QueryForDataSet("Back_GetArticleTypeList", dic);
-            apiResult.data = ds.Tables[0];
+
+            if (ds != null && ds.Tables.Count >= 2)
+            {
+                var result = new { table = ds.Tables[0], total = ds.Tables[1].Rows[0][0] };
+                apiResult.data = result;
+            }
 
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }

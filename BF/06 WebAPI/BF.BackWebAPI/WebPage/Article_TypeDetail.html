@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>分类详细</title>
+    <link rel="stylesheet" type="text/css" href="js/bootstrap/css/bootstrap.css">
+</head>
+<body>
+
+    <ul class="breadcrumb">
+        <li class="active">文章分类 <span class="divider">/</span></li>
+        <li class="active">分类编辑</li>
+    </ul>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="btn-toolbar">
+                <button class="btn btn-primary" id="save_model"><i class="icon-save"></i> 保存</button>
+                <div class="btn-group">
+                </div>
+            </div>
+
+            <div class="well">
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane active in" id="home">
+                        <form id="tab">
+                            <table>
+                                <tr>
+                                    <td><label>分类名称：</label></td>
+                                    <td><input type="text" id="Name" value="" class="input-xlarge" placeholder="请输入名称" maxlength="50" /></td>
+                                </tr>
+
+                                <tr>
+                                    <td><label>分类图片：</label></td>
+                                    <td><input type="file" /></td>
+                                </tr>
+
+                                <tr>
+                                    <td><label>分类描述：</label></td>
+                                    <td><input type="text" id="TypeDescribe" value="" class="input-xlarge" placeholder="分类描述" maxlength="50" /></td>
+                                </tr>
+                                <tr>
+                                    <td><label>排序：</label></td>
+                                    <td><input type="text" id="TypeSort" value="" class="input-xlarge" placeholder="排序" maxlength="50" /></td>
+                                </tr>
+                            </table>
+
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
