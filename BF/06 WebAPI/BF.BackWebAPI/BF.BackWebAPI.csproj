@@ -253,7 +253,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="WebPage\Article_TypeDetail.html" />
     <Content Include="WebPage\Article_TypeManage.html" />
-    <Content Include="WebPage\js\jquery.pagination.js" />
     <Content Include="WebPage\js\pagination.js" />
     <Content Include="WebPage\ModelDetails.html" />
     <Content Include="WebPage\ArticleDetails.html" />

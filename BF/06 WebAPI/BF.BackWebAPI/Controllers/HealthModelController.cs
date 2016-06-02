@@ -71,7 +71,7 @@ namespace BF.BackWebAPI.Controllers
             {
                 dic.Add("Model_Name", "%" + model_name + "%");
             }
-            apiResult.data = DBBaseFactory.DALBase.QueryForList<HealthModelList>("BackWeb_GetHealthModelListByType", dic);
+            apiResult.data = DBBaseFactory.DALBase.QueryForList<HealthModelList>("FrontWeb_GetHealthModelListByType", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
 
