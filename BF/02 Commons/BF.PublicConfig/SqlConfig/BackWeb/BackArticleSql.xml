@@ -5,7 +5,7 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-SELECT ID, `Name` AS 'Name',TypeDescribe,ImageUrl,TypeSort, DATE_FORMAT(IFNULL(`ModificationDate`,`CreationDate`),'%Y-%c-%d %h:%i:%s')  AS OperatioinDate
+SELECT ID, `Name` AS 'Name',TypeDescribe,ImageUrl,"" AS FullUrl,TypeSort, DATE_FORMAT(IFNULL(`ModificationDate`,`CreationDate`),'%Y-%c-%d %h:%i:%s')  AS OperatioinDate
 FROM `TB_MB_ArticleType`
 WHERE `Status`=TRUE
 <%= AND NAME LIKE @@Type_Name@@%>

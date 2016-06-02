@@ -11,6 +11,7 @@ namespace BF.BackWebAPI.Models.Back.OutParam
         public string Name { set; get; }
         public string TypeDescribe { set; get; }
         public string ImageUrl { set; get; }
+        public string FullUrl { set; get; }
         public int TypeSort { set; get; }
         public DateTime OperatioinDate { set; get; }
 

@@ -5,12 +5,14 @@ using BF.Common.DataAccess;
 using BF.Common.FileProcess;
 using BF.Common.Helper;
 using BF.Common.StaticConstant;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web;
 using System.Web.Http;
 
@@ -48,6 +50,13 @@ namespace BF.BackWebAPI.Controllers.Back
 
             if (ds != null && ds.Tables.Count >= 2)
             {
+                foreach (DataRow item in ds.Tables[0].Rows)
+                {
+                    if (item["ImageUrl"] != null&&!string.IsNullOrWhiteSpace(item["ImageUrl"].ToString()))
+                    {
+                        item["FullUrl"] = Global.AttmntUrl + item["ImageUrl"].ToString();
+                    }
+                }
                 var result = new { table = ds.Tables[0], total = ds.Tables[1].Rows[0][0] };
                 apiResult.data = result;
             }
@@ -93,6 +102,10 @@ namespace BF.BackWebAPI.Controllers.Back
             string key = "Back_QueryArticleTypeByID";
             dic.Add("ID", ID + "");
             var result = DBBaseFactory.DALBase.QueryForObject<ArticleType>(key, dic);
+            if (result != null && !string.IsNullOrWhiteSpace(result.ImageUrl))
+            {
+                result.FullUrl = Global.AttmntUrl + result.ImageUrl;
+            }
             apiResult.data = result;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
@@ -111,7 +124,10 @@ namespace BF.BackWebAPI.Controllers.Back
 
             apiResult.data = new { FullUrl = Global.AttmntUrl + paramInsert["AttachmentUrl"], ImageUrl = paramInsert["AttachmentUrl"] };
 
-            return JsonHelper.SerializeObjectToWebApi(apiResult);
+            //HttpResponseMessage result = new HttpResponseMessage { Content = new StringContent(JsonConvert.SerializeObject(apiResult), Encoding.GetEncoding("UTF-8"), "text/html") };
+
+            //return JsonHelper.SerializeObjectToWebApi(apiResult);
+            return new HttpResponseMessage { Content = new StringContent(JsonConvert.SerializeObject(apiResult), Encoding.GetEncoding("UTF-8"), "text/html") }; ;
         }
 
     }

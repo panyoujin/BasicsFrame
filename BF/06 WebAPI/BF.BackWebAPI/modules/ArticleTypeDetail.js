@@ -17,15 +17,12 @@
                     $("#TypeDescribe").val(data.data.TypeDescribe);
                     $("#ImageUrl").val(data.data.ImageUrl);
                     $("#TypeSort").val(data.data.TypeSort);
+                    $("#ImageUrl").val(data.data.ImageUrl);
+                    $("#titlePic").attr("src", data.data.FullUrl)
                     //window.location.href = "Article_TypeManage.html";
                 }
             })
         }
-
-        $('#fileInput').change(function () {
-            alert($(this).val());
-            //str = $(this).val();
-        })
 
         $("#save_articleType").click(function () {
             if (formvalidate()) {
@@ -40,15 +37,38 @@
         });
 
         $("#before").click(function () { history.back(-1); });
+        //图片上传
+        $('#FileUploadImg').change(function () {
+            var options = {
+                success: callbackuploadimage,
+                type: 'post',
+                clearForm: false
+            };
+            $('#UploadFormImg').ajaxSubmit(options);
+        });
+
     })
 
     function formvalidate() {
+        alert($("#ImageUrl").val());
 
         if ($("#Name").val().length <= 0) {
             alert("请填写分类名称!");
             return false;
         }
         return true;
+    }
+    //上传图片回调方法
+    function callbackuploadimage(data) {
+        data = $.parseJSON(data);
+
+        if (data != null && data.code == "200") {
+            $("#ImageUrl").val(data.data.ImageUrl);
+            $("#titlePic").attr("src", data.data.FullUrl)
+        }
+        else {
+            alert("上传失败");
+        }
     }
 
 })

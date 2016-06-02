@@ -5,6 +5,22 @@
     <title>分类详细</title>
     <link rel="stylesheet" type="text/css" href="js/bootstrap/css/bootstrap.css">
     <script src="js/base.js"></script>
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="js/jquery.form.js"></script>
+
+    <style type="text/css">
+        #FileUploadImg {
+            cursor: pointer;
+            font-size: 30px;
+            position: absolute;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            width: 70px;
+            height: 60px;
+            left: 120px;
+            top: 120px;
+        }
+    </style>
 </head>
 <body>
 
@@ -29,11 +45,14 @@
 
                                 <tr>
                                     <td><label>分类图片：</label></td>
-                                    <td><img style="height:100px;width:100px;" src="js/bootstrap/img/default.png" class="img-thumbnail" id="ImageUrlFull">
-                                    <input type="text" id="ImageUrl" name="ImageUrl" style="display: none;" /></td>
-                                    <!-- <td><input id ="file-Portrait1" type="file" /></td>-->
+                                    <td>
+                                        <img id="titlePic" src="js/bootstrap/img/notimage.png" style="width: 60px; height: 60px; margin: 3px;"/>
+         
+                                       <!-- <img style="height:100px;width:100px;" src="js/bootstrap/img/default.png" class="img-thumbnail" id="ImageUrlFull">-->
+                                        <input id="ImageUrl" name="ImageUrl" type="hidden" />
+                                    </td>
+    
                                 </tr>
-                                <tr><td></td><td><input type="file" id="fileInput"/></td></tr>
                                 <tr>
                                     <td><label>分类描述：</label></td>
                                     <td><input type="text" id="TypeDescribe" value="" name="TypeDescribe" class="input-xlarge" placeholder="分类描述" maxlength="50" /></td>
@@ -59,6 +78,10 @@
 
         </div>
     </div>
+
+    <form id="UploadFormImg"  method="post" action="/znsh//Article/UploadImage">
+        <input type="file" name="file" id="FileUploadImg" />
+    </form>
 
     <script src="js/require.js" data-main="js/config.js"></script>
 

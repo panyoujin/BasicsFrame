@@ -27,7 +27,7 @@
             $("#tab").html("");
             for (var i = 0; i < data.data.table.length; i++) {
                 var str = "<tr><td>" + (i + 1) + "</td>";
-                str += '<td><img src="' + data.data.table[i].ImageUrl + '" width="50px" height="50px" /></td>';
+                str += '<td><img src="' + data.data.table[i].FullUrl + '" width="50px" height="50px" /></td>';
                 str += "<td>" + data.data.table[i].Name + "</td><td>" + data.data.table[i].TypeDescribe + "</td> <td>" + data.data.table[i].TypeSort + "</td><td>" + data.data.table[i].OperatioinDate + "</td>";
                 str += '<td><a href="Article_TypeDetail.html?ID='+ data.data.table[i].ID + '" ><i class="icon-pencil">编辑</i></a>  <a  role="button" data-toggle="modal"><i class="icon-remove">删除</i></a> </td></tr>';
                 $("#tab").append(str);
