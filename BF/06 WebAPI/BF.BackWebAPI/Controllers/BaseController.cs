@@ -17,6 +17,7 @@ namespace BF.BackWebAPI.Controllers
         {
             get
             {
+                LogHelper.Info(string.Format("BaseController开始:{0}", RequestInfo.SessionID));
                 var user = RequestInfo.UserInfo<MemberInfo>();
                 if (user == null || user.ID <= 0)
                 {
@@ -24,6 +25,7 @@ namespace BF.BackWebAPI.Controllers
 
                     dic.Add("SessionID", RequestInfo.SessionID);
                     //从数据看获取
+
                     user = DBBaseFactory.DALBase.QueryForObject<MemberInfo>("FrontApi_GetMemberInfoByAccount", dic);
                     if (user != null)
                     {

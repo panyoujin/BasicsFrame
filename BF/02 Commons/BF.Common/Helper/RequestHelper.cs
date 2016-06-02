@@ -11,7 +11,7 @@ namespace BF.Common.Helper
     {
         public RequestHelper()
         {
-
+            Request = HttpContext.Current.Request;
         }
         public RequestHelper(HttpRequest request)
         {
@@ -70,7 +70,7 @@ namespace BF.Common.Helper
                 Dictionary<string, object> dic = new Dictionary<string, object>();
                 dic.Add("SessionID", SessionID);
                 //从数据看获取
-                user = DBBaseFactory.DALBase.QueryForObject<T>("BackWeb_GetLoginUser", dic);
+                user = DBBaseFactory.DALBase.QueryForObject<T>("FrontApi_GetMemberInfoByAccount", dic);
                 if (user != null)
                 {
 

@@ -47,7 +47,8 @@ namespace BF.BackWebAPI
                 }
                 postParameter += "\r\n";
             }
-            string errMsg = string.Format("请求URL：{0},IP:{1},请求类型:{2}{3}", url, RequestHelper.GetIP(), Request.RequestType, postParameter);
+            RequestHelper rh = new RequestHelper(Request);
+            string errMsg = string.Format("请求URL：{0},IP:{1},请求类型:{2}{3},SessionID:{4}", url, RequestHelper.GetIP(), Request.RequestType, postParameter, rh.SessionID);
             LogHelper.Info(errMsg);
         }
         protected void Application_AuthenticateRequest()
