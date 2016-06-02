@@ -256,6 +256,7 @@
     <Content Include="WebPage\js\pagination.js" />
     <Content Include="WebPage\ModelDetails.html" />
     <Content Include="WebPage\ArticleDetails.html" />
+    <Content Include="WebPage\modules\ArticleType.js" />
     <Content Include="WebPage\modules\new-model.js" />
     <Content Include="WebPage\home.html" />
     <Content Include="WebPage\index.html" />
