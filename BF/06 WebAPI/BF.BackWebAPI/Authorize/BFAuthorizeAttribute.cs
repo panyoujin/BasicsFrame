@@ -59,13 +59,16 @@ namespace BF.BackWebAPI.Authorize
                     Dictionary<string, object> dic = new Dictionary<string, object>();
                     dic.Add("SessionID", RequestInfo.SessionID);
                     //从数据看获取
+                    LogHelper.Info(string.Format("从数据库中获取登录信息开始"));
                     user = DBBaseFactory.DALBase.QueryForObject<MemberInfo>("FrontApi_GetMemberInfoByAccount", dic);
                     if (user != null)
                     {
                         //user.IsAdmin = true;
                         HttpContext.Current.Cache.Remove(RequestInfo.SessionID);
                         HttpContext.Current.Cache.Insert(RequestInfo.SessionID, user);
+                        LogHelper.Info(string.Format("从数据库中获取登录信息并重新缓存起来"));
                     }
+                    LogHelper.Info(string.Format("从数据库中获取登录信息结束"));
                 }
                 if (user == null || user.ID <= 0)
                 {

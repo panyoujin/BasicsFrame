@@ -44,7 +44,7 @@
         })
     }
     $(function () {
-        init_data(1, 3);
+        init_data(1, 10);
     })
 
 })
