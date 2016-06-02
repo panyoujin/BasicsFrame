@@ -458,7 +458,6 @@ define(['zepto'], function () {
                 cb(data);
                 break;
             case "600":
-                alert(600);
                 window.location.href = window.webroot+'/sign-in.html?ReturnUrl=' + window.location.href;
                 break;
             default:
