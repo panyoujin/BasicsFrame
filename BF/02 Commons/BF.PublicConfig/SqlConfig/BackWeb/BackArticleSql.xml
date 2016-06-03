@@ -51,4 +51,14 @@ WHERE ID=@@ID@@
 			</SqlCommand>
 		</SqlDefinition>
 	</Data>
+	
+	<Data name="Back_DeleteArticleTypeByID">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+UPDATE TB_MB_ArticleType SET STATUS=FALSE WHERE ID=@@ID@@ 
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
 </HCIP.AjaxDataSetting>

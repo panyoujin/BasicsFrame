@@ -8,7 +8,7 @@
             }
         }
         var ID = request.QueryString("ID");
-        if (ID > 0) {
+        if (ID > 0) {//如果是编辑信息
             var url = window.apibase + "/Article/QueryArticleTypeByID";
             c.get({ ID: ID }, url, function (data) {
                 if (data != null && data.code == "200") {
@@ -17,9 +17,10 @@
                     $("#TypeDescribe").val(data.data.TypeDescribe);
                     $("#ImageUrl").val(data.data.ImageUrl);
                     $("#TypeSort").val(data.data.TypeSort);
+
                     $("#ImageUrl").val(data.data.ImageUrl);
-                    $("#titlePic").attr("src", data.data.FullUrl)
-                    //window.location.href = "Article_TypeManage.html";
+                    if (data.data.FullUrl != null)
+                        $("#titlePic").attr("src", data.data.FullUrl)
                 }
             })
         }

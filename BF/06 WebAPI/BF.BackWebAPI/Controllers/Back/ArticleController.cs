@@ -52,7 +52,7 @@ namespace BF.BackWebAPI.Controllers.Back
             {
                 foreach (DataRow item in ds.Tables[0].Rows)
                 {
-                    if (item["ImageUrl"] != null&&!string.IsNullOrWhiteSpace(item["ImageUrl"].ToString()))
+                    if (item["ImageUrl"] != null && !string.IsNullOrWhiteSpace(item["ImageUrl"].ToString()))
                     {
                         item["FullUrl"] = Global.AttmntUrl + item["ImageUrl"].ToString();
                     }
@@ -93,7 +93,7 @@ namespace BF.BackWebAPI.Controllers.Back
 
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
-        
+
         [HttpGet]
         public HttpResponseMessage QueryArticleTypeByID(int ID)
         {
@@ -109,7 +109,20 @@ namespace BF.BackWebAPI.Controllers.Back
             apiResult.data = result;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
-
+        
+        [HttpGet]
+        public HttpResponseMessage DeleteArticleTypeByID(int ID)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            string key = "Back_DeleteArticleTypeByID";
+            dic.Add("ID", ID + "");
+            int result = DBBaseFactory.DALBase.ExecuteNonQuery(key, dic);
+            if (result <= 0)
+                apiResult.code = ResultCode.CODE_UPDATE_FAIL;
+            apiResult.data = result;
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
         /// <summary>
         /// 上传图片
         /// </summary>
