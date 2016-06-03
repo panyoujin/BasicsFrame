@@ -20,6 +20,7 @@ namespace BF.BackWebAPI.Controllers.Back
 {
     public class ArticleController : ApiController
     {
+        #region --ArticleType--
         /// <summary>
         /// 获取列表
         /// </summary>
@@ -123,6 +124,55 @@ namespace BF.BackWebAPI.Controllers.Back
             apiResult.data = result;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+
+        #endregion
+
+        #region --- Article ---
+        /// <summary>
+        /// 获取列表
+        /// </summary>
+        /// <param name="type_name"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public HttpResponseMessage GetArticles(string search = "", int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            if (page <= 0)
+            {
+                page = 1;
+            }
+            if (pageSize <= 0)
+            {
+                pageSize = 10;
+            }
+            var startSize = (page > 1 ? (page - 1) * pageSize : 0);
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("StartSize", startSize);
+            dic.Add("PageSize", pageSize);
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                dic.Add("Search", "%" + search + "%");
+            }
+
+            DataSet ds = DBBaseFactory.DALBase.QueryForDataSet("Back_GetArticleList", dic);
+
+            if (ds != null && ds.Tables.Count >= 2)
+            {
+                foreach (DataRow item in ds.Tables[0].Rows)
+                {
+                    if (item["ImageUrl"] != null && !string.IsNullOrWhiteSpace(item["ImageUrl"].ToString()))
+                    {
+                        item["FullUrl"] = Global.AttmntUrl + item["ImageUrl"].ToString();
+                    }
+                }
+                var result = new { table = ds.Tables[0], total = ds.Tables[1].Rows[0][0] };
+                apiResult.data = result;
+            }
+
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+        #endregion
         /// <summary>
         /// 上传图片
         /// </summary>

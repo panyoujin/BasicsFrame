@@ -61,4 +61,25 @@ UPDATE TB_MB_ArticleType SET STATUS=FALSE WHERE ID=@@ID@@
 			</SqlCommand>
 		</SqlDefinition>
 	</Data>
+
+	<Data name="Back_GetArticleList">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+SELECT ar.`ID`,ar.`ArticleType_ID`,ar.`ArticleTitle`,ar.`ImageUrl`,"" AS FullUrl,DATE_FORMAT(ar.`PublishDate`,'%Y-%c-%d %h:%i:%s') AS PublishDate,ar.`ArticleSort`,ar.`PraiseCount`,ar.`CommentCount`,ar.`ReadCount`,art.`Name`
+FROM `TB_MB_Article` ar
+JOIN `TB_MB_ArticleType` art ON ar.`ArticleType_ID`=art.`ID`
+WHERE 1=1 AND ar.status=TRUE
+<%= AND (art.`Name` LIKE @@Search@@ or ar.`ArticleTitle` LIKE @@Search@@) %>
+ORDER BY IFNULL(ar.`ModificationDate`,ar.`CreationDate`) DESC
+<%= LIMIT @@StartSize@@ , @@PageSize@@%>;
+SELECT COUNT(1) AS total
+FROM `TB_MB_Article` ar
+JOIN `TB_MB_ArticleType` art ON ar.`ArticleType_ID`=art.`ID`
+WHERE 1=1 AND ar.status=TRUE
+<%= AND (art.`Name` LIKE @@Name@@ or ar.`ArticleTitle` LIKE @@Search@@) %>;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
 </HCIP.AjaxDataSetting>

@@ -237,6 +237,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ArticleDetails.html" />
+    <Content Include="Article_Manage.html" />
     <Content Include="Article_TypeDetail.html" />
     <Content Include="Article_TypeManage.html" />
     <Content Include="favicon.ico" />
@@ -269,6 +270,7 @@
     <Content Include="js\zepto.js" />
     <Content Include="ModelDetails.html" />
     <Content Include="ModelsMamager.html" />
+    <Content Include="modules\Article.js" />
     <Content Include="modules\ArticleType.js" />
     <Content Include="modules\ArticleTypeDetail.js" />
     <Content Include="modules\index.js" />
