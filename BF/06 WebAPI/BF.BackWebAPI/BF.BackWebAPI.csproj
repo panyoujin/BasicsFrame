@@ -181,6 +181,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArticController.cs" />
     <Compile Include="Controllers\Back\ArticleController.cs" />
+    <Compile Include="Controllers\Back\Back_AftermarketController.cs" />
     <Compile Include="Controllers\Back\Bask_HealthModelController.cs" />
     <Compile Include="Controllers\MySettingController.cs" />
     <Compile Include="Controllers\PlanController.cs" />
@@ -242,6 +243,7 @@
     <Compile Include="Models\RequestModels\AddShareRequest.cs" />
     <Compile Include="Models\RequestModels\CommentAndPraise.cs" />
     <Compile Include="Models\RequestModels\HealthModelInfo.cs" />
+    <Compile Include="Models\ResponseModel\AftermarketResponse.cs" />
     <Compile Include="Models\ResponseModel\ArticleListResponse.cs" />
     <Compile Include="Models\ResponseModel\ArticleInfoResponse.cs" />
     <Compile Include="Models\ResponseModel\DeleteDerviceCodeResponse.cs" />
@@ -300,6 +302,7 @@
     <Content Include="js\pagination.js" />
     <Content Include="js\require.js" />
     <Content Include="js\server_data\member_data.js" />
+    <Content Include="js\server_data\Aftermarket_data.js" />
     <Content Include="js\server_data\models_data.js" />
     <Content Include="js\tabs.js" />
     <Content Include="js\UEditor\dialogs\anchor\anchor.html" />
@@ -579,12 +582,14 @@
     <Content Include="js\wxapi.js" />
     <Content Include="js\zepto.js" />
     <Content Include="ModelDetails.html" />
+    <Content Include="AftermarketMamager.html" />
     <Content Include="ModelsMamager.html" />
     <Content Include="modules\Article.js" />
     <Content Include="modules\ArticleType.js" />
     <Content Include="modules\ArticleDetail.js" />
     <Content Include="modules\ArticleTypeDetail.js" />
     <Content Include="modules\index.js" />
+    <Content Include="modules\AftermarketMamager.js" />
     <Content Include="modules\ModelsMamager.js" />
     <Content Include="modules\new-model.js" />
     <Content Include="modules\sign-in.js" />
