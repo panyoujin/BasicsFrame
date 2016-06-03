@@ -13,6 +13,31 @@
       </SqlCommand>
     </SqlDefinition>
   </Data>
-	
+  
+  <Data name="BackWeb_GetAftermarketList">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT IFNULL(m.`Name`,m.`Account`) AS User_Name,a.`CreationUser`,a.`ID` AS `uuid`,a.`ProductCode`,a.`QuestionType`,a.`QuestionDescribe`,a.`AftermarketStatus`,UNIX_TIMESTAMP(a.CreationDate) AS CreationDateTicks,DATE_FORMAT(a.CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate
+        FROM TB_MB_Aftermarket a 
+        JOIN `TB_MB_MemberInfo` AS m ON a.`User_ID`=m.`ID`
+        WHERE a.`Status`=TRUE <%= AND a.AftermarketStatus=@@AftermarketStatus@@ %> <%= AND a.ProductCode like @@ProductCode@@ %>
+        ORDER BY a.ID DESC <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
+        SELECT count(0) AS total
+        FROM TB_MB_Aftermarket a 
+        WHERE a.`Status`=TRUE <%= AND a.AftermarketStatus=@@AftermarketStatus@@ %> <%= AND a.ProductCode like @@ProductCode@@ %>;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
 
+  <Data name="BackWeb_SetAftermarketStatus">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        UPDATE TB_MB_Aftermarket SET AftermarketStatus=@@AftermarketStatus@@,`ModificationUser`=@@UserAccount@@,ModificationDate=NOW() WHERE ID = @@AID@@;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
 </HCIP.AjaxDataSetting>

@@ -180,6 +180,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArticController.cs" />
     <Compile Include="Controllers\Back\ArticleController.cs" />
+    <Compile Include="Controllers\Back\Back_AftermarketController.cs" />
     <Compile Include="Controllers\Back\Bask_HealthModelController.cs" />
     <Compile Include="Controllers\MySettingController.cs" />
     <Compile Include="Controllers\PlanController.cs" />
@@ -216,6 +217,7 @@
     <Compile Include="Models\RequestModels\AddShareRequest.cs" />
     <Compile Include="Models\RequestModels\CommentAndPraise.cs" />
     <Compile Include="Models\RequestModels\HealthModelInfo.cs" />
+    <Compile Include="Models\ResponseModel\AftermarketResponse.cs" />
     <Compile Include="Models\ResponseModel\ArticleListResponse.cs" />
     <Compile Include="Models\ResponseModel\ArticleInfoResponse.cs" />
     <Compile Include="Models\ResponseModel\DeleteDerviceCodeResponse.cs" />
@@ -237,8 +239,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ArticleDetails.html" />
-    <Content Include="Article_Manage.html" />
-    <Content Include="Article_TypeDetail.html" />
     <Content Include="Article_TypeManage.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -251,29 +251,27 @@
     <Content Include="js\bootstrap\css\bootstrap.min.css" />
     <Content Include="js\bootstrap\img\glyphicons-halflings-white.png" />
     <Content Include="js\bootstrap\img\glyphicons-halflings.png" />
-    <Content Include="js\bootstrap\img\notimage.png" />
     <Content Include="js\bootstrap\js\bootstrap.js" />
     <Content Include="js\bootstrap\js\bootstrap.min.js" />
     <Content Include="js\common.js" />
     <Content Include="js\config.js" />
     <Content Include="js\domready.js" />
     <Content Include="js\jquery-1.7.2.min.js" />
-    <Content Include="js\jquery.form.js" />
     <Content Include="js\jweixin-1.0.0.js" />
     <Content Include="js\md5.js" />
     <Content Include="js\pagination.js" />
     <Content Include="js\require.js" />
     <Content Include="js\server_data\member_data.js" />
+    <Content Include="js\server_data\Aftermarket_data.js" />
     <Content Include="js\server_data\models_data.js" />
     <Content Include="js\tabs.js" />
     <Content Include="js\wxapi.js" />
     <Content Include="js\zepto.js" />
     <Content Include="ModelDetails.html" />
+    <Content Include="AftermarketMamager.html" />
     <Content Include="ModelsMamager.html" />
-    <Content Include="modules\Article.js" />
-    <Content Include="modules\ArticleType.js" />
-    <Content Include="modules\ArticleTypeDetail.js" />
     <Content Include="modules\index.js" />
+    <Content Include="modules\AftermarketMamager.js" />
     <Content Include="modules\ModelsMamager.js" />
     <Content Include="modules\new-model.js" />
     <Content Include="modules\sign-in.js" />
