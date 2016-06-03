@@ -172,6 +172,67 @@ namespace BF.BackWebAPI.Controllers.Back
 
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+
+        [HttpPost]
+        public HttpResponseMessage InsertArticle([FromBody]InsertArticle param)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            string key = "Back_InsertArticle";
+            if (param.ID > 0)
+            {
+                key = "Back_UpdateArticle";
+                dic.Add("ModificationUser", "admin");
+                dic.Add("ID", param.ID + "");
+            }
+            else
+            {
+                dic.Add("CreationUser", "admin");
+            }
+            dic.Add("ArticleType_ID", param.ArticleType_ID+"");
+            dic.Add("ArticleTitle", param.ArticleTitle);
+            dic.Add("ArticleContent", param.ArticleContent);
+            dic.Add("ImageUrl", param.ImageUrl);
+            dic.Add("PublishDate", param.PublishDate + "");
+            dic.Add("ArticleSort", param.ArticleSort + "");
+            int result = DBBaseFactory.DALBase.ExecuteNonQuery(key, dic);
+            if (result <= 0)
+            {
+                apiResult.code = ResultCode.CODE_UPDATE_FAIL;
+            }
+
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+
+        [HttpGet]
+        public HttpResponseMessage QueryArticleByID(int ID)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            string key = "Back_QueryArticleByID";
+            dic.Add("ID", ID + "");
+            var result = DBBaseFactory.DALBase.QueryForObject<InsertArticle>(key, dic);
+            if (result != null && !string.IsNullOrEmpty(result.ImageUrl))
+            {
+                result.FullUrl = Global.AttmntUrl + result.ImageUrl;
+            }
+            apiResult.data = result;
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+        [HttpGet]
+        public HttpResponseMessage DeleteArticleByID(int ID)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            string key = "Back_DeleteArticleByID";
+            dic.Add("ID", ID + "");
+            int result = DBBaseFactory.DALBase.ExecuteNonQuery(key, dic);
+            if (result <= 0)
+                apiResult.code = ResultCode.CODE_UPDATE_FAIL;
+            apiResult.data = result;
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+
         #endregion
         /// <summary>
         /// 上传图片

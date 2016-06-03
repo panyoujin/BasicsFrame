@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>文章详细</title>
+    <link rel="stylesheet" type="text/css" href="js/bootstrap/css/bootstrap.css">
+    <script src="js/base.js"></script>
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="js/date-picker/wdatepicker.js"></script>
+    <script src="js/UEditor/ueditor.config.js"></script>
+    <script src="js/UEditor/ueditor.all.min.js"></script>
+    <script src="js/jquery.form.js"></script>
+
+    <style type="text/css">
+        #FileUploadImg {
+            cursor: pointer;
+            font-size: 30px;
+            position: absolute;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            width: 70px;
+            height: 60px;
+            left: 120px;
+            top: 170px;
+        }
+    </style>
+</head>
+<body>
+
+    <ul class="breadcrumb">
+        <li class="active">文章管理<span class="divider">/</span></li>
+        <li class="active">文章编辑</li>
+    </ul>
+    <div class="container-fluid">
+        <div class="row-fluid">
+
+            <div class="well">
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane active in" id="home">
+                        <form id="tab" >
+                            <table>
+                               
+                                <tr>
+                                    <td><label>文章标题：</label></td>
+                                    <td><input type="text" id="ArticleTitle" name="ArticleTitle" value="" class="input-xlarge" placeholder="请输入标题" maxlength="50" />
+                                        <input type="hidden" id="ID" name="ID" value="" /></td>
+                                </tr>
+                                <tr>
+                                    <td><label>文章分类：</label></td>
+                                    <td>
+                                        <select class="form-control" name="ArticleType_ID" id="ArticleType_ID">
+                                            <option value="">请选择分类</option>
+                                        </select>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label>文章图片：</label></td>
+                                    <td>
+                                        <img id="titlePic" src="js/bootstrap/img/notimage.png" style="width: 60px; height: 60px; margin: 3px;"/>
+        
+                                        <input id="ImageUrl" name="ImageUrl" type="hidden" />
+                                    </td>
+    
+                                </tr>
+
+                                <tr>
+                                    <td><label>排序：</label></td>
+                                    <td><input type="text" id="ArticleSort" value="" name="ArticleSort" class="input-xlarge" placeholder="排序" maxlength="50" /></td>
+                                </tr>
+
+                                <tr>
+                                    <td><label>发布时间：</label></td>
+                                    <td><input type="text" id="PublishDate" value="" name="PublishDate" class="wdate easyui-validatebox input-xlarge" placeholder="发布时间" onclick="WdatePicker({ dateFmt: 'yyyy-MM-dd H:mm:ss', readOnly: false })" maxlength="50" /></td>
+                                </tr>
+
+                                <tr>
+                                    <td><label>内容：</label></td>
+                                    <td>
+                                        <textarea  style="width:800px;height:500px;" class="edui-default"  name="ArticleContent" id="ArticleContent"></textarea>
+
+                                    </td>
+                                </tr>
+                            </table>
+
+
+                        </form>
+                    </div>
+                </div>
+
+                <div class="btn-toolbar">
+                    <div class="btn-group">
+                        <button class="btn btn-primary" id="save_article"><i class="icon-save"></i> 保存</button>
+                        <button class="btn btn-primary" id="before"><i class="icon-save"></i> 返回</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <form id="UploadFormImg"  method="post" action="/znsh/Article/UploadImage">
+        <input type="file" name="file" id="FileUploadImg" />
+    </form>
+
+    <script src="js/require.js" data-main="js/config.js"></script>
+
+    <script>
+        require(['../modules/ArticleDetail']);
+    </script>
+</body>
+
+</html>

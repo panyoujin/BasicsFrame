@@ -2,7 +2,7 @@
     $(function () {
         loadData(1, 10);
         $("#btn_Search").click(function () { loadData(); });
-        //$("#new_type").click(function () { window.location.href = "/Article_TypeDetail.html"; });
+        $("#new_article").click(function () { window.location.href = "/Article_Detail.html"; });
     })
 
 
@@ -37,14 +37,14 @@
                 str += "<td>" + data.data.table[i].CommentCount + "</td>";
                 str += "<td>" + data.data.table[i].ReadCount + "</td>";
                 str += "<td>" + data.data.table[i].PublishDate + "</td>";
-                str += '<td><a href="Article_TypeDetail.html?ID=' + data.data.table[i].ID + '" ><i class="icon-pencil">编辑</i></a>  <a href="#" role="button"  data-toggle="modal" id="btnDelete" data-id="' + data.data.table[i].ID + '" data-name="' + data.data.table[i].ArticleTitle + '"><i class="icon-remove">删除</i></a> </td></tr>';
+                str += '<td><a href="Article_Detail.html?ID=' + data.data.table[i].ID + '" ><i class="icon-pencil">编辑</i></a>  <a href="#" role="button"  data-toggle="modal" id="btnDelete" data-id="' + data.data.table[i].ID + '" data-name="' + data.data.table[i].ArticleTitle + '"><i class="icon-remove">删除</i></a> </td></tr>';
                 $("#tab").append(str);
             }
             $("td #btnDelete").off("click");
             $('td #btnDelete').on('click', function () {
 
                 if (confirm('确定要删除_' + $(this).attr("data-name") + '_吗?')) {
-                    var url = window.apibase + "/Article/DeleteArticleTypeByID";
+                    var url = window.apibase + "/Article/DeleteArticleByID";
                     c.get({ ID: $(this).attr("data-id") }, url, function (data) {
                         if (data != null && data.code == "200") {
                             loadData(1, 10);

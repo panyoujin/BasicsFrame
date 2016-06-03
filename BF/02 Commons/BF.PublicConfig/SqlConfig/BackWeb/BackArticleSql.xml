@@ -82,4 +82,49 @@ WHERE 1=1 AND ar.status=TRUE
 			</SqlCommand>
 		</SqlDefinition>
 	</Data>
+	
+	<Data name="Back_InsertArticle">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+INSERT INTO `TB_MB_Article`(`ArticleType_ID`,`ArticleTitle`,`ArticleContent`,`ImageUrl`,`PublishDate`,`ArticleSort`,`CreationDate`,`CreationUser`)
+VALUE(@@ArticleType_ID@@,@@ArticleTitle@@,@@ArticleContent@@,@@ImageUrl@@,@@PublishDate@@,@@ArticleSort@@,Now(),@@CreationUser@@);
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	<Data name="Back_UpdateArticle">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+UPDATE `TB_MB_Article` SET `ArticleType_ID`=@@ArticleType_ID@@,`ArticleTitle`=@@ArticleTitle@@,`ArticleContent`=@@ArticleContent@@,
+`ImageUrl`=@@ImageUrl@@,`PublishDate`=@@PublishDate@@,`ArticleSort`=@@ArticleSort@@,`ModificationDate`=NOW(),`ModificationUser`=@@ModificationUser@@
+WHERE ID=@@ID@@;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	<Data name="Back_QueryArticleByID">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+SELECT ar.`ID`,ar.`ArticleType_ID`,ar.`ArticleTitle`,ar.`ImageUrl`,"" AS FullUrl,DATE_FORMAT(ar.`PublishDate`,'%Y-%c-%d %h:%i:%s') AS PublishDate,ar.`ArticleSort`,ar.`PraiseCount`,
+ar.`CommentCount`,ar.`ReadCount`,art.`Name`,ar.`ArticleContent`
+FROM `TB_MB_Article` ar 
+JOIN `TB_MB_ArticleType` art ON ar.`ArticleType_ID`=art.`ID`
+WHERE ar.ID=@@ID@@
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	
+	<Data name="Back_DeleteArticleByID">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+UPDATE TB_MB_Article SET STATUS=FALSE WHERE ID=@@ID@@ 
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
 </HCIP.AjaxDataSetting>
