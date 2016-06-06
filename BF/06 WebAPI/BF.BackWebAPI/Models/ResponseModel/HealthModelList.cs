@@ -111,5 +111,10 @@ namespace BF.BackWebAPI.Models.ResponseModel
         }
 
         public string WeChatUrl { get; set; }
+
+        /// <summary>
+        /// 收藏数量
+        /// </summary>
+        public int CollectionCount { get; set; }
     }
 }
