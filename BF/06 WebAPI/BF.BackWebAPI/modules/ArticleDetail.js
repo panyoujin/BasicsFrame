@@ -1,6 +1,5 @@
 ﻿define(['domready!', 'zepto', 'common', 'angular', 'server_data/models_data'], function (doc, $, c, angular, m) {
     var ue = UE.getEditor('ArticleContent');
-
     UE.getEditor('ArticleContent').ready(function () {
         //获取分类
         var url = window.apibase + "/Article/GetArticleTypes";
@@ -15,19 +14,23 @@
 
                 getDetail();
             }
-        })
+        });
 
+        
         //保存按钮
         $("#save_article").click(function () {
+            if (formvalidate()==true)
+            {
+                var url = window.apibase + "/Article/InsertArticle";
+                c.post($('#tab').serialize(), url, function (data) {
+                    console.debug(data);
+                    if (data != null && data.code == "200") {
+                        window.location.href = "Article_Manage.html";
+                    }
+                })
+            }
+        });
 
-            var url = window.apibase + "/Article/InsertArticle";
-            c.post($('#tab').serialize(), url, function (data) {
-                console.debug(data);
-                if (data != null && data.code == "200") {
-                    window.location.href = "Article_Manage.html";
-                }
-            })
-        })
         $("#before").click(function () { history.back(-1); });
         ////图片上传
         $('#FileUploadImg').change(function () {
@@ -75,14 +78,23 @@
 
 
     function formvalidate() {
-        alert($("#ImageUrl").val());
 
-        if ($("#Name").val().length <= 0) {
-            alert("请填写分类名称!");
+        if ($("#ArticleTitle").val().length <= 0) {
+            alert("请填写文章标题!");
+            return false;
+        }
+
+        if ($("#PublishDate").val().length <= 0) {
+            alert("请填写发布时间!");
+            return false;
+        }
+        if ($("#ArticleContent").val().length <= 0) {
+            alert("请填写发布内容!");
             return false;
         }
         return true;
     }
+
     //上传图片回调方法
     function callbackuploadimage(data) {
         data = $.parseJSON(data);
