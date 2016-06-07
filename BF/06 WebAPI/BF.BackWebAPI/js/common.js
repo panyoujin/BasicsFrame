@@ -5,7 +5,7 @@ define(['zepto'], function () {
     var isweixin = IsWeiXinBrowser();
     var ReturnUrl = GetUrlParam("ReturnUrl");
     if (ReturnUrl.length <= 0) {
-        ReturnUrl = "/WebPage/index.html"; //需要修改
+        ReturnUrl = window.webroot + "/index.html"; //需要修改
     }
 
     
