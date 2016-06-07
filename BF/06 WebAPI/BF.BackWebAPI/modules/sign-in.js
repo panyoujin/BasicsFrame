@@ -28,6 +28,7 @@
     }
 
     $(function () {
+        Cookies.Del("CACHED_SESSION_ID");
         angular.set('info', info, bindEvent);
     })
 
