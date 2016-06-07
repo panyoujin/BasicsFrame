@@ -10,7 +10,7 @@
             type: (type || -1),
             model_name: model_name,
             page: (page || 0),
-            pageSize: (pageSize || 0)
+            pageSize: (pageSize || 10)
         };
         var url = window.apibase + "/Bask_HealthModel/GetHealthModelList";
         c.get(param, url, cb, function (err) { c.msgtips(err, "e"); }, ischeck_code)
