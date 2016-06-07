@@ -66,4 +66,26 @@ WHERE ID=@@ID@@;
 			</SqlCommand>
 		</SqlDefinition>
 	</Data>
+	
+	<Data name="Back_EnableShopping">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+UPDATE  `TB_MB_Shopping` SET `Enable`=@@Enable@@
+WHERE ID=@@ID@@;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	
+	<Data name="Back_OnShelfShopping">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+UPDATE  `TB_MB_Shopping` SET `OnShelf`=@@OnShelf@@
+WHERE ID=@@ID@@;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
 </HCIP.AjaxDataSetting>

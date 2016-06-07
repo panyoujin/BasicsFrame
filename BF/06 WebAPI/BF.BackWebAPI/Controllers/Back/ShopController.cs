@@ -119,5 +119,33 @@ namespace BF.BackWebAPI.Controllers.Back
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
 
+        [HttpGet]
+        public HttpResponseMessage EnableShopByID(int ID, int Enable)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            string key = "Back_EnableShopping";
+            dic.Add("ID", ID);
+            dic.Add("Enable", Enable);
+            int result = DBBaseFactory.DALBase.ExecuteNonQuery(key, dic);
+            if (result <= 0)
+                apiResult.code = ResultCode.CODE_UPDATE_FAIL;
+            apiResult.data = result;
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+        [HttpGet]
+        public HttpResponseMessage OnShelfShopByID(int ID, int OnShelf)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            string key = "Back_OnShelfShopping";
+            dic.Add("ID", ID);
+            dic.Add("OnShelf", OnShelf);
+            int result = DBBaseFactory.DALBase.ExecuteNonQuery(key, dic);
+            if (result <= 0)
+                apiResult.code = ResultCode.CODE_UPDATE_FAIL;
+            apiResult.data = result;
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
     }
 }
