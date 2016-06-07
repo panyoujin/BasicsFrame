@@ -180,6 +180,7 @@
     <Compile Include="Authorize\ExceptionAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArticController.cs" />
+    <Compile Include="Controllers\Back\ShopController.cs" />
     <Compile Include="Controllers\Back\ArticleController.cs" />
     <Compile Include="Controllers\Back\Back_AftermarketController.cs" />
     <Compile Include="Controllers\Back\Bask_HealthModelController.cs" />
@@ -225,6 +226,7 @@
     <Compile Include="Models\Back\InParam\Collection.cs" />
     <Compile Include="Models\Back\InParam\Bask_HealthModel.cs" />
     <Compile Include="Models\Back\InParam\HealthModel.cs" />
+    <Compile Include="Models\Back\InParam\InsertShop.cs" />
     <Compile Include="Models\Back\InParam\InsertArticle.cs" />
     <Compile Include="Models\Back\InParam\InsertArticleType.cs" />
     <Compile Include="Models\Back\InParam\Login.cs" />
@@ -265,6 +267,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ArticleDetails.html" />
+    <Content Include="Shopping_Detail.html" />
+    <Content Include="modules\ShoppingDetail.js" />
+    <Content Include="modules\Shopping.js" />
+    <Content Include="Shopping_Manage.html" />
     <Content Include="Article_Manage.html" />
     <Content Include="Article_Detail.html" />
     <Content Include="Article_TypeDetail.html" />

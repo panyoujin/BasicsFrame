@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>商品详细</title>
+    <link rel="stylesheet" type="text/css" href="js/bootstrap/css/bootstrap.css">
+    <script src="js/base.js"></script>
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="js/jquery.form.js"></script>
+
+    <style type="text/css">
+        #FileUploadImg {
+            cursor: pointer;
+            font-size: 30px;
+            position: absolute;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            width: 70px;
+            height: 60px;
+            left: 120px;
+            top: 120px;
+        }
+    </style>
+</head>
+<body>
+
+    <ul class="breadcrumb">
+        <li class="active">商品管理<span class="divider">/</span></li>
+        <li class="active">商品编辑</li>
+    </ul>
+    <div class="container-fluid">
+        <div class="row-fluid">
+
+            <div class="well">
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane active in" id="home">
+                        <form id="tab" >
+                            <table>
+                               
+                                <tr>
+                                    <td><label>商品名称：</label></td>
+                                    <td><input type="text" id="Name" name="Name" value="" class="input-xlarge" placeholder="请输入商品名称" maxlength="50" />
+                                        <input type="text" id="ID" name="ID" value="" style="display: none;" /></td>
+                                </tr>
+
+                                <tr>
+                                    <td><label>商品图片：</label></td>
+                                    <td>
+                                        <img id="titlePic" src="js/bootstrap/img/notimage.png" style="width: 60px; height: 60px; margin: 3px;"/>
+         
+                                        <input id="ImageUrl" name="ImageUrl" type="hidden" />
+                                    </td>
+    
+                                </tr>
+                                <tr>
+                                    <td><label>商品链接地址：</label></td>
+                                    <td><input type="text" id="ContentUrl" value="" name="ContentUrl" class="input-xlarge" placeholder="商品链接地址" maxlength="50" /></td>
+                                </tr>
+                                <tr>
+                                    <td><label>商品描述：</label></td>
+                                    <td><input type="text" id="Description" value="" name="Description" class="input-xlarge" placeholder="商品描述" maxlength="50" /></td>
+                                </tr>
+                                <tr>
+                                    <td><label>原价：</label></td>
+                                    <td><input type="text" id="Price" value="" name="Price" class="input-xlarge" placeholder="原价" maxlength="50" /></td>
+                                </tr>
+                                <tr>
+                                    <td><label>现价：</label></td>
+                                    <td><input type="text" id="NowPrice" value="" name="NowPrice" class="input-xlarge" placeholder="现价" maxlength="50" /></td>
+                                </tr>
+                            </table>
+
+                        </form>
+                    </div>
+                </div>
+
+                <div class="btn-toolbar">
+                    <div class="btn-group">
+                        <button class="btn btn-primary" id="save_shop"><i class="icon-save"></i> 保存</button>
+                        <button class="btn btn-primary" id="before"><i class="icon-save"></i> 返回</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <form id="UploadFormImg"  method="post" action="/znsh/Article/UploadImage">
+        <input type="file" name="file" id="FileUploadImg" accept="image/*" />
+    </form>
+
+    <script src="js/require.js" data-main="js/config.js"></script>
+
+    <script>
+        require(['../modules/ShoppingDetail']);
+    </script>
+</body>
+
+</html>

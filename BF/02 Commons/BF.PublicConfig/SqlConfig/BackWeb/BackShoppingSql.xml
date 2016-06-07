@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HCIP.AjaxDataSetting>
+	<!--获取商品列表-->
+	<Data name="Back_GetShopsList">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+SELECT `ID`,`Name`,`Description`,`Url`,`Price`,`NowPrice`,DATE_FORMAT(IFNULL(`ModificationDate`,`CreationDate`),'%Y-%c-%d %h:%i:%s') AS OpenationDate,IF(`Enable`,1,0) AS 'Enable',IF(`OnShelf`,1,0) AS OnShelf,
+`ImageUrl`,`ContentUrl`
+FROM `TB_MB_Shopping`
+WHERE STATUS=TRUE
+<%= AND NAME LIKE @@Search@@%>
+ORDER BY OpenationDate DESC
+<%= LIMIT @@StartSize@@ , @@PageSize@@%>;
+SELECT COUNT(1) AS total
+FROM `TB_MB_Shopping`
+WHERE STATUS=TRUE
+<%= AND NAME LIKE @@Search@@%>;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+
+	<Data name="Back_InsertShopping">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+INSERT INTO  `TB_MB_Shopping`(`Name`,`ImageUrl`,`Price`,`NowPrice`,`CreationDate`,`CreationUser`,`Description`,`ContentUrl`)
+VALUE(@@Name@@,@@ImageUrl@@,@@Price@@,@@NowPrice@@,now(),@@CreationUser@@,@@Description@@,@@ContentUrl@@);
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	
+	<Data name="Back_QueryShopping">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+SELECT `ID`,`Name`,`Description`,'' AS FullUrl,`Price`,`NowPrice`,DATE_FORMAT(IFNULL(`ModificationDate`,`CreationDate`),'%Y-%c-%d %h:%i:%s') AS OpenationDate,IF(`Enable`,1,0) AS 'Enable',IF(`OnShelf`,1,0) AS OnShelf,
+`ImageUrl`,`ContentUrl`
+FROM `TB_MB_Shopping`
+WHERE ID=@@ID@@;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+
+	<Data name="Back_UpdateShopping">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+UPDATE `TB_MB_Shopping` SET `Name`=@@Name@@,`Description`=@@Description@@,`Price`=@@Price@@,`NowPrice`=@@NowPrice@@,`ImageUrl`=@@ImageUrl@@,`ContentUrl`=@@ContentUrl@@,
+`ModificationUser`=@@ModificationUser@@,`ModificationDate`=NOW()
+WHERE ID=@@ID@@;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	<Data name="Back_DeleteShopping">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+UPDATE  `TB_MB_Shopping` SET `Status`=FALSE
+WHERE ID=@@ID@@;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+</HCIP.AjaxDataSetting>

@@ -13,7 +13,7 @@ namespace BF.BackWebAPI.Models.Back.InParam
         public string ArticleContent { set; get; }
         public string ImageUrl { set; get; }
         public string FullUrl { set; get; }
-        public string PublishDate { set; get; }
+        public DateTime PublishDate { set; get; }
         public int ArticleSort { set; get; }
     }
 }
