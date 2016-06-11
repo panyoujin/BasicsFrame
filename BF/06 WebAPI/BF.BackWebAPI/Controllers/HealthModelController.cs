@@ -64,7 +64,7 @@ namespace BF.BackWebAPI.Controllers
                 }
                 catch (Exception ex)
                 {
-
+                    dic.Remove("User_ID");
                 }
             }
             if (!string.IsNullOrWhiteSpace(model_name))
