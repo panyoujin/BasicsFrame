@@ -180,6 +180,7 @@
     <Compile Include="Authorize\ExceptionAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArticController.cs" />
+    <Compile Include="Controllers\Back\Back_MemberController.cs" />
     <Compile Include="Controllers\Back\ShopController.cs" />
     <Compile Include="Controllers\Back\ArticleController.cs" />
     <Compile Include="Controllers\Back\Back_AftermarketController.cs" />
