@@ -232,6 +232,7 @@
     <Compile Include="Models\Back\InParam\InsertArticleType.cs" />
     <Compile Include="Models\Back\InParam\Login.cs" />
     <Compile Include="Models\Back\InParam\CommonModel.cs" />
+    <Compile Include="Models\Back\OutParam\MemberInfo.cs" />
     <Compile Include="Models\Back\OutParam\ArticleType.cs" />
     <Compile Include="Models\Back\User.cs" />
     <Compile Include="Models\Front\MemberInfo.cs" />
@@ -268,6 +269,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ArticleDetails.html" />
+    <Content Include="MemberInfo_Manage.html" />
+    <Content Include="modules\BackMemberInfo.js" />
     <Content Include="Shopping_Detail.html" />
     <Content Include="modules\ShoppingDetail.js" />
     <Content Include="modules\Shopping.js" />

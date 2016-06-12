@@ -1,4 +1,5 @@
-﻿using BF.Common.CommonEntities;
+﻿using BF.BackWebAPI.Models.Back.OutParam;
+using BF.Common.CommonEntities;
 using BF.Common.DataAccess;
 using BF.Common.Helper;
 using BF.Common.StaticConstant;
@@ -34,7 +35,7 @@ namespace BF.BackWebAPI.Controllers.Back
                 dic.Add("Search", "%" + search + "%");
             }
 
-            DataSet ds = DBBaseFactory.DALBase.QueryForDataSet("Back_GetShopsList", dic);
+            DataSet ds = DBBaseFactory.DALBase.QueryForDataSet("Back_MemberInfoList", dic);
 
             if (ds != null && ds.Tables.Count >= 2)
             {
@@ -45,7 +46,7 @@ namespace BF.BackWebAPI.Controllers.Back
                         item["ImageUrl"] = Global.AttmntUrl + item["ImageUrl"].ToString();
                     }
                 }
-                var result = new { table = ds.Tables[0], total = ds.Tables[1].Rows[0][0] };
+                var result = new { table = DBBaseFactory.DALBase.TableToList<MemberInfo>(ds.Tables[0]), total = ds.Tables[1].Rows[0][0] };
                 apiResult.data = result;
             }
 

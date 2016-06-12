@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HCIP.AjaxDataSetting>
+  <Data name="Back_MemberInfoList">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+SELECT `ID`,`Account`,`Name`,`Age`,`Birthday`,IF(`Sex`,'男',IF(`Sex`=FALSE,'女','')) AS Sex,
+`Email`,`Phone`,`QQ`,`ImageUrl`,IF(`IsAdmin`,'后台用户','前端用户') AS IsAdmin,IF(`Status`,'正常','删除') AS StatusStr,
+DATE_FORMAT(`CreationDate`,'%Y-%c-%d %h:%i:%s') AS CreationDate
+FROM `TB_MB_MemberInfo`
+WHERE 1=1
+<%=AND (`Account` LIKE @@Search@@ or `Name` LIKE @@Search@@) %>
+ORDER BY ID DESC
+<%= LIMIT @@StartSize@@ , @@PageSize@@%>;
+SELECT COUNT(1) AS total
+FROM `TB_MB_MemberInfo`
+WHERE 1=1
+<%=AND (`Account` LIKE @@Search@@ or `Name` LIKE @@Search@@) %>;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+	
+</HCIP.AjaxDataSetting>
