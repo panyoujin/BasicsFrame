@@ -70,7 +70,7 @@
         `Bubble_Time`,`Bubble_Temperature`,`Cook_Time`,`Cook_Temperature`,`Is_Heat_Preservation`,`Heat_Preservation_Time`,`Heat_Preservation_Temperature`,
         `Removal_Chlorine_Time`,`Final_Temperature`,`IsFerv`,`Model_Type`,`Model_Status`,WeChatUrl,`CreationUser`,`CreationDate`) 
         VALUES(
-        @@User_ID@@, @@Model_Name@@, @@IcoUrl@@, @@ImageUrl@@, @@Introduce@@, @@Describe@@, @@Remarks@@, @@Sort@@, @@IsBubble@@, @@Bubble_Time@@,@@Bubble_Temperature@@,@@Cook_Time@@,@@Cook_Temperature@@,@@Is_Heat_Preservation@@
+        @@User_ID@@, @@Model_Name@@, @@IcoUrl@@, @@ImageUrl@@, @@Introduce@@, @@Model_Describe@@, @@Remarks@@, @@Sort@@, @@IsBubble@@, @@Bubble_Time@@,@@Bubble_Temperature@@,@@Cook_Time@@,@@Cook_Temperature@@,@@Is_Heat_Preservation@@
         ,@@Heat_Preservation_Time@@,@@Heat_Preservation_Temperature@@,
         @@Removal_Chlorine_Time@@,@@Final_Temperature@@,@@IsFerv@@,@@Model_Type@@
         ,@@Model_Status@@,@@WeChatUrl@@,@@CreationUser@@,NOW()
@@ -84,7 +84,7 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        UPDATE `TB_MB_Models` SET ModificationDate=NOW() ,Model_Name=@@Model_Name@@  ,IcoUrl= @@IcoUrl@@ ,ImageUrl=@@ImageUrl@@  ,Introduce=@@Introduce@@  , Describe=@@Describe@@  , Remarks=@@Remarks@@  , Sort=@@Sort@@  , IsBubble=@@IsBubble@@  ,Bubble_Time=@@Bubble_Time@@,Bubble_Temperature=@@Bubble_Temperature@@  ,Cook_Time=@@Cook_Time@@  ,Cook_Temperature=@@Cook_Temperature@@,Is_Heat_Preservation=@@Is_Heat_Preservation@@ ,Heat_Preservation_Time=@@Heat_Preservation_Time@@  ,Heat_Preservation_Temperature=@@Heat_Preservation_Temperature@@ ,Removal_Chlorine_Time=@@Removal_Chlorine_Time@@ ,Final_Temperature=@@Final_Temperature@@  ,IsFerv=@@IsFerv@@,Model_Type=@@Model_Type@@  ,Model_Status=@@Model_Status@@  ,WeChatUrl=@@WeChatUrl@@  ,ModificationUser=@@CreationUser@@ 
+        UPDATE `TB_MB_Models` SET ModificationDate=NOW() ,Model_Name=@@Model_Name@@  ,IcoUrl= @@IcoUrl@@ ,ImageUrl=@@ImageUrl@@  ,Introduce=@@Introduce@@  , `Describe`=@@Model_Describe@@  , Remarks=@@Remarks@@  , Sort=@@Sort@@  , IsBubble=@@IsBubble@@  ,Bubble_Time=@@Bubble_Time@@,Bubble_Temperature=@@Bubble_Temperature@@  ,Cook_Time=@@Cook_Time@@  ,Cook_Temperature=@@Cook_Temperature@@,Is_Heat_Preservation=@@Is_Heat_Preservation@@ ,Heat_Preservation_Time=@@Heat_Preservation_Time@@  ,Heat_Preservation_Temperature=@@Heat_Preservation_Temperature@@ ,Removal_Chlorine_Time=@@Removal_Chlorine_Time@@ ,Final_Temperature=@@Final_Temperature@@  ,IsFerv=@@IsFerv@@,Model_Type=@@Model_Type@@  ,Model_Status=@@Model_Status@@  ,WeChatUrl=@@WeChatUrl@@  ,ModificationUser=@@CreationUser@@ 
         WHERE ID=@@MID@@ AND  User_ID=@@User_ID@@;
       ]]>
       </SqlCommand>

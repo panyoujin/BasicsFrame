@@ -134,7 +134,7 @@ namespace BF.BackWebAPI.Controllers
             dic.Add("IcoUrl", string.IsNullOrWhiteSpace(healthModel.IcoUrl) ? "" : healthModel.IcoUrl);
             dic.Add("ImageUrl", string.IsNullOrWhiteSpace(healthModel.ImageUrl) ? "" : healthModel.ImageUrl);
             dic.Add("Introduce", healthModel.Introduce);
-            dic.Add("Describe", string.IsNullOrWhiteSpace(healthModel.Describe) ? "" : healthModel.Describe);
+            dic.Add("Model_Describe", string.IsNullOrWhiteSpace(healthModel.Describe) ? "" : healthModel.Describe);
             dic.Add("Remarks", healthModel.Remarks);
             dic.Add("Sort", healthModel.Sort);
             dic.Add("IsBubble", healthModel.IsBubble);

@@ -175,7 +175,7 @@ namespace BF.BackWebAPI.Controllers
             dic.Add("IcoUrl", string.IsNullOrWhiteSpace(healthModel.icoUrl) ? "" : healthModel.icoUrl);
             dic.Add("ImageUrl", string.IsNullOrWhiteSpace(healthModel.imageUrl) ? "" : healthModel.imageUrl);
             dic.Add("Introduce", healthModel.introduce);
-            dic.Add("Describe", string.IsNullOrWhiteSpace(healthModel.describe) ? "" : healthModel.describe);
+            dic.Add("Model_Describe", string.IsNullOrWhiteSpace(healthModel.describe) ? "" : healthModel.describe);
             dic.Add("Remarks", healthModel.remarks);
             dic.Add("Sort", healthModel.sort);
             dic.Add("IsBubble", healthModel.isBubble);
@@ -196,6 +196,7 @@ namespace BF.BackWebAPI.Controllers
             var key = "BackWeb_AddHealthModel";
             if (healthModel.MID > 0)
             {
+                dic.Add("MID", healthModel.MID);
                 key = "BackWeb_EditHealthModel";
             }
             apiResult.data = DBBaseFactory.DALBase.ExecuteNonQuery(key, dic);
