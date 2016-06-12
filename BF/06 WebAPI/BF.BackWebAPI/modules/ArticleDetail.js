@@ -23,7 +23,7 @@
             {
                 var url = window.apibase + "/Article/InsertArticle";
                 c.post($('#tab').serialize(), url, function (data) {
-                    console.debug(data);
+     
                     if (data != null && data.code == "200") {
                         window.location.href = "Article_Manage.html";
                     }
@@ -64,7 +64,8 @@
 
                     $("#ImageUrl").val(data.data.ImageUrl);
                     $("#ArticleSort").val(data.data.ArticleSort);
-                    //$("#ArticleContent").val(data.data.ArticleContent);
+
+                    $("#ArticleContent").val(data.data.ArticleContent);
 
                     ue.setContent(data.data.ArticleContent);
 
@@ -83,7 +84,7 @@
             alert("请填写文章标题!");
             return false;
         }
-
+        
         if ($("#PublishDate").val().length <= 0) {
             alert("请填写发布时间!");
             return false;
