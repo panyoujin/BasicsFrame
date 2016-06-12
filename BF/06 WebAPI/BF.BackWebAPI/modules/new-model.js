@@ -23,12 +23,14 @@
         ImageUrl: "",//图片地址
         Introduce: "",//简单介绍，用户自定义的需要动态生成
         Describe: "",//材料描述
-        Remarks: ""//注意事项
+        Remarks: "",//注意事项
+        ImageUrl: "",
+        FullUrl: "js/bootstrap/img/notimage.png",
+        WeChatUrl:""
     }
     function bindEvent() {
         $('body').show();
         loading(0);
-
         $('#save_model').off('click')
 
         $('#save_model').on('click', function () {
@@ -40,6 +42,7 @@
                 alert('最终温度不能为空');
                 return;
             }
+            info.ImageUrl = $("#ImageUrl").val();
             if (!info.Cook_Time) {
                 alert('煮料时间不能为空');
                 return;
@@ -49,12 +52,24 @@
                 alert(data.msg);
             });
         });
+        ////图片上传
+        $('#FileUploadImg').change(function () {
+            var options = {
+                success: callbackuploadimage,
+                type: 'post',
+                clearForm: false
+            };
+            $('#UploadFormImg').ajaxSubmit(options);
+        });
     }
     function init_data() {
         if (modelID > 0) {
             m.GetHealthModelInfo(modelID, function (data) {
-                if (data.data!=null && data.data.MID > 0) {
+                if (data.data != null && data.data.MID > 0) {
                     info = data.data;
+                    if (info.FullUrl == null || info.FullUrl.length <= 0) {
+                        info.FullUrl = "js/bootstrap/img/notimage.png";
+                    }
                 }
                 angular.set('info', info, bindEvent)
             });
@@ -65,5 +80,18 @@
     $(function () {
         init_data();
     })
+    //上传图片回调方法
+    function callbackuploadimage(data) {
+        data = $.parseJSON(data);
 
+        if (data != null && data.code == "200") {
+            info.ImageUrl = data.data.ImageUrl;
+            info.FullUrl = data.data.FullUrl;
+            $("#ImageUrl").val(data.data.ImageUrl);
+            $("#titlePic").attr("src", data.data.FullUrl);
+        }
+        else {
+            alert("上传失败");
+        }
+    }
 })

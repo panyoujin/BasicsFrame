@@ -97,5 +97,7 @@ namespace BF.BackWebAPI.Models.ResponseModel
         }
 
         public long CreationDateTicks { get; set; }
+
+        public string Comment_Content { get; set; }
     }
 }

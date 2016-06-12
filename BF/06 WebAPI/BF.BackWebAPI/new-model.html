@@ -12,11 +12,29 @@
 
     <link rel="stylesheet" type="text/css" href="stylesheets/theme.css">
     <script src="js/base.js"></script>
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="js/date-picker/wdatepicker.js"></script>
+    <script src="js/UEditor/ueditor.config.js"></script>
+    <script src="js/UEditor/ueditor.all.min.js"></script>
+    <script src="js/jquery.form.js"></script>
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <!-- Le fav and touch icons -->
+    <style type="text/css">
+        #FileUploadImg {
+            cursor: pointer;
+            font-size: 30px;
+            position: absolute;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            width: 70px;
+            height: 60px;
+            left: 42px;
+            top: 205px;
+        }
+    </style>
 </head>
 
 <!--[if lt IE 7 ]> <body class="ie ie6"> <![endif]-->
@@ -47,6 +65,11 @@
                         <form id="tab">
                             <label>名称</label>
                             <input type="text" value="" class="input-xlarge" placeholder="请输入名称" am-bind="info.Model_Name" maxlength="50" />
+                            <label>图片</label>
+                            <img id="titlePic" am-src="{{info.FullUrl}}" style="width: 60px; height: 60px; margin: 3px;" />
+
+                            <input id="ImageUrl" name="ImageUrl" type="hidden" am-bind="info.ImageUrl" />
+
                             <label>最终温度</label>
                             <input type="text" value="" class="input-xlarge" placeholder="单位：摄氏度" am-bind="info.Final_Temperature" />
                             <label>煮料时长</label>
@@ -57,12 +80,14 @@
                             <input type="text" value="" class="input-xlarge" placeholder="单位：摄氏度" am-bind="info.Heat_Preservation_Time" />
                             <label>保温温度</label>
                             <input type="text" value="" class="input-xlarge" placeholder="单位：摄氏度" am-bind="info.Heat_Preservation_Temperature" />
-                            <label>简单介绍</label>
+                            <label>煮料过程描述</label>
                             <input type="text" value="" class="input-xlarge" placeholder="如:煮沸除氯五分钟，保温在50度" am-bind="info.Introduce" maxlength="200" />
                             <label>材料描述</label>
                             <input type="text" value="" class="input-xlarge" placeholder="填写材料的描述" am-bind="info.Describe" maxlength="1000" />
                             <label>注意事项</label>
                             <input type="text" value="" class="input-xlarge" placeholder="填写一些煮料的注意事项" am-bind="info.Remarks" maxlength="1000" />
+                            <label>微信地址</label>
+                            <input type="text" value="" class="input-xlarge" placeholder="微信url" am-bind="info.WeChatUrl" maxlength="1000" />
                         </form>
                     </div>
                 </div>
@@ -74,6 +99,9 @@
 
         </div>
     </div>
+    <form id="UploadFormImg" method="post" action="http://115.29.49.135:1010/znsh/Article/UploadImage">
+        <input type="file" name="file" id="FileUploadImg" accept="image/*" />
+    </form>
     <script src="js/require.js" data-main="js/config.js"></script>
     <script>
         require(['../modules/new-model']);

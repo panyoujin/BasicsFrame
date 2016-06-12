@@ -44,26 +44,24 @@ namespace BF.BackWebAPI.Models.RequestModels
             }
         }
 
+        public string FullUrl
+        {
+            get
+            {
+                if (ImageUrl == null || ImageUrl.IndexOf("http://") == 0 || ImageUrl.IndexOf("https://") == 0)
+                {
+
+                    return ImageUrl;
+                }
+                return Global.AttmntUrl + ImageUrl;
+            }
+        }
+
         private string _imgUrl;
         /// <summary>
         /// 
         /// </summary>
-        public string ImageUrl
-        {
-            get
-            {
-                if (_imgUrl == null || _imgUrl.IndexOf("http://") == 0 || _imgUrl.IndexOf("https://") == 0)
-                {
-
-                    return _imgUrl;
-                }
-                return Global.AttmntUrl + _imgUrl;
-            }
-            set
-            {
-                _imgUrl = value;
-            }
-        }
+        public string ImageUrl { get; set; }
         /// <summary>
         /// 
         /// </summary>
