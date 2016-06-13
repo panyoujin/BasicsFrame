@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <HCIP.AjaxDataSetting>
-  <Data name="Back_MemberInfoList">
-    <SqlDefinition type="sql">
-      <SqlCommand>
-        <![CDATA[
+	<Data name="Back_MemberInfoList">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
 SELECT `ID`,`Account`,`Name`,`Age`,`Birthday`,IF(`Sex`,'男',IF(`Sex`=FALSE,'女','')) AS Sex,
 `Email`,`Phone`,`QQ`,`ImageUrl`,IF(`IsAdmin`,'后台用户','前端用户') AS IsAdmin,IF(`Status`,'正常','删除') AS StatusStr,
 DATE_FORMAT(`CreationDate`,'%Y-%c-%d %h:%i:%s') AS CreationDate
@@ -17,8 +17,27 @@ FROM `TB_MB_MemberInfo`
 WHERE 1=1
 <%=AND (`Account` LIKE @@Search@@ or `Name` LIKE @@Search@@) %>;
       ]]>
-      </SqlCommand>
-    </SqlDefinition>
-  </Data>
-	
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+
+	<Data name="Back_DeviceList">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+SELECT `ID`,`device_id`,`device_identifier`,`name`,`device_ip`,`router_id`,`device_type`,`MemberID`,DATE_FORMAT(`CreationDate`,'%Y-%c-%d %h:%i:%s') AS CreationDate,`CreationUser`,
+IF(`Status`,'删除','正常') AS StatusStr
+FROM `TB_DV_Devices`
+WHERE 1=1
+<%=AND (`name` LIKE @@Search@@ or `device_identifier` LIKE @@Search@@ or `CreationUser` LIKE @@Search@@) %>
+ORDER BY `MemberID`,`Status` ASC,`CreationDate` DESC
+<%= LIMIT @@StartSize@@ , @@PageSize@@%>;
+SELECT COUNT(1) AS total
+FROM `TB_DV_Devices`
+WHERE 1=1
+<%=AND (`name` LIKE @@Search@@ or `device_identifier` LIKE @@Search@@ or `CreationUser` LIKE @@Search@@) %>;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
 </HCIP.AjaxDataSetting>
