@@ -40,13 +40,13 @@ namespace BF.BackWebAPI.Controllers
             {
                 foreach (var item in shops)
                 {
-                    if (!string.IsNullOrEmpty(item.Url))
+                    if (!string.IsNullOrEmpty(item.ImageUrl))
                     {
-                        item.Url = string.IsNullOrEmpty(item.Url) ? "" : Global.AttmntUrl + item.Url;
+                        item.ImageUrl = string.IsNullOrEmpty(item.ImageUrl) ? "" : Global.AttmntUrl + item.ImageUrl;
                     }
                 }
             }
-            apiResult.data = DBBaseFactory.DALBase.QueryForList<MyShopResponse>("Get_MyShoppings", dic);
+            apiResult.data = shops;
 
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
