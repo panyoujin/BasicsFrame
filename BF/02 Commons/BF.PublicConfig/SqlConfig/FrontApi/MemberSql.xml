@@ -48,6 +48,16 @@ WHERE `ID`=@@ID@@ AND `Status`=TRUE AND `Passwd`=@@OldPasswd@@;
 			</SqlCommand>
 		</SqlDefinition>
 	</Data>
+	<Data name="FrontApi_ForGetMemberInfoPasswd">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+UPDATE TB_MB_MemberInfo SET Passwd=@@NewPasswd@@, `ModificationDate`=NOW()
+WHERE `Account`=@@Account@@ AND `Status`=TRUE;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
 	<Data name="FrontApi_UpdateSessionID">
 		<SqlDefinition type="sql">
 			<SqlCommand>

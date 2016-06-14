@@ -240,6 +240,7 @@
     <Compile Include="Models\Front\Request\KettleModel.cs" />
     <Compile Include="Models\Front\Request\RegisterModel.cs" />
     <Compile Include="Models\Front\Request\UpdateMemberInfoModel.cs" />
+    <Compile Include="Models\Front\Request\ForGetPasswdModel.cs" />
     <Compile Include="Models\Front\Request\UpdatePasswdModel.cs" />
     <Compile Include="Models\Front\Response\AppVersionResponse.cs" />
     <Compile Include="Models\Front\Response\MyShopResponse.cs" />

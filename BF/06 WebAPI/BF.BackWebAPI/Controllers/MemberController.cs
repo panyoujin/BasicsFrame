@@ -174,6 +174,32 @@ namespace BF.BackWebAPI.Controllers
 
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+
+        /// <summary>
+        /// 忘记密码接口
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public HttpResponseMessage ForgetPasswd([FromBody]ForGetPasswdModel param)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("Account", param.Account);
+            dic.Add("NewPasswd", param.NewPasswd);
+            int result = DBBaseFactory.DALBase.ExecuteNonQuery("FrontApi_ForGetMemberInfoPasswd", dic);
+            if (result > 0)
+            {
+                apiResult.data = true;
+            }
+            else
+            {
+                apiResult.code = ResultCode.CODE_EXCEPTION;
+                apiResult.msg = "修改密码失败！";
+            }
+
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
         [HttpGet]
         public HttpResponseMessage LogOut()
         {
