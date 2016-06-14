@@ -138,5 +138,7 @@ namespace BF.BackWebAPI.Models.RequestModels
         /// 收藏数量
         /// </summary>
         public int CollectionCount { get; set; }
+
+        public int ModelType_ID { get; set; }
     }
 }

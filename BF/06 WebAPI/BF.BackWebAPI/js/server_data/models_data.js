@@ -35,9 +35,22 @@
         var url = window.apibase + "/Bask_HealthModel/AddHealthModel";
         c.post(param, url, cb, function (err) { c.msgtips(err, "e"); }, ischeck_code)
     }
+
+    /*
+	*根据模式ID获取模式详情接口
+	*/
+    function DeleteHealthModelByModelID(modelID, cb, ischeck_code) {
+        //登录
+        var param = {
+            modelID: (modelID || 0)
+        };
+        var url = window.apibase + "/Bask_HealthModel/DeleteHealthModelByModelID";
+        c.get(param, url, cb, function (err) { c.msgtips(err, "e"); }, ischeck_code)
+    }
     return {
         GetHealthModelList: GetHealthModelList,
         AddHealthModel: AddHealthModel,
-        GetHealthModelInfo: GetHealthModelInfo
+        GetHealthModelInfo: GetHealthModelInfo,
+        DeleteHealthModelByModelID: DeleteHealthModelByModelID
     }
 })

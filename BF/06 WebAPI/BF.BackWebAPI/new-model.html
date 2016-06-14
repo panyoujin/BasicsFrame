@@ -54,17 +54,19 @@
     <div class="container-fluid">
         <div class="row-fluid">
 
-            <div class="btn-toolbar"> 
-                <button class="btn btn-primary" id="save_model"><i class="icon-save"></i> 保存</button>
-                <div class="btn-group">
-                </div>
-            </div>
+           
             <div class="well">
                 <div id="myTabContent" class="tab-content">
                     <div class="tab-pane active in" id="home">
                         <form id="tab">
                             <label>名称</label>
                             <input type="text" value="" class="input-xlarge" placeholder="请输入名称" am-bind="info.Model_Name" maxlength="50" />
+
+                            <label>分类</label>
+                            <select class="form-control" name="ModelType_ID" id="ModelType_ID">
+                                <option value="">请选择分类</option>
+                            </select>
+
                             <label>图片</label>
                             <img id="titlePic" am-src="{{info.FullUrl}}" style="width: 60px; height: 60px; margin: 3px;" />
 
@@ -94,9 +96,12 @@
 
             </div>
 
-            
-
-
+            <div class="btn-toolbar">
+                <button class="btn btn-primary" id="save_model"><i class="icon-save"></i> 保存</button>
+                <button class="btn btn-primary" id="before"><i class="icon-save"></i> 返回</button>
+                <div class="btn-group">
+                </div>
+            </div>
         </div>
     </div>
     <form id="UploadFormImg" method="post" action="http://115.29.49.135:1010/znsh/Article/UploadImage">

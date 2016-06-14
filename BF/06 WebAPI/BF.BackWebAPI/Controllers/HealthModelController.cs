@@ -193,6 +193,7 @@ namespace BF.BackWebAPI.Controllers
             dic.Add("Model_Status", this.MemberInfo.IsAdmin ? (int)Model_Status.Public : (int)Model_Status.Private);
             dic.Add("CreationUser", this.MemberInfo.Account ?? this.MemberInfo.ID + "");
             dic.Add("WeChatUrl", healthModel.WeChatUrl);
+            dic.Add("ModelType_ID", healthModel.ModelType_ID);
             var key = "BackWeb_AddHealthModel";
             if (healthModel.MID > 0)
             {

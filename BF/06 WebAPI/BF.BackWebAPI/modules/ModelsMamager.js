@@ -17,12 +17,23 @@
         $('#btn_Search').on('click', function () {
             init_data(1, 10, $("#model_name").val());
         });
+        $('#btn_Search').off('click')
 
-        $('#new_model').off('click')
+        $('#btn_Search').on('click', function () {
+            init_data(1, 10, $("#model_name").val());
+        });
+        $('td a .icon-remove').off('click')
 
-        $('#new_model').on('click', function () {
-            alert(window.webroot + "/new-model.html")
-            window.location.href = window.webroot + "/new-model.html";
+        $('td a .icon-remove').on('click', function () {
+            if (confirm('确定要删除_' + $(this).attr("data-name") + '_吗?')) {
+                m.DeleteHealthModelByModelID($(this).attr("data-mid"), function (data) {
+
+                    init_data(1, 10, $("#model_name").val());
+                });
+            } else {
+                return false;
+            }
+
         });
     }
     function init_data(page, size, name) {

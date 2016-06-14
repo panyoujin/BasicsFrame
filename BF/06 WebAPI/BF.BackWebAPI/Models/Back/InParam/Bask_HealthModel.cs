@@ -32,5 +32,7 @@ namespace BF.BackWebAPI.Models.Back.InParam
         public string WeChatUrl { get; set; }
 
         public int MID { get; set; }
+
+        public int ModelType_ID { get; set; }
     }
 }

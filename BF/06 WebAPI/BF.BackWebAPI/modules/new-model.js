@@ -26,7 +26,8 @@
         Remarks: "",//注意事项
         ImageUrl: "",
         FullUrl: "js/bootstrap/img/notimage.png",
-        WeChatUrl:""
+        WeChatUrl: "",
+        ModelType_ID:0
     }
     function bindEvent() {
         $('body').show();
@@ -47,11 +48,18 @@
                 alert('煮料时间不能为空');
                 return;
             }
-
+            info.ModelType_ID = $("#ModelType_ID").val();
             m.AddHealthModel(info, function (data) {
                 alert(data.msg);
             });
         });
+
+
+        $("#before").off('click')
+        $("#before").on('click', function () {
+            history.back(-1);
+        });
+
         ////图片上传
         $('#FileUploadImg').change(function () {
             var options = {
@@ -61,6 +69,25 @@
             };
             $('#UploadFormImg').ajaxSubmit(options);
         });
+
+        var url = window.apibase + "/Back_ModelType/GetModelTypes";
+        c.get({ type_name: "", page: 1, pageSize: 100 }, url, function (data) {
+
+            if (data != null && data.code == "200") {
+                $("#ModelType_ID").html('<option value="0">请选择分类</option>');
+                for (var i = 0; i < data.data.table.length; i++) {
+                    var str = "";
+                    if (data.data.table[i].ID == info.ModelType_ID) {
+                        str = '<option value=' + data.data.table[i].ID + ' selected="selected">' + data.data.table[i].Name + '</option>';
+                    }
+                    else {
+                        str = '<option value=' + data.data.table[i].ID + '>' + data.data.table[i].Name + '</option>';
+                    }
+                    $("#ModelType_ID").append(str);
+                }
+            }
+        });
+
     }
     function init_data() {
         if (modelID > 0) {

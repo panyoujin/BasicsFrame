@@ -152,6 +152,7 @@ namespace BF.BackWebAPI.Controllers
             dic.Add("Model_Status", this.MemberInfo.IsAdmin ? (int)Model_Status.Public : (int)Model_Status.Private);
             dic.Add("CreationUser", this.MemberInfo.Account ?? this.MemberInfo.ID + "");
             dic.Add("WeChatUrl", healthModel.WeChatUrl);
+            dic.Add("ModelType_ID", healthModel.ModelType_ID);
             var key = "BackWeb_AddHealthModel";
             if (healthModel.MID > 0)
             {
@@ -159,6 +160,22 @@ namespace BF.BackWebAPI.Controllers
                 key = "BackWeb_EditHealthModel";
             }
             apiResult.data = DBBaseFactory.DALBase.ExecuteNonQuery(key, dic);
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+
+        /// <summary>
+        /// 根据模式ID 获取模式，需要检验当前用户是否有权限访问该模式
+        /// </summary>
+        /// <param name="modelID"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage DeleteHealthModelByModelID(int modelID)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("ModelID", modelID);
+            dic.Add("UserAccount", this.MemberInfo.Account);
+            apiResult.data = DBBaseFactory.DALBase.QueryForObject<HealthModelInfo>("BackWeb_DeleteHealthModelByModelID", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
     }
