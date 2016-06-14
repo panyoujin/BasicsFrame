@@ -5,8 +5,9 @@
 		<SqlDefinition type="sql">
 			<SqlCommand>
 				<![CDATA[
-SELECT `ID` as uuid,`Name`,`Description`,`Url`,`Price`,`NowPrice` FROM `TB_MB_Shopping`
-WHERE `Status`=TRUE
+SELECT `ID` AS UUID,`Name`,`Description`,`Url`,`Price`,`NowPrice` ,`ImageUrl`,`ContentUrl`
+FROM `TB_MB_Shopping`
+WHERE `Status`=TRUE AND `Enable`=TRUE AND `OnShelf`=TRUE
 <%=AND `Name` LIKE @@Name@@%>
 <%=AND `Description` LIKE @@Description@@%>
 ORDER BY `CreationDate` DESC
