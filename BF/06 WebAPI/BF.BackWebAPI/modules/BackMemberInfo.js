@@ -36,10 +36,24 @@
                 str += "<td>" + data.data.table[i].StatusStr + "</td>";
                 str += "<td>" + data.data.table[i].Sex + "</td>";
                 str += "<td>" + data.data.table[i].CreationDate + "</td>";
-
-                //str += '<td><a href="Article_Detail.html?ID=' + data.data.table[i].ID + '" ><i class="icon-pencil">编辑</i></a>  <a href="#" role="button"  data-toggle="modal" id="btnDelete" data-id="' + data.data.table[i].ID + '" data-name="' + data.data.table[i].ArticleTitle + '"><i class="icon-remove">删除</i></a> </td></tr>';
+                str += '<td><a href="#" id="btnReset" data-id="' + data.data.table[i].ID + '"><i class="icon-pencil">重置密码</i></a>  <a href="#" role="button"  data-toggle="modal" id="btnDelete" data-id="' + data.data.table[i].ID + '" data-name="' + data.data.table[i].ArticleTitle + '"><i class="icon-remove">设备管理</i></a> </td></tr>';
                 $("#tab").append(str);
             }
+            $("td #btnReset").off("click");
+            $('td #btnReset').on('click', function () {
+
+                if (confirm('确定要重置密码吗?')) {
+                    var url = window.apibase + "/Back_Member/ResetPasswd";
+
+                    c.get({ memberID: $(this).attr("data-id") }, url, function (data) {
+                        if (data != null && data.code == "200") {
+                            alert("重置密码成功,默认密码:a000000！");
+                        }
+                    })
+                } else {
+                    return false;
+                }
+            });
 
         }
     }

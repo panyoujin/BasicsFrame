@@ -1,6 +1,7 @@
 ﻿using BF.BackWebAPI.Models.Back.OutParam;
 using BF.Common.CommonEntities;
 using BF.Common.DataAccess;
+using BF.Common.Encrypt;
 using BF.Common.Helper;
 using BF.Common.StaticConstant;
 using System;
@@ -9,6 +10,7 @@ using System.Data;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Cryptography;
 using System.Web.Http;
 
 namespace BF.BackWebAPI.Controllers.Back
@@ -85,5 +87,31 @@ namespace BF.BackWebAPI.Controllers.Back
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
 
+        /// <summary>
+        /// 重置密码
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage ResetPasswd(int memberID)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("memberID", memberID);
+            dic.Add("NewPasswd", MD5Encrypt.Md5("a123456"));
+
+            int result = DBBaseFactory.DALBase.ExecuteNonQuery("Back_ResetPasswd", dic);
+            if (result > 0)
+            {
+                apiResult.data = true;
+            }
+            else
+            {
+                apiResult.code = ResultCode.CODE_EXCEPTION;
+                apiResult.msg = "修改密码失败！";
+            }
+
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
     }
 }
