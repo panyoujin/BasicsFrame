@@ -29,12 +29,14 @@ SELECT `ID`,`device_id`,`device_identifier`,`name`,`device_ip`,`router_id`,`devi
 IF(`Status`,'删除','正常') AS StatusStr
 FROM `TB_DV_Devices`
 WHERE 1=1
+<%=AND `MemberID`=@@memberID@@ %>
 <%=AND (`name` LIKE @@Search@@ or `device_identifier` LIKE @@Search@@ or `CreationUser` LIKE @@Search@@) %>
 ORDER BY `MemberID`,`Status` ASC,`CreationDate` DESC
 <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
 SELECT COUNT(1) AS total
 FROM `TB_DV_Devices`
 WHERE 1=1
+<%=AND `MemberID`=@@memberID@@ %>
 <%=AND (`name` LIKE @@Search@@ or `device_identifier` LIKE @@Search@@ or `CreationUser` LIKE @@Search@@) %>;
       ]]>
 			</SqlCommand>

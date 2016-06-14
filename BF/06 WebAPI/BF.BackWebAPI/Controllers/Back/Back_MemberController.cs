@@ -55,7 +55,7 @@ namespace BF.BackWebAPI.Controllers.Back
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
 
-        public HttpResponseMessage GetDevices(string search = "", int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
+        public HttpResponseMessage GetDevices(string search = "",int memberID=0, int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             if (page <= 0)
@@ -74,7 +74,10 @@ namespace BF.BackWebAPI.Controllers.Back
             {
                 dic.Add("Search", "%" + search + "%");
             }
-
+            if (memberID > 0)
+            {
+                dic.Add("memberID", memberID);
+            }
             DataSet ds = DBBaseFactory.DALBase.QueryForDataSet("Back_DeviceList", dic);
 
             if (ds != null && ds.Tables.Count >= 2)

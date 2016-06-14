@@ -1,5 +1,6 @@
 ﻿define(['domready!', 'zepto', 'common', 'angular', 'server_data/models_data', 'pagination'], function (doc, $, c, angular, m, p) {
     $(function () {
+        getDetail();
         loadData(1, 10);
         $("#btn_Search").click(function () { loadData(); });
 
@@ -10,7 +11,7 @@
     function loadData(page, size) {
 
         var param = {
-            search: $("#text_search").val(), page: page, pageSize: size
+            search: $("#text_search").val(), memberID:$("#memberID").val(), page: page, pageSize: size
         };
 
         var url = window.apibase + "/Back_Member/GetDevices";
@@ -41,6 +42,22 @@
                 $("#tab").append(str);
             }
 
+        }
+    }
+
+    function getDetail() {
+        var request = {
+            QueryString: function (val) {
+                var uri = window.location.search;
+                var re = new RegExp("" + val + "=([^&?]*)", "ig");
+                return ((uri.match(re)) ? (uri.match(re)[0].substr(val.length + 1)) : null);
+            }
+        }
+     
+        var memberID = request.QueryString("memberID");
+
+        if (memberID > 0) {//如果是编辑信息
+            $("#memberID").val(memberID);
         }
     }
 

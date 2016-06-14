@@ -36,7 +36,7 @@
                 str += "<td>" + data.data.table[i].StatusStr + "</td>";
                 str += "<td>" + data.data.table[i].Sex + "</td>";
                 str += "<td>" + data.data.table[i].CreationDate + "</td>";
-                str += '<td><a href="#" id="btnReset" data-id="' + data.data.table[i].ID + '"><i class="icon-pencil">重置密码</i></a>  <a href="#" role="button"  data-toggle="modal" id="btnDelete" data-id="' + data.data.table[i].ID + '" data-name="' + data.data.table[i].ArticleTitle + '"><i class="icon-remove">设备管理</i></a> </td></tr>';
+                str += '<td><a href="#" id="btnReset" data-id="' + data.data.table[i].ID + '"><i class="icon-pencil">重置密码</i></a>  <a href="#" role="button"  data-toggle="modal" id="btnDeivces" data-id="' + data.data.table[i].ID + '"><i class="icon-remove">设备管理</i></a> </td></tr>';
                 $("#tab").append(str);
             }
             $("td #btnReset").off("click");
@@ -53,6 +53,12 @@
                 } else {
                     return false;
                 }
+            });
+
+            $("td #btnDeivces").off("click");
+            $('td #btnDeivces').on('click', function () {
+                window.location.href = "DeviceInfo_Manage.html?memberID=" + $(this).attr("data-id");
+
             });
 
         }
