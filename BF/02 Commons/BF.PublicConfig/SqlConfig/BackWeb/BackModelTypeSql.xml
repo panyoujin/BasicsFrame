@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HCIP.AjaxDataSetting>
+<!--获取文章分类-->
+  <Data name="Back_GetModelTypeList">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+SELECT ID, `Name` AS 'Name',TypeDescribe,ImageUrl,"" AS FullUrl,TypeSort, DATE_FORMAT(IFNULL(`ModificationDate`,`CreationDate`),'%Y-%c-%d %h:%i:%s')  AS OperatioinDate
+FROM `TB_MB_ModelType`
+WHERE `Status`=TRUE
+<%= AND NAME LIKE @@Type_Name@@%>
+ORDER BY OperatioinDate DESC
+<%= LIMIT @@StartSize@@ , @@PageSize@@%>;
+SELECT COUNT(1) AS total
+FROM `TB_MB_ModelType`
+WHERE `Status`=TRUE
+<%= AND NAME LIKE @@Type_Name@@%>;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+	
+	<Data name="Back_InsertModelType">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+INSERT INTO  `TB_MB_ModelType`(`Name`,`TypeDescribe`,`ImageUrl`,`TypeSort`,`CreationDate`,`CreationUser`)
+VALUE(@@Name@@,@@TypeDescribe@@,@@ImageUrl@@,@@TypeSort@@,now(),@@CreationUser@@);
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	<Data name="Back_UpdateModelType">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+UPDATE `TB_MB_ModelType` SET NAME= @@NAME@@,TypeDescribe=@@TypeDescribe@@,ImageUrl=@@ImageUrl@@,TypeSort=@@TypeSort@@,`ModificationUser`=@@ModificationUser@@,`ModificationDate`=NOW()
+WHERE ID=@@ID@@
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	<Data name="Back_QueryModelTypeByID">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+SELECT `ID`,`Name`,`TypeDescribe`,`ImageUrl`,`TypeSort`,`CreationDate`,`CreationUser` 
+FROM `TB_MB_ModelType`
+WHERE ID=@@ID@@
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	
+	<Data name="Back_DeleteModelTypeByID">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+UPDATE TB_MB_ModelType SET STATUS=FALSE WHERE ID=@@ID@@ 
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+
+</HCIP.AjaxDataSetting>

@@ -116,5 +116,10 @@ namespace BF.BackWebAPI.Models.ResponseModel
         /// 收藏数量
         /// </summary>
         public int CollectionCount { get; set; }
+
+        /// <summary>
+        /// 分类名称，ModelType表
+        /// </summary>
+        public string ModelTypeName { get; set; }
     }
 }

@@ -25,16 +25,20 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        SELECT `ID` AS MID,Introduce,Model_Name,IcoUrl,ImageUrl,Sort,Model_Type,UNIX_TIMESTAMP(CreationDate) AS CreationDateTicks,DATE_FORMAT(CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate,m.WeChatUrl 
-        ,(SELECT COUNT(0) FROM TB_MC_Collection AS c  WHERE c.`Source_ID`=m.ID AND c.`Status`=TRUE AND c.`Source_Type`=1 LIMIT 0,1) AS CollectionCount
+        SELECT m.`ID` AS MID,m.Introduce,m.Model_Name,m.IcoUrl,m.ImageUrl,m.Sort,m.Model_Type,UNIX_TIMESTAMP(m.CreationDate) AS CreationDateTicks,DATE_FORMAT(m.CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate,m.WeChatUrl 
+        ,(SELECT COUNT(0) FROM TB_MC_Collection AS c  WHERE c.`Source_ID`=m.ID AND c.`Status`=TRUE AND c.`Source_Type`=1 LIMIT 0,1) AS CollectionCount,m.ModelType_ID,mt.Name AS ModelTypeName
         <%=,(SELECT p.Plan_RGB FROM TB_MB_Plan AS p WHERE  p.`Status`=TRUE AND p.`Model_ID`=m.ID AND p.`User_ID`=@@User_ID@@ LIMIT 0,1) AS Plan_RGB %>
-        FROM `TB_MB_Models` m WHERE `Status` AND Model_Type =0 <%=  AND @@Model_Type@@=0 %><%= AND Model_Name LIKE @@Model_Name@@ %>
+        FROM `TB_MB_Models` m 
+        LEFT JOIN `TB_MB_ModelType` AS mt ON mt.ID=m.ModelType_ID
+        WHERE m.`Status` AND m.Model_Type =0 <%=  AND @@Model_Type@@=0 %><%= AND m.Model_Name LIKE @@Model_Name@@ %>
         UNION ALL
-        SELECT `ID` AS MID,Introduce,Model_Name,IcoUrl,ImageUrl,Sort,Model_Type,UNIX_TIMESTAMP(CreationDate) AS CreationDateTicks,DATE_FORMAT(CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate,m.WeChatUrl 
-        ,(SELECT COUNT(0) FROM TB_MC_Collection AS c  WHERE c.`Source_ID`=m.ID AND c.`Status`=TRUE AND c.`Source_Type`=1 LIMIT 0,1) AS CollectionCount
+        SELECT m.`ID` AS MID,m.Introduce,m.Model_Name,m.IcoUrl,m.ImageUrl,m.Sort,m.Model_Type,UNIX_TIMESTAMP(m.CreationDate) AS CreationDateTicks,DATE_FORMAT(m.CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate,m.WeChatUrl 
+        ,(SELECT COUNT(0) FROM TB_MC_Collection AS c  WHERE c.`Source_ID`=m.ID AND c.`Status`=TRUE AND c.`Source_Type`=1 LIMIT 0,1) AS CollectionCount,m.ModelType_ID,mt.Name AS ModelTypeName
         <%=,(SELECT p.Plan_RGB FROM TB_MB_Plan AS p WHERE  p.`Status`=TRUE AND p.`Model_ID`=m.ID AND p.`User_ID`=@@User_ID@@ LIMIT 0,1) AS Plan_RGB %>
-        FROM `TB_MB_Models` m WHERE `Status` AND Model_Type =1<%= AND 1 = @@Model_Type@@ %><%= AND Model_Name LIKE @@Model_Name@@ %><%= AND m.User_ID=@@User_ID@@ %> 
-        order BY Sort DESC <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
+        FROM `TB_MB_Models` m 
+        LEFT JOIN `TB_MB_ModelType` AS mt ON mt.ID=m.ModelType_ID
+        WHERE m.`Status` AND m.Model_Type =1<%= AND 1 = @@Model_Type@@ %><%= AND m.Model_Name LIKE @@Model_Name@@ %><%= AND m.User_ID=@@User_ID@@ %> 
+        order BY Sort DESC,MID DESC <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
         SELECT COUNT(0) AS total FROM(
         SELECT ID FROM `TB_MB_Models` m WHERE `Status` AND Model_Type =0 <%=  AND @@Model_Type@@=0 %><%= AND Model_Name LIKE @@Model_Name@@ %>
         UNION ALL
@@ -48,14 +52,16 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        SELECT  `ID` AS MID, `User_ID`, `Model_Name`, `IcoUrl`, `ImageUrl`, `Introduce`, `Describe`, `Remarks`, `Sort`, `IsBubble`, `Bubble_Time`, `Bubble_Temperature`
-        , `Cook_Time`, `Cook_Temperature`, `Is_Heat_Preservation`, `Heat_Preservation_Time`, `Heat_Preservation_Temperature`, `Removal_Chlorine_Time`
-        , `Final_Temperature`, `IsFerv`, `Model_Type`, `Model_Status`,UNIX_TIMESTAMP(CreationDate) AS CreationDateTicks,DATE_FORMAT(CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate,m.WeChatUrl
+        SELECT  m.`ID` AS MID, m.`User_ID`, m.`Model_Name`, m.`IcoUrl`, m.`ImageUrl`, m.`Introduce`, m.`Describe`, m.`Remarks`, m.`Sort`, m.`IsBubble`, m.`Bubble_Time`, m.`Bubble_Temperature`
+        , m.`Cook_Time`, m.`Cook_Temperature`, m.`Is_Heat_Preservation`, m.`Heat_Preservation_Time`, m.`Heat_Preservation_Temperature`, m.`Removal_Chlorine_Time`
+        , m.`Final_Temperature`, m.`IsFerv`, m.`Model_Type`, m.`Model_Status`,UNIX_TIMESTAMP(m.CreationDate) AS CreationDateTicks,DATE_FORMAT(m.CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate,m.WeChatUrl,m.ModelType_ID,mt.Name AS ModelTypeName
         ,(SELECT COUNT(0) FROM TB_MC_Collection AS c  WHERE c.`Source_ID`=m.ID AND c.`Status`=TRUE AND c.`Source_Type`=1 LIMIT 0,1) AS CollectionCount
         <%=,(SELECT p.Plan_RGB FROM TB_MB_Plan AS p WHERE  p.`Status`=TRUE AND p.`Model_ID`=m.ID AND p.`User_ID`=@@User_ID@@ LIMIT 0,1) AS Plan_RGB %>
         <%= ,(SELECT COUNT(0) FROM TB_MC_Collection AS c  WHERE c.User_ID=@@User_ID@@ and c.`Source_ID`=@@ModelID@@ AND c.`Status`=TRUE AND c.`Source_Type`=1 LIMIT 0,1) AS IsCollection %>
         <%= ,(SELECT COUNT(0) FROM TB_MB_CommonModel AS c  WHERE c.User_ID=@@User_ID@@ and c.`Model_ID`=@@ModelID@@ AND c.`Status`=TRUE LIMIT 0,1) AS IsCommonModel %>
-        FROM `TB_MB_Models` m WHERE `Status` AND (ID=@@ModelID@@ AND (Model_Type=0 <%= OR (Model_Type=1 AND User_ID=@@User_ID@@) %>));
+        FROM `TB_MB_Models` m 
+        LEFT JOIN `TB_MB_ModelType` AS mt ON mt.ID=m.ModelType_ID
+        WHERE m.`Status` AND (m.ID=@@ModelID@@ AND (m.Model_Type=0 <%= OR (m.Model_Type=1 AND m.User_ID=@@User_ID@@) %>));
       ]]>
       </SqlCommand>
     </SqlDefinition>

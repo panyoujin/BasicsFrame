@@ -55,7 +55,9 @@
                             <th style="width:15%;">图片</th>
                             <th style="width:10%;">模式名称</th>
                             <th style="width:30%;">介绍</th>
-                            <th style="width:10%;">类型</th>
+                            <th style="width:10%;">模式分类</th>
+                            <th style="width:10%;">创建类型</th>
+                            <th style="width:10%;">排序</th>
                             <th style="width:15%;">创建时间</th>
                             <th style="width:15%;">操作</th>
                         </tr>
@@ -66,7 +68,9 @@
                             <td><img am-src="{{ImageUrl}}" width="50px" height="50px" /></td>
                             <td>{{Model_Name}}</td>
                             <td>{{Introduce}}</td>
+                            <td>{{ModelTypeName}}</td>
                             <td>{{Model_TypeStr}}</td>
+                            <td>{{Sort}}</td>
                             <td>{{CreationDate}}</td>
                             <td>
                                 <a style="display:{{model_hide}};" href="{{edit_url}}"><i class="icon-pencil">编辑</i></a>

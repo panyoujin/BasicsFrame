@@ -180,6 +180,7 @@
     <Compile Include="Authorize\ExceptionAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ArticController.cs" />
+    <Compile Include="Controllers\Back\Back_ModelTypeController.cs" />
     <Compile Include="Controllers\Back\Back_MemberController.cs" />
     <Compile Include="Controllers\Back\ShopController.cs" />
     <Compile Include="Controllers\Back\ArticleController.cs" />
@@ -227,11 +228,13 @@
     <Compile Include="Models\Back\InParam\Collection.cs" />
     <Compile Include="Models\Back\InParam\Bask_HealthModel.cs" />
     <Compile Include="Models\Back\InParam\HealthModel.cs" />
+    <Compile Include="Models\Back\InParam\InsertModelType.cs" />
     <Compile Include="Models\Back\InParam\InsertShop.cs" />
     <Compile Include="Models\Back\InParam\InsertArticle.cs" />
     <Compile Include="Models\Back\InParam\InsertArticleType.cs" />
     <Compile Include="Models\Back\InParam\Login.cs" />
     <Compile Include="Models\Back\InParam\CommonModel.cs" />
+    <Compile Include="Models\Back\OutParam\ModelType.cs" />
     <Compile Include="Models\Back\OutParam\DeviceInfo.cs" />
     <Compile Include="Models\Back\OutParam\MemberInfo.cs" />
     <Compile Include="Models\Back\OutParam\ArticleType.cs" />
@@ -271,8 +274,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ArticleDetails.html" />
+    <Content Include="Model_TypeDetail.html" />
+    <Content Include="Model_TypeManage.html" />
     <Content Include="DeviceInfo_Manage.html" />
     <Content Include="MemberInfo_Manage.html" />
+    <Content Include="modules\ModelType.js" />
+    <Content Include="modules\ModelTypeDetail.js" />
     <Content Include="modules\BackDeviceInfo.js" />
     <Content Include="modules\BackMemberInfo.js" />
     <Content Include="Shopping_Detail.html" />

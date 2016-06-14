@@ -27,7 +27,7 @@ namespace BF.BackWebAPI.Controllers
         /// <returns></returns>
         [HttpGet]
         [BFAuthorizeAttribute(IsLogin = true)]
-        public HttpResponseMessage GetHealthModelList(int type = 0, string model_name = "", int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
+        public HttpResponseMessage GetHealthModelList(int type = 0, string model_name = "",int ModelTypeID=0, int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             if (page <= 0)
