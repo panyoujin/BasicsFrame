@@ -1,4 +1,4 @@
-﻿define(['domready!', 'zepto', 'common', 'angular', 'server_data/models_data', 'pagination'], function (doc, $, c, angular, m, p) {
+﻿define(['domready!', 'zepto', 'common', 'angular', 'pagination'], function (doc, $, c, angular, p) {
 
     loading(0);
     //$('body').hide();
@@ -15,13 +15,19 @@
         $('#btn_Search').off('click')
 
         $('#btn_Search').on('click', function () {
-            init_data(1, 10, $("#model_name").val());
+            init_data(1, 10, $("#role_name").val());
         });
         $('td a .icon-remove').off('click')
 
         $('td a .icon-remove').on('click', function () {
             if (confirm('确定要删除_' + $(this).attr("data-name") + '_吗?')) {
-                m.DeleteHealthModelByModelID($(this).attr("data-mid"), function (data) {
+                var url = window.apibase + "/Role/DeleteRole";
+                c.post({ ids: $(this).attr("data-id") }, url, function (data) {
+                    init_data(1, 10, $("#role_name").val());
+                })
+
+
+                m.DeleteHealthModelByModelID($(this).attr("data-id"), function (data) {
 
                     init_data(1, 10, $("#model_name").val());
                 });
@@ -30,32 +36,28 @@
             }
 
         });
-        $('#new_model').off('click')
 
-        $('#new_model').on('click', function () {
-            window.location.href = window.webroot + "/new-model.html";
+        $('#new_role').off('click')
+
+        $('#new_role').on('click', function () {
+            window.location.href = window.webroot + "/RoleDetail.html";
         });
     }
     function init_data(page, size, name) {
-        m.GetHealthModelList(type, name, page, size, function (data) {
-            info.models = data.data.modelList;
-            $.each(info.models, function (index, obj) {
-                obj.model_hide = "none";
-                obj.edit_url = "";
-                if (obj.Model_Type == 0) {
-                    obj.model_hide = "inline-block";
-                    obj.edit_url = window.webroot + "/new-model.html?modelID=" + obj.MID;
-                }
-            })
+        var url = window.apibase + "/Role/GetRoleDataJson";
+        c.get({ rolename: name, page: page, pageSize: size }, url, function (data) {
+            info.roleList = data.data.RoleList;
             p.setindex(page, size, data.data.total, function (pindex, psize) {
                 init_data(pindex, psize, name);
             });
-
             angular.set('info', info, bindEvent);
         })
+
     }
     $(function () {
         init_data(1, 10);
     })
+
+
 
 })

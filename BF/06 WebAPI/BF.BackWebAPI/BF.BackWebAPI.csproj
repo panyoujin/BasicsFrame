@@ -280,6 +280,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ArticleDetails.html" />
+    <Content Include="modules\RoleMamager.js" />
+    <Content Include="RoleMamager.html" />
     <Content Include="Model_TypeDetail.html" />
     <Content Include="Model_TypeManage.html" />
     <Content Include="DeviceInfo_Manage.html" />

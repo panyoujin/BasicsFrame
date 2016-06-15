@@ -25,7 +25,7 @@ namespace BF.BackWebAPI.Controllers.Back
         /// <param name="order"></param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetRoleDataJson(string sort, string rolename, string roledesc, int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE, string order = "asc")
+        public HttpResponseMessage GetRoleDataJson(string sort="", string rolename="", string roledesc="", int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE, string order = "asc")
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             int startSize = 0;
@@ -295,7 +295,7 @@ namespace BF.BackWebAPI.Controllers.Back
         }
 
         [HttpPost]
-        public HttpResponseMessage DeleteJson(string ids)
+        public HttpResponseMessage DeleteRole(string ids)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             Dictionary<string, object> dic = new Dictionary<string, object>();

@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>角色管理</title>
+    <meta charset="utf-8" />
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="stylesheet" type="text/css" href="js/bootstrap/css/bootstrap.css">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/theme.css">
+    <script src="js/base.js"></script>
+</head>
+<!--[if lt IE 7 ]> <body class="ie ie6"> <![endif]-->
+<!--[if IE 7 ]> <body class="ie ie7 "> <![endif]-->
+<!--[if IE 8 ]> <body class="ie ie8 "> <![endif]-->
+<!--[if IE 9 ]> <body class="ie ie9 "> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<body>
+    <!--<div class="header">
+
+        <h1 class="page-title">Users</h1>
+    </div>-->
+    <!--<ul class="breadcrumb">
+        <li><a href="index.html">Home</a> <span class="divider">/</span></li>
+        <li class="active">Users</li>
+    </ul>-->
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="well">
+                <div class="search-well">
+                    <form class="form-inline">
+                        <!--<select class="form-control input-lg">
+                            <option value="">自定义</option>
+                            <option value="">系统</option>
+                        </select>-->
+                        <input class="input-xlarge" placeholder="输入需要查询的角色名称..." id="role_name" type="text">
+                        <button class="btn" type="button" id="btn_Search"><i class="icon-search"></i> 查询</button>
+                        <button class="btn" type="button" id="new_role"><i class="icon-plus"></i>新增角色</button>
+                    </form>
+                </div>
+                
+                <div class="btn-group">
+                </div>
+            </div>
+            <div class="well">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:10%;">ID</th>
+                            <th style="width:10%;">角色名称</th>
+                            <th style="width:30%;">描述</th>
+                            <th style="width:15%;">创建时间</th>
+                            <th style="width:15%;">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody am-repeat="info.roleList" style="display: none;">
+                        <tr>
+                            <td>{{ID}}</td>
+                            <td>{{RoleName}}</td>
+                            <td>{{Description}}</td>
+                            <td>{{CreationDate}}</td>
+                            <td>
+                                <a  href="RoleDetail.html?roleID={{ID}}"><i class="icon-pencil">编辑</i></a>
+                                <a  href="javascript:;" role="button" data-toggle="modal" ><i class="icon-remove" data-id="{{ID}}" data-name="{{RoleName}}">删除</i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination" id="pagination">
+                
+            </div>
+        </div>
+    </div>
+    <script src="js/require.js" data-main="js/config.js"></script>
+    <script>
+        require(['../modules/RoleMamager']);
+    </script>
+</body>
+
+</html>
