@@ -34,7 +34,7 @@
                 //str += "<td>" + data.data.table[i].ContentUrl + "</td>";
                 str += "<td>￥" + data.data.table[i].Price + "</td>";
                 str += "<td>￥" + data.data.table[i].NowPrice + "</td>";
-
+                str += "<td>" + data.data.table[i].Sort + "</td>";
                 str += "<td>" + (data.data.table[i].Enable == 1 ? '已启用' : '已禁用') + "</td>";
                 str += "<td>" + (data.data.table[i].OnShelf == 1 ? '已上架' : '已下架') + "</td>";
                 str += "<td>" + data.data.table[i].OpenationDate + "</td>";

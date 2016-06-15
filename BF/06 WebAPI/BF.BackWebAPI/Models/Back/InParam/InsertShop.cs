@@ -12,6 +12,7 @@ namespace BF.BackWebAPI.Models.Back.InParam
         public string Description { set; get; }
         public decimal Price { set; get; }
         public decimal NowPrice { set; get; }
+        public int Sort { set; get; }
         public string OpenationDate { set; get; }
         public int Enable { set; get; }
         public int OnShelf { set; get; }

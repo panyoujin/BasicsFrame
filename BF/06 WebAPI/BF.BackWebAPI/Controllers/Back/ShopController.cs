@@ -77,6 +77,7 @@ namespace BF.BackWebAPI.Controllers.Back
             dic.Add("Name", param.Name);
             dic.Add("ImageUrl", param.ImageUrl);
             dic.Add("ContentUrl", param.ContentUrl);
+            dic.Add("Sort", param.Sort);
             dic.Add("Price", param.Price);
             dic.Add("NowPrice", param.NowPrice);
             dic.Add("Description", param.Description);
