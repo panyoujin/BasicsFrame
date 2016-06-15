@@ -147,5 +147,12 @@ namespace BF.Common.DataAccess
 
             return t;
         }
+
+        public int BatchInsert<T>(string tbName, string[] columeArr, IList<T> listModels, string sqlConnStringName = "") where T : class, new()
+        {
+            SqlConfig.SqlConnStringName = sqlConnStringName;
+            return MySqlHelper.BatchInsert<T>(tbName, columeArr, listModels);
+        }
+
     }
 }

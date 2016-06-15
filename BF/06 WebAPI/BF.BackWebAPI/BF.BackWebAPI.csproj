@@ -182,6 +182,7 @@
     <Compile Include="Controllers\ArticController.cs" />
     <Compile Include="Controllers\Back\Back_ModelTypeController.cs" />
     <Compile Include="Controllers\Back\Back_MemberController.cs" />
+    <Compile Include="Controllers\Back\RoleController.cs" />
     <Compile Include="Controllers\Back\ShopController.cs" />
     <Compile Include="Controllers\Back\ArticleController.cs" />
     <Compile Include="Controllers\Back\Back_AftermarketController.cs" />
@@ -234,10 +235,15 @@
     <Compile Include="Models\Back\InParam\InsertArticleType.cs" />
     <Compile Include="Models\Back\InParam\Login.cs" />
     <Compile Include="Models\Back\InParam\CommonModel.cs" />
+    <Compile Include="Models\Back\MenuTreeModel.cs" />
     <Compile Include="Models\Back\OutParam\ModelType.cs" />
     <Compile Include="Models\Back\OutParam\DeviceInfo.cs" />
     <Compile Include="Models\Back\OutParam\MemberInfo.cs" />
     <Compile Include="Models\Back\OutParam\ArticleType.cs" />
+    <Compile Include="Models\Back\TB_CM_Menu.cs" />
+    <Compile Include="Models\Back\TB_CM_Role.cs" />
+    <Compile Include="Models\Back\TB_CM_Rolemenu.cs" />
+    <Compile Include="Models\Back\TB_CM_UserRole.cs" />
     <Compile Include="Models\Back\User.cs" />
     <Compile Include="Models\Front\MemberInfo.cs" />
     <Compile Include="Models\Front\Request\KettleModel.cs" />

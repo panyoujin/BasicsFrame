@@ -105,6 +105,27 @@ namespace BF.BackWebAPI.Controllers
         }
 
 
+        /// <summary>
+        /// 设置页码大小
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="startSize"></param>
+        /// <param name="endSize"></param>
+        public void SetPageSize(int page, int pageSize, ref int startSize, ref int endSize)
+        {
+            if (page <= 0)
+            {
+                page = CommonConstant.PAGE;
+            }
+            if (pageSize <= 0)
+            {
+                pageSize = CommonConstant.PAGE_SIZE;
+            }
+            startSize = (page > 1 ? (page - 1) * pageSize : 0);
+            endSize = pageSize;
+
+        }
 
         /// <summary>
         /// 换取幻腾接口的access_token

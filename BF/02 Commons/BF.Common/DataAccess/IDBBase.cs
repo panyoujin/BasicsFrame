@@ -44,9 +44,20 @@ namespace BF.Common.DataAccess
         /// <param name="isUseTrans">是否启用事务</param>
         /// <returns></returns>
         object ExecuteScalar(string sqlKey, Dictionary<string, object> paramDic, bool isUseTrans, string sqlConnStringName = "");
-        
+
         #endregion ExecuteScalar
-        
+
+        #region ExecuteNonQuery
+
+        /// <summary>
+        /// 执行sql命令，返回影响行数 (启用事务)
+        /// </summary>
+        /// <param name="key">SQL配置关键字</param>
+        /// <param name="paramDic">参数集合</param>
+        /// <returns></returns>
+        int BatchInsert<T>(string tbName, string[] columeArr, IList<T> listModels, string sqlConnStringName = "") where T : class, new();
+
+        #endregion ExecuteNonQuery
 
         #region Collections
 
