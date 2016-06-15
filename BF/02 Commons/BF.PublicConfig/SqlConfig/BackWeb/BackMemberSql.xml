@@ -53,4 +53,14 @@ WHERE `ID`=@@memberID@@ AND `Status`=TRUE;
 			</SqlCommand>
 		</SqlDefinition>
 	</Data>
+
+  <Data name="Back_DeleteMember">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+UPDATE `TB_MB_MemberInfo` SET `Status`=FALSE WHERE `ID`=@@memberID@@;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
 </HCIP.AjaxDataSetting>

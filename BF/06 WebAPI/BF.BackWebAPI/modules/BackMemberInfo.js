@@ -36,7 +36,9 @@
                 str += "<td>" + data.data.table[i].StatusStr + "</td>";
                 str += "<td>" + data.data.table[i].Sex + "</td>";
                 str += "<td>" + data.data.table[i].CreationDate + "</td>";
-                str += '<td><a href="#" id="btnReset" data-id="' + data.data.table[i].ID + '"><i class="icon-pencil">重置密码</i></a>  <a href="#" role="button"  data-toggle="modal" id="btnDeivces" data-id="' + data.data.table[i].ID + '"><i class="icon-remove">设备管理</i></a> </td></tr>';
+                str += '<td><a href="#" id="btnReset" data-id="' + data.data.table[i].ID + '"><i class="icon-pencil">重置密码</i></a>  <a href="#" role="button"  data-toggle="modal" id="btnDeivces" data-id="' + data.data.table[i].ID + '"><i class="icon-remove">设备管理</i></a> ';
+                str += '<a href="#" role="button"  data-toggle="modal" id="btnDelete" data-account="' + data.data.table[i].Account + '" data-id="' + data.data.table[i].ID + '"><i class="icon-remove">删除</i></a> ';
+                str += "</td></tr>"
                 $("#tab").append(str);
             }
             $("td #btnReset").off("click");
@@ -59,6 +61,21 @@
             $('td #btnDeivces').on('click', function () {
                 window.location.href = "DeviceInfo_Manage.html?memberID=" + $(this).attr("data-id");
 
+            });
+
+            $("td #btnDelete").off("click");
+            $('td #btnDelete').on('click', function () {
+
+                if (confirm('确定要删除_' + $(this).attr("data-account") + '_吗?')) {
+                    var url = window.apibase + "/Back_Member/DeleteMember";
+                    c.get({ ID: $(this).attr("data-id") }, url, function (data) {
+                        if (data != null && data.code == "200") {
+                            loadData(1, 10);
+                        }
+                    })
+                } else {
+                    return false;
+                }
             });
 
         }

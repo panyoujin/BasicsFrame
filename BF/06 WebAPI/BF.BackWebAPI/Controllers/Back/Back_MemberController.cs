@@ -116,5 +116,19 @@ namespace BF.BackWebAPI.Controllers.Back
 
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+
+        [HttpGet]
+        public HttpResponseMessage DeleteMember(int ID)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            string key = "Back_DeleteMember";
+            dic.Add("memberID", ID);
+            int result = DBBaseFactory.DALBase.ExecuteNonQuery(key, dic);
+            if (result <= 0)
+                apiResult.code = ResultCode.CODE_UPDATE_FAIL;
+            apiResult.data = result;
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
     }
 }
