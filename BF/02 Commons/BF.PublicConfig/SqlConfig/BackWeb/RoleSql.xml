@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HCIP.AjaxDataSetting>
+
+  <Data name="get_roleList_back">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT * FROM `TB_CM_Role` 
+        WHERE `Status` = TRUE
+        <%= AND `RoleName` LIKE @@RoleName@@ %>
+        <%= AND `Description` LIKE @@RoleDesc@@ %>
+        <%= ORDER BY @@SortStr@@ @@OrderStr@@ %>
+        <%= LIMIT @@StartSize@@ , @@EndSize@@%>;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  <Data name="get_roleById_back">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT * FROM `TB_CM_Role` WHERE `ID`=@@RoleID@@ AND `Status` = TRUE ;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  <Data name="add_role_back">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        INSERT INTO `TB_CM_Role` (`RoleName`,`Description`,`Status`,`CreationUser`,`CreationDate`) 
+        VALUES(@@RoleName@@,@@Description@@,TRUE,@@CreationUser@@,NOW()) ;
+        SELECT LAST_INSERT_ID() ;   
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  <Data name="update_role_back">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        UPDATE   `TB_CM_Role` 
+        SET    
+            `RoleName` = @@RoleName@@,
+            `Description` = @@Description@@,    
+            `ModificationUser` = @@ModificationUser@@,
+            `ModificationDate` = NOW() 
+        WHERE `ID` = @@RoleID@@ ; 
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  <Data name="delete_rolemenu_by_roleid_back">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        DELETE FROM `TB_CM_RoleMenu` WHERE `RoleID` = @@RoleID@@;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  <Data name="get_menuAllList_back">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT * FROM TB_CM_Menu WHERE `Status`=TRUE;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+
+  <Data name="get_rolemenuByRoleId_back">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT * FROM `TB_CM_RoleMenu` WHERE `Status`= TRUE AND `RoleID`=@@RoleID@@;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  <!--获取已授权的-->
+  <Data name="GetAuthorizedUserByRoleid_back">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT m.* 
+        FROM TB_MB_MemberInfo m
+        JOIN TB_CM_UserRole ur ON m.`ID` = ur.`UserID`
+        WHERE m.`Status`=TRUE AND m.`IsAdmin`=TRUE
+        AND ur.`RoleID`=@@RoleID@@
+        <%= ORDER BY @@SortStr@@ @@OrderStr@@ %>
+        <%= LIMIT @@StartSize@@ , @@EndSize@@%>;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  <!--获取未授权的-->
+  <Data name="GetUnauthorizedUserByRoleid_back">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT m.* FROM TB_MB_MemberInfo m
+        LEFT JOIN (SELECT `UserID` FROM TB_CM_UserRole WHERE `RoleID`=@@RoleID@@) AS ur ON ur.`UserID`=m.`ID`
+        WHERE m.`Status`=TRUE AND m.`IsAdmin`=TRUE
+        AND ur.`UserID` IS NULL
+        <%= ORDER BY @@SortStr@@ @@OrderStr@@ %>
+        <%= LIMIT @@StartSize@@ , @@EndSize@@%>;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  <!--取消授权-->
+  <Data name="delete_userRole_back">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        DELETE FROM `TB_CM_Userrole` WHERE `RoleID`=@@RoleID@@ AND `UserID` IN(@@UserIDs@@) ;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  <!--删除角色-->
+  <Data name="delete_userRole_back">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        DELETE  FROM `TB_CM_RoleMenu` WHERE RoleID = @@RoleID@@;
+        DELETE  FROM `TB_CM_UserRole` WHERE RoleID = @@RoleID@@;
+        DELETE  FROM `TB_CM_Role` WHERE ID = @@RoleID@@;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+
+  <Data name="get_menuListByUserID_back">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT DISTINCT m.*
+        FROM TB_CM_Menu m
+        JOIN TB_CM_RoleMenu r ON m.`ID` = r.`MenuID`
+        JOIN TB_CM_UserRole ur ON r.`RoleID` = ur.`RoleID`
+        WHERE m.`Status`=TRUE AND AND ur.`UserID`=@@UserID@@
+        ORDER BY m.`Sort`;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  
+</HCIP.AjaxDataSetting>

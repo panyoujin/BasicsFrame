@@ -33,8 +33,14 @@ namespace BF.BackWebAPI.Controllers.Back
             this.SetPageSize(page, pageSize, ref startSize, ref endSize);
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("SortStr", sort);
-            dic.Add("RoleName", rolename);
-            dic.Add("RoleDesc", roledesc);
+            if(!string.IsNullOrWhiteSpace(rolename))
+            {
+                dic.Add("RoleName", string.Format("%{0}%",rolename));
+            }
+            if (!string.IsNullOrWhiteSpace(roledesc))
+            {
+                dic.Add("RoleDesc", string.Format("%{0}%", roledesc));
+            }
             dic.Add("OrderStr", order);
             dic.Add("StartSize", startSize);
             dic.Add("EndSize", endSize);
@@ -78,15 +84,15 @@ namespace BF.BackWebAPI.Controllers.Back
             dic.Add("CreationUser", this.MemberInfo.Account);
             if (role.ID <= 0)
             {
-                dic.Add("RoleID", role.ID);
                 var objRoleID = DBBaseFactory.DALBase.ExecuteScalar("add_role_back", dic);
                 int.TryParse(objRoleID + "", out roleID);
             }
             else
             {
+                dic.Add("RoleID", role.ID);
                 var objRoleID = DBBaseFactory.DALBase.ExecuteNonQuery("update_role_back", dic);
             }
-            DBBaseFactory.DALBase.ExecuteNonQuery("delete_rolemenu_back", dic);
+            DBBaseFactory.DALBase.ExecuteNonQuery("delete_rolemenu_by_roleid_back", dic);
             string[] values = (role.MenuIDs == null ? null : role.MenuIDs.Split(','));
             List<int> menuidlist = new List<int>();
             if (values != null && values.Length > 0)
@@ -133,7 +139,7 @@ namespace BF.BackWebAPI.Controllers.Back
             dic.Add("RoleID", id);
             if (id > 0)
             {
-                var rolemenulist = DBBaseFactory.DALBase.QueryForList<TB_CM_Rolemenu>("", dic);
+                var rolemenulist = DBBaseFactory.DALBase.QueryForList<TB_CM_Rolemenu>("get_rolemenuByRoleId_back", dic);
                 if (rolemenulist != null && rolemenulist.Count > 0)
                 {
                     foreach (TB_CM_Rolemenu item in rolemenulist)
@@ -274,7 +280,7 @@ namespace BF.BackWebAPI.Controllers.Back
 
                 }
                 List<string> columeArr = new List<string>() { "RoleID", "UserID", "CreationUser", "CreationDate", "Status" };
-                DBBaseFactory.DALBase.BatchInsert<TB_CM_UserRole>("TB_CM_Rolemenu", columeArr.ToArray(), userRoleList);
+                DBBaseFactory.DALBase.BatchInsert<TB_CM_UserRole>("TB_CM_UserRole", columeArr.ToArray(), userRoleList);
             }
             else
             {
@@ -295,7 +301,7 @@ namespace BF.BackWebAPI.Controllers.Back
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("RoleIDs", ids);
             //需要删除主表role，角色和用户，角色和菜单
-            DBBaseFactory.DALBase.ExecuteNonQuery("delete_userRole_back", dic);
+            DBBaseFactory.DALBase.ExecuteNonQuery("delete_Role_back", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
 
         }
