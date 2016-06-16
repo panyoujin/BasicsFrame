@@ -2,7 +2,7 @@
     $(function () {
         loadData(1, 10);
         $("#btn_Search").click(function () { loadData(); });
-
+        $("#new_Member").click(function () { window.location.href = "/MemberInfo_Detail.html"; });
     })
 
 

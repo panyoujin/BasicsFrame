@@ -281,6 +281,7 @@
   <ItemGroup>
     <Content Include="ArticleDetails.html" />
     <Content Include="modules\RoleMamager.js" />
+    <Content Include="modules\BackMemberInfoDetail.js" />
     <Content Include="RoleMamager.html" />
     <Content Include="Model_TypeDetail.html" />
     <Content Include="Model_TypeManage.html" />
@@ -290,6 +291,7 @@
     <Content Include="modules\ModelTypeDetail.js" />
     <Content Include="modules\BackDeviceInfo.js" />
     <Content Include="modules\BackMemberInfo.js" />
+    <Content Include="MemberInfo_Detail.html" />
     <Content Include="Shopping_Detail.html" />
     <Content Include="modules\ShoppingDetail.js" />
     <Content Include="modules\Shopping.js" />

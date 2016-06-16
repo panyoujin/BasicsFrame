@@ -55,7 +55,7 @@ namespace BF.BackWebAPI.Controllers.Back
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
 
-        public HttpResponseMessage GetDevices(string search = "",int memberID=0, int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
+        public HttpResponseMessage GetDevices(string search = "", int memberID = 0, int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             if (page <= 0)
@@ -128,6 +128,59 @@ namespace BF.BackWebAPI.Controllers.Back
             if (result <= 0)
                 apiResult.code = ResultCode.CODE_UPDATE_FAIL;
             apiResult.data = result;
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+
+        /// <summary>
+        /// 新增用户
+        /// </summary>
+        /// <param name="Account"></param>
+        /// <param name="Name"></param>
+        /// <param name="ImageUrl"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage BackInsertMember(string Account = "", string Name = "", int IsAdmin = 0, string ImageUrl = "")
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("Account", Account);
+
+
+            var user = DBBaseFactory.DALBase.QueryForObject<MemberInfo>("FrontApi_GetMemberInfoByAccount", dic);
+            if (user != null)
+            {
+                apiResult.code = ResultCode.CODE_BUSINESS_ERROR;
+                apiResult.msg = "手机已存在！";
+                return JsonHelper.SerializeObjectToWebApi(apiResult);
+            }
+
+            dic.Add("Name", Name);
+            dic.Add("ImageUrl", ImageUrl);
+            dic.Add("IsAdmin", IsAdmin);
+            dic.Add("Passwd", MD5Encrypt.Md5("a123456"));
+
+            int resultInt = DBBaseFactory.DALBase.ExecuteNonQuery("Back_InsertMember", dic);
+            if (resultInt <= 0)
+            {
+                apiResult.code = ResultCode.CODE_UPDATE_FAIL;
+                apiResult.msg = ResultMsg.CODE_EXCEPTION;
+            }
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+        /// <summary>
+        /// 查找用户
+        /// </summary>
+        /// <param name="MemberID"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage QueryMember(int MemberID)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("MemberID", MemberID);
+            var user = DBBaseFactory.DALBase.QueryForObject<MemberInfo>("FrontApi_GetMyInfo", dic);
+            apiResult.data = user;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
     }

@@ -63,4 +63,14 @@ UPDATE `TB_MB_MemberInfo` SET `Status`=FALSE WHERE `ID`=@@memberID@@;
       </SqlCommand>
     </SqlDefinition>
   </Data>
+	<Data name="Back_InsertMember">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+INSERT INTO  `TB_MB_MemberInfo`(`Account`,`Passwd`,`Status`,`IsAuto`,`CreationDate`,`CreationUser`,`Name`,`ImageUrl`,`IsAdmin`) 
+VALUES(@@Account@@,@@Passwd@@,TRUE,FALSE,NOW(),@@Account@@,@@Name@@,@@ImageUrl@@,@@IsAdmin@@);
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
 </HCIP.AjaxDataSetting>
