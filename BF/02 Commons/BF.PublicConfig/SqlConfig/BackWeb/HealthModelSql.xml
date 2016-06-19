@@ -6,6 +6,15 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
+        CALL pro_FrontWeb_get_model_list(@@Model_Type@@,@@Model_Name@@,@@StartSize@@ , @@PageSize@@,@@User_ID@@);
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  <!--<Data name="FrontWeb_GetHealthModelListByType">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
         SELECT `ID` AS MID,Introduce,Model_Name,IcoUrl,ImageUrl,Sort,Model_Type,UNIX_TIMESTAMP(CreationDate) AS CreationDateTicks,DATE_FORMAT(CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate,m.WeChatUrl 
         ,(SELECT COUNT(0) FROM TB_MC_Collection AS c  WHERE c.`Source_ID`=m.ID AND c.`Status`=TRUE AND c.`Source_Type`=1 LIMIT 0,1) AS CollectionCount
         <%=,(SELECT p.Plan_RGB FROM TB_MB_Plan AS p WHERE  p.`Status`=TRUE AND p.`Model_ID`=m.ID AND p.`User_ID`=@@User_ID@@ LIMIT 0,1) AS Plan_RGB %>
@@ -19,9 +28,19 @@
       ]]>
       </SqlCommand>
     </SqlDefinition>
-  </Data>
+  </Data>-->
   <!--通过类型获取养生模式-->
   <Data name="BackWeb_GetHealthModelListByType">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        CALL pro_FrontWeb_get_model_list(@@Model_Type@@,@@Model_Name@@,@@StartSize@@ , @@PageSize@@,@@User_ID@@);
+        CALL pro_FrontWeb_get_model_list_Count(@@Model_Type@@,@@Model_Name@@,@@StartSize@@ , @@PageSize@@,@@User_ID@@);
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  <!--<Data name="BackWeb_GetHealthModelListByType">
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
@@ -46,7 +65,7 @@
       ]]>
       </SqlCommand>
     </SqlDefinition>
-  </Data>
+  </Data>-->
   <!--根据模式ID 获取模式，需要检验当前用户是否有权限访问该模式-->
   <Data name="BackWeb_GetHealthModelInfoByModelID">
     <SqlDefinition type="sql">

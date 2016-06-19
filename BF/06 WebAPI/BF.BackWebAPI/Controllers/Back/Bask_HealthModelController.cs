@@ -27,7 +27,7 @@ namespace BF.BackWebAPI.Controllers
         /// <returns></returns>
         [HttpGet]
         [BFAuthorizeAttribute(IsLogin = true)]
-        public HttpResponseMessage GetHealthModelList(int type = 0, string model_name = "",int ModelTypeID=0, int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
+        public HttpResponseMessage GetHealthModelList(int type = 0, string model_name = "", int ModelTypeID = 0, int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             if (page <= 0)
@@ -43,21 +43,32 @@ namespace BF.BackWebAPI.Controllers
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("StartSize", startSize);
             dic.Add("PageSize", pageSize);
-            if (type >= 0)
-            {
-                dic.Add("Model_Type", type);
-            }
+
+            dic.Add("Model_Type", type);
+
+            dic.Add("Model_Name", "");
             if (!string.IsNullOrWhiteSpace(model_name))
             {
-                dic.Add("Model_Name", "%" + model_name + "%");
+                dic["Model_Name"] = "%" + model_name + "%";
+            }
+            dic.Add("User_ID", 0);
+            try
+            {
+
+                dic["User_ID"] = this.MemberInfo.ID;
+
+            }
+            catch (Exception ex)
+            {
+                //dic.Remove("User_ID");
             }
             var ds = DBBaseFactory.DALBase.QueryForDataSet("BackWeb_GetHealthModelListByType", dic);
             int total = 0;
             int.TryParse(ds.Tables[1].Rows[0][0].ToString(), out total);
-            apiResult.data = new { modelList =  DBBaseFactory.DALBase.TableToList<HealthModelList>(ds.Tables[0]),total= total };
+            apiResult.data = new { modelList = DBBaseFactory.DALBase.TableToList<HealthModelList>(ds.Tables[0]), total = total };
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
-        
+
         /// <summary>
         /// 根据模式ID 获取模式，需要检验当前用户是否有权限访问该模式
         /// </summary>

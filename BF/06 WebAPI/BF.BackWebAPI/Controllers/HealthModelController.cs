@@ -44,10 +44,10 @@ namespace BF.BackWebAPI.Controllers
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("StartSize", startSize);
             dic.Add("PageSize", pageSize);
-            if (type >= 0)
-            {
-                dic.Add("Model_Type", type);
-            }
+            //if (type >= 0)
+            //{
+            dic.Add("Model_Type", type);
+            //}
             dic.Add("User_ID", 0);
             //如果获取自定义的，必须登录
             if (type == (int)Model_Types.Custom)
@@ -64,12 +64,13 @@ namespace BF.BackWebAPI.Controllers
                 }
                 catch (Exception ex)
                 {
-                    dic.Remove("User_ID");
+                    //dic.Remove("User_ID");
                 }
             }
+            dic.Add("Model_Name", "");
             if (!string.IsNullOrWhiteSpace(model_name))
             {
-                dic.Add("Model_Name", "%" + model_name + "%");
+                dic["Model_Name"] = "%" + model_name + "%";
             }
             apiResult.data = DBBaseFactory.DALBase.QueryForList<HealthModelList>("FrontWeb_GetHealthModelListByType", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
