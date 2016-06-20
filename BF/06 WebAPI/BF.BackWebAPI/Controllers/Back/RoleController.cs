@@ -230,30 +230,32 @@ namespace BF.BackWebAPI.Controllers.Back
         /// <param name="order"></param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage UserDataJson(string sort, int roleid, string operation, int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE, string order = "asc")
+        public HttpResponseMessage UserDataJson(int roleid, string operation, string search = "", int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             int startSize = 0;
             int endSize = 0;
             this.SetPageSize(page, pageSize, ref startSize, ref endSize);
             Dictionary<string, object> dic = new Dictionary<string, object>();
-            dic.Add("SortStr", sort);
             dic.Add("RoleID", roleid);
-            dic.Add("OrderStr", order);
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                dic.Add("search", search);
+            }
             dic.Add("StartSize", startSize);
             dic.Add("EndSize", endSize);
             List<UserModel> data = new List<UserModel>();
             if (string.IsNullOrEmpty(operation))
             {
                 //获取未授权的
-                data = DBBaseFactory.DALBase.QueryForList<UserModel>("GetUnauthorizedUserByRoleid_back", dic);
+                data = DBBaseFactory.DALBase.QueryForList<UserModel>("GetUnauthorizedUserByRoleid_back", dic) ?? new List<UserModel>();
             }
             else
             {
                 //获取已授权的
-                data = DBBaseFactory.DALBase.QueryForList<UserModel>("GetAuthorizedUserByRoleid_back", dic);
+                data = DBBaseFactory.DALBase.QueryForList<UserModel>("GetAuthorizedUserByRoleid_back", dic) ?? new List<UserModel>();
             }
-            apiResult.data = new { RoleList = data, Total = data.Count };//需要修改总数
+            apiResult.data = new { RoleUserList = data, Total = data.Count };//需要修改总数
             return JsonHelper.SerializeObjectToWebApi(apiResult);
 
         }
@@ -264,8 +266,14 @@ namespace BF.BackWebAPI.Controllers.Back
         /// <param name="ids"></param>
         /// <returns></returns>   
         [HttpPost]
-        public HttpResponseMessage AuthorizationUser(string ids, int roleid, string operation)
+        public HttpResponseMessage AuthorizationUser()
         {
+            string ids = HttpContext.Current.Request.Form["ids"];
+            int roleid = 0;
+            string operation = HttpContext.Current.Request.Form["operation"];
+            var roleIDstr = HttpContext.Current.Request.Form["roleID"];
+            int.TryParse(roleIDstr, out roleid);
+
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             string[] values = (ids == null ? null : ids.Split(','));
             List<int> list = new List<int>();

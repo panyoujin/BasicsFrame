@@ -5,11 +5,11 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        SELECT * FROM `TB_CM_Role` 
+        SELECT r.ID,r.RoleName,r.Description,DATE_FORMAT(r.CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate FROM `TB_CM_Role` AS r 
         WHERE `Status` = TRUE
         <%= AND `RoleName` LIKE @@RoleName@@ %>
         <%= AND `Description` LIKE @@RoleDesc@@ %>
-        <%= ORDER BY @@SortStr@@ @@OrderStr@@ %>
+        ORDER BY ID DESC
         <%= LIMIT @@StartSize@@ , @@EndSize@@%>;
       ]]>
       </SqlCommand>
@@ -88,7 +88,9 @@
         JOIN TB_CM_UserRole ur ON m.`ID` = ur.`UserID`
         WHERE m.`Status`=TRUE AND m.`IsAdmin`=TRUE
         AND ur.`RoleID`=@@RoleID@@
-        <%= ORDER BY @@SortStr@@ @@OrderStr@@ %>
+        <%= AND m.Name LIKE @@search@@ %>
+        <%= AND m.Account LIKE @@search@@ %>
+        ORDER BY m.ID DESC
         <%= LIMIT @@StartSize@@ , @@EndSize@@%>;
       ]]>
       </SqlCommand>
@@ -103,7 +105,9 @@
         LEFT JOIN (SELECT `UserID` FROM TB_CM_UserRole WHERE `RoleID`=@@RoleID@@) AS ur ON ur.`UserID`=m.`ID`
         WHERE m.`Status`=TRUE AND m.`IsAdmin`=TRUE
         AND ur.`UserID` IS NULL
-        <%= ORDER BY @@SortStr@@ @@OrderStr@@ %>
+        <%= AND m.Name LIKE @@search@@ %>
+        <%= AND m.Account LIKE @@search@@ %>
+        ORDER BY m.ID DESC
         <%= LIMIT @@StartSize@@ , @@EndSize@@%>;
       ]]>
       </SqlCommand>
@@ -120,7 +124,7 @@
     </SqlDefinition>
   </Data>
   <!--删除角色-->
-  <Data name="delete_userRole_back">
+  <Data name="delete_Role_back">
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[

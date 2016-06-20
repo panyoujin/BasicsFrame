@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>授权/取消授权</title>
+    <link rel="stylesheet" type="text/css" href="js/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="stylesheets/theme.css">
+    <script src="js/base.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="well">
+                <div class="search-well">
+                    <form class="form-inline">
+                        <input class="input-xlarge" placeholder="输入需要查询的账号或者昵称..." id="text_search" type="text">
+                        <button class="btn" type="button" id="btn_Search"><i class="icon-search"></i> 查询</button>
+                    </form>
+                </div>
+                <div class="btn-group">
+                </div>
+            </div>
+            <div class="well">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="width:5%;"></th>
+                            <th style="width:20%;">账号</th>
+                            <th style="width:20%;">昵称</th>
+
+                            <th style="width:25%;">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody am-repeat="info.roleUserList" style="display: none;">
+                        <tr>
+                            <td>{{ID}}</td>
+                            <td>{{Account}}</td>
+                            <td>{{Name}}</td>
+                            <td>
+                                <a style="display:{{IsShowAuthor}};" href="javascript:;"><i class="icon-pencil" data-id="{{ID}}" data-name="{{Account}}">授权</i></a>
+                                <a style="display:{{IsShowUnAuthor}};" href="javascript:;"><i class="icon-remove" data-id="{{ID}}" data-name="{{Account}}">取消授权</i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+            <div class="pagination" id="pagination">
+            </div>
+        </div>
+    </div>
+
+    <script src="js/require.js" data-main="js/config.js"></script>
+
+    <script>
+        require(['../modules/Authorization']);
+    </script>
+</body>
+</html>

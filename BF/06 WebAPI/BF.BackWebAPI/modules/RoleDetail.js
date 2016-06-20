@@ -4,7 +4,7 @@
     var width = Screen.ViewWidth();
     var height = Screen.ViewHeight();
     var info = {}
-    var roleID = c.GetUrlParam("roleID");
+    var roleID = (c.GetUrlParam("roleID") || 0);
     function bindEvent() {
         $('body').show();
         loading(0);
@@ -18,6 +18,7 @@
             var url = window.apibase + "/Role/Create";
             c.post({ ID: roleID, RoleName: roleName, Description: description, MenuIDs: menus }, url, function (data) {
                 alert(data.msg);
+                history.back(-1);
             })
         });
         $("#before").click(function () { history.back(-1); });
@@ -30,7 +31,6 @@
                 $("#RoleName").val(info.RoleInfo.RoleName);
                 $("#RoleDescribe").val(info.RoleInfo.Description);
             }
-            angular.set('info', info, bindEvent);
         })
 
     }
@@ -70,6 +70,7 @@
 
         }
         init_tree();
+        angular.set('info', info, bindEvent);
     })
 
 

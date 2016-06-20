@@ -357,7 +357,9 @@
     <Content Include="js\easyui-1.4.3\themes\images\tabs_icons.png" />
     <Content Include="js\easyui-1.4.3\themes\images\tree_icons.png" />
     <Content Include="js\easyui-1.4.3\themes\images\validatebox_warning.png" />
+    <Content Include="Authorization.html" />
     <Content Include="modules\RoleDetail.js" />
+    <Content Include="modules\Authorization.js" />
     <Content Include="RoleDetail.html" />
     <Content Include="modules\RoleMamager.js" />
     <Content Include="modules\BackMemberInfoDetail.js" />

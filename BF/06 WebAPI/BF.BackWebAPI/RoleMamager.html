@@ -66,6 +66,8 @@
                             <td>{{CreationDate}}</td>
                             <td>
                                 <a  href="RoleDetail.html?roleID={{ID}}"><i class="icon-pencil">编辑</i></a>
+                                <a href="Authorization.html?roleID={{ID}}"><i class="icon-pencil">授权</i></a>
+                                <a href="Authorization.html?roleID={{ID}}&operation=UnAuthorization"><i class="icon-pencil">取消授权</i></a>
                                 <a  href="javascript:;" role="button" data-toggle="modal" ><i class="icon-remove" data-id="{{ID}}" data-name="{{RoleName}}">删除</i></a>
                             </td>
                         </tr>

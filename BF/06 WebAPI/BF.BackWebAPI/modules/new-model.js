@@ -51,6 +51,7 @@
             info.ModelType_ID = $("#ModelType_ID").val();
             m.AddHealthModel(info, function (data) {
                 alert(data.msg);
+                history.back(-1);
             });
         });
 

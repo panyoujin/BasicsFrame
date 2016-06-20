@@ -24,12 +24,6 @@
                 var url = window.apibase + "/Role/DeleteRole";
                 c.post({ ids: $(this).attr("data-id") }, url, function (data) {
                     init_data(1, 10, $("#role_name").val());
-                })
-
-
-                m.DeleteHealthModelByModelID($(this).attr("data-id"), function (data) {
-
-                    init_data(1, 10, $("#model_name").val());
                 });
             } else {
                 return false;

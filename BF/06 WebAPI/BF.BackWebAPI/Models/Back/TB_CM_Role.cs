@@ -32,7 +32,7 @@ namespace BF.BackWebAPI.Models.Back
         /// <summary>
         /// CreationDate
         /// </summary>	
-        public DateTime CreationDate { get; set; }
+        public string CreationDate { get; set; }
         /// <summary>
         /// ModificationUser
         /// </summary>	
@@ -40,7 +40,7 @@ namespace BF.BackWebAPI.Models.Back
         /// <summary>
         /// ModificationDate
         /// </summary>	
-        public DateTime ModificationDate { get; set; }
+        public string ModificationDate { get; set; }
         /// <summary>
         /// 菜单ID集合 ,分割
         /// </summary>
