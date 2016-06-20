@@ -29,7 +29,7 @@
       <SqlCommand>
         <![CDATA[
         INSERT INTO `TB_CM_Role` (`RoleName`,`Description`,`Status`,`CreationUser`,`CreationDate`) 
-        VALUES(@@RoleName@@,@@Description@@,TRUE,@@CreationUser@@,NOW()) ;
+        VALUES(@@RoleName@@,@@RoleDescription@@,TRUE,@@CreationUser@@,NOW()) ;
         SELECT LAST_INSERT_ID() ;   
       ]]>
       </SqlCommand>
@@ -42,8 +42,8 @@
         UPDATE   `TB_CM_Role` 
         SET    
             `RoleName` = @@RoleName@@,
-            `Description` = @@Description@@,    
-            `ModificationUser` = @@ModificationUser@@,
+            `Description` = @@RoleDescription@@,    
+            `ModificationUser` = @@CreationUser@@,
             `ModificationDate` = NOW() 
         WHERE `ID` = @@RoleID@@ ; 
       ]]>

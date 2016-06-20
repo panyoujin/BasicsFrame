@@ -1,0 +1,76 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>角色编辑</title>
+    <link rel="stylesheet" type="text/css" href="js/bootstrap/css/bootstrap.css">
+    <link href="js/easyui-1.4.3/themes/icon.css" rel="stylesheet" />
+    <link href="js/easyui-1.4.3/themes/easyui.css" rel="stylesheet" />
+    <script src="js/base.js"></script>
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="js/easyui-1.4.3/jquery.easyui.min.js"></script>
+
+</head>
+<body>
+
+    <ul class="breadcrumb">
+        <li class="active">角色管理<span class="divider">/</span></li>
+        <li class="active">角色编辑</li>
+    </ul>
+    <div class="container-fluid">
+        <div class="row-fluid">
+
+            <div class="well">
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane active in" id="home">
+                        <form id="tab" >
+                            <table>
+                               
+                                <tr>
+                                    <td><label>角色名称：</label></td>
+                                    <td><input type="text" id="RoleName" name="RoleName" value="" class="input-xlarge" placeholder="请输入名称" maxlength="50" />
+                                        <input type="text" id="ID" name="ID" value="" style="display: none;" /></td>
+                                </tr>
+                                <tr>
+                                    <td><label>角色描述：</label></td>
+                                    <td><input type="text" id="RoleDescribe" value="" name="RoleDescribe" class="input-xlarge" placeholder="角色描述" maxlength="50" /></td>
+                                </tr>
+                                <!--<tr>
+                                    <td><label>排序：</label></td>
+                                    <td><input type="text" id="RoleSort" value="" name="RoleSort" class="input-xlarge" placeholder="排序" maxlength="50" /></td>
+                                </tr>-->
+                                <tr>
+                                    <th><label>菜单权限:</label></th>
+                                    <td>
+                                        <ul id="menu_tree">
+                                           
+                                        </ul>
+                                        <br />
+                                    </td>
+                                </tr>
+                            </table>
+
+
+                        </form>
+                    </div>
+                </div>
+
+                <div class="btn-toolbar">
+                    <div class="btn-group">
+                        <button class="btn btn-primary" id="save_Role"><i class="icon-save"></i> 保存</button>
+                        <button class="btn btn-primary" id="before"><i class="icon-save"></i> 返回</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="js/require.js" data-main="js/config.js"></script>
+
+    <script>
+        require(['../modules/RoleDetail']);
+    </script>
+</body>
+
+</html>

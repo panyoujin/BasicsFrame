@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Web;
 using System.Web.Http;
 
 namespace BF.BackWebAPI.Controllers.Back
@@ -25,7 +26,7 @@ namespace BF.BackWebAPI.Controllers.Back
         /// <param name="order"></param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetRoleDataJson(string sort="", string rolename="", string roledesc="", int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE, string order = "asc")
+        public HttpResponseMessage GetRoleDataJson(string sort = "", string rolename = "", string roledesc = "", int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE, string order = "asc")
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             int startSize = 0;
@@ -33,9 +34,9 @@ namespace BF.BackWebAPI.Controllers.Back
             this.SetPageSize(page, pageSize, ref startSize, ref endSize);
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("SortStr", sort);
-            if(!string.IsNullOrWhiteSpace(rolename))
+            if (!string.IsNullOrWhiteSpace(rolename))
             {
-                dic.Add("RoleName", string.Format("%{0}%",rolename));
+                dic.Add("RoleName", string.Format("%{0}%", rolename));
             }
             if (!string.IsNullOrWhiteSpace(roledesc))
             {
@@ -79,17 +80,18 @@ namespace BF.BackWebAPI.Controllers.Back
 
             int roleID = role.ID;
             Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("RoleID", roleID);
             dic.Add("RoleName", role.RoleName);
-            dic.Add("Description", role.Description);
+            dic.Add("RoleDescription", role.Description);
             dic.Add("CreationUser", this.MemberInfo.Account);
             if (role.ID <= 0)
             {
                 var objRoleID = DBBaseFactory.DALBase.ExecuteScalar("add_role_back", dic);
                 int.TryParse(objRoleID + "", out roleID);
+                dic["RoleID"] = roleID;
             }
             else
             {
-                dic.Add("RoleID", role.ID);
                 var objRoleID = DBBaseFactory.DALBase.ExecuteNonQuery("update_role_back", dic);
             }
             DBBaseFactory.DALBase.ExecuteNonQuery("delete_rolemenu_by_roleid_back", dic);
@@ -122,7 +124,7 @@ namespace BF.BackWebAPI.Controllers.Back
 
             }
             List<string> columeArr = new List<string>() { "RoleID", "MenuID", "CreationUser", "CreationDate", "Status" };
-            DBBaseFactory.DALBase.BatchInsert<TB_CM_Rolemenu>("TB_CM_Rolemenu", columeArr.ToArray(), roleMenuList);
+            DBBaseFactory.DALBase.BatchInsert<TB_CM_Rolemenu>("TB_CM_RoleMenu", columeArr.ToArray(), roleMenuList);
 
         }
         /// <summary>
@@ -130,14 +132,20 @@ namespace BF.BackWebAPI.Controllers.Back
         /// </summary>
         /// <returns></returns>        
         [HttpGet]
-        public HttpResponseMessage GettreeJosn(int id, bool isShowAll)
+        public HttpResponseMessage GettreeJosn(int roleID, bool isShowAll)
         {
+            //int roleID = 0;
+            //bool isShowAll = true;
+            //var roleIDstr = HttpContext.Current.Request.Form["roleID"];
+            //int.TryParse(roleIDstr, out roleID);
+            //var isShowAllstr = HttpContext.Current.Request.Form["isShowAll"];
+            //Boolean.TryParse(isShowAllstr, out isShowAll);
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
 
             List<string> menuidlist = new List<string>();
             Dictionary<string, object> dic = new Dictionary<string, object>();
-            dic.Add("RoleID", id);
-            if (id > 0)
+            dic.Add("RoleID", roleID);
+            if (roleID > 0)
             {
                 var rolemenulist = DBBaseFactory.DALBase.QueryForList<TB_CM_Rolemenu>("get_rolemenuByRoleId_back", dic);
                 if (rolemenulist != null && rolemenulist.Count > 0)
