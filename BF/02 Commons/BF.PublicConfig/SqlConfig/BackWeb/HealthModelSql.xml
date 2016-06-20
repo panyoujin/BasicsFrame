@@ -34,8 +34,8 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        CALL pro_FrontWeb_get_model_list(@@Model_Type@@,@@Model_Name@@,@@StartSize@@ , @@PageSize@@,@@User_ID@@);
-        CALL pro_FrontWeb_get_model_list_Count(@@Model_Type@@,@@Model_Name@@,@@StartSize@@ , @@PageSize@@,@@User_ID@@);
+        CALL pro_back_get_model_list(@@Model_Type@@,@@Model_Name@@,@@StartSize@@ , @@PageSize@@,@@User_ID@@);
+        CALL pro_back_get_model_list_Count(@@Model_Type@@,@@Model_Name@@,@@StartSize@@ , @@PageSize@@,@@User_ID@@);
       ]]>
       </SqlCommand>
     </SqlDefinition>
@@ -71,6 +71,15 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
+        CALL pro_FrontWeb_get_model_info(@@ModelID@@,@@User_ID@@);
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  <!--<Data name="BackWeb_GetHealthModelInfoByModelID">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
         SELECT  m.`ID` AS MID, m.`User_ID`, m.`Model_Name`, m.`IcoUrl`, m.`ImageUrl`, m.`Introduce`, m.`Describe`, m.`Remarks`, m.`Sort`, m.`IsBubble`, m.`Bubble_Time`, m.`Bubble_Temperature`
         , m.`Cook_Time`, m.`Cook_Temperature`, m.`Is_Heat_Preservation`, m.`Heat_Preservation_Time`, m.`Heat_Preservation_Temperature`, m.`Removal_Chlorine_Time`
         , m.`Final_Temperature`, m.`IsFerv`, m.`Model_Type`, m.`Model_Status`,UNIX_TIMESTAMP(m.CreationDate) AS CreationDateTicks,DATE_FORMAT(m.CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate,m.WeChatUrl,m.ModelType_ID,mt.Name AS ModelTypeName
@@ -84,7 +93,7 @@
       ]]>
       </SqlCommand>
     </SqlDefinition>
-  </Data>
+  </Data>-->
   <!--新增模式-->
   <Data name="BackWeb_AddHealthModel">
     <SqlDefinition type="sql">

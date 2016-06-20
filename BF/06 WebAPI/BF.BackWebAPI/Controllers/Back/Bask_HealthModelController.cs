@@ -80,6 +80,17 @@ namespace BF.BackWebAPI.Controllers
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("ModelID", modelID);
+            dic.Add("User_ID", 0);
+            try
+            {
+
+                dic["User_ID"] = this.MemberInfo.ID;
+
+            }
+            catch (Exception ex)
+            {
+                //dic.Remove("User_ID");
+            }
             apiResult.data = DBBaseFactory.DALBase.QueryForObject<HealthModelInfo>("BackWeb_GetHealthModelInfoByModelID", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
