@@ -321,7 +321,7 @@ namespace BF.BackWebAPI.Controllers.Back
             return JsonHelper.SerializeObjectToWebApi(apiResult);
 
         }
-
+        [HttpGet]
         public HttpResponseMessage GetMenuListByUser()
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
@@ -329,7 +329,7 @@ namespace BF.BackWebAPI.Controllers.Back
             dic.Add("UserID", this.MemberInfo.ID);
 
             List<TB_CM_Menu> list = DBBaseFactory.DALBase.QueryForList<TB_CM_Menu>("get_menuListByUserID_back", dic) ?? new List<TB_CM_Menu>();
-            List<TB_CM_Menu> parentdList = list.Where(m => m.Status == false && m.ParentMenuID == 1).OrderBy(m => m.Sort).ToList();
+            List<TB_CM_Menu> parentdList = list.Where(m => m.Status == true && m.ParentMenuID == 1).OrderBy(m => m.Sort).ToList();
             MenuTreeModel model = new MenuTreeModel();
             List<MenuTreeModel> treeMenuList = new List<MenuTreeModel>();
             model.menus = treeMenuList;
@@ -349,7 +349,7 @@ namespace BF.BackWebAPI.Controllers.Back
         private void SetChildMenu(List<TB_CM_Menu> alllist, MenuTreeModel model, TB_CM_Menu menu, bool isChild = true)
         {
             List<MenuTreeModel> treeMenuChildList = new List<MenuTreeModel>();
-            List<TB_CM_Menu> childList = alllist.Where(m => m.Status == false && m.ParentMenuID == menu.ID).ToList();
+            List<TB_CM_Menu> childList = alllist.Where(m => m.Status == true && m.ParentMenuID == menu.ID).ToList();
             if (isChild)
             {
                 model.child = treeMenuChildList;

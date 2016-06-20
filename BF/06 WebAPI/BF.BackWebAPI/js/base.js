@@ -72,6 +72,75 @@ window.onload = function () {
     if (isloading) loading();
 }
 
+
+function _base_param(data) {
+    var p = null;
+    if (typeof data != "string") {
+        p = {};
+        for (key in data) {
+            if (data[key] != undefined) {
+                p[key] = data[key];
+            }
+        }
+    } else {
+        p = data;
+    }
+    return p
+}
+
+function base_init_header(request) {
+    //alert(is_gethospital());
+    var session = Cookies.Get("CACHED_SESSION_ID");
+    request.setRequestHeader("CACHED_SESSION_ID", session);
+}
+
+
+/*
+	 *ischeck_response_code 是否调用统一的返回码校验，如果调用将会统一处理异常情况,默认校验，如果需要自定义函数处理指定的code就需要传入false
+	 */
+function basepost(data, url, succ, err) {
+    $.ajax({
+        type: 'post',
+        url: url,
+        beforeSend: function (request, settings) {
+            base_init_header(request);
+        },
+        data: _base_param(data),
+        dataType: 'json',
+        success: function (data) {
+            
+                succ(data);
+        },
+        error: function (err) {
+            err(err);
+            //loading(0);
+        }
+    })
+}
+/*
+ *ischeck_response_code 是否调用统一的返回码校验，如果调用将会统一处理异常情况,默认校验，如果需要自定义函数处理指定的code就需要传入false
+ */
+function baseget(data, url, succ, err) {
+
+    $.ajax({
+        type: 'get',
+        url: url,
+        beforeSend: function (request) {
+            base_init_header(request);
+        },
+        data: _base_param(data),
+        dataType: 'json',
+        success: function (data) {
+
+            succ(data);
+        },
+        error: function (err) {
+            err(err);
+            //loading(0);
+        }
+    })
+}
+
 var Session = {
     Set: function (key, value) {
         window.sessionStorage.setItem(key, value);

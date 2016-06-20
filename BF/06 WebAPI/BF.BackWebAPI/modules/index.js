@@ -56,6 +56,7 @@
     }
 
     $(function () {
+        
         var b_h = $("body").height();
         if (window.innerHeight) {
             b_h = window.innerHeight;

@@ -144,7 +144,7 @@
         FROM TB_CM_Menu m
         JOIN TB_CM_RoleMenu r ON m.`ID` = r.`MenuID`
         JOIN TB_CM_UserRole ur ON r.`RoleID` = ur.`RoleID`
-        WHERE m.`Status`=TRUE AND AND ur.`UserID`=@@UserID@@
+        WHERE m.`Status`=TRUE AND ur.`UserID`=@@UserID@@
         ORDER BY m.`Sort`;
       ]]>
       </SqlCommand>
