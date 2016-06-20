@@ -101,7 +101,7 @@ namespace BF.BackWebAPI.Controllers.Back
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("memberID", memberID);
-            dic.Add("NewPasswd", MD5Encrypt.Md5("a123456"));
+            dic.Add("NewPasswd", MD5Encrypt.Md5("123456"));
 
             int result = DBBaseFactory.DALBase.ExecuteNonQuery("Back_ResetPasswd", dic);
             if (result > 0)

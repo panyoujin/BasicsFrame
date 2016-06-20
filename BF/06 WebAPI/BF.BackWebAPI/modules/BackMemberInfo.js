@@ -49,7 +49,7 @@
 
                     c.get({ memberID: $(this).attr("data-id") }, url, function (data) {
                         if (data != null && data.code == "200") {
-                            alert("重置密码成功,默认密码:a000000！");
+                            alert("重置密码成功,默认密码:123456");
                         }
                     })
                 } else {
