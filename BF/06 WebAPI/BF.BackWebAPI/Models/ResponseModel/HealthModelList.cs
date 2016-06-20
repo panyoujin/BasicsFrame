@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BF.Common.Extensions;
 using System.Web;
+using BF.Common.Helper;
 
 namespace BF.BackWebAPI.Models.ResponseModel
 {
@@ -13,10 +14,21 @@ namespace BF.BackWebAPI.Models.ResponseModel
     {
         public int MID { get; set; }
 
+        private string _introduce;
         /// <summary>
         /// 
         /// </summary>
-        public string Introduce { get; set; }
+        public string Introduce
+        {
+            get
+            {
+                return HTMLHelper.NoHTML(_introduce);
+            }
+            set
+            {
+                _introduce = value;
+            }
+        }
 
         /// <summary>
         /// 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BF.Common.Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,8 +12,22 @@ namespace BF.BackWebAPI.Models.ResponseModel
         public int sID { get; set; }
 
         public int sType { get; set; }
-
-        public string sIntroduce { get; set; }
+        private string _sIntroduce;
+        /// <summary>
+        /// 
+        /// </summary>
+        public string sIntroduce
+        {
+            get
+            {
+                return HTMLHelper.NoHTML(_sIntroduce);
+            }
+            set
+            {
+                _sIntroduce = value;
+            }
+        }
+        //public string sIntroduce { get; set; }
 
         public string sName { get; set; }
 
