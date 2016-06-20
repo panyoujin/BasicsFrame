@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HCIP.AjaxDataSetting>
+<!--添加售后-->
+	<Data name="FrontWeb_AddFeedback">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+        INSERT INTO `TB_MB_Feedback` (User_ID,`QuestionDescribe`,`CreationUser`,`CreationDate`) 
+        VALUES(@@User_ID@@,@@QuestionDescribe@@,@@UserAccount@@,NOW());
+        SELECT LAST_INSERT_ID() into @SID;
+        SELECT @SID;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	
+</HCIP.AjaxDataSetting>

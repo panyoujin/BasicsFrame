@@ -73,6 +73,31 @@ window.onload = function () {
 }
 
 
+function base_check_response_code(data, cb) {
+    //返回格式不符合规范不往下处理
+    if (!data || data == null || !data.code || data.code == null) {
+        return;
+    }
+    //msgtips(data.msg);
+    var code = data.code;
+    switch (code) {
+        case "200":
+            cb(data);
+            break;
+        case "300":
+            alert(data.msg);
+            cb(data);
+            break;
+        case "600":
+            window.location.href = window.webroot + '/sign-in.html?ReturnUrl=' + window.location.href;
+            break;
+        default:
+            alert(data.msg);
+            break;
+    }
+}
+
+
 function _base_param(data) {
     var p = null;
     if (typeof data != "string") {
@@ -108,8 +133,7 @@ function basepost(data, url, succ, err) {
         data: _base_param(data),
         dataType: 'json',
         success: function (data) {
-            
-                succ(data);
+            base_check_response_code(data, succ);
         },
         error: function (err) {
             err(err);
@@ -132,7 +156,7 @@ function baseget(data, url, succ, err) {
         dataType: 'json',
         success: function (data) {
 
-            succ(data);
+            base_check_response_code(data, succ);
         },
         error: function (err) {
             err(err);

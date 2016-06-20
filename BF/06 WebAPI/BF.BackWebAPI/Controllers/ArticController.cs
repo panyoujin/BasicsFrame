@@ -4,6 +4,7 @@ using BF.Common.CustomException;
 using BF.Common.DataAccess;
 using BF.Common.Helper;
 using BF.Common.StaticConstant;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Web.Http;
@@ -58,7 +59,14 @@ namespace BF.BackWebAPI.Controllers
             }
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("Article_ID", articleID);
-            dic.Add("User_ID", this.MemberInfo.ID);
+            try
+            {
+                dic.Add("User_ID", this.MemberInfo.ID);
+            }
+            catch (Exception ex)
+            {
+
+            }
             var obj = DBBaseFactory.DALBase.QueryForObject<ArticleInfoResponse>("BackWeb_GetArticleInfoByID", dic);
             apiResult.data = obj;
             return JsonHelper.SerializeObjectToWebApi(apiResult);

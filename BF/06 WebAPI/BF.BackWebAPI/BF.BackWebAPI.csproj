@@ -179,6 +179,7 @@
     <Compile Include="Authorize\BFAuthorizeAttribute.cs" />
     <Compile Include="Authorize\ExceptionAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\ArticController.cs" />
     <Compile Include="Controllers\Back\Back_ModelTypeController.cs" />
     <Compile Include="Controllers\Back\Back_MemberController.cs" />
