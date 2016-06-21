@@ -35,7 +35,7 @@ ORDER BY `CreationDate` DESC
 		<SqlDefinition type="sql">
 			<SqlCommand>
 				<![CDATA[
-SELECT NAME AS 'Name',TypeCode AS 'Code',`ImageUrl` FROM  `TB_MB_Advertise`
+SELECT NAME AS 'Name',TypeCode AS 'Code',`ImageUrl`,`Sort` FROM  `TB_MB_Advertise`
 WHERE STATUS=TRUE AND `TypeCode`=@@Code@@
 ORDER BY Sort DESC;
       ]]>

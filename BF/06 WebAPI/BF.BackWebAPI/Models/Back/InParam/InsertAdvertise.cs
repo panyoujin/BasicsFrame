@@ -10,7 +10,7 @@ namespace BF.BackWebAPI.Models.Back.InParam
         public int ID { set; get; }
         public string TypeCode { set; get; }
         public string Name { set; get; }
-        public string Sort { set; get; }
+        public int Sort { set; get; }
         public string ImageUrl { set; get; }
         public string FullUrl { set; get; }
     }
