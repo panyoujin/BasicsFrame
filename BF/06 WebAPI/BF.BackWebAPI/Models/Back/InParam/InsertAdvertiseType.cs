@@ -5,11 +5,12 @@ using System.Web;
 
 namespace BF.BackWebAPI.Models.Back.InParam
 {
-    public class InsertAdvertiseType
+    public class InsertArticleType
     {
         public int ID { set; get; }
         public string Name { set; get; }
-        public string Description { set; get; }
-        public string Code { set; get; }
+        public string TypeDescribe { set; get; }
+        public string ImageUrl { set; get; }
+        public int TypeSort { set; get; }
     }
 }

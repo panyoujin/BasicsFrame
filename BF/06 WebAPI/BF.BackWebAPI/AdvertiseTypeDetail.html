@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>广告分类详细</title>
+    <link rel="stylesheet" type="text/css" href="js/bootstrap/css/bootstrap.css">
+    <script src="js/base.js"></script>
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="js/jquery.form.js"></script>
+
+</head>
+<body>
+
+    <ul class="breadcrumb">
+        <li class="active">广告分类<span class="divider">/</span></li>
+        <li class="active">分类编辑</li>
+    </ul>
+    <div class="container-fluid">
+        <div class="row-fluid">
+
+            <div class="well">
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane active in" id="home">
+                        <form id="tab" >
+                            <table>
+                               
+                                <tr>
+                                    <td><label>分类名称：</label></td>
+                                    <td><input type="text" id="Name" name="Name" value="" class="input-xlarge" placeholder="请输入广告分类名称" maxlength="50" />
+                                        <input type="text" id="ID" name="ID" value="" style="display: none;" /></td>
+                                </tr>
+
+                                <tr>
+                                    <td><label>分类Code：</label></td>
+                                    <td><input type="text" id="Code" value="" name="Code" class="input-xlarge" placeholder="请输入广告分类Code" maxlength="50" /></td>
+                                </tr>
+                                <tr>
+                                    <td><label>分类描述：</label></td>
+                                    <td><input type="text" id="Description" value="" name="Description" class="input-xlarge" placeholder="分类描述" maxlength="50" /></td>
+                                </tr>
+                            </table>
+
+
+                        </form>
+                    </div>
+                </div>
+
+                <div class="btn-toolbar">
+                    <div class="btn-group">
+                        <button class="btn btn-primary" id="Save_AdvertiseType"><i class="icon-save"></i> 保存</button>
+                        <button class="btn btn-primary" id="before"><i class="icon-save"></i> 返回</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <script src="js/require.js" data-main="js/config.js"></script>
+
+    <script>
+        require(['../modules/AdvertiseTypeDetail']);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HCIP.AjaxDataSetting>
+<!--获取广告分类-->
+  <Data name="Back_GetAdvertiseTypeList">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+SELECT ID, `Name` AS 'Name',Code,Description, DATE_FORMAT(IFNULL(`ModificationDate`,`CreationDate`),'%Y-%c-%d %h:%i:%s')  AS OperatioinDate
+FROM `TB_MB_AdvertiseType`
+WHERE `Status`=TRUE
+<%= AND Name LIKE @@Name@@%>
+ORDER BY OperatioinDate DESC
+<%= LIMIT @@StartSize@@ , @@PageSize@@%>;
+SELECT COUNT(1) AS total
+FROM `TB_MB_AdvertiseType`
+WHERE `Status`=TRUE
+<%= AND Name LIKE @@Name@@%>;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+
+	<!--插入广告分类-->
+	<Data name="Back_InsertAdvertiseType">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+INSERT INTO  `TB_MB_AdvertiseType`(`Name`,`Code`,`Description`,`CreationDate`,`CreationUser`)
+VALUE(@@Name@@,@@Code@@,@@Description@@,now(),@@CreationUser@@);
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	<!--更新广告分类-->
+	<Data name="Back_UpdateAdvertiseType">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+UPDATE `TB_MB_AdvertiseType` SET Name= @@Name@@,Description=@@Description@@,Code=@@Code@@,`ModificationUser`=@@ModificationUser@@,`ModificationDate`=NOW()
+WHERE ID=@@ID@@
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	<!--根据id获取广告分类-->
+	<Data name="Back_QueryAdvertiseTypeByID">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+SELECT `ID`,`Name`,`Description`,`Code`,`CreationDate`,`CreationUser` 
+FROM `TB_MB_AdvertiseType`
+WHERE ID=@@ID@@
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	
+</HCIP.AjaxDataSetting>
