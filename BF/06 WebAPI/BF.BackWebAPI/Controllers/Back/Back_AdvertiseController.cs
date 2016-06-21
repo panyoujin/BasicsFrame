@@ -179,6 +179,7 @@ namespace BF.BackWebAPI.Controllers.Back
             }
             dic.Add("TypeCode", param.TypeCode + "");
             dic.Add("Name", param.Name);
+            dic.Add("GoUrl", param.GoUrl);
             dic.Add("ImageUrl", param.ImageUrl);
             dic.Add("Sort", param.Sort + "");
             int result = DBBaseFactory.DALBase.ExecuteNonQuery(key, dic);

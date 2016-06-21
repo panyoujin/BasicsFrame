@@ -13,5 +13,6 @@ namespace BF.BackWebAPI.Models.Back.InParam
         public int Sort { set; get; }
         public string ImageUrl { set; get; }
         public string FullUrl { set; get; }
+        public string GoUrl { set; get; }
     }
 }

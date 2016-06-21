@@ -71,7 +71,7 @@ UPDATE TB_MB_AdvertiseType SET STATUS=FALSE WHERE ID=@@ID@@
 			<SqlCommand>
 				<![CDATA[
 SELECT ar.`ID`,ar.`TypeCode`,ar.`Name`,ar.`ImageUrl`,"" AS FullUrl,DATE_FORMAT(IFNULL(ar.`ModificationDate`,ar.`CreationDate`),'%Y-%c-%d %h:%i:%s') AS OperatioinDate,
-ar.`Sort`,art.`Name` AS TypeName
+ar.`Sort`,art.`Name` AS TypeName,ar.GoUrl
 FROM `TB_MB_Advertise` ar
 JOIN `TB_MB_AdvertiseType` art ON ar.`TypeCode`=art.`Code`
 WHERE 1=1 AND ar.status=TRUE
@@ -92,8 +92,8 @@ WHERE 1=1 AND ar.status=TRUE
 		<SqlDefinition type="sql">
 			<SqlCommand>
 				<![CDATA[
-INSERT INTO `TB_MB_Advertise`(`TypeCode`,`Name`,`ImageUrl`,`Sort`,`CreationDate`,`CreationUser`)
-VALUE(@@TypeCode@@,@@Name@@,@@ImageUrl@@,@@Sort@@,Now(),@@CreationUser@@);
+INSERT INTO `TB_MB_Advertise`(`TypeCode`,`Name`,`ImageUrl`,`Sort`,`CreationDate`,`CreationUser`,GoUrl)
+VALUE(@@TypeCode@@,@@Name@@,@@ImageUrl@@,@@Sort@@,Now(),@@CreationUser@@,@@GoUrl@@);
       ]]>
 			</SqlCommand>
 		</SqlDefinition>
@@ -103,7 +103,7 @@ VALUE(@@TypeCode@@,@@Name@@,@@ImageUrl@@,@@Sort@@,Now(),@@CreationUser@@);
 		<SqlDefinition type="sql">
 			<SqlCommand>
 				<![CDATA[
-UPDATE `TB_MB_Advertise` SET `TypeCode`=@@TypeCode@@,`Name`=@@Name@@,`ImageUrl`=@@ImageUrl@@,`Sort`=@@Sort@@,`ModificationDate`=NOW(),`ModificationUser`=@@ModificationUser@@
+UPDATE `TB_MB_Advertise` SET `TypeCode`=@@TypeCode@@,`Name`=@@Name@@,`ImageUrl`=@@ImageUrl@@,`Sort`=@@Sort@@,`ModificationDate`=NOW(),`ModificationUser`=@@ModificationUser@@,GoUrl=@@GoUrl@@
 WHERE ID=@@ID@@;
       ]]>
 			</SqlCommand>
@@ -114,7 +114,7 @@ WHERE ID=@@ID@@;
 		<SqlDefinition type="sql">
 			<SqlCommand>
 				<![CDATA[
-SELECT ar.`ID`,ar.`TypeCode`,ar.`Name`,ar.`ImageUrl`,"" AS FullUrl,ar.`Sort`
+SELECT ar.`ID`,ar.`TypeCode`,ar.`Name`,ar.`ImageUrl`,"" AS FullUrl,ar.`Sort`,ar.`GoUrl`
 FROM `TB_MB_Advertise` ar 
 WHERE ar.ID=@@ID@@
       ]]>

@@ -61,7 +61,7 @@
                     $("#Name").val(data.data.Name);
                     $("#ID").val(data.data.ID);
                     $("#TypeCode").val(data.data.TypeCode);
-
+                    $("#GoUrl").val(data.data.GoUrl);
                     $("#ImageUrl").val(data.data.ImageUrl);
                     $("#Sort").val(data.data.Sort);
 
@@ -79,7 +79,10 @@
             alert("请填写广告名称!");
             return false;
         }
- 
+        if ($("#TypeCode").val().length <= 0) {
+            alert("请填选择分类!");
+            return false;
+        }
         return true;
     }
 

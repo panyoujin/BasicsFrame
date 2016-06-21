@@ -85,6 +85,8 @@ namespace BF.BackWebAPI.Controllers
         [HttpGet]
         public HttpResponseMessage GetAdvertise(string code)
         {
+            if (string.IsNullOrWhiteSpace(code))
+                code = "SC";
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             
             Dictionary<string, object> dic = new Dictionary<string, object>();
