@@ -47,7 +47,7 @@ namespace BF.BackWebAPI.Controllers.Back
             dic.Add("EndSize", endSize);
 
             List<TB_CM_Role> data = DBBaseFactory.DALBase.QueryForList<TB_CM_Role>("get_roleList_back", dic);
-            apiResult.data = new { RoleList = data, Total = data.Count };//需要修改总数
+            apiResult.data = new { RoleList = data, total = data.Count };//需要修改总数
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
         /// <summary>
