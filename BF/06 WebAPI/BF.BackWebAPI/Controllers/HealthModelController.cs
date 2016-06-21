@@ -136,9 +136,10 @@ namespace BF.BackWebAPI.Controllers
         /// <param name="modelID"></param>
         /// <returns></returns>
         [HttpPost]
-        public HttpResponseMessage AddHealthModel([FromBody]HealthModel healthModel)
+        public HttpResponseMessage AddHealthModel()
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            HealthModel healthModel = new HealthModel();
             if (string.IsNullOrWhiteSpace(healthModel.model_Name) || healthModel.final_Temperature <= 0)
             {
                 throw new BusinessException("请填写完整数据在提交");
