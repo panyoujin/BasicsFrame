@@ -115,15 +115,15 @@ namespace BF.BackWebAPI.Controllers.Back
 
         #endregion
 
-        #region --- Article ---
+        #region --- Advertise ---
         /// <summary>
-        /// 获取列表
+        /// 获取广告列表
         /// </summary>
         /// <param name="type_name"></param>
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public HttpResponseMessage GetArticles(string search = "", int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
+        public HttpResponseMessage GetAdvertises(string search = "", int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             if (page <= 0)
@@ -143,7 +143,7 @@ namespace BF.BackWebAPI.Controllers.Back
                 dic.Add("Search", "%" + search + "%");
             }
 
-            DataSet ds = DBBaseFactory.DALBase.QueryForDataSet("Back_GetArticleList", dic);
+            DataSet ds = DBBaseFactory.DALBase.QueryForDataSet("Back_GetAdvertiseList", dic);
 
             if (ds != null && ds.Tables.Count >= 2)
             {
@@ -162,14 +162,14 @@ namespace BF.BackWebAPI.Controllers.Back
         }
 
         [HttpPost]
-        public HttpResponseMessage InsertArticle([FromBody]InsertArticle param)
+        public HttpResponseMessage InsertAdvertise([FromBody]InsertAdvertise param)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             Dictionary<string, object> dic = new Dictionary<string, object>();
-            string key = "Back_InsertArticle";
+            string key = "Back_InsertAdvertise";
             if (param.ID > 0)
             {
-                key = "Back_UpdateArticle";
+                key = "Back_UpdateAdvertise";
                 dic.Add("ModificationUser", "admin");
                 dic.Add("ID", param.ID + "");
             }
@@ -177,12 +177,10 @@ namespace BF.BackWebAPI.Controllers.Back
             {
                 dic.Add("CreationUser", "admin");
             }
-            dic.Add("ArticleType_ID", param.ArticleType_ID+"");
-            dic.Add("ArticleTitle", param.ArticleTitle);
-            dic.Add("ArticleContent", param.ArticleContent);
+            dic.Add("TypeCode", param.TypeCode + "");
+            dic.Add("Name", param.Name);
             dic.Add("ImageUrl", param.ImageUrl);
-            dic.Add("PublishDate", param.PublishDate + "");
-            dic.Add("ArticleSort", param.ArticleSort + "");
+            dic.Add("Sort", param.Sort + "");
             int result = DBBaseFactory.DALBase.ExecuteNonQuery(key, dic);
             if (result <= 0)
             {
@@ -193,13 +191,13 @@ namespace BF.BackWebAPI.Controllers.Back
         }
 
         [HttpGet]
-        public HttpResponseMessage QueryArticleByID(int ID)
+        public HttpResponseMessage QueryAdvertiseByID(int ID)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             Dictionary<string, object> dic = new Dictionary<string, object>();
-            string key = "Back_QueryArticleByID";
+            string key = "Back_QueryAdvertiseByID";
             dic.Add("ID", ID + "");
-            var result = DBBaseFactory.DALBase.QueryForObject<InsertArticle>(key, dic);
+            var result = DBBaseFactory.DALBase.QueryForObject<InsertAdvertise>(key, dic);
             if (result != null && !string.IsNullOrEmpty(result.ImageUrl))
             {
                 result.FullUrl = Global.AttmntUrl + result.ImageUrl;
@@ -208,11 +206,11 @@ namespace BF.BackWebAPI.Controllers.Back
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
         [HttpGet]
-        public HttpResponseMessage DeleteArticleByID(int ID)
+        public HttpResponseMessage DeleteAdvertiseByID(int ID)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             Dictionary<string, object> dic = new Dictionary<string, object>();
-            string key = "Back_DeleteArticleByID";
+            string key = "Back_DeleteAdvertiseByID";
             dic.Add("ID", ID + "");
             int result = DBBaseFactory.DALBase.ExecuteNonQuery(key, dic);
             if (result <= 0)

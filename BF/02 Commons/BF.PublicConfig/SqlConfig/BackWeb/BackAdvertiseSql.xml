@@ -54,5 +54,81 @@ WHERE ID=@@ID@@
 			</SqlCommand>
 		</SqlDefinition>
 	</Data>
-	
+
+	<!--根据id删除广告分类-->
+	<Data name="Back_DeleteAdvertiseTypeByID">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+UPDATE TB_MB_AdvertiseType SET STATUS=FALSE WHERE ID=@@ID@@ 
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	<!--获取广告列表-->
+	<Data name="Back_GetAdvertiseList">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+SELECT ar.`ID`,ar.`TypeCode`,ar.`Name`,ar.`ImageUrl`,"" AS FullUrl,DATE_FORMAT(IFNULL(ar.`ModificationDate`,ar.`CreationDate`),'%Y-%c-%d %h:%i:%s') AS OperatioinDate,
+ar.`Sort`,art.`Name` AS TypeName
+FROM `TB_MB_Advertise` ar
+JOIN `TB_MB_AdvertiseType` art ON ar.`TypeCode`=art.`Code`
+WHERE 1=1 AND ar.status=TRUE
+<%= AND (art.`Name` LIKE @@Search@@ or ar.`Name` LIKE @@Search@@) %>
+ORDER BY IFNULL(ar.`ModificationDate`,ar.`CreationDate`) DESC
+<%= LIMIT @@StartSize@@ , @@PageSize@@%>;
+SELECT COUNT(1) AS total
+FROM `TB_MB_Advertise` ar
+JOIN `TB_MB_AdvertiseType` art ON ar.`TypeCode`=art.`Code`
+WHERE 1=1 AND ar.status=TRUE
+<%= AND (art.`Name` LIKE @@Name@@ or ar.`Name` LIKE @@Search@@) %>;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	<!--新增广告-->
+	<Data name="Back_InsertAdvertise">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+INSERT INTO `TB_MB_Advertise`(`TypeCode`,`Name`,`ImageUrl`,`Sort`,`CreationDate`,`CreationUser`)
+VALUE(@@TypeCode@@,@@Name@@,@@ImageUrl@@,@@Sort@@,Now(),@@CreationUser@@);
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	<!--更新广告-->
+	<Data name="Back_UpdateAdvertise">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+UPDATE `TB_MB_Advertise` SET `TypeCode`=@@TypeCode@@,`Name`=@@Name@@,`ImageUrl`=@@ImageUrl@@,`Sort`=@@Sort@@,`ModificationDate`=NOW(),`ModificationUser`=@@ModificationUser@@
+WHERE ID=@@ID@@;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	<!--根据id查询广告-->
+	<Data name="Back_QueryAdvertiseByID">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+SELECT ar.`ID`,ar.`TypeCode`,ar.`Name`,ar.`ImageUrl`,"" AS FullUrl,ar.`Sort`
+FROM `TB_MB_Advertise` ar 
+WHERE ar.ID=@@ID@@
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	<!--根据id删除广告-->
+	<Data name="Back_DeleteAdvertiseByID">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+UPDATE TB_MB_Advertise SET STATUS=FALSE WHERE ID=@@ID@@ 
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
 </HCIP.AjaxDataSetting>

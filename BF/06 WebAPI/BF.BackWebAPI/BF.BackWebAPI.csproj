@@ -232,6 +232,7 @@
     <Compile Include="Models\Back\InParam\Bask_HealthModel.cs" />
     <Compile Include="Models\Back\InParam\HealthModel.cs" />
     <Compile Include="Models\Back\InParam\InsertAdvertiseType.cs" />
+    <Compile Include="Models\Back\InParam\InsertAdvertise.cs" />
     <Compile Include="Models\Back\InParam\InsertModelType.cs" />
     <Compile Include="Models\Back\InParam\InsertShop.cs" />
     <Compile Include="Models\Back\InParam\InsertArticle.cs" />
@@ -286,6 +287,8 @@
     <Content Include="ArticleDetails.html" />
     <Content Include="AdvertiseTypeManage.html" />
     <Content Include="AdvertiseTypeDetail.html" />
+    <Content Include="Advertise_Detail.html" />
+    <Content Include="Advertise_Manage.html" />
     <Content Include="js\easyui-1.4.3\ExtendedValidation.js" />
     <Content Include="js\easyui-1.4.3\images\arrow.gif" />
     <Content Include="js\easyui-1.4.3\images\blocks.gif" />
@@ -366,6 +369,8 @@
     <Content Include="Authorization.html" />
     <Content Include="modules\AdvertiseTypeDetail.js" />
     <Content Include="modules\AdvertiseType.js" />
+    <Content Include="modules\Advertise.js" />
+    <Content Include="modules\AdvertiseDetail.js" />
     <Content Include="modules\RoleDetail.js" />
     <Content Include="modules\Authorization.js" />
     <Content Include="RoleDetail.html" />
