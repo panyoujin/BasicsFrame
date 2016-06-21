@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>授权/取消授权</title>
+    <title>意见反馈</title>
     <link rel="stylesheet" type="text/css" href="js/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="stylesheets/theme.css">
     <script src="js/base.js"></script>
@@ -13,9 +13,8 @@
             <div class="well">
                 <div class="search-well">
                     <form class="form-inline">
-                        <input class="input-xlarge" placeholder="输入需要查询的账号或者昵称..." id="text_search" type="text">
+                        <input class="input-xlarge" placeholder="输入需要查询的信息..." id="text_search" type="text">
                         <button class="btn" type="button" id="btn_Search"><i class="icon-search"></i> 查询</button>
-                        <a class="btn btn-primary" href="javascript: history.back(-1);"><i class="icon-save"></i> 返回</a>
                     </form>
                 </div>
                 <div class="btn-group">
@@ -27,20 +26,22 @@
                         <tr>
                             <th style="width:5%;"></th>
                             <th style="width:20%;">账号</th>
-                            <th style="width:20%;">昵称</th>
+                            <th style="width:50%;">内容</th>
+                            <th style="width:20%;">创建时间</th>
 
-                            <th style="width:25%;">操作</th>
+                            <!--<th style="width:25%;">操作</th>-->
                         </tr>
                     </thead>
-                    <tbody am-repeat="info.roleUserList" style="display: none;">
+                    <tbody am-repeat="info.dataList" style="display: none;">
                         <tr>
-                            <td>{{ID}}</td>
-                            <td>{{Account}}</td>
-                            <td>{{Name}}</td>
-                            <td>
+                            <td>{{uuid}}</td>
+                            <td>{{User_Name}}</td>
+                            <td>{{QuestionDescribe}}</td>
+                            <td>{{CreationDate}}</td>
+                            <!--<td>
                                 <a style="display:{{IsShowAuthor}};" href="javascript:;"><i class="icon-pencil" data-id="{{ID}}" data-name="{{Account}}">授权</i></a>
                                 <a style="display:{{IsShowUnAuthor}};" href="javascript:;"><i class="icon-remove" data-id="{{ID}}" data-name="{{Account}}">取消授权</i></a>
-                            </td>
+                            </td>-->
                         </tr>
                     </tbody>
 
@@ -54,7 +55,7 @@
     <script src="js/require.js" data-main="js/config.js"></script>
 
     <script>
-        require(['../modules/Authorization']);
+        require(['../modules/FeedbackList']);
     </script>
 </body>
 </html>

@@ -65,5 +65,26 @@ namespace BF.BackWebAPI.Controllers.Back
             apiResult.data = count;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+        /// <summary>
+        /// 售后备注
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public HttpResponseMessage AddRemarks()
+        {
+            int aid = 0;
+            int.TryParse(HttpContext.Current.Request.Form["aid"], out aid);
+            var remarks = HttpContext.Current.Request.Form["remarks"];
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("Source_ID", aid);
+            dic.Add("Source_Type", (int)RemarksSourceTypeEnum.Aftermarket);
+            dic.Add("Remarks", remarks);
+            dic.Add("UserAccount", this.MemberInfo.Account);
+            dic.Add("User_ID", this.MemberInfo.ID);
+            var rID = DBBaseFactory.DALBase.ExecuteScalar("BackWeb_AddRemarks", dic);
+            apiResult.data = rID;
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
     }
 }

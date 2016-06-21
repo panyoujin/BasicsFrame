@@ -20,10 +20,19 @@
         $('#datalist tr td a').on('click', function () {
             var aid = $(this).attr("data-id");
             var status = $(this).attr("data-status");
-            a.SetAftermarketStatus(aid, status, function (data) {
-                alert(data.msg);
-                init_data(1, 10);
-            })
+            if (status == -1) {
+                var str = prompt("请输入备注信息");
+                if (str.length > 0) {
+                    a.AddRemarks(aid, str, function (data) {
+                        init_data(1, 10, $("#aftermarket_name").val());
+                    })
+                }
+            } else {
+                a.SetAftermarketStatus(aid, status, function (data) {
+                    alert(data.msg);
+                    init_data(1, 10, $("#aftermarket_name").val());
+                })
+            }
         });
     }
     function init_data(page, size, name) {
@@ -55,6 +64,8 @@
     }
     $(function () {
         init_data(1, 10);
+
+        angular.set('info', info, bindEvent);
     })
 
 })

@@ -16,7 +16,7 @@
         c.get(param, url, cb, function (err) { c.msgtips(err, "e"); }, ischeck_code)
     }
     /*
-	*根据模式ID获取模式详情接口
+	*修改状态
 	*/
     function SetAftermarketStatus(aid, status, cb, ischeck_code) {
         //登录
@@ -27,8 +27,23 @@
         var url = window.apibase + "/Back_Aftermarket/SetAftermarketStatus";
         c.post(param, url, cb, function (err) { c.msgtips(err, "e"); }, ischeck_code)
     }
+
+    /*
+	*修改状态
+	*/
+    function AddRemarks(aid, remarks, cb, ischeck_code) {
+        //登录
+        var param = {
+            aid: aid,
+            remarks: remarks
+        };
+        var url = window.apibase + "/Back_Aftermarket/AddRemarks";
+        c.post(param, url, cb, function (err) { c.msgtips(err, "e"); }, ischeck_code)
+    }
+
     return {
         GetAftermarketList: GetAftermarketList,
-        SetAftermarketStatus: SetAftermarketStatus
+        SetAftermarketStatus: SetAftermarketStatus,
+        AddRemarks: AddRemarks
     }
 })

@@ -54,4 +54,15 @@ namespace BF.Common.Enums
         [Description("完成")]
         Complete = 4,
     }
+    /// <summary>
+    /// 备注源类型
+    /// </summary>
+    public enum RemarksSourceTypeEnum
+    {
+        /// <summary>
+        /// 售后
+        /// </summary>
+        [Description("售后")]
+        Aftermarket = 1
+    }
 }

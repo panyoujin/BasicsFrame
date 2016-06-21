@@ -6,11 +6,13 @@ using BF.Common.CommonEntities;
 using BF.Common.CustomException;
 using BF.Common.DataAccess;
 using BF.Common.Enums;
+using BF.Common.FileProcess;
 using BF.Common.Helper;
 using BF.Common.StaticConstant;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace BF.BackWebAPI.Controllers
@@ -185,10 +187,23 @@ namespace BF.BackWebAPI.Controllers
                 healthModel.is_Heat_Preservation = true;
             }
             Dictionary<string, object> dic = new Dictionary<string, object>();
-            dic.Add("Model_Name", healthModel.model_Name);
-            dic.Add("User_ID", this.MemberInfo.ID);
+
             dic.Add("IcoUrl", string.IsNullOrWhiteSpace(healthModel.icoUrl) ? "" : healthModel.icoUrl);
             dic.Add("ImageUrl", string.IsNullOrWhiteSpace(healthModel.imageUrl) ? "" : healthModel.imageUrl);
+            Dictionary<string, object> paramInsert = new Dictionary<string, object>();
+            try
+            {
+                paramInsert = FileProcessHelp.Save(HttpContext.Current.Request.Files[0], Global.AttmntServer);
+                dic["ImageUrl"] = paramInsert["AttachmentUrl"];
+                dic["IcoUrl"] = paramInsert["AttachmentUrl"];
+            }
+            catch
+            {
+            }
+
+            dic.Add("Model_Name", healthModel.model_Name);
+            dic.Add("User_ID", this.MemberInfo.ID);
+
             dic.Add("Introduce", healthModel.introduce);
             dic.Add("Model_Describe", string.IsNullOrWhiteSpace(healthModel.describe) ? "" : healthModel.describe);
             dic.Add("Remarks", healthModel.remarks);

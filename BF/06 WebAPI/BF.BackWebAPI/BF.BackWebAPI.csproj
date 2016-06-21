@@ -180,6 +180,7 @@
     <Compile Include="Authorize\ExceptionAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Back\Back_AdvertiseController.cs" />
+    <Compile Include="Controllers\Back\Back_FeedbackController.cs" />
     <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\ArticController.cs" />
     <Compile Include="Controllers\Back\Back_ModelTypeController.cs" />
@@ -289,6 +290,7 @@
     <Content Include="AdvertiseTypeDetail.html" />
     <Content Include="Advertise_Detail.html" />
     <Content Include="Advertise_Manage.html" />
+    <Content Include="FeedbackList.html" />
     <Content Include="js\easyui-1.4.3\ExtendedValidation.js" />
     <Content Include="js\easyui-1.4.3\images\arrow.gif" />
     <Content Include="js\easyui-1.4.3\images\blocks.gif" />
@@ -371,6 +373,7 @@
     <Content Include="modules\AdvertiseType.js" />
     <Content Include="modules\Advertise.js" />
     <Content Include="modules\AdvertiseDetail.js" />
+    <Content Include="modules\FeedbackList.js" />
     <Content Include="modules\RoleDetail.js" />
     <Content Include="modules\Authorization.js" />
     <Content Include="RoleDetail.html" />

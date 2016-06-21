@@ -57,5 +57,7 @@ namespace BF.BackWebAPI.Models.ResponseModel
         public int AftermarketStatus { get; set; }
 
         public string CreationDate { get; set; }
+
+        public string Remarks { get; set; }
     }
 }

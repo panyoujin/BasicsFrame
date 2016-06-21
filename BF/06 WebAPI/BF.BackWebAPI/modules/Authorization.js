@@ -19,7 +19,6 @@
     function bindEvent() {
         $('body').show();
         loading(0);
-
         $('#btn_Search').off('click')
 
         $('#btn_Search').on('click', function () {

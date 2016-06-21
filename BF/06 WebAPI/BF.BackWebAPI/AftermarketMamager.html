@@ -53,26 +53,29 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th style="width:5%;">ID</th>
+                            <!--<th style="width:5%;">ID</th>-->
                             <th style="width:10%;">用户</th>
                             <th style="width:10%;">编号</th>
                             <th style="width:10%;">售后类型</th>
-                            <th style="width:20%;">描述</th>
+                            <th style="min-width:150px;">描述</th>
                             <th style="width:10%;">处理状态</th>
+                            <th style="min-width:150px;">备注</th>
                             <th style="width:15%;">创建时间</th>
-                            <th style="width:15%;">操作</th>
+                            <th style="min-width:150px;">操作</th>
                         </tr>
                     </thead>
                     <tbody am-repeat="info.dataList" style="display: none;" id="datalist">
                         <tr>
-                            <td>{{uuid}}</td>
+                            <!--<td>{{uuid}}</td>-->
                             <td>{{User_Name}}</td>
                             <td>{{ProductCode}}</td>
                             <td>{{QuestionTypeStr}}</td>
                             <td>{{QuestionDescribe}}</td>
                             <td>{{AftermarketStatusStr}}</td>
+                            <td>{{Remarks}}</td>
                             <td>{{CreationDate}}</td>
                             <td>
+                                <a  href="javascript:;" data-id="{{uuid}}" data-status="-1"><i class="icon-pencil">备注</i></a>
                                 <a style="display:{{Processing_Hide}};" href="javascript:;" data-id="{{uuid}}" data-status="3"><i class="icon-pencil">处理中</i></a>
                                 <a style="display:{{No_Hide}};" href="javascript:;" data-id="{{uuid}}" data-status="2"><i class="icon-pencil">申请不通过</i></a>
                                 <a style="display:{{Complete_Hide}};" href="javascript:;" data-id="{{uuid}}" data-status="4"><i class="icon-pencil">完成</i></a>

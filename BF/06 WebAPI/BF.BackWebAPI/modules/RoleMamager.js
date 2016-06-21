@@ -50,6 +50,8 @@
     }
     $(function () {
         init_data(1, 10);
+
+        angular.set('info', info, bindEvent);
     })
 
 

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HCIP.AjaxDataSetting>
+
+  <Data name="BackWeb_GetFeedbackList">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT  IFNULL(m.`Account`,m.`Name`) AS User_Name,f.`ID` AS `uuid`,  f.`User_ID`,f.`User_Phone`,f.`QuestionDescribe`,f.`FeedbackStatus`,DATE_FORMAT(f.CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate
+        FROM `TB_MB_Feedback` f
+        JOIN `TB_MB_MemberInfo` AS m ON f.`User_ID`=m.`ID`
+        WHERE f.`Status`=TRUE <%= AND f.FeedbackStatus=@@FeedbackStatus@@ %> <%= AND f.QuestionDescribe LIKE @@search@@ OR m.`Account` LIKE @@search@@ %>
+        ORDER BY f.ID DESC <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
+        SELECT count(0) AS total FROM `TB_MB_Feedback` f 
+        JOIN `TB_MB_MemberInfo` AS m ON f.`User_ID`=m.`ID`
+        WHERE f.`Status`=TRUE <%= AND f.FeedbackStatus=@@FeedbackStatus@@ %> <%= AND f.QuestionDescribe LIKE @@search@@ OR m.`Account` LIKE @@search@@ %>;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+	
+
+</HCIP.AjaxDataSetting>
