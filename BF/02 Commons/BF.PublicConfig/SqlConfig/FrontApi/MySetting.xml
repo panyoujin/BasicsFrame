@@ -16,7 +16,7 @@ ORDER BY `CreationDate` DESC
 			</SqlCommand>
 		</SqlDefinition>
 	</Data>
-	
+
 	<Data name="Get_AppVersion">
 		<SqlDefinition type="sql">
 			<SqlCommand>
@@ -26,6 +26,18 @@ ORDER BY `CreationDate` DESC
          WHERE `AppType`=@@AppType@@ AND `Status`=FALSE AND a.update_status IN(1,2)
          AND a.`Version`>=@@Version@@
          ORDER BY a.`Version` DESC LIMIT 1;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	
+	<Data name="Get_AdvertiseList">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+SELECT NAME AS 'Name',TypeCode AS 'Code',`ImageUrl` FROM  `TB_MB_Advertise`
+WHERE STATUS=TRUE AND `TypeCode`=@@Code@@
+ORDER BY Sort DESC;
       ]]>
 			</SqlCommand>
 		</SqlDefinition>

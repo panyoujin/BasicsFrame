@@ -1,4 +1,5 @@
-﻿using BF.BackWebAPI.Models.Front;
+﻿using BF.BackWebAPI.Models.Back.InParam;
+using BF.BackWebAPI.Models.Front;
 using BF.BackWebAPI.Models.Front.Request;
 using BF.BackWebAPI.Models.Front.Response;
 using BF.Common.CommonEntities;
@@ -71,6 +72,32 @@ namespace BF.BackWebAPI.Controllers
                 if (!string.IsNullOrEmpty(app.TargetUrl))
                 {
                     app.TargetUrl = Global.AttmntUrl + app.TargetUrl;
+                }
+            }
+            apiResult.data = app;
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+        /// <summary>
+        /// 根据code查询广告
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetAdvertise(string code)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("Code", code);
+            List<InsertAdvertise> app = DBBaseFactory.DALBase.QueryForList<InsertAdvertise>("Get_AdvertiseList", dic);
+            if (app != null&&app.Count>0)
+            {
+                foreach (var item in app)
+                {
+                    if (!string.IsNullOrEmpty(item.ImageUrl))
+                    {
+                        item.FullUrl = Global.AttmntUrl + item.ImageUrl;
+                    }
                 }
             }
             apiResult.data = app;
