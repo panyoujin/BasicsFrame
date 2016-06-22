@@ -95,7 +95,7 @@ UPDATE TB_MB_MemberInfo SET `ImageUrl`=@@AttachmentUrl@@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-SELECT ID AS 'uuid',Account,`Email`,`Passwd`,`ImageUrl`,`Name`,`QQ` FROM `TB_MB_MemberInfo`
+SELECT ID AS 'uuid',Account,`Email`,`Passwd`,`ImageUrl`,`Name`,`QQ`,`openid`,`nickname` FROM `TB_MB_MemberInfo`
 WHERE Id=@@MemberID@@;
       ]]>
       </SqlCommand>

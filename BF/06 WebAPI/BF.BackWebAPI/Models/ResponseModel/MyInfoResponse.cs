@@ -14,5 +14,7 @@ namespace BF.BackWebAPI.Models.ResponseModel
         public string ImageUrl { set; get; }
         public string Name { set; get; }
         public string QQ { set; get; }
+        public string openid { set; get; }
+        public string nickname { set; get; }
     }
 }
