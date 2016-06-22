@@ -12,11 +12,7 @@
     <meta http-equiv="Cache-Control" content="no-cache">
     <meta http-equiv="Pragma" content="no-cache">
     <title>养生宝典</title>
-    <style type="text/css">
-        p {
-            text-indent: 2em; /*em是相对单位，2em即现在一个字大小的两倍*/
-        }
-    </style>
+    
 </head>
 <body>
 
@@ -29,8 +25,8 @@
         <div class="text-content" id="divSummary" style="background-color:#F2FAFD;margin-top:20px;">
         </div>-->
 
-        <p class="text-content" id="divContent">
-        </p>
+        <div class="text-content" id="divContent">
+        </div>
     </div>
 
     <script src="js/jquery-1.7.2.min.js" type="text/javascript"></script>
@@ -56,7 +52,9 @@
                     console.debug(data);
                     if (data.code == "200") {
                         //$("#divSummary").html(data.data.Summary);
-                        $("#divContent").html((data.data.Describe || data.data.Introduce));
+                        var content = (data.data.Introduce || data.data.Describe);
+                        content = content.replace(/\n/ig, "<br/>");
+                        $("#divContent").html(content);
                         //$("#pTitle").html(data.data.Title);
                         //var date = new Date(data.data.PublishTime);
                         //$("#pDate").html(data.data.PublishTime);

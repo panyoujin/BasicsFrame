@@ -72,6 +72,8 @@
 
                             <input id="ImageUrl" name="ImageUrl" type="hidden" am-bind="info.ImageUrl" />
 
+                            <label>排序</label>
+                            <input type="text" value="" class="input-xlarge" placeholder="排序越大越靠前" am-bind="info.Sort" />
                             <label>最终温度</label>
                             <input type="text" value="" class="input-xlarge" placeholder="单位：摄氏度" am-bind="info.Final_Temperature" />
                             <label>煮料时长</label>
@@ -83,11 +85,14 @@
                             <label>保温温度</label>
                             <input type="text" value="" class="input-xlarge" placeholder="单位：摄氏度" am-bind="info.Heat_Preservation_Temperature" />
                             <label>煮料过程描述</label>
-                            <input type="text" value="" class="input-xlarge" placeholder="如:煮沸除氯五分钟，保温在50度" am-bind="info.Introduce" maxlength="200" />
+                            <textarea style="width:400px;height:100px;" class="edui-default"placeholder="如:煮沸除氯五分钟，保温在50度" am-bind="info.Introduce" id="Introduce"></textarea>
+                            <!--<input type="text" value="" class="input-xlarge" placeholder="如:煮沸除氯五分钟，保温在50度" am-bind="info.Introduce" maxlength="200" />-->
                             <label>材料描述</label>
-                            <input type="text" value="" class="input-xlarge" placeholder="填写材料的描述" am-bind="info.Describe" maxlength="1000" />
+                            <textarea style="width:400px;height:100px;" class="edui-default" placeholder="填写材料的描述" am-bind="info.Describe" id="Describe"></textarea>
+                            <!--<input type="text" value="" class="input-xlarge" placeholder="填写材料的描述" am-bind="info.Describe" maxlength="1000" />-->
                             <label>注意事项</label>
-                            <input type="text" value="" class="input-xlarge" placeholder="填写一些煮料的注意事项" am-bind="info.Remarks" maxlength="1000" />
+                            <textarea style="width:400px;height:100px;" class="edui-default" placeholder="填写材料的描述" am-bind="info.Remarks" id="Remarks"></textarea>
+                            <!--<input type="text" value="" class="input-xlarge" placeholder="填写一些煮料的注意事项" am-bind="info.Remarks" maxlength="1000" />-->
                             <label>微信地址</label>
                             <input type="text" value="" class="input-xlarge" placeholder="微信url" am-bind="info.WeChatUrl" maxlength="1000" />
                         </form>

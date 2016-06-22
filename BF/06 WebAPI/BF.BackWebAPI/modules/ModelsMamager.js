@@ -33,7 +33,7 @@
         $('#new_model').off('click')
 
         $('#new_model').on('click', function () {
-            window.location.href = window.webroot + "/new-model.html";
+            window.location.href = window.webroot + "/new-model.html?r=0622";
         });
     }
     function init_data(page, size, name) {
@@ -42,9 +42,9 @@
             $.each(info.models, function (index, obj) {
                 obj.model_hide = "none";
                 obj.edit_url = "";
-                if (obj.Model_Type == 0) {
+                if (obj.Model_Type == 0 || obj.Model_Type == 1) {
                     obj.model_hide = "inline-block";
-                    obj.edit_url = window.webroot + "/new-model.html?modelID=" + obj.MID;
+                    obj.edit_url = window.webroot + "/new-model.html?r=0622&modelID=" + obj.MID;
                 }
             })
             p.setindex(page, size, data.data.total, function (pindex, psize) {

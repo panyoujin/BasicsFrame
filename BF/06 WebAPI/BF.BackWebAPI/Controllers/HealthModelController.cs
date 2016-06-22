@@ -229,7 +229,7 @@ namespace BF.BackWebAPI.Controllers
             if (healthModel.MID > 0)
             {
                 dic.Add("MID", healthModel.MID);
-                key = "BackWeb_EditHealthModel";
+                key = "FrontWeb_EditHealthModel";
             }
             apiResult.data = DBBaseFactory.DALBase.ExecuteNonQuery(key, dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);

@@ -43,7 +43,7 @@ namespace BF.BackWebAPI.Models.ResponseModel
         {
             get
             {
-                if (_iocUrl == null || _iocUrl.IndexOf("http://") == 0 || _iocUrl.IndexOf("https://") == 0)
+                if (string.IsNullOrWhiteSpace(_iocUrl) || _iocUrl.IndexOf("http://") == 0 || _iocUrl.IndexOf("https://") == 0)
                 {
 
                     return _iocUrl;
@@ -64,7 +64,7 @@ namespace BF.BackWebAPI.Models.ResponseModel
         {
             get
             {
-                if (_imgUrl == null || _imgUrl.IndexOf("http://") == 0 || _imgUrl.IndexOf("https://") == 0)
+                if (string.IsNullOrWhiteSpace(_imgUrl) || _imgUrl.IndexOf("http://") == 0 || _imgUrl.IndexOf("https://") == 0)
                 {
 
                     return _imgUrl;

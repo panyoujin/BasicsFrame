@@ -44,10 +44,13 @@
                 return;
             }
             info.ImageUrl = $("#ImageUrl").val();
-            if (!info.Cook_Time) {
-                alert('煮料时间不能为空');
-                return;
-            }
+            //if (!info.Cook_Time) {
+            //    alert('煮料时间不能为空');
+            //    return;
+            //}
+            info.Introduce = $("#Introduce").val();
+            info.Describe = $("#Describe").val();
+            info.Remarks = $("#Remarks").val();
             info.ModelType_ID = $("#ModelType_ID").val();
             m.AddHealthModel(info, function (data) {
                 alert(data.msg);
@@ -113,6 +116,7 @@
         data = $.parseJSON(data);
 
         if (data != null && data.code == "200") {
+            info.IcoUrl = data.data.ImageUrl;
             info.ImageUrl = data.data.ImageUrl;
             info.FullUrl = data.data.FullUrl;
             $("#ImageUrl").val(data.data.ImageUrl);
