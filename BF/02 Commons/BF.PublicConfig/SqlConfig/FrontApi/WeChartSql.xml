@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HCIP.AjaxDataSetting>
+
+	<Data name="Wechart_GetMemberInfoByOpenID">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+SELECT `ID`,`Account`,`Passwd`,`Name`,`Age`,`Birthday`,`Sex`,`Email`,`Phone`,`Remark`,`QQ`,`ImageUrl`,IsAdmin,`openid`,`nickname` FROM  `TB_MB_MemberInfo`
+WHERE `Status`=TRUE AND `openid`=@@openid@@
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	<Data name="Wechart_InsertMemberInfo">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+INSERT INTO `TB_MB_MemberInfo`(`Account`,`Passwd`,`Name`,`CreationDate`,`CreationUser`,`openid`,`nickname`)
+VALUES(@@Account@@,@@Passwd@@,@@Name@@,now(),'admin',@@openid@@,@@nickname@@);
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+</HCIP.AjaxDataSetting>
