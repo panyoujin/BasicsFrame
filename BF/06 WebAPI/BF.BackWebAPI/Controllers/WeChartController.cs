@@ -31,6 +31,12 @@ namespace BF.BackWebAPI.Controllers
                 apiResult.msg = "openid不能为空！";
                 return JsonHelper.SerializeObjectToWebApi(apiResult);
             }
+            if (string.IsNullOrWhiteSpace(nickname))
+            {
+                apiResult.code = ResultCode.CODE_BUSINESS_ERROR;
+                apiResult.msg = "nickname不能为空！";
+                return JsonHelper.SerializeObjectToWebApi(apiResult);
+            }
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("openid", openid);
             MemberInfo user = DBBaseFactory.DALBase.QueryForObject<MemberInfo>("Wechart_GetMemberInfoByOpenID", dic);
@@ -41,7 +47,7 @@ namespace BF.BackWebAPI.Controllers
             else
             { //未绑定
                 user = new Models.Front.MemberInfo();
-                user.Account = "测试";
+                user.Account = RandomAccountHelper.GenerateRandom(4) + nickname;
                 user.Passwd = MD5Encrypt.Md5("123456");
                 user.Name = nickname;
                 user.openid = openid;

@@ -100,6 +100,7 @@
     <Compile Include="Helper\HttpRequestHelper.cs" />
     <Compile Include="Helper\JsonHelper.cs" />
     <Compile Include="Helper\LogHelper.cs" />
+    <Compile Include="Helper\RandomAccountHelper.cs" />
     <Compile Include="Helper\RequestHelper.cs" />
     <Compile Include="Helper\XmlHelper.cs" />
     <Compile Include="Models\APPInfo.cs" />

@@ -15,8 +15,8 @@ WHERE `Status`=TRUE AND `openid`=@@openid@@
 		<SqlDefinition type="sql">
 			<SqlCommand>
 				<![CDATA[
-INSERT INTO `TB_MB_MemberInfo`(`Account`,`Passwd`,`Name`,`CreationDate`,`CreationUser`,`openid`,`nickname`)
-VALUES(@@Account@@,@@Passwd@@,@@Name@@,now(),'admin',@@openid@@,@@nickname@@);
+INSERT INTO `TB_MB_MemberInfo`(`Account`,`Passwd`,`Name`,`CreationDate`,`CreationUser`,`openid`,`nickname`,`IsAuto`)
+VALUES(@@Account@@,@@Passwd@@,@@Name@@,now(),'admin',@@openid@@,@@nickname@@,true);
       ]]>
 			</SqlCommand>
 		</SqlDefinition>
