@@ -31,4 +31,14 @@ WHERE `Status`=TRUE AND `ID`=@@MemberID@@
 			</SqlCommand>
 		</SqlDefinition>
 	</Data>
+	<Data name="Wechart_DeleteMemberInfoBind">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+UPDATE `TB_MB_MemberInfo` SET `openid`=NULL,`nickname`=NULL,`ModificationDate`=NOW(),`ModificationUser`=@@ModificationUser@@
+WHERE `Status`=TRUE AND `ID`=@@MemberID@@ and openid=@@openid@@;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
 </HCIP.AjaxDataSetting>

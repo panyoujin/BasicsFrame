@@ -118,5 +118,36 @@ namespace BF.BackWebAPI.Controllers
             }
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+        /// <summary>
+        /// 微信取消绑定接口
+        /// </summary>
+        /// <param name="openid"></param>
+        /// <param name="nickname"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage WeChartDeleteBaindAccount(string openid)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            if (string.IsNullOrWhiteSpace(openid))
+            {
+                apiResult.code = ResultCode.CODE_BUSINESS_ERROR;
+                apiResult.msg = "openid不能为空！";
+                return JsonHelper.SerializeObjectToWebApi(apiResult);
+            }
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("openid", openid);
+
+            dic.Add("ModificationUser", MemberInfo.Account);
+            dic.Add("MemberID", MemberInfo.ID);
+
+            int result = DBBaseFactory.DALBase.ExecuteNonQuery("Wechart_DeleteMemberInfoBind", dic);
+            if (result <= 0)
+            {
+                apiResult.code = ResultCode.CODE_BUSINESS_ERROR;
+                apiResult.msg = "取消绑定失败！";
+                return JsonHelper.SerializeObjectToWebApi(apiResult);
+            }
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
     }
 }
