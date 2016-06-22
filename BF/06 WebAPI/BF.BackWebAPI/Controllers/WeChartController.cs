@@ -42,7 +42,7 @@ namespace BF.BackWebAPI.Controllers
             { //未绑定
                 user = new Models.Front.MemberInfo();
                 user.Account = "测试";
-                user.Passwd= MD5Encrypt.Md5("123456");
+                user.Passwd = MD5Encrypt.Md5("123456");
                 user.Name = nickname;
                 user.openid = openid;
                 user.nickname = nickname;
@@ -76,6 +76,46 @@ namespace BF.BackWebAPI.Controllers
             }
 
             apiResult.data = new { Account = user.Account, Name = user.Name, ImageUrl = string.IsNullOrEmpty(user.ImageUrl) ? "" : Global.AttmntUrl + user.ImageUrl, SessionID = sessionID };
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+
+        /// <summary>
+        /// 微信绑定账号接口
+        /// </summary>
+        /// <param name="memberID"></param>
+        /// <param name="openid"></param>
+        /// <param name="nickname"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage WeChartBaindAccount(string openid, string nickname)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            if (string.IsNullOrWhiteSpace(openid))
+            {
+                apiResult.code = ResultCode.CODE_BUSINESS_ERROR;
+                apiResult.msg = "openid不能为空！";
+                return JsonHelper.SerializeObjectToWebApi(apiResult);
+            }
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("openid", openid);
+            MemberInfo user = DBBaseFactory.DALBase.QueryForObject<MemberInfo>("Wechart_GetMemberInfoByOpenID", dic);
+            if (user != null)
+            {//已经存在绑定
+                apiResult.code = ResultCode.CODE_BUSINESS_ERROR;
+                apiResult.msg = "该微信号已经绑定了其他账号！";
+                return JsonHelper.SerializeObjectToWebApi(apiResult);
+            }
+            dic.Add("nickname", nickname);
+            dic.Add("ModificationUser", MemberInfo.Account);
+            dic.Add("MemberID", MemberInfo.ID);
+
+            int result = DBBaseFactory.DALBase.ExecuteNonQuery("Wechart_UpdateMemberInfoBind", dic);
+            if (result <= 0)
+            {
+                apiResult.code = ResultCode.CODE_BUSINESS_ERROR;
+                apiResult.msg = "绑定失败！";
+                return JsonHelper.SerializeObjectToWebApi(apiResult);
+            }
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
     }
