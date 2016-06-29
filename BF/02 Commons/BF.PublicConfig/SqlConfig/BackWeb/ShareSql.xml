@@ -31,7 +31,8 @@
         ,m.`ImageUrl` AS Comment_User_Image
         FROM `TB_MB_Comment` c 
         JOIN `TB_MB_MemberInfo` AS m ON c.`Comment_User_ID` = m.`ID`
-        WHERE c.`Source_ID`=@@Source_ID@@ AND c.`Source_Type`=1 AND c.`Comment_Type`=1 AND c.`Status`=TRUE AND m.`Status`=TRUE ORDER BY c.ID DESC;
+        WHERE c.`Source_ID`=@@Source_ID@@ AND c.`Source_Type`=1 AND c.`Comment_Type`=1 AND c.`Status`=TRUE AND m.`Status`=TRUE ORDER BY c.ID DESC
+        <%= LIMIT @@StartSize@@ , @@EndSize@@%>;
         
         <%= SELECT COUNT(0) AS MyPraiseCount FROM `TB_MB_Comment` c  WHERE c.`Source_ID`=@@Source_ID@@ AND c.`Source_Type`=1 AND c.`Comment_Type`=2 AND c.`Status`=TRUE AND c.`Comment_User_ID`=@@User_ID@@;%>
       ]]>

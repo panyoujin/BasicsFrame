@@ -73,14 +73,18 @@ namespace BF.BackWebAPI.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetShareInfoByID(int shareID)
+        public HttpResponseMessage GetShareInfoByID(int shareID, int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
-
+            int startSize = 0;
+            int endSize = 0;
+            this.SetPageSize(page, pageSize, ref startSize, ref endSize);
             Dictionary<string, object> dic = new Dictionary<string, object>();
 
             dic.Add("User_ID", this.MemberInfo.ID);
             dic.Add("Source_ID", shareID);
+            dic.Add("StartSize", startSize);
+            dic.Add("EndSize", endSize);
 
 
             var ds = DBBaseFactory.DALBase.QueryForDataSet("BackWeb_GetShareInfoByID", dic);
