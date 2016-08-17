@@ -26,12 +26,13 @@ namespace BF.BackWebAPI.Controllers
         /// <summary>
         /// 根据类型获取模式列表
         /// </summary>
-        /// <param name="type">类型：0.系统提供;1.自定义</param>
+        /// <param name="modelType_ID">类型ID</param>
+        /// <param name="isCustom">是否自定义：0.系统提供;1.自定义</param>
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetHealthModelList(int type = 0, string model_name = "", int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
+        public HttpResponseMessage GetHealthModelList(int modelType_ID = 0, int isCustom = 0, string model_name = "", int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             if (page <= 0)
@@ -42,17 +43,18 @@ namespace BF.BackWebAPI.Controllers
             {
                 pageSize = 10;
             }
-            var startSize = this.GetStartSize(page, pageSize);
+            //var startSize = this.GetStartSize(page, pageSize);
+            int startSize = 0;
+            int endSize = 0;
+            this.SetPageSize(page, pageSize, ref startSize, ref endSize);
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("StartSize", startSize);
-            dic.Add("PageSize", pageSize);
-            //if (type >= 0)
-            //{
-            dic.Add("Model_Type", type);
-            //}
+            dic.Add("EndSize", endSize);
+            dic.Add("ModelType_ID", modelType_ID);
+            dic.Add("IsCustom", isCustom);
             dic.Add("User_ID", 0);
             //如果获取自定义的，必须登录
-            if (type == (int)Model_Types.Custom)
+            if (isCustom == (int)Model_Types.Custom)
             {
                 dic["User_ID"] = this.MemberInfo.ID;
             }
@@ -101,7 +103,7 @@ namespace BF.BackWebAPI.Controllers
             {
                 //dic.Remove("User_ID");
             }
-            apiResult.data = DBBaseFactory.DALBase.QueryForList<HealthModelInfo>("BackWeb_GetHealthModelInfoByModelID", dic);
+            apiResult.data = DBBaseFactory.DALBase.QueryForList<HealthModelInfo>("FrontWeb_GetHealthModelInfoByModelID", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
 
@@ -127,7 +129,7 @@ namespace BF.BackWebAPI.Controllers
             {
                 //dic.Remove("User_ID");
             }
-            apiResult.data = DBBaseFactory.DALBase.QueryForObject<HealthModelInfo>("BackWeb_GetHealthModelInfoByModelID", dic);
+            apiResult.data = DBBaseFactory.DALBase.QueryForObject<HealthModelInfo>("FrontWeb_GetHealthModelInfoByModelID", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
         /// <summary>
@@ -140,53 +142,11 @@ namespace BF.BackWebAPI.Controllers
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             HealthModel healthModel = new HealthModel();
-            if (string.IsNullOrWhiteSpace(healthModel.model_Name) || healthModel.final_Temperature <= 0)
+            if (string.IsNullOrWhiteSpace(healthModel.model_Name) || string.IsNullOrWhiteSpace(healthModel.Param))
             {
                 throw new BusinessException("请填写完整数据在提交");
             }
-            if (healthModel.cook_Temperature <= 0)
-            {
-                healthModel.cook_Temperature = healthModel.final_Temperature;
-            }
-            //需要生成对应的信息
-            if (string.IsNullOrEmpty(healthModel.introduce))
-            {
-                if (healthModel.isFerv || healthModel.final_Temperature >= 100 || healthModel.cook_Temperature >= 100)
-                {
-                    healthModel.introduce = string.Format("{0}需要煮沸、", healthModel.introduce);
-                }
-                else
-                {
-                    healthModel.introduce = string.Format("{0}目标温度:{1}度、", healthModel.introduce, healthModel.final_Temperature);
-                }
-                if (healthModel.removal_Chlorine_Time > 0)
-                {
-                    healthModel.introduce = string.Format("{0}需要除氯{1}分钟、", healthModel.introduce, healthModel.removal_Chlorine_Time);
-                }
-                if (healthModel.isBubble)
-                {
-                    healthModel.introduce = string.Format("{0}在{1}度下泡料{2}分钟、", healthModel.introduce, healthModel.bubble_Temperature, healthModel.bubble_Time);
-                }
-                healthModel.introduce = string.Format("{0}煮料{1}分钟到{2}度、", healthModel.introduce, healthModel.cook_Time, healthModel.cook_Temperature);
-                if (healthModel.heat_Preservation_Temperature > 0)
-                {
-                    healthModel.introduce = string.Format("{0}保温在{1}度、", healthModel.introduce, healthModel.heat_Preservation_Temperature);
-                }
-                healthModel.introduce = healthModel.introduce.Substring(0, healthModel.introduce.Length - 1);
-            }
-            //需要生成对应的信息
-            if (string.IsNullOrEmpty(healthModel.remarks))
-            {
-
-            }
-            if (!healthModel.isBubble && (healthModel.bubble_Time > 0 || healthModel.bubble_Temperature > 0))
-            {
-                healthModel.isBubble = true;
-            }
-            if (!healthModel.is_Heat_Preservation && (healthModel.heat_Preservation_Time > 0 || healthModel.heat_Preservation_Temperature > 0))
-            {
-                healthModel.is_Heat_Preservation = true;
-            }
+            //组装描述
             Dictionary<string, object> dic = new Dictionary<string, object>();
 
             dic.Add("IcoUrl", string.IsNullOrWhiteSpace(healthModel.icoUrl) ? "" : healthModel.icoUrl);
@@ -194,9 +154,12 @@ namespace BF.BackWebAPI.Controllers
             Dictionary<string, object> paramInsert = new Dictionary<string, object>();
             try
             {
-                paramInsert = FileProcessHelp.Save(HttpContext.Current.Request.Files[0], Global.AttmntServer);
-                dic["ImageUrl"] = paramInsert["AttachmentUrl"];
-                dic["IcoUrl"] = paramInsert["AttachmentUrl"];
+                if (HttpContext.Current.Request.Files.Count > 0)
+                {
+                    paramInsert = FileProcessHelp.Save(HttpContext.Current.Request.Files[0], Global.AttmntServer);
+                    dic["ImageUrl"] = paramInsert["AttachmentUrl"];
+                    dic["IcoUrl"] = paramInsert["AttachmentUrl"];
+                }
             }
             catch
             {
@@ -209,23 +172,13 @@ namespace BF.BackWebAPI.Controllers
             dic.Add("Model_Describe", string.IsNullOrWhiteSpace(healthModel.describe) ? "" : healthModel.describe);
             dic.Add("Remarks", healthModel.remarks);
             dic.Add("Sort", healthModel.sort);
-            dic.Add("IsBubble", healthModel.isBubble);
-            dic.Add("Bubble_Time", healthModel.bubble_Time);
-            dic.Add("Bubble_Temperature", healthModel.bubble_Temperature);
-            dic.Add("Cook_Time", healthModel.cook_Time);
-            dic.Add("Cook_Temperature", healthModel.cook_Temperature);
-            dic.Add("Is_Heat_Preservation", healthModel.is_Heat_Preservation);
-            dic.Add("Heat_Preservation_Time", healthModel.heat_Preservation_Time);
-            dic.Add("Heat_Preservation_Temperature", healthModel.heat_Preservation_Temperature);
-            dic.Add("Removal_Chlorine_Time", healthModel.removal_Chlorine_Time);
-            dic.Add("Final_Temperature", healthModel.final_Temperature);
-            dic.Add("IsFerv", healthModel.isFerv);
-            dic.Add("Model_Type", this.MemberInfo.IsAdmin ? (int)Model_Types.System : (int)Model_Types.Custom);
+            dic.Add("Param", healthModel.Param);
+            dic.Add("IsCustom", this.MemberInfo.IsAdmin ? (int)Model_Types.System : (int)Model_Types.Custom);
             dic.Add("Model_Status", this.MemberInfo.IsAdmin ? (int)Model_Status.Public : (int)Model_Status.Private);
             dic.Add("CreationUser", this.MemberInfo.Account ?? this.MemberInfo.ID + "");
             dic.Add("WeChatUrl", healthModel.WeChatUrl);
             dic.Add("ModelType_ID", healthModel.ModelType_ID);
-            var key = "BackWeb_AddHealthModel";
+            var key = "FrontWeb_AddHealthModel";
             if (healthModel.MID > 0)
             {
                 dic.Add("MID", healthModel.MID);
@@ -251,7 +204,7 @@ namespace BF.BackWebAPI.Controllers
             dic.Add("ModelID", model.modelID);
             dic.Add("UserAccount", this.MemberInfo.Account ?? this.MemberInfo.ID + "");
             dic.Add("User_ID", this.MemberInfo.ID);
-            DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_SetCommonModel", dic);
+            DBBaseFactory.DALBase.ExecuteNonQuery("FrontWeb_SetCommonModel", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
 
@@ -272,7 +225,7 @@ namespace BF.BackWebAPI.Controllers
             dic.Add("ModelID", model.modelID);
             dic.Add("UserAccount", this.MemberInfo.Account ?? this.MemberInfo.ID + "");
             dic.Add("User_ID", this.MemberInfo.ID);
-            DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_CancelCommonModel", dic);
+            DBBaseFactory.DALBase.ExecuteNonQuery("FrontWeb_CancelCommonModel", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
 
@@ -286,7 +239,7 @@ namespace BF.BackWebAPI.Controllers
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
             Dictionary<string, object> dic = new Dictionary<string, object>();
             dic.Add("User_ID", this.MemberInfo.ID);
-            apiResult.data = DBBaseFactory.DALBase.QueryForList<HealthModelList>("BackWeb_GetCommonHealthModelList", dic);
+            apiResult.data = DBBaseFactory.DALBase.QueryForList<HealthModelList>("FrontWeb_GetCommonHealthModelList", dic);
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
     }

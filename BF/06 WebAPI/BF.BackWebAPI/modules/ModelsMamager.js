@@ -7,7 +7,7 @@
     var height = Screen.ViewHeight();
     var info = {}
     //0.系统提供;1.自定义
-    var type = -1;
+    var IsCustom = -1;
     function bindEvent() {
         $('body').show();
         loading(0);
@@ -37,12 +37,12 @@
         });
     }
     function init_data(page, size, name) {
-        m.GetHealthModelList(type, name, page, size, function (data) {
+        m.GetHealthModelList(IsCustom, name, page, size, function (data) {
             info.models = data.data.modelList;
             $.each(info.models, function (index, obj) {
                 obj.model_hide = "none";
                 obj.edit_url = "";
-                if (obj.Model_Type == 0 || obj.Model_Type == 1) {
+                if (obj.IsCustom == 0 || obj.IsCustom == 1) {
                     obj.model_hide = "inline-block";
                     obj.edit_url = window.webroot + "/new-model.html?r=0622&modelID=" + obj.MID;
                 }

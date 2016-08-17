@@ -16,17 +16,14 @@ namespace BF.BackWebAPI.Models.Back.InParam
         public string Describe { get; set; }
         public string Remarks { get; set; }
         public int Sort { get; set; }
-        public bool IsBubble { get; set; }
-        public int Bubble_Time { get; set; }
-        public int Bubble_Temperature { get; set; }
-        public int Cook_Time { get; set; }
-        public int Cook_Temperature { get; set; }
-        public bool Is_Heat_Preservation { get; set; }
-        public int Heat_Preservation_Time { get; set; }
-        public int Heat_Preservation_Temperature { get; set; }
-        public int Removal_Chlorine_Time { get; set; }
-        public int Final_Temperature { get; set; }
-        public bool IsFerv { get; set; }
+        /// <summary>
+        /// 是否自定义
+        /// </summary>
+        public int IsCustom { get; set; }
+        /// <summary>
+        /// 指令参数值：100,100|0,0|0,0|0,0|0,0|100,50
+        /// </summary>
+        public string Param { get; set; }
 
 
         public string WeChatUrl { get; set; }

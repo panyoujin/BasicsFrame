@@ -6,68 +6,13 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        CALL pro_FrontWeb_get_model_list(@@Model_Type@@,@@Model_Name@@,@@StartSize@@ , @@PageSize@@,@@User_ID@@);
+        CALL pro_FrontWeb_get_model_list(@@ModelType_ID@@,@@IsCustom@@,@@Model_Name@@,@@StartSize@@ , @@EndSize@@,@@User_ID@@);
       ]]>
       </SqlCommand>
     </SqlDefinition>
   </Data>
-  <!--<Data name="FrontWeb_GetHealthModelListByType">
-    <SqlDefinition type="sql">
-      <SqlCommand>
-        <![CDATA[
-        SELECT `ID` AS MID,Introduce,Model_Name,IcoUrl,ImageUrl,Sort,Model_Type,UNIX_TIMESTAMP(CreationDate) AS CreationDateTicks,DATE_FORMAT(CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate,m.WeChatUrl 
-        ,(SELECT COUNT(0) FROM TB_MC_Collection AS c  WHERE c.`Source_ID`=m.ID AND c.`Status`=TRUE AND c.`Source_Type`=1 LIMIT 0,1) AS CollectionCount
-        <%=,(SELECT p.Plan_RGB FROM TB_MB_Plan AS p WHERE  p.`Status`=TRUE AND p.`Model_ID`=m.ID AND p.`User_ID`=@@User_ID@@ LIMIT 0,1) AS Plan_RGB %>
-        FROM `TB_MB_Models` m WHERE `Status` AND Model_Type =0 <%=  AND @@Model_Type@@=0 %><%= AND Model_Name LIKE @@Model_Name@@ %>
-        UNION ALL
-        SELECT `ID` AS MID,Introduce,Model_Name,IcoUrl,ImageUrl,Sort,Model_Type,UNIX_TIMESTAMP(CreationDate) AS CreationDateTicks,DATE_FORMAT(CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate,m.WeChatUrl 
-        ,(SELECT COUNT(0) FROM TB_MC_Collection AS c  WHERE c.`Source_ID`=m.ID AND c.`Status`=TRUE AND c.`Source_Type`=1 LIMIT 0,1) AS CollectionCount
-        <%=,(SELECT p.Plan_RGB FROM TB_MB_Plan AS p WHERE  p.`Status`=TRUE AND p.`Model_ID`=m.ID AND p.`User_ID`=@@User_ID@@ LIMIT 0,1) AS Plan_RGB %>
-        FROM `TB_MB_Models` m WHERE `Status` AND Model_Type =1<%= AND 1 = @@Model_Type@@ %><%= AND Model_Name LIKE @@Model_Name@@ %><%= AND m.User_ID=@@User_ID@@ %> 
-        order BY Sort DESC <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
-      ]]>
-      </SqlCommand>
-    </SqlDefinition>
-  </Data>-->
-  <!--通过类型获取养生模式-->
-  <Data name="BackWeb_GetHealthModelListByType">
-    <SqlDefinition type="sql">
-      <SqlCommand>
-        <![CDATA[
-        CALL pro_back_get_model_list(@@Model_Type@@,@@Model_Name@@,@@StartSize@@ , @@PageSize@@,@@User_ID@@);
-        CALL pro_back_get_model_list_Count(@@Model_Type@@,@@Model_Name@@,@@StartSize@@ , @@PageSize@@,@@User_ID@@);
-      ]]>
-      </SqlCommand>
-    </SqlDefinition>
-  </Data>
-  <!--<Data name="BackWeb_GetHealthModelListByType">
-    <SqlDefinition type="sql">
-      <SqlCommand>
-        <![CDATA[
-        SELECT m.`ID` AS MID,m.Introduce,m.Model_Name,m.IcoUrl,m.ImageUrl,m.Sort,m.Model_Type,UNIX_TIMESTAMP(m.CreationDate) AS CreationDateTicks,DATE_FORMAT(m.CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate,m.WeChatUrl 
-        ,(SELECT COUNT(0) FROM TB_MC_Collection AS c  WHERE c.`Source_ID`=m.ID AND c.`Status`=TRUE AND c.`Source_Type`=1 LIMIT 0,1) AS CollectionCount,m.ModelType_ID,mt.Name AS ModelTypeName
-        <%=,(SELECT p.Plan_RGB FROM TB_MB_Plan AS p WHERE  p.`Status`=TRUE AND p.`Model_ID`=m.ID AND p.`User_ID`=@@User_ID@@ LIMIT 0,1) AS Plan_RGB %>
-        FROM `TB_MB_Models` m 
-        LEFT JOIN `TB_MB_ModelType` AS mt ON mt.ID=m.ModelType_ID
-        WHERE m.`Status` AND m.Model_Type =0 <%=  AND @@Model_Type@@=0 %><%= AND m.Model_Name LIKE @@Model_Name@@ %>
-        UNION ALL
-        SELECT m.`ID` AS MID,m.Introduce,m.Model_Name,m.IcoUrl,m.ImageUrl,m.Sort,m.Model_Type,UNIX_TIMESTAMP(m.CreationDate) AS CreationDateTicks,DATE_FORMAT(m.CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate,m.WeChatUrl 
-        ,(SELECT COUNT(0) FROM TB_MC_Collection AS c  WHERE c.`Source_ID`=m.ID AND c.`Status`=TRUE AND c.`Source_Type`=1 LIMIT 0,1) AS CollectionCount,m.ModelType_ID,mt.Name AS ModelTypeName
-        <%=,(SELECT p.Plan_RGB FROM TB_MB_Plan AS p WHERE  p.`Status`=TRUE AND p.`Model_ID`=m.ID AND p.`User_ID`=@@User_ID@@ LIMIT 0,1) AS Plan_RGB %>
-        FROM `TB_MB_Models` m 
-        LEFT JOIN `TB_MB_ModelType` AS mt ON mt.ID=m.ModelType_ID
-        WHERE m.`Status` AND m.Model_Type =1<%= AND 1 = @@Model_Type@@ %><%= AND m.Model_Name LIKE @@Model_Name@@ %><%= AND m.User_ID=@@User_ID@@ %> 
-        order BY Sort DESC,MID DESC <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
-        SELECT COUNT(0) AS total FROM(
-        SELECT ID FROM `TB_MB_Models` m WHERE `Status` AND Model_Type =0 <%=  AND @@Model_Type@@=0 %><%= AND Model_Name LIKE @@Model_Name@@ %>
-        UNION ALL
-        SELECT ID FROM `TB_MB_Models` m WHERE `Status` AND Model_Type =1<%= AND 1 = @@Model_Type@@ %><%= AND Model_Name LIKE @@Model_Name@@ %><%= AND m.User_ID=@@User_ID@@ %>) AS temp ;
-      ]]>
-      </SqlCommand>
-    </SqlDefinition>
-  </Data>-->
   <!--根据模式ID 获取模式，需要检验当前用户是否有权限访问该模式-->
-  <Data name="BackWeb_GetHealthModelInfoByModelID">
+  <Data name="FrontWeb_GetHealthModelInfoByModelID">
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
@@ -76,38 +21,15 @@
       </SqlCommand>
     </SqlDefinition>
   </Data>
-  <!--<Data name="BackWeb_GetHealthModelInfoByModelID">
-    <SqlDefinition type="sql">
-      <SqlCommand>
-        <![CDATA[
-        SELECT  m.`ID` AS MID, m.`User_ID`, m.`Model_Name`, m.`IcoUrl`, m.`ImageUrl`, m.`Introduce`, m.`Describe`, m.`Remarks`, m.`Sort`, m.`IsBubble`, m.`Bubble_Time`, m.`Bubble_Temperature`
-        , m.`Cook_Time`, m.`Cook_Temperature`, m.`Is_Heat_Preservation`, m.`Heat_Preservation_Time`, m.`Heat_Preservation_Temperature`, m.`Removal_Chlorine_Time`
-        , m.`Final_Temperature`, m.`IsFerv`, m.`Model_Type`, m.`Model_Status`,UNIX_TIMESTAMP(m.CreationDate) AS CreationDateTicks,DATE_FORMAT(m.CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate,m.WeChatUrl,m.ModelType_ID,mt.Name AS ModelTypeName
-        ,(SELECT COUNT(0) FROM TB_MC_Collection AS c  WHERE c.`Source_ID`=m.ID AND c.`Status`=TRUE AND c.`Source_Type`=1 LIMIT 0,1) AS CollectionCount
-        <%=,(SELECT p.Plan_RGB FROM TB_MB_Plan AS p WHERE  p.`Status`=TRUE AND p.`Model_ID`=m.ID AND p.`User_ID`=@@User_ID@@ LIMIT 0,1) AS Plan_RGB %>
-        <%= ,(SELECT COUNT(0) FROM TB_MC_Collection AS c  WHERE c.User_ID=@@User_ID@@ and c.`Source_ID`=@@ModelID@@ AND c.`Status`=TRUE AND c.`Source_Type`=1 LIMIT 0,1) AS IsCollection %>
-        <%= ,(SELECT COUNT(0) FROM TB_MB_CommonModel AS c  WHERE c.User_ID=@@User_ID@@ and c.`Model_ID`=@@ModelID@@ AND c.`Status`=TRUE LIMIT 0,1) AS IsCommonModel %>
-        FROM `TB_MB_Models` m 
-        LEFT JOIN `TB_MB_ModelType` AS mt ON mt.ID=m.ModelType_ID
-        WHERE m.`Status` AND (m.ID=@@ModelID@@ AND (m.Model_Type=0 <%= OR (m.Model_Type=1 AND m.User_ID=@@User_ID@@) %>));
-      ]]>
-      </SqlCommand>
-    </SqlDefinition>
-  </Data>-->
   <!--新增模式-->
-  <Data name="BackWeb_AddHealthModel">
+  <Data name="FrontWeb_AddHealthModel">
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        INSERT INTO `TB_MB_Models` (
-        `User_ID`,`Model_Name`,`IcoUrl`,`ImageUrl`,`Introduce`,`Describe`,`Remarks`,`Sort`,`IsBubble`,
-        `Bubble_Time`,`Bubble_Temperature`,`Cook_Time`,`Cook_Temperature`,`Is_Heat_Preservation`,`Heat_Preservation_Time`,`Heat_Preservation_Temperature`,
-        `Removal_Chlorine_Time`,`Final_Temperature`,`IsFerv`,`Model_Type`,`Model_Status`,WeChatUrl,ModelType_ID,`CreationUser`,`CreationDate`) 
+        INSERT INTO `TB_MB_HealthModel` (
+        `User_ID`,`Model_Name`,`IcoUrl`,`ImageUrl`,`Introduce`,`Describe`,`Remarks`,`Sort`, `Param`,`IsCustom`,`Model_Status`,WeChatUrl,ModelType_ID,`CreationUser`,`CreationDate`) 
         VALUES(
-        @@User_ID@@, @@Model_Name@@, @@IcoUrl@@, @@ImageUrl@@, @@Introduce@@, @@Model_Describe@@, @@Remarks@@, @@Sort@@, @@IsBubble@@, @@Bubble_Time@@,@@Bubble_Temperature@@,@@Cook_Time@@,@@Cook_Temperature@@,@@Is_Heat_Preservation@@
-        ,@@Heat_Preservation_Time@@,@@Heat_Preservation_Temperature@@,
-        @@Removal_Chlorine_Time@@,@@Final_Temperature@@,@@IsFerv@@,@@Model_Type@@
-        ,@@Model_Status@@,@@WeChatUrl@@,@@ModelType_ID@@,@@CreationUser@@,NOW()
+        @@User_ID@@, @@Model_Name@@, @@IcoUrl@@, @@ImageUrl@@, @@Introduce@@, @@Model_Describe@@, @@Remarks@@, @@Sort@@, @@Param@@,@@IsCustom@@ ,@@Model_Status@@,@@WeChatUrl@@,@@ModelType_ID@@,@@CreationUser@@,NOW()
         );
       ]]>
       </SqlCommand>
@@ -118,27 +40,16 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        UPDATE `TB_MB_Models` SET ModificationDate=NOW() ,Model_Name=@@Model_Name@@  ,IcoUrl= @@IcoUrl@@ ,ImageUrl=@@ImageUrl@@  ,Introduce=@@Introduce@@  , `Describe`=@@Model_Describe@@  , Remarks=@@Remarks@@  , Sort=@@Sort@@  , IsBubble=@@IsBubble@@  ,Bubble_Time=@@Bubble_Time@@,Bubble_Temperature=@@Bubble_Temperature@@  ,Cook_Time=@@Cook_Time@@  ,Cook_Temperature=@@Cook_Temperature@@,Is_Heat_Preservation=@@Is_Heat_Preservation@@ ,Heat_Preservation_Time=@@Heat_Preservation_Time@@  ,Heat_Preservation_Temperature=@@Heat_Preservation_Temperature@@ ,Removal_Chlorine_Time=@@Removal_Chlorine_Time@@ ,Final_Temperature=@@Final_Temperature@@  ,IsFerv=@@IsFerv@@,Model_Type=@@Model_Type@@  ,Model_Status=@@Model_Status@@  ,WeChatUrl=@@WeChatUrl@@ ,ModelType_ID=@@ModelType_ID@@  ,ModificationUser=@@CreationUser@@ 
+        UPDATE `TB_MB_HealthModel` SET ModificationDate=NOW() ,Model_Name=@@Model_Name@@  ,IcoUrl= @@IcoUrl@@ ,ImageUrl=@@ImageUrl@@  ,Introduce=@@Introduce@@  , `Describe`=@@Model_Describe@@  , Remarks=@@Remarks@@  , Sort=@@Sort@@  , Param=@@Param@@ ,Model_Status=@@Model_Status@@  ,WeChatUrl=@@WeChatUrl@@ ,ModelType_ID=@@ModelType_ID@@  ,ModificationUser=@@CreationUser@@ 
         WHERE ID=@@MID@@ AND  User_ID=@@User_ID@@;
       ]]>
       </SqlCommand>
     </SqlDefinition>
   </Data>
-  
-  <!--编辑模式-->
-  <Data name="BackWeb_EditHealthModel">
-    <SqlDefinition type="sql">
-      <SqlCommand>
-        <![CDATA[
-        UPDATE `TB_MB_Models` SET ModificationDate=NOW() ,Model_Name=@@Model_Name@@  ,IcoUrl= @@IcoUrl@@ ,ImageUrl=@@ImageUrl@@  ,Introduce=@@Introduce@@  , `Describe`=@@Model_Describe@@  , Remarks=@@Remarks@@  , Sort=@@Sort@@  , IsBubble=@@IsBubble@@  ,Bubble_Time=@@Bubble_Time@@,Bubble_Temperature=@@Bubble_Temperature@@  ,Cook_Time=@@Cook_Time@@  ,Cook_Temperature=@@Cook_Temperature@@,Is_Heat_Preservation=@@Is_Heat_Preservation@@ ,Heat_Preservation_Time=@@Heat_Preservation_Time@@  ,Heat_Preservation_Temperature=@@Heat_Preservation_Temperature@@ ,Removal_Chlorine_Time=@@Removal_Chlorine_Time@@ ,Final_Temperature=@@Final_Temperature@@  ,IsFerv=@@IsFerv@@,Model_Type=@@Model_Type@@  ,Model_Status=@@Model_Status@@  ,WeChatUrl=@@WeChatUrl@@ ,ModelType_ID=@@ModelType_ID@@  ,ModificationUser=@@CreationUser@@ 
-        WHERE ID=@@MID@@;
-      ]]>
-      </SqlCommand>
-    </SqlDefinition>
-  </Data>
+
 
   <!--设置常用模式-->
-  <Data name="BackWeb_SetCommonModel">
+  <Data name="FrontWeb_SetCommonModel">
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
@@ -146,13 +57,13 @@
         INSERT INTO `TB_MB_CommonModel` (`User_ID`,`Model_ID`,`CreationDate`,`CreationUser`) 
         SELECT @@User_ID@@,@@ModelID@@,now(),@@UserAccount@@
         FROM `TB_MB_MemberInfo` WHERE NOT EXISTS (SELECT ID FROM TB_MB_CommonModel WHERE User_ID=@@User_ID@@ and Model_ID = @@ModelID@@ and `Status`=TRUE)
-        AND EXISTS (SELECT ID FROM `TB_MB_Models` WHERE `ID`=@@ModelID@@ AND `Status`=TRUE)LIMIT 0,1;
+        AND EXISTS (SELECT ID FROM `TB_MB_HealthModel` WHERE `ID`=@@ModelID@@ AND `Status`=TRUE) LIMIT 0,1;
       ]]>
       </SqlCommand>
     </SqlDefinition>
   </Data>
   <!--取消常用模式-->
-  <Data name="BackWeb_CancelCommonModel">
+  <Data name="FrontWeb_CancelCommonModel">
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
@@ -163,26 +74,74 @@
   </Data>
 
   <!--获取常用养生模式列表-->
-  <Data name="BackWeb_GetCommonHealthModelList">
+  <Data name="FrontWeb_GetCommonHealthModelList">
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
         SELECT m.`ID` AS MID,m.Introduce,m.Model_Name,m.IcoUrl,m.ImageUrl,m.Sort,UNIX_TIMESTAMP(cm.CreationDate) AS CreationDateTicks,DATE_FORMAT(cm.CreationDate,'%Y-%m-%d %H:%i:%s') AS CreationDate 
         <%=,(SELECT p.Plan_RGB FROM TB_MB_Plan AS p WHERE  p.`Status`=TRUE AND p.`Model_ID`=m.ID AND p.`User_ID`=@@User_ID@@ LIMIT 0,1) AS Plan_RGB %>
         FROM `TB_MB_CommonModel` AS cm
-        JOIN `TB_MB_Models` AS m ON m.`ID`=cm.`Model_ID`
+        JOIN `TB_MB_HealthModel` AS m ON m.`ID`=cm.`Model_ID`
         WHERE cm.`User_ID`=@@User_ID@@ AND cm.`Status`=TRUE AND m.`Status`=TRUE ORDER BY m.Sort DESC,cm.`CreationDate` DESC;
       ]]>
       </SqlCommand>
     </SqlDefinition>
   </Data>
 
-  <!--获取常用养生模式列表-->
+<!--后台-->
+  <!--通过类型获取养生模式-->
+  <Data name="BackWeb_GetHealthModelListByType">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        CALL pro_back_get_model_list(@@ModelType_ID@@,@@IsCustom@@,@@Model_Name@@,@@StartSize@@ , @@PageSize@@,@@User_ID@@);
+        #CALL pro_back_get_model_list_Count(@@IsCustom@@,@@Model_Name@@,@@StartSize@@ , @@PageSize@@,@@User_ID@@);
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  <!--根据模式ID 获取模式，需要检验当前用户是否有权限访问该模式-->
+  <Data name="BackWeb_GetHealthModelInfoByModelID">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        CALL pro_BackWeb_get_model_info(@@ModelID@@,@@User_ID@@);
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  <!--新增模式-->
+  <Data name="BackWeb_AddHealthModel">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        INSERT INTO `TB_MB_HealthModel` (
+        `User_ID`,`Model_Name`,`IcoUrl`,`ImageUrl`,`Introduce`,`Describe`,`Remarks`,`Sort`, `Param`,`IsCustom`,`Model_Status`,WeChatUrl,ModelType_ID,`CreationUser`,`CreationDate`) 
+        VALUES(
+        @@User_ID@@, @@Model_Name@@, @@IcoUrl@@, @@ImageUrl@@, @@Introduce@@, @@Model_Describe@@, @@Remarks@@, @@Sort@@, @@Param@@,@@IsCustom@@ ,@@Model_Status@@,@@WeChatUrl@@,@@ModelType_ID@@,@@CreationUser@@,NOW()
+        );
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  <!--编辑模式-->
+  <Data name="BackWeb_EditHealthModel">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        UPDATE `TB_MB_HealthModel` SET ModificationDate=NOW() ,Model_Name=@@Model_Name@@  ,IcoUrl= @@IcoUrl@@ ,ImageUrl=@@ImageUrl@@  ,Introduce=@@Introduce@@  , `Describe`=@@Model_Describe@@  , Remarks=@@Remarks@@  , Sort=@@Sort@@  , Param=@@Param@@ ,Model_Status=@@Model_Status@@  ,WeChatUrl=@@WeChatUrl@@ ,ModelType_ID=@@ModelType_ID@@  ,ModificationUser=@@CreationUser@@ 
+        WHERE ID=@@MID@@;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+
+  <!--删除养生模式列表-->
   <Data name="BackWeb_DeleteHealthModelByModelID">
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        UPDATE TB_MB_Models SET `Status`=FALSE,`ModificationUser`=@@UserAccount@@,`ModificationDate`=NOW() WHERE ID = @@ModelID@@;
+        UPDATE TB_MB_HealthModel SET `Status`=FALSE,`ModificationUser`=@@UserAccount@@,`ModificationDate`=NOW() WHERE ID = @@ModelID@@;
       ]]>
       </SqlCommand>
     </SqlDefinition>
