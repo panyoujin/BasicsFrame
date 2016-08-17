@@ -137,7 +137,7 @@ namespace BF.BackWebAPI.Controllers
                 string token = Global.APPInfo.Access_Token;
                 if (string.IsNullOrEmpty(token))
                 {
-                    string address = string.Format("https://huantengsmart.com/oauth2/token?grant_type=refresh_token&refresh_token={1}", Global.APPInfo.Refresh_Token);
+                    string address = string.Format("https://huantengsmart.com/oauth2/token?grant_type=refresh_token&refresh_token={0}", Global.APPInfo.Refresh_Token);
 
                     string returnStr = HttpRequestHelper.Request(address, "POST", 10);
                     if (!string.IsNullOrEmpty(returnStr))

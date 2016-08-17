@@ -6,6 +6,7 @@ using BF.Common.StaticConstant;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -402,6 +403,114 @@ namespace BF.BackWebAPI.Controllers
                     if (!string.IsNullOrEmpty(returnStr))
                     {
                         module = JsonConvert.DeserializeObject<GenericSuccess>(returnStr);
+                    }
+                }
+            }
+            else
+            {
+                apiResult.code = ResultCode.CODE_BUSINESS_ERROR;
+                if (shuihu == null)
+                {
+                    apiResult.msg = "获取状态失败";
+                }
+                else if (shuihu.connectivity == "离线")
+                {
+                    apiResult.msg = "设备离线";
+                }
+            }
+            apiResult.data = module;
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+
+
+        /// <summary>
+        /// 设置水壶开机或者关机
+        /// </summary>
+        /// <param name="deviceID">水壶id</param>
+        /// <param name="flagInt">0：关机 1：开机</param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage SetBottleStatus(int deviceID, int flagInt = 0)
+        {
+            bool flag = flagInt == 0 ? false : true;
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+
+            try
+            {
+                Dictionary<string, string> headers = new Dictionary<string, string>();
+                headers.Add("Authorization", "bearer " + Access_Token);
+                string url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/bools/{1}?bool={2}", deviceID, 0, flag);
+                HttpRequestHelper.Request(url, "PUT", 10, headers);
+
+            }
+            catch (Exception ex)
+            {
+                apiResult.code = ResultCode.CODE_EXCEPTION;
+                apiResult.msg = ex.Message;
+            }
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+
+        /// <summary>
+        /// 操作水壶接口
+        /// </summary>
+        /// <param name="modelID">水壶指令id</param>
+        /// <param name="deviceID">设备id</param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage OperatBottle(int modelID, int deviceID)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            GenericSuccess module = null;
+            GenericModules shuihu = GetGenericModules(deviceID);
+            if (shuihu != null && shuihu.connectivity == "在线" && shuihu.basics != null && shuihu.basics.bools.Count >= 4)
+            {
+                //开机
+                Dictionary<string, string> headers = new Dictionary<string, string>();
+                headers.Add("Authorization", "bearer " + Access_Token);
+                string url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/bools/{1}?bool={2}", deviceID, 0, true);
+                HttpRequestHelper.Request(url, "PUT", 10, headers);
+
+                Dictionary<string, object> dic = new Dictionary<string, object>();
+                dic.Add("ID", modelID);
+                DataTable healthModel = DBBaseFactory.DALBase.QueryForDataTable("HTSmart_Get_HealthModel", dic);
+                if (healthModel != null && healthModel.Rows.Count > 0)
+                {
+                    if (healthModel.Columns.Contains("Param"))
+                    {
+                        string param = healthModel.Rows[0]["Param"] == null ? "" : healthModel.Rows[0]["Param"].ToString();
+                        if (!string.IsNullOrWhiteSpace(param))
+                        {
+                            string[] zhilin = param.Split('|');
+                            if (zhilin != null && zhilin.Length > 0)
+                            {
+                                for (int i = 0; i < zhilin.Length; i++)
+                                {
+                                    string abc = "";
+                                    string[] zhilin1 = zhilin[i].Split(',');
+                                    if (zhilin1[0] == "0" && zhilin1[1] == "0")
+                                    {
+                                        abc = "0";
+                                    }
+                                    else if (zhilin1[0] != "0" && zhilin1[1] == "0")
+                                    {
+                                        abc = zhilin1[0];
+                                    }
+                                    else if (zhilin1[0] == "0" && zhilin1[1] != "0")
+                                    {
+                                        abc = zhilin1[1];
+                                    }
+                                    else
+                                    {
+                                        abc = zhilin1[0] + zhilin1[1];
+                                    }
+      
+                                    url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/data/{1}?datum=", deviceID, (i + 1), abc);
+                                    string result = HttpRequestHelper.Request(url, "PUT", 10, headers);
+                                }
+
+                            }
+                        }
                     }
                 }
             }

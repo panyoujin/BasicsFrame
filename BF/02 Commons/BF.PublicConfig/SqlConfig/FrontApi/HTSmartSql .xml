@@ -84,4 +84,15 @@ UPDATE `TB_DV_Devices` SET `Default`=TRUE WHERE `MemberID`=@@MemberID@@ and `ID`
 			</SqlCommand>
 		</SqlDefinition>
 	</Data>
+
+  <Data name="HTSmart_Get_HealthModel">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+SELECT `User_ID`,`ModelType_ID`,`Model_Name`,`IcoUrl`,`ImageUrl`,`Introduce`,`Describe`,`Remarks`,`Sort`,`IsCustom`,`Model_Status`,`WeChatUrl`,`Param`,`CreationUser`,`CreationDate`
+ FROM `TB_MB_HealthModel` WHERE ID=@@ID@@;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
 </HCIP.AjaxDataSetting>
