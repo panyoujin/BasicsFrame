@@ -430,7 +430,7 @@ namespace BF.BackWebAPI.Controllers
         /// <param name="flagInt">0：关机 1：开机</param>
         /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage SetBottleStatus(int deviceID, int flagInt = 0)
+        public HttpResponseMessage SetBottleStatus(int deviceID, int flagInt = 1)
         {
             bool flag = flagInt == 0 ? false : true;
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
@@ -486,26 +486,31 @@ namespace BF.BackWebAPI.Controllers
                             {
                                 for (int i = 0; i < zhilin.Length; i++)
                                 {
-                                    string abc = "";
                                     string[] zhilin1 = zhilin[i].Split(',');
-                                    if (zhilin1[0] == "0" && zhilin1[1] == "0")
+                                    string a = zhilin1[0];
+                                    string b = zhilin1[1];
+                                    string ab = "";
+                                    a = Convert.ToString(int.Parse(a), 16);
+                                    b = Convert.ToString(int.Parse(b), 16);
+
+                                    if (a == "0" && b == "0")
                                     {
-                                        abc = "0";
+                                        ab = "0";
                                     }
-                                    else if (zhilin1[0] != "0" && zhilin1[1] == "0")
+                                    else if (a != "0" && b == "0")
                                     {
-                                        abc = zhilin1[0];
+                                        ab = a;
                                     }
-                                    else if (zhilin1[0] == "0" && zhilin1[1] != "0")
+                                    else if (a == "0" && b != "0")
                                     {
-                                        abc = zhilin1[1];
+                                        ab = b;
                                     }
                                     else
                                     {
-                                        abc = zhilin1[0] + zhilin1[1];
+                                        ab = a + b;
                                     }
-      
-                                    url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/data/{1}?datum=", deviceID, (i + 1), abc);
+
+                                    url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/data/{1}?datum={2}", deviceID, (i + 1), Convert.ToInt32(ab, 16));
                                     string result = HttpRequestHelper.Request(url, "PUT", 10, headers);
                                 }
 
