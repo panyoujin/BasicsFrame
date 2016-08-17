@@ -12,7 +12,7 @@ using System.Web.Http;
 namespace BF.BackWebAPI.Controllers
 {
     public class ArticController : BaseController
-    {
+    { 
         /// <summary>
         /// 获取文章分类
         /// </summary>
