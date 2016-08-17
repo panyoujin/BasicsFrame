@@ -4,10 +4,10 @@
 	*根据类型获取模式列表接口
     type：0.系统提供;1.自定义
 	*/
-    function GetHealthModelList(type,model_name, page, pageSize, cb, ischeck_code) {
+    function GetHealthModelList(IsCustom, model_name, page, pageSize, cb, ischeck_code) {
         //登录
         var param = {
-            type: (type || -1),
+            IsCustom: (IsCustom || -1),
             model_name: model_name,
             page: (page || 0),
             pageSize: (pageSize || 10)

@@ -91,15 +91,15 @@ namespace BF.BackWebAPI.Models.ResponseModel
         /// </summary>
         public string CreationDate { get; set; }
 
-        public int Model_Type { get; set; }
+        public int IsCustom { get; set; }
 
-        public string Model_TypeStr
+        public string IsCustomStr
         {
             get
             {
                 try
                 {
-                    return ((Model_Types)this.Model_Type).Description();
+                    return ((Model_Types)this.IsCustom).Description();
                 }
                 catch (Exception ex)
                 {

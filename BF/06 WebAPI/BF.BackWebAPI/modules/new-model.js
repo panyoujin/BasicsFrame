@@ -7,17 +7,7 @@
     var height = Screen.ViewHeight();
     var info = {
         Model_Name: '',//模式名称，养生品名称
-        Final_Temperature: 100,//最终温度
-        Cook_Time: 5,//煮料时长，单位分钟
-        Cook_Temperature: 100,//煮料温度，单位摄氏度，最小单位1摄氏度
-        Removal_Chlorine_Time: 0,//除氯时长，单位分钟
-        Is_Heat_Preservation: false,//是否保温，默认不保温
-        Heat_Preservation_Time: 0,//保温时长，单位分钟
-        Heat_Preservation_Temperature: 0,//保温温度，单位摄氏度，最小单位1摄氏度
-        IsFerv: false,//是否煮沸,默认不煮沸
-        IsBubble: false,//是否泡料，默认不泡
-        Bubble_Temperature: 0,//泡料温度，单位摄氏度，最小单位1摄氏度
-        Bubble_Time: 0,//泡料时长，单位分钟
+        Param: '0,0|0,0|0,0|0,0|0,0|0,0',//参数
         Sort: 0,//排序，越大越前
         IcoUrl: "",//图标地址
         ImageUrl: "",//图片地址
@@ -27,7 +17,20 @@
         ImageUrl: "",
         FullUrl: "js/bootstrap/img/notimage.png",
         WeChatUrl: "",
-        ModelType_ID:0
+        ModelType_ID: 0,
+        byte1: 0,
+        byte2: 0,
+        byte3: 0,
+        byte4: 0,
+        byte5: 0,
+        byte6: 0,
+        byte7: 0,
+        byte8: 0,
+        byte9: 0,
+        byte10: 0,
+        byte11: 0,
+        byte12: 0,
+
     }
     function bindEvent() {
         $('body').show();
@@ -39,18 +42,11 @@
                 alert('名称不能为空');
                 return;
             }
-            if (!info.Final_Temperature) {
-                alert('最终温度不能为空');
-                return;
-            }
+
             info.ImageUrl = $("#ImageUrl").val();
-            //if (!info.Cook_Time) {
-            //    alert('煮料时间不能为空');
-            //    return;
-            //}
             info.Introduce = $("#Introduce").val();
             info.Describe = $("#Describe").val();
-            info.Remarks = $("#Remarks").val();
+            info.Param = (info.byte1 || 0) + ',' + (info.byte2 || 0) + '|' + (info.byte3 || 0) + ',' + (info.byte4 || 0) + '|' + (info.byte5 || 0) + ',' + (info.byte6 || 0) + '|' + (info.byte7 || 0) + ',' + (info.byte8 || 0) + '|' + (info.byte9 || 0) + ',' + (info.byte10 || 0) + '|' + (info.byte11 || 0) + ',' + (info.byte12 || 0);
             info.ModelType_ID = $("#ModelType_ID").val();
             m.AddHealthModel(info, function (data) {
                 alert(data.msg);
@@ -101,10 +97,69 @@
                     if (info.FullUrl == null || info.FullUrl.length <= 0) {
                         info.FullUrl = "js/bootstrap/img/notimage.png";
                     }
+                    if (info.Param != null && info.Param.length > 0) {
+                        var byteList = info.Param.split('|');
+                        for (var i = 0; i < byteList.length; i++) {
+                            var arry = byteList[i].split(',');
+                            switch (i) {
+                                case 0:
+                                    info.byte1 = arry[0];
+                                    info.byte2 = arry[1];
+                                    break;
+                                case 1:
+                                    info.byte3 = arry[0];
+                                    info.byte4 = arry[1];
+                                    break;
+                                case 2:
+                                    info.byte5 = arry[0];
+                                    info.byte6 = arry[1];
+                                    break;
+                                case 3:
+                                    info.byte7 = arry[0];
+                                    info.byte8 = arry[1];
+                                    break;
+                                case 4:
+                                    info.byte9 = arry[0];
+                                    info.byte10 = arry[1];
+                                    break;
+                                case 5:
+                                    info.byte11 = arry[0];
+                                    info.byte12 = arry[1];
+                                    break;
+                            }
+                        }
+                    }
+                    else {
+                        info.byte1 = 0;
+                        info.byte2 = 0;
+                        info.byte3 = 0;
+                        info.byte4 = 0;
+                        info.byte5 = 0;
+                        info.byte6 = 0;
+                        info.byte7 = 0;
+                        info.byte8 = 0;
+                        info.byte9 = 0;
+                        info.byte10 = 0;
+                        info.byte11 = 0;
+                        info.byte12 = 0;
+                    }
                 }
                 angular.set('info', info, bindEvent)
             });
         } else {
+
+            info.byte1 = 0;
+            info.byte2 = 0;
+            info.byte3 = 0;
+            info.byte4 = 0;
+            info.byte5 = 0;
+            info.byte6 = 0;
+            info.byte7 = 0;
+            info.byte8 = 0;
+            info.byte9 = 0;
+            info.byte10 = 0;
+            info.byte11 = 0;
+            info.byte12 = 0;
             angular.set('info', info, bindEvent)
         }
     }

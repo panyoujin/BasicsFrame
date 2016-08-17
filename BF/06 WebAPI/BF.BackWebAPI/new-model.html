@@ -74,16 +74,33 @@
 
                             <label>排序</label>
                             <input type="text" value="" class="input-xlarge" placeholder="排序越大越靠前" am-bind="info.Sort" />
-                            <label>最终温度</label>
-                            <input type="text" value="" class="input-xlarge" placeholder="单位：摄氏度" am-bind="info.Final_Temperature" />
-                            <label>煮料时长</label>
-                            <input type="text" value="" class="input-xlarge" placeholder="单位：分钟" am-bind="info.Cook_Time" />
-                            <label>除氯时间</label>
-                            <input type="text" value="" class="input-xlarge" placeholder="单位：分钟" am-bind="info.Removal_Chlorine_Time" />
-                            <label>保温时间</label>
-                            <input type="text" value="" class="input-xlarge" placeholder="单位：摄氏度" am-bind="info.Heat_Preservation_Time" />
-                            <label>保温温度</label>
-                            <input type="text" value="" class="input-xlarge" placeholder="单位：摄氏度" am-bind="info.Heat_Preservation_Temperature" />
+                            <label>阶段- - 功率</label>
+                            <input type="text" value="" class="input-xlarge" placeholder="单位：功率(*10W)" am-bind="info.byte1" />
+                            <label>阶段- - 温度</label>
+                            <input type="text" value="" class="input-xlarge" placeholder="单位：摄氏度" am-bind="info.byte2" />
+                            <label>阶段二 - 功率</label>
+                            <input type="text" value="" class="input-xlarge" placeholder="单位：功率(*10W)" am-bind="info.byte3" />
+                            <label>阶段二 - 温度</label>
+                            <input type="text" value="" class="input-xlarge" placeholder="单位：摄氏度" am-bind="info.byte4" />
+                            <label>阶段三 - 提示加料温度</label>
+                            <input type="text" value="" class="input-xlarge" placeholder="单位：摄氏度" am-bind="info.byte5" />
+                            <label>阶段三 - 浸泡时间</label>
+                            <input type="text" value="" class="input-xlarge" placeholder="单位：分钟" am-bind="info.byte6" />
+                            <label>阶段四 - 功率</label>
+                            <input type="text" value="" class="input-xlarge" placeholder="单位：功率(*10W)" am-bind="info.byte7" />
+                            <label>阶段四 - 时间</label>
+                            <input type="text" value="" class="input-xlarge" placeholder="单位：分钟" am-bind="info.byte8" />
+
+                            <label>阶段五 - 功率</label>
+                            <input type="text" value="" class="input-xlarge" placeholder="单位：功率(*10W)" am-bind="info.byte9" />
+                            <label>阶段五 - 时间</label>
+                            <input type="text" value="" class="input-xlarge" placeholder="单位：分钟" am-bind="info.byte10" />
+
+                            <label>阶段六 - 保温温度</label>
+                            <input type="text" value="" class="input-xlarge" placeholder="单位：功率(*10W)" am-bind="info.byte11" />
+                            <label>阶段六 - 时间</label>
+                            <input type="text" value="" class="input-xlarge" placeholder="单位：小时" am-bind="info.byte12" />
+
                             <label>煮料过程描述</label>
                             <textarea style="width:400px;height:100px;" class="edui-default"placeholder="如:煮沸除氯五分钟，保温在50度" am-bind="info.Introduce" id="Introduce"></textarea>
                             <!--<input type="text" value="" class="input-xlarge" placeholder="如:煮沸除氯五分钟，保温在50度" am-bind="info.Introduce" maxlength="200" />-->

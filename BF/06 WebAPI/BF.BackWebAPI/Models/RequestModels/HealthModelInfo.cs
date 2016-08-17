@@ -44,24 +44,24 @@ namespace BF.BackWebAPI.Models.RequestModels
             }
         }
 
-        public string FullUrl
+        public string ImageUrl
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(ImageUrl) || ImageUrl.IndexOf("http://") == 0 || ImageUrl.IndexOf("https://") == 0)
+                if (string.IsNullOrWhiteSpace(_imgUrl) || _imgUrl.IndexOf("http://") == 0 || _imgUrl.IndexOf("https://") == 0)
                 {
 
-                    return ImageUrl;
+                    return _imgUrl;
                 }
-                return Global.AttmntUrl + ImageUrl;
+                return Global.AttmntUrl + _imgUrl;
+            }
+            set
+            {
+                _imgUrl = value;
             }
         }
 
         private string _imgUrl;
-        /// <summary>
-        /// 
-        /// </summary>
-        public string ImageUrl { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -76,16 +76,18 @@ namespace BF.BackWebAPI.Models.RequestModels
         /// 
         /// </summary>
         public string CreationDate { get; set; }
+        /// <summary>
+        /// 是否自定义
+        /// </summary>
+        public int IsCustom { get; set; }
 
-        public int Model_Type { get; set; }
-
-        public string Model_TypeStr
+        public string IsCustomStr
         {
             get
             {
                 try
                 {
-                    return ((Model_Types)this.Model_Type).Description();
+                    return ((Model_Types)this.IsCustom).Description();
                 }
                 catch (Exception ex)
                 {
@@ -104,17 +106,6 @@ namespace BF.BackWebAPI.Models.RequestModels
 
         public string Describe { get; set; }
         public string Remarks { get; set; }
-        public bool IsBubble { get; set; }
-        public int Bubble_Time { get; set; }
-        public int Bubble_Temperature { get; set; }
-        public int Cook_Time { get; set; }
-        public int Cook_Temperature { get; set; }
-        public bool Is_Heat_Preservation { get; set; }
-        public int Heat_Preservation_Time { get; set; }
-        public int Heat_Preservation_Temperature { get; set; }
-        public int Removal_Chlorine_Time { get; set; }
-        public int Final_Temperature { get; set; }
-        public bool IsFerv { get; set; }
         public int Model_Status { get; set; }
         /// <summary>
         /// 是否收藏
@@ -140,5 +131,10 @@ namespace BF.BackWebAPI.Models.RequestModels
         public int CollectionCount { get; set; }
 
         public int ModelType_ID { get; set; }
+
+        /// <summary>
+        /// 指令参数值：100,100|0,0|0,0|0,0|0,0|100,50
+        /// </summary>
+        public string Param { get; set; }
     }
 }
