@@ -1,4 +1,5 @@
 ﻿using BF.BackWebAPI.Authorize;
+using BF.BackWebAPI.BLL;
 using BF.BackWebAPI.Models.Back.InParam;
 using BF.BackWebAPI.Models.RequestModels;
 using BF.BackWebAPI.Models.ResponseModel;
@@ -167,7 +168,10 @@ namespace BF.BackWebAPI.Controllers
 
             dic.Add("Model_Name", healthModel.model_Name);
             dic.Add("User_ID", this.MemberInfo.ID);
-
+            if (string.IsNullOrWhiteSpace(healthModel.introduce))
+            {
+                healthModel.introduce = HealthModelBLL.GetIntroduceByParam(healthModel.Param);
+            }
             dic.Add("Introduce", healthModel.introduce);
             dic.Add("Model_Describe", string.IsNullOrWhiteSpace(healthModel.describe) ? "" : healthModel.describe);
             dic.Add("Remarks", healthModel.remarks);

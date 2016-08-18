@@ -178,6 +178,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Authorize\BFAuthorizeAttribute.cs" />
     <Compile Include="Authorize\ExceptionAttribute.cs" />
+    <Compile Include="BLL\HealthModelBLL.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Back\Back_AdvertiseController.cs" />
     <Compile Include="Controllers\Back\Back_FeedbackController.cs" />
