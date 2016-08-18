@@ -534,6 +534,154 @@ namespace BF.BackWebAPI.Controllers
             apiResult.data = module;
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+
+        /// <summary>
+        /// 煮水跟除氯接口
+        /// </summary>
+        /// <param name="deviceID"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage BoilWater(int deviceID)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            GenericSuccess module = null;
+            GenericModules shuihu = GetGenericModules(deviceID);
+            if (shuihu != null && shuihu.connectivity == "在线" && shuihu.basics != null && shuihu.basics.bools.Count >= 4)
+            {
+                //开机
+                Dictionary<string, string> headers = new Dictionary<string, string>();
+                headers.Add("Authorization", "bearer " + Access_Token);
+                string url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/bools/{1}?bool={2}", deviceID, 0, true);
+                HttpRequestHelper.Request(url, "PUT", 10, headers);
+
+                string param = "100,100|0,0|0,0|0,0|0,0|0,16";
+                if (!string.IsNullOrWhiteSpace(param))
+                {
+                    string[] zhilin = param.Split('|');
+                    if (zhilin != null && zhilin.Length > 0)
+                    {
+                        for (int i = 0; i < zhilin.Length; i++)
+                        {
+                            string[] zhilin1 = zhilin[i].Split(',');
+                            string a = zhilin1[0];
+                            string b = zhilin1[1];
+                            string ab = "";
+                            a = Convert.ToString(int.Parse(a), 16);
+                            b = Convert.ToString(int.Parse(b), 16);
+
+                            if (a == "0" && b == "0")
+                            {
+                                ab = "0";
+                            }
+                            else if (a != "0" && b == "0")
+                            {
+                                ab = a;
+                            }
+                            else if (a == "0" && b != "0")
+                            {
+                                ab = b;
+                            }
+                            else
+                            {
+                                ab = a + b;
+                            }
+
+                            url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/data/{1}?datum={2}", deviceID, (i + 1), Convert.ToInt32(ab, 16));
+                            string result = HttpRequestHelper.Request(url, "PUT", 10, headers);
+                        }
+                    }
+
+                }
+            }
+            else
+            {
+                apiResult.code = ResultCode.CODE_BUSINESS_ERROR;
+                if (shuihu == null)
+                {
+                    apiResult.msg = "获取状态失败";
+                }
+                else if (shuihu.connectivity == "离线")
+                {
+                    apiResult.msg = "设备离线";
+                }
+            }
+            apiResult.data = module;
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+
+        /// <summary>
+        /// 保温
+        /// </summary>
+        /// <param name="deviceID"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage KeepWarm(int deviceID, int temperature)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            GenericSuccess module = null;
+            GenericModules shuihu = GetGenericModules(deviceID);
+            if (shuihu != null && shuihu.connectivity == "在线" && shuihu.basics != null && shuihu.basics.bools.Count >= 4)
+            {
+                //开机
+                Dictionary<string, string> headers = new Dictionary<string, string>();
+                headers.Add("Authorization", "bearer " + Access_Token);
+                string url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/bools/{1}?bool={2}", deviceID, 0, true);
+                HttpRequestHelper.Request(url, "PUT", 10, headers);
+
+                string param = string.Format("0,0|0,0|0,0|0,0|0,0|{0},120", temperature);
+                if (!string.IsNullOrWhiteSpace(param))
+                {
+                    string[] zhilin = param.Split('|');
+                    if (zhilin != null && zhilin.Length > 0)
+                    {
+                        for (int i = 0; i < zhilin.Length; i++)
+                        {
+                            string[] zhilin1 = zhilin[i].Split(',');
+                            string a = zhilin1[0];
+                            string b = zhilin1[1];
+                            string ab = "";
+                            a = Convert.ToString(int.Parse(a), 16);
+                            b = Convert.ToString(int.Parse(b), 16);
+
+                            if (a == "0" && b == "0")
+                            {
+                                ab = "0";
+                            }
+                            else if (a != "0" && b == "0")
+                            {
+                                ab = a;
+                            }
+                            else if (a == "0" && b != "0")
+                            {
+                                ab = b;
+                            }
+                            else
+                            {
+                                ab = a + b;
+                            }
+
+                            url = string.Format("http://huantengsmart.com:80/api/generic_modules/{0}/data/{1}?datum={2}", deviceID, (i + 1), Convert.ToInt32(ab, 16));
+                            string result = HttpRequestHelper.Request(url, "PUT", 10, headers);
+                        }
+                    }
+
+                }
+            }
+            else
+            {
+                apiResult.code = ResultCode.CODE_BUSINESS_ERROR;
+                if (shuihu == null)
+                {
+                    apiResult.msg = "获取状态失败";
+                }
+                else if (shuihu.connectivity == "离线")
+                {
+                    apiResult.msg = "设备离线";
+                }
+            }
+            apiResult.data = module;
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
         #endregion
 
 
