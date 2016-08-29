@@ -127,6 +127,11 @@ namespace BF.BackWebAPI.Controllers
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
 
+            string[] codeStr = qr_code.Split('/');
+            if (codeStr != null && codeStr.Length > 0)
+            {
+                qr_code = codeStr[codeStr.Length - 1];
+            }
             string url = string.Format("http://huantengsmart.com:80/api/devices?qr_code={0}", qr_code);
             Dictionary<string, string> headers = new Dictionary<string, string>();
             headers.Add("Authorization", "bearer " + Access_Token);
