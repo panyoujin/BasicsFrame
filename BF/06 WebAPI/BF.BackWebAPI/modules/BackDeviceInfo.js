@@ -1,5 +1,6 @@
 ﻿define(['domready!', 'zepto', 'common', 'angular', 'server_data/models_data', 'pagination'], function (doc, $, c, angular, m, p) {
     $(function () {
+
         getDetail();
         loadData(1, 10);
         $("#btn_Search").click(function () { loadData(); });
@@ -11,11 +12,13 @@
     function loadData(page, size) {
 
         var param = {
-            search: $("#text_search").val(), memberID:$("#memberID").val(), page: page, pageSize: size
+            search: $("#text_search").val(), memberID: $("#memberID").val() == '' ? 0 : $("#memberID").val(), page: page, pageSize: size
         };
 
         var url = window.apibase + "/Back_Member/GetDevices";
+
         c.get(param, url, function (data) {
+
             init_html(data);
             p.setindex(page, size, data.data.total, function (pindex, psize) {
                 loadData(pindex, psize);
