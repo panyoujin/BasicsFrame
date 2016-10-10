@@ -34,7 +34,7 @@ namespace BF.BackWebAPI.Controllers
             dic.Add("Accept_Comment_User_ID", praise.Accept_Comment_User_ID);
             dic.Add("Comment_Type", (int)Comment_Type.Praise);
             dic.Add("Comment_User_ID", this.MemberInfo.ID);
-            dic.Add("Comment_Content", this.MemberInfo.Name ?? "" + "点赞");
+            dic.Add("Comment_Content", (this.MemberInfo.Name ?? "") + "点赞");
             dic.Add("UserAccount", this.MemberInfo.Account ?? this.MemberInfo.ID + "");
             var executeCount = DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_AddPraise", dic);
             if (executeCount > 0)

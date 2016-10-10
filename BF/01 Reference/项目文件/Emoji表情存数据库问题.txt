@@ -1,0 +1,24 @@
+[client]
+default-character-set = utf8mb4
+
+[mysql]
+default-character-set = utf8mb4
+
+[mysqld]
+character-set-server = utf8mb4
+collation-server = utf8mb4_unicode_ci
+
+修改数据库的字符集：
+
+ALTER DATABASE `znsh_dev` CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+
+修改表的字符集：
+
+ALTER TABLE `TB_MB_Share` CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+ 
+
+修改字段的字符集：
+
+ALTER TABLE `TB_MB_Share` CHANGE `ShareContent` `ShareContent` TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

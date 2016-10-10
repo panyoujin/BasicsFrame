@@ -35,7 +35,7 @@ namespace BF.BackWebAPI.Controllers
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
 
             Dictionary<string, object> dic = new Dictionary<string, object>();
-            dic.Add("User_ID", this.MemberInfo.ID);
+            dic.Add("MyUser_ID", this.MemberInfo.ID);
             if (request_type == 1)
             {
                 if (maxID > 0)
@@ -56,7 +56,7 @@ namespace BF.BackWebAPI.Controllers
                 dic.Add("StartSize", 0);
                 dic.Add("PageSize", pageSize);
             }
-            var spList = DBBaseFactory.DALBase.QueryForList<ShareListResponse>("BackWeb_GetShareListByID", dic) ?? new List<ShareListResponse>();
+            var spList = DBBaseFactory.DALBase.QueryForList<ShareListResponse>("BackWeb_GetShareListByUserID", dic) ?? new List<ShareListResponse>();
             if (spList != null && spList.Count > 0)
             {
                 var tempID = spList.Max(s => s.ShareID);
@@ -160,6 +160,122 @@ namespace BF.BackWebAPI.Controllers
             }
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+        /// <summary>
+        /// 获取动态
+        /// </summary>
+        /// <param name="userID">用户ID</param>
+        /// <param name="maxID">已经获取的最大ID</param>
+        /// <param name="minID">已经获取的最小ID</param>
+        /// <param name="request_type">获取类型：
+        /// 1：获取当前没获取过的新动态
+        ///  0：获取当前获取后的下一页
+        /// </param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetShareListByUserID(int userID, int maxID = 0, int minID = 0, int request_type = 0, int pageSize = CommonConstant.PAGE_SIZE)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
 
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            //try
+            //{
+            dic.Add("MyUser_ID", this.MemberInfo.ID);
+            //}
+            //catch
+            //{ }
+            dic.Add("User_ID", userID);
+            if (request_type == 1)
+            {
+                if (maxID > 0)
+                {
+                    dic.Add("MaxID", maxID);
+                }
+            }
+            else
+            {
+                if (pageSize <= 0)
+                {
+                    pageSize = 10;
+                }
+                if (minID > 0)
+                {
+                    dic.Add("MinID", minID);
+                }
+                dic.Add("StartSize", 0);
+                dic.Add("PageSize", pageSize);
+            }
+            var spList = DBBaseFactory.DALBase.QueryForList<ShareListResponse>("BackWeb_GetShareListByUserID", dic) ?? new List<ShareListResponse>();
+            if (spList != null && spList.Count > 0)
+            {
+                var tempID = spList.Max(s => s.ShareID);
+                maxID = maxID > tempID ? maxID : tempID;
+
+                tempID = spList.Min(s => s.ShareID);
+                minID = minID > 0 && minID < tempID ? minID : tempID;
+            }
+            apiResult.data = new { ShareList = spList, MaxID = maxID, MinID = minID };
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+
+
+        /// <summary>
+        /// 获取动态
+        /// </summary>
+        /// <param name="userID">用户ID</param>
+        /// <param name="maxID">已经获取的最大ID</param>
+        /// <param name="minID">已经获取的最小ID</param>
+        /// <param name="request_type">获取类型：
+        /// 1：获取当前没获取过的新动态
+        ///  0：获取当前获取后的下一页
+        /// </param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public HttpResponseMessage GetShareListByHot(int maxID = 0, int minID = 0, int request_type = 0, int pageSize = CommonConstant.PAGE_SIZE)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            //try
+            //{
+            dic.Add("MyUser_ID", this.MemberInfo.ID);
+            //}
+            //catch
+            //{ }
+            if (request_type == 1)
+            {
+                if (maxID > 0)
+                {
+                    dic.Add("MaxID", maxID);
+                }
+            }
+            else
+            {
+                if (pageSize <= 0)
+                {
+                    pageSize = 10;
+                }
+                if (minID > 0)
+                {
+                    dic.Add("MinID", minID);
+                }
+                dic.Add("StartSize", 0);
+                dic.Add("PageSize", pageSize);
+            }
+            var spList = DBBaseFactory.DALBase.QueryForList<ShareListResponse>("BackWeb_GetShareListByHot", dic) ?? new List<ShareListResponse>();
+            if (spList != null && spList.Count > 0)
+            {
+                var tempID = spList.Max(s => s.ShareID);
+                maxID = maxID > tempID ? maxID : tempID;
+
+                tempID = spList.Min(s => s.ShareID);
+                minID = minID > 0 && minID < tempID ? minID : tempID;
+            }
+            apiResult.data = new { ShareList = spList, MaxID = maxID, MinID = minID };
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
     }
 }
