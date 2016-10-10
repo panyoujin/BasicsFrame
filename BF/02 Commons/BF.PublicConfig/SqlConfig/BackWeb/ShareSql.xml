@@ -116,4 +116,29 @@
       </SqlCommand>
     </SqlDefinition>
   </Data>
+  <!--后台获取用户的社区分享-->
+  <Data name="BackWeb_GetAllUserShare">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+SELECT s.`ID`,s.`Source_ID`,IF(s.`Source_Type`=1,'自定义',IF(s.`Source_Type`=2,'养生品','养生堂') ) AS Source_TypeStr,
+s.`ShareTitle`,s.`ShareContent`,s.`PraiseCount`,s.`CommentCount`,s.`CreationDate`,mi.`Account`,mi.`Name`,
+s.`IsHot`,IF(s.`IsHot`=FALSE,'否','是') AS IsHotStr,s.HotSort
+FROM `TB_MB_Share` s
+JOIN `TB_MB_MemberInfo` mi ON s.`User_ID`=mi.`ID`
+WHERE s.`Status`=TRUE
+
+<%= AND s.`ShareTitle` LIKE @@Search@@%>
+
+ORDER BY s.HotSort DESC,s.`CreationDate` DESC
+ <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
+ SELECT COUNT(1) AS total
+ FROM `TB_MB_Share` s
+JOIN `TB_MB_MemberInfo` mi ON s.`User_ID`=mi.`ID`
+WHERE s.`Status`=TRUE 
+<%= AND s.`ShareTitle` LIKE @@Search@@%>;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
 </HCIP.AjaxDataSetting>
