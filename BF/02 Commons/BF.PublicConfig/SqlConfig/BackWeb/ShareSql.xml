@@ -28,10 +28,10 @@
         <![CDATA[
         SELECT c.ID as CommentID,c.`Comment_Content`,c.`Comment_User_ID`,c.`Accept_Comment_User_ID`,IFNULL(m.`Name`,m.`Account`) AS User_Name ,UNIX_TIMESTAMP(c.`CreationDate`) AS CreationDateTicks
         ,(SELECT GROUP_CONCAT(a.`AttachmentUrl`) FROM `TB_MB_ShareAttmnt` AS a WHERE a.`Source_ID`=c.`ID` AND a.`Status`=TRUE AND a.`Attmnt_Type`=2) AS AttachUrls
-        ,m.`ImageUrl` AS Comment_User_Image
+        ,m.`ImageUrl` AS Comment_User_Image,c.`Comment_Type`
         FROM `TB_MB_Comment` c 
         JOIN `TB_MB_MemberInfo` AS m ON c.`Comment_User_ID` = m.`ID`
-        WHERE c.`Source_ID`=@@Source_ID@@ AND c.`Source_Type`=1 AND c.`Comment_Type`=1 AND c.`Status`=TRUE AND m.`Status`=TRUE ORDER BY c.ID DESC
+        WHERE c.`Source_ID`=@@Source_ID@@ AND c.`Source_Type`=1 AND c.`Comment_Type` in (1,2) AND c.`Status`=TRUE AND m.`Status`=TRUE ORDER BY c.ID DESC
         <%= LIMIT @@StartSize@@ , @@EndSize@@%>;
         
         <%= SELECT COUNT(0) AS MyPraiseCount FROM `TB_MB_Comment` c  WHERE c.`Source_ID`=@@Source_ID@@ AND c.`Source_Type`=1 AND c.`Comment_Type`=2 AND c.`Status`=TRUE AND c.`Comment_User_ID`=@@User_ID@@;%>
@@ -76,27 +76,42 @@
       </SqlCommand>
     </SqlDefinition>
   </Data>
-  <!--后台获取用户的社区分享-->
-  <Data name="BackWeb_GetAllUserShare">
+
+  <!--获取指定用户的分享-->
+  <Data name="BackWeb_GetShareListByUserID">
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-SELECT s.`ID`,s.`Source_ID`,IF(s.`Source_Type`=1,'自定义',IF(s.`Source_Type`=2,'养生品','养生堂') ) AS Source_TypeStr,
-s.`ShareTitle`,s.`ShareContent`,s.`PraiseCount`,s.`CommentCount`,s.`CreationDate`,mi.`Account`,mi.`Name`,
-s.`IsHot`,IF(s.`IsHot`=FALSE,'否','是') AS IsHotStr,s.HotSort
-FROM `TB_MB_Share` s
-JOIN `TB_MB_MemberInfo` mi ON s.`User_ID`=mi.`ID`
-WHERE s.`Status`=TRUE
+        SELECT s.`ID` AS ShareID,s.`User_ID`,s.`Source_ID`,s.`Source_Type`,s.ShareUrl,s.`ShareTitle`,s.`ShareContent`
+        ,s.`PraiseCount`,s.`CommentCount`,IFNULL(m.`Name`,m.`Account`) AS User_Name,s.`CreationDate`,UNIX_TIMESTAMP(s.`CreationDate`) AS CreationDateTicks
+        <%= ,(SELECT COUNT(0) FROM `TB_MB_Comment` c  WHERE c.`Source_ID`=s.ID AND c.`Source_Type`=1 AND c.`Comment_Type`=2 AND c.`Status`=TRUE AND c.`Comment_User_ID`=@@MyUser_ID@@) AS MyPraiseCount  %>
+         ,(SELECT GROUP_CONCAT(a.`AttachmentUrl`) FROM `TB_MB_ShareAttmnt` AS a WHERE a.`Source_ID`=s.`ID` AND a.`Status`=TRUE AND a.`Attmnt_Type`=1) AS AttachUrls
+         ,m.`ImageUrl` AS User_Image
+        FROM `TB_MB_Share` AS s
+        JOIN `TB_MB_MemberInfo` AS m ON s.`User_ID`=m.`ID`
+        WHERE s.`Status`=TRUE AND m.`Status`=TRUE <%= AND s.`ID`> @@MaxID@@%> <%= AND s.`ID`< @@MinID@@%><%=  AND s.`User_ID`=@@User_ID@@%>
+        ORDER BY s.CreationDate DESC
+        <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
 
-<%= AND s.`ShareTitle` LIKE @@Search@@%>
-
-ORDER BY s.HotSort DESC,s.`CreationDate` DESC
- <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
- SELECT COUNT(1) AS total
- FROM `TB_MB_Share` s
-JOIN `TB_MB_MemberInfo` mi ON s.`User_ID`=mi.`ID`
-WHERE s.`Status`=TRUE 
-<%= AND s.`ShareTitle` LIKE @@Search@@%>;
+  <!--获取热门的分享-->
+  <Data name="BackWeb_GetShareListByHot">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT s.`ID` AS ShareID,s.`User_ID`,s.`Source_ID`,s.`Source_Type`,s.ShareUrl,s.`ShareTitle`,s.`ShareContent`
+        ,s.`PraiseCount`,s.`CommentCount`,IFNULL(m.`Name`,m.`Account`) AS User_Name,s.`CreationDate`,UNIX_TIMESTAMP(s.`CreationDate`) AS CreationDateTicks
+        <%= ,(SELECT COUNT(0) FROM `TB_MB_Comment` c  WHERE c.`Source_ID`=s.ID AND c.`Source_Type`=1 AND c.`Comment_Type`=2 AND c.`Status`=TRUE AND c.`Comment_User_ID`=@@MyUser_ID@@) AS MyPraiseCount  %>
+         ,(SELECT GROUP_CONCAT(a.`AttachmentUrl`) FROM `TB_MB_ShareAttmnt` AS a WHERE a.`Source_ID`=s.`ID` AND a.`Status`=TRUE AND a.`Attmnt_Type`=1) AS AttachUrls
+         ,m.`ImageUrl` AS User_Image
+        FROM `TB_MB_Share` AS s
+        JOIN `TB_MB_MemberInfo` AS m ON s.`User_ID`=m.`ID`
+        WHERE s.`Status`=TRUE AND m.`Status`=TRUE <%= AND s.`ID`> @@MaxID@@%> <%= AND s.`ID`< @@MinID@@%> AND s.IsHot=TRUE
+        ORDER BY s.HotSort desc ,s.CreationDate DESC
+        <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
       ]]>
       </SqlCommand>
     </SqlDefinition>
