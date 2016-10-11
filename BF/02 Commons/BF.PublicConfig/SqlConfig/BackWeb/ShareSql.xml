@@ -141,4 +141,15 @@ WHERE s.`Status`=TRUE
       </SqlCommand>
     </SqlDefinition>
   </Data>
+	
+	<!--设置是否热门-->
+	<Data name="BackWeb_SetShareHot">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+UPDATE `TB_MB_Share` set IsHot=@@Hot@@,`ModificationDate`=NOW() where ID=@@ID@@;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
 </HCIP.AjaxDataSetting>

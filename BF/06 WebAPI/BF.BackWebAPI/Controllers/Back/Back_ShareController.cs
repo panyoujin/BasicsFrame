@@ -20,7 +20,7 @@ namespace BF.BackWebAPI.Controllers.Back
 {
     public class Back_ShareController : ApiController
     {
-     
+
         public HttpResponseMessage GetUserShares(string search = "", int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
@@ -59,6 +59,22 @@ namespace BF.BackWebAPI.Controllers.Back
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
 
+        [HttpGet]
+        public HttpResponseMessage SetHot(int id, int hot)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
 
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("Hot", hot);
+            dic.Add("ID", id);
+            int result = DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_SetShareHot", dic);
+            if (result <= 0) {
+                apiResult.code = ResultCode.CODE_UPDATE_FAIL;
+                apiResult.msg = ResultMsg.CODE_EXCEPTION;
+            }
+            
+
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
     }
 }

@@ -12,6 +12,7 @@ namespace BF.Common.StaticConstant
         /// 成功！200
         /// </summary>
         public static String CODE_SUCCESS = "200";
+        
 
         /// <summary>
         /// 系统异常！500
