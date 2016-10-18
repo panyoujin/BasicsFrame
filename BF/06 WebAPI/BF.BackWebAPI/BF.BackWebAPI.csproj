@@ -180,6 +180,7 @@
     <Compile Include="Authorize\ExceptionAttribute.cs" />
     <Compile Include="BLL\HealthModelBLL.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Back\Back_AppVersionController.cs" />
     <Compile Include="Controllers\Back\Back_ShareController.cs" />
     <Compile Include="Controllers\Back\Back_AdvertiseController.cs" />
     <Compile Include="Controllers\Back\Back_FeedbackController.cs" />
@@ -372,6 +373,7 @@
     <Content Include="js\easyui-1.4.3\themes\images\tree_icons.png" />
     <Content Include="js\easyui-1.4.3\themes\images\validatebox_warning.png" />
     <Content Include="Authorization.html" />
+    <Content Include="modules\AppVersion.js" />
     <Content Include="modules\UserShares.js" />
     <Content Include="modules\AdvertiseTypeDetail.js" />
     <Content Include="modules\AdvertiseType.js" />
@@ -393,6 +395,7 @@
     <Content Include="modules\BackDeviceInfo.js" />
     <Content Include="modules\BackMemberInfo.js" />
     <Content Include="MemberInfo_Detail.html" />
+    <Content Include="AppVersionManager.html" />
     <Content Include="Share_Manage.html" />
     <Content Include="Shopping_Detail.html" />
     <Content Include="modules\ShoppingDetail.js" />

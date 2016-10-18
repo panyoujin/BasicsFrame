@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<HCIP.AjaxDataSetting>
+
+	<Data name="BackWeb_GetAppVersion">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+SELECT `ID`,`Version`,`Update_Status`,`Target_Url`,`AppType`,`AppKey`,DATE_FORMAT(`VersionDate`,'%Y-%m-%d %H:%i:%s') AS VersionDate,`FileSize`,`CreationUser`,
+DATE_FORMAT(`CreationDate`,'%Y-%m-%d %H:%i:%s') AS CreationDate
+,`UpdateContent` 
+FROM `TB_MB_AppVersion`
+ORDER BY `ID` DESC
+<%= LIMIT @@StartSize@@ , @@PageSize@@%>;
+
+ SELECT COUNT(1) AS total
+FROM `TB_MB_AppVersion`;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+
+	<Data name="BackWeb_InsertAppVersion">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+
+INSERT INTO `TB_MB_AppVersion`(`Version`,`Update_Status`,`Target_Url`,`AppType`,`VersionDate`,`FileSize`,`CreationUser`,`CreationDate`,`UpdateContent`)
+VALUES(@@Version@@,@@Update_Status@@,@@Target_Url@@,@@AppType@@,@@VersionDate@@,@@FileSize@@,@@CreationUser@@,now(),@@UpdateContent@@)
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+</HCIP.AjaxDataSetting>
