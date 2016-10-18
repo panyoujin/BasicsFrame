@@ -9,11 +9,13 @@ SELECT `ID`,`Version`,`Update_Status`,`Target_Url`,`AppType`,`AppKey`,DATE_FORMA
 DATE_FORMAT(`CreationDate`,'%Y-%m-%d %H:%i:%s') AS CreationDate
 ,`UpdateContent` 
 FROM `TB_MB_AppVersion`
+where STATUS=false
 ORDER BY `ID` DESC
 <%= LIMIT @@StartSize@@ , @@PageSize@@%>;
 
  SELECT COUNT(1) AS total
-FROM `TB_MB_AppVersion`;
+FROM `TB_MB_AppVersion`
+where STATUS=true;
       ]]>
 			</SqlCommand>
 		</SqlDefinition>
@@ -24,10 +26,22 @@ FROM `TB_MB_AppVersion`;
 			<SqlCommand>
 				<![CDATA[
 
-INSERT INTO `TB_MB_AppVersion`(`Version`,`Update_Status`,`Target_Url`,`AppType`,`VersionDate`,`FileSize`,`CreationUser`,`CreationDate`,`UpdateContent`)
-VALUES(@@Version@@,@@Update_Status@@,@@Target_Url@@,@@AppType@@,@@VersionDate@@,@@FileSize@@,@@CreationUser@@,now(),@@UpdateContent@@)
+INSERT INTO `TB_MB_AppVersion`(`Version`,`Update_Status`,`Target_Url`,`AppType`,`VersionDate`,`FileSize`,`CreationUser`,`CreationDate`,`UpdateContent`,STATUS)
+VALUES(@@Version@@,@@Update_Status@@,@@Target_Url@@,@@AppType@@,@@VersionDate@@,@@FileSize@@,@@CreationUser@@,now(),@@UpdateContent@@,false)
       ]]>
 			</SqlCommand>
 		</SqlDefinition>
 	</Data>
+
+	<Data name="BackWeb_DeleteAppVersion">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+
+UPDATE TB_MB_AppVersion SET STATUS=true WHERE ID=@@ID@@ 
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
+	
 </HCIP.AjaxDataSetting>

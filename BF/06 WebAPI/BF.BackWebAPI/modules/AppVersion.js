@@ -72,17 +72,17 @@
             }
             $("td #btnDelete").off("click");
             $('td #btnDelete').on('click', function () {
-                alert($(this).attr("data-id"));
-                //var param = { id: $(this).attr("data-id"), hot: $(this).attr("data-hot") };
 
-                //var url = window.apibase + "/Back_Share/SetHot";
+                var param = { id: $(this).attr("data-id")};
 
-                //c.get(param, url, function (data) {
-                //    if (data != null && data.code == "200") {
-                //        loadData(1, 10);
-                //    }
+                var url = window.apibase + "/Back_AppVersion/DeleteAppVersion";
 
-                //})
+                c.get(param, url, function (data) {
+                    if (data != null && data.code == "200") {
+                        loadData(1, 10);
+                    }
+
+                })
             });
 
    

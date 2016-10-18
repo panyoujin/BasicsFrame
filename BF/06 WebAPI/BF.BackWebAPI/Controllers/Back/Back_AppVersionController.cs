@@ -80,5 +80,24 @@ namespace BF.BackWebAPI.Controllers.Back
 
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+
+        [HttpGet]
+        public HttpResponseMessage DeleteAppVersion(int id)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("ID", id);
+
+            int result = DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_DeleteAppVersion", dic);
+            if (result <= 0)
+            {
+                apiResult.code = ResultCode.CODE_UPDATE_FAIL;
+                apiResult.msg = ResultMsg.CODE_EXCEPTION;
+            }
+
+
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
     }
 }
