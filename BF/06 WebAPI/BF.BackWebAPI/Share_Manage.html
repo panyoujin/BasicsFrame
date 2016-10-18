@@ -5,9 +5,17 @@
     <title>社区分享管理</title>
     <link rel="stylesheet" type="text/css" href="js/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="stylesheets/theme.css">
+
     <script src="js/base.js"></script>
+
+    <link href="js/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="js/bootstrap/js/bootstrap.min.js"></script>
+
+
 </head>
 <body>
+
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="well">
@@ -26,7 +34,7 @@
                         <tr>
                             <th style="width:5%;"></th>
                             <th style="width:10%;">标题</th>
-                            <th style="width:10%;">分享内容</th>
+                            <!--<th style="width:10%;">分享内容</th>-->
                             <th style="width:8%;">分类名称</th>
                             <th style="width:10%;">用户账号</th>
                             <th style="width:8%;">用户昵称</th>
@@ -54,6 +62,43 @@
             </div>
         </div>
     </div>
+    <!-- 设置排序弹出框 -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">设置排序</h4>
+                </div>
+                <div class="modal-body">
+                    <input class="input-xlarge" placeholder="输入排序..." id="text_sort" type="text">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btn_save" class="btn btn-primary">保存</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
+
+    <!-- 查看内容弹出框 -->
+    <div class="modal fade" id="modal_Content" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">内容</h4>
+                </div>
+                <div class="modal-body">
+                  <label id="lbContent"></label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="js/require.js" data-main="js/config.js"></script>
     <script>
         require(['../modules/UserShares']);

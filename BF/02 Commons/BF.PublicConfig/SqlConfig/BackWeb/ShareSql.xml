@@ -152,4 +152,14 @@ UPDATE `TB_MB_Share` set IsHot=@@Hot@@,`ModificationDate`=NOW() where ID=@@ID@@;
 			</SqlCommand>
 		</SqlDefinition>
 	</Data>
+
+	<Data name="BackWeb_SetShareHotSort">
+		<SqlDefinition type="sql">
+			<SqlCommand>
+				<![CDATA[
+UPDATE `TB_MB_Share` set HotSort=@@HotSort@@,`ModificationDate`=NOW() where ID=@@ID@@;
+      ]]>
+			</SqlCommand>
+		</SqlDefinition>
+	</Data>
 </HCIP.AjaxDataSetting>
