@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BF.Common", "02 Commons\BF.Common\BF.Common.csproj", "{FFD8F5E7-963A-4FBF-B6F1-5FED0C14547C}"
 EndProject
@@ -65,6 +65,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "项目文件", "项目文件", "{8FC65F89-1E3E-4F76-8D9C-233BB7B22E68}"
 	ProjectSection(SolutionItems) = preProject
 		G:\OneDrive\智能茶壶\table_all.sql = G:\OneDrive\智能茶壶\table_all.sql
+		01 Reference\项目文件\我的消息.txt = 01 Reference\项目文件\我的消息.txt
 		01 Reference\项目文件\手机app.pdf = 01 Reference\项目文件\手机app.pdf
 		01 Reference\项目文件\智能水壶V1.0.0.35.docx = 01 Reference\项目文件\智能水壶V1.0.0.35.docx
 		01 Reference\项目文件\智能水壶V1.0.0.36.docx = 01 Reference\项目文件\智能水壶V1.0.0.36.docx

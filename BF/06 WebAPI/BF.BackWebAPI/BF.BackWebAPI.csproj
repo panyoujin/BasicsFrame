@@ -283,6 +283,7 @@
     <Compile Include="Models\ResponseModel\MyInfoResponse.cs" />
     <Compile Include="Models\ResponseModel\PlanGroupList.cs" />
     <Compile Include="Models\ResponseModel\PlanList.cs" />
+    <Compile Include="Models\ResponseModel\MyMessageResponse.cs" />
     <Compile Include="Models\ResponseModel\ShareInfoResponse.cs" />
     <Compile Include="Models\ResponseModel\ShareListResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

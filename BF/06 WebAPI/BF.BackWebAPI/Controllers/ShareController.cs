@@ -277,5 +277,40 @@ namespace BF.BackWebAPI.Controllers
             apiResult.data = new { ShareList = spList, MaxID = maxID, MinID = minID };
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
+
+        [HttpGet]
+        public HttpResponseMessage GetMyMessage(int page = CommonConstant.PAGE, int pageSize = CommonConstant.PAGE_SIZE)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+            int startSize = 0;
+            int endSize = 0;
+            this.SetPageSize(page, pageSize, ref startSize, ref endSize);
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+
+            dic.Add("User_ID", this.MemberInfo.ID);
+            dic.Add("StartSize", startSize);
+            dic.Add("EndSize", endSize);
+
+            var obj = new { CommentID = 0, Comment_User_ID = 0, };
+            apiResult.data = DBBaseFactory.DALBase.QueryForList<MyMessageResponse>("GetMyMessage", dic);
+
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+
+        [HttpPost]
+        public HttpResponseMessage CleanMyMessage()
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+
+            dic.Add("User_ID", this.MemberInfo.ID);
+            dic.Add("ModificationUser", this.MemberInfo.Name ?? this.MemberInfo.Account);
+
+
+            apiResult.data = DBBaseFactory.DALBase.ExecuteNonQuery("CleanMyMessage", dic);
+
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
     }
 }

@@ -1,0 +1,54 @@
+接口获取我的消息：/znsh/Share/GetMyMessage 参数page、pageSize  GET
+{
+    "data": [
+        {
+            "CommentID": 99,
+            "Comment_User_ID": 3,
+            "Comment_User_Image": "http://115.28.85.184/2016/9/9/89149930-3265-4c03-b13f-c9f91233c3b1.jpeg",
+            "Accept_Comment_User_ID": 3,
+            "CommentCount": 0,
+            "User_Name": "昵称3",
+            "CreationDateTicks": 1475890839,
+            "Comment_Content": "%E6%9C%89",
+            "Comment_Type": 1
+        },
+        {
+            "CommentID": 98,
+            "Comment_User_ID": 3,
+            "Comment_User_Image": "http://115.28.85.184/2016/9/9/89149930-3265-4c03-b13f-c9f91233c3b1.jpeg",
+            "Accept_Comment_User_ID": 3,
+            "CommentCount": 0,
+            "User_Name": "昵称3",
+            "CreationDateTicks": 1475890832,
+            "Comment_Content": "uhhu",
+            "Comment_Type": 1
+        },
+        {
+            "CommentID": 97,
+            "Comment_User_ID": 3,
+            "Comment_User_Image": "http://115.28.85.184/2016/9/9/89149930-3265-4c03-b13f-c9f91233c3b1.jpeg",
+            "Accept_Comment_User_ID": 3,
+            "CommentCount": 0,
+            "User_Name": "昵称3",
+            "CreationDateTicks": 1475890830,
+            "Comment_Content": "vvghhh",
+            "Comment_Type": 1
+        },
+        {
+            "CommentID": 96,
+            "Comment_User_ID": 3,
+            "Comment_User_Image": "http://115.28.85.184/2016/9/9/89149930-3265-4c03-b13f-c9f91233c3b1.jpeg",
+            "Accept_Comment_User_ID": 3,
+            "CommentCount": 0,
+            "User_Name": "昵称3",
+            "CreationDateTicks": 1475890824,
+            "Comment_Content": "%E5%85%B3%E4%BA%8E%E9%9B%A8%E5%93%88%E5%93%88",
+            "Comment_Type": 1
+        }
+    ],
+    "code": "200",
+    "msg": "成功"
+}
+
+接口清空：/znsh/Share/CleanMyMessage   POST
+{"data":0,"code":"200","msg":"成功"}

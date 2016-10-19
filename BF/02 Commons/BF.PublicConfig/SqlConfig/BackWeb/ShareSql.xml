@@ -162,4 +162,35 @@ UPDATE `TB_MB_Share` set HotSort=@@HotSort@@,`ModificationDate`=NOW() where ID=@
 			</SqlCommand>
 		</SqlDefinition>
 	</Data>
+  <!--获取我的信息-->
+  <Data name="GetMyMessage">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        SELECT c.ID as CommentID,c.`Comment_Content`,c.`Comment_User_ID`,c.`Accept_Comment_User_ID`,IFNULL(m.`Name`,m.`Account`) AS User_Name ,UNIX_TIMESTAMP(c.`CreationDate`) AS CreationDateTicks
+        ,m.`ImageUrl` AS Comment_User_Image,c.`Comment_Type`
+        FROM `TB_MB_Comment` c 
+        JOIN `TB_MB_MemberInfo` AS m ON c.`Comment_User_ID` = m.`ID`
+        WHERE c.Accept_Comment_User_ID=@@User_ID@@ AND c.`Status`=TRUE AND m.`Status`=TRUE AND c.IsRemind=TRUE AND c.Source_Type=1 ORDER BY c.ID DESC
+        <%= LIMIT @@StartSize@@ , @@EndSize@@%>;
+        
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+
+  <!--清除我的信息-->
+  <Data name="CleanMyMessage">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+        
+        UPDATE `TB_MB_Comment` c SET c.IsRemind=FALSE,c.ModificationUser=@@ModificationUser@@,c.ModificationDate=NOW()
+        WHERE c.Accept_Comment_User_ID=@@User_ID@@ AND c.IsRemind=TRUE AND c.Source_Type=1;
+        
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  
 </HCIP.AjaxDataSetting>
