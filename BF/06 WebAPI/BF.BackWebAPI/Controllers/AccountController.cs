@@ -13,7 +13,7 @@ namespace BF.BackWebAPI.Controllers
 {
     public class AccountController : BaseController
     {
-        [HttpPost]
+        [HttpPost] 
         public HttpResponseMessage Login([FromBody]Login login)
         {
             ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
