@@ -7,7 +7,7 @@
       <SqlCommand>
         <![CDATA[
         SELECT s.`ID` AS ShareID,s.`User_ID`,s.`Source_ID`,s.`Source_Type`,s.ShareUrl,s.`ShareTitle`,s.`ShareContent`
-        ,s.`PraiseCount`,s.`CommentCount`,IFNULL(m.`Name`,m.`Account`) AS User_Name,s.`CreationDate`,UNIX_TIMESTAMP(s.`CreationDate`) AS CreationDateTicks
+        ,s.`PraiseCount`,s.`CommentCount`,IFNULL(m.`Name`,'花心匿名用户') AS User_Name,s.`CreationDate`,UNIX_TIMESTAMP(s.`CreationDate`) AS CreationDateTicks
         <%= ,(SELECT COUNT(0) FROM `TB_MB_Comment` c  WHERE c.`Source_ID`=s.ID AND c.`Source_Type`=1 AND c.`Comment_Type`=2 AND c.`Status`=TRUE AND c.`Comment_User_ID`=@@User_ID@@) AS MyPraiseCount  %>
          ,(SELECT GROUP_CONCAT(a.`AttachmentUrl`) FROM `TB_MB_ShareAttmnt` AS a WHERE a.`Source_ID`=s.`ID` AND a.`Status`=TRUE AND a.`Attmnt_Type`=1) AS AttachUrls
          ,m.`ImageUrl` AS User_Image
@@ -26,7 +26,7 @@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        SELECT c.ID as CommentID,c.`Comment_Content`,c.`Comment_User_ID`,c.`Accept_Comment_User_ID`,IFNULL(m.`Name`,m.`Account`) AS User_Name ,UNIX_TIMESTAMP(c.`CreationDate`) AS CreationDateTicks
+        SELECT c.ID as CommentID,c.`Comment_Content`,c.`Comment_User_ID`,c.`Accept_Comment_User_ID`,IFNULL(m.`Name`,'花心匿名用户') AS User_Name ,UNIX_TIMESTAMP(c.`CreationDate`) AS CreationDateTicks
         ,(SELECT GROUP_CONCAT(a.`AttachmentUrl`) FROM `TB_MB_ShareAttmnt` AS a WHERE a.`Source_ID`=c.`ID` AND a.`Status`=TRUE AND a.`Attmnt_Type`=2) AS AttachUrls
         ,m.`ImageUrl` AS Comment_User_Image,c.`Comment_Type`
         FROM `TB_MB_Comment` c 
@@ -83,7 +83,7 @@
       <SqlCommand>
         <![CDATA[
         SELECT s.`ID` AS ShareID,s.`User_ID`,s.`Source_ID`,s.`Source_Type`,s.ShareUrl,s.`ShareTitle`,s.`ShareContent`
-        ,s.`PraiseCount`,s.`CommentCount`,IFNULL(m.`Name`,m.`Account`) AS User_Name,s.`CreationDate`,UNIX_TIMESTAMP(s.`CreationDate`) AS CreationDateTicks
+        ,s.`PraiseCount`,s.`CommentCount`,IFNULL(m.`Name`,'花心匿名用户') AS User_Name,s.`CreationDate`,UNIX_TIMESTAMP(s.`CreationDate`) AS CreationDateTicks
         <%= ,(SELECT COUNT(0) FROM `TB_MB_Comment` c  WHERE c.`Source_ID`=s.ID AND c.`Source_Type`=1 AND c.`Comment_Type`=2 AND c.`Status`=TRUE AND c.`Comment_User_ID`=@@MyUser_ID@@) AS MyPraiseCount  %>
          ,(SELECT GROUP_CONCAT(a.`AttachmentUrl`) FROM `TB_MB_ShareAttmnt` AS a WHERE a.`Source_ID`=s.`ID` AND a.`Status`=TRUE AND a.`Attmnt_Type`=1) AS AttachUrls
          ,m.`ImageUrl` AS User_Image
@@ -103,7 +103,7 @@
       <SqlCommand>
         <![CDATA[
         SELECT s.`ID` AS ShareID,s.`User_ID`,s.`Source_ID`,s.`Source_Type`,s.ShareUrl,s.`ShareTitle`,s.`ShareContent`
-        ,s.`PraiseCount`,s.`CommentCount`,IFNULL(m.`Name`,m.`Account`) AS User_Name,s.`CreationDate`,UNIX_TIMESTAMP(s.`CreationDate`) AS CreationDateTicks
+        ,s.`PraiseCount`,s.`CommentCount`,IFNULL(m.`Name`,'花心匿名用户') AS User_Name,s.`CreationDate`,UNIX_TIMESTAMP(s.`CreationDate`) AS CreationDateTicks
         <%= ,(SELECT COUNT(0) FROM `TB_MB_Comment` c  WHERE c.`Source_ID`=s.ID AND c.`Source_Type`=1 AND c.`Comment_Type`=2 AND c.`Status`=TRUE AND c.`Comment_User_ID`=@@MyUser_ID@@) AS MyPraiseCount  %>
          ,(SELECT GROUP_CONCAT(a.`AttachmentUrl`) FROM `TB_MB_ShareAttmnt` AS a WHERE a.`Source_ID`=s.`ID` AND a.`Status`=TRUE AND a.`Attmnt_Type`=1) AS AttachUrls
          ,m.`ImageUrl` AS User_Image
@@ -167,9 +167,10 @@ UPDATE `TB_MB_Share` set HotSort=@@HotSort@@,`ModificationDate`=NOW() where ID=@
     <SqlDefinition type="sql">
       <SqlCommand>
         <![CDATA[
-        SELECT c.ID as CommentID,c.`Comment_Content`,c.`Comment_User_ID`,c.`Accept_Comment_User_ID`,IFNULL(m.`Name`,m.`Account`) AS User_Name ,UNIX_TIMESTAMP(c.`CreationDate`) AS CreationDateTicks
-        ,m.`ImageUrl` AS Comment_User_Image,c.`Comment_Type`
+        SELECT c.ID as CommentID,c.`Comment_Content`,c.`Comment_User_ID`,c.`Accept_Comment_User_ID`,IFNULL(m.`Name`,'花心匿名用户') AS User_Name ,UNIX_TIMESTAMP(c.`CreationDate`) AS CreationDateTicks
+        ,m.`ImageUrl` AS Comment_User_Image,c.`Comment_Type`,s.ShareContent,(SELECT a.`AttachmentUrl` FROM `TB_MB_ShareAttmnt` AS a WHERE a.`Source_ID`=s.`ID` AND a.`Status`=TRUE AND a.`Attmnt_Type`=1 LIMIT 0,1) AS ShareImage,c.Source_ID as ShareID
         FROM `TB_MB_Comment` c 
+        left join `TB_MB_Share` s ON c.Source_ID=s.ID
         JOIN `TB_MB_MemberInfo` AS m ON c.`Comment_User_ID` = m.`ID`
         WHERE c.Accept_Comment_User_ID=@@User_ID@@ AND c.`Status`=TRUE AND m.`Status`=TRUE AND c.IsRemind=TRUE AND c.Source_Type=1 ORDER BY c.ID DESC
         <%= LIMIT @@StartSize@@ , @@EndSize@@%>;

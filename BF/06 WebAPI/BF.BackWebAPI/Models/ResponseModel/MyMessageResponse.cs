@@ -6,7 +6,7 @@ using System.Web;
 
 namespace BF.BackWebAPI.Models.ResponseModel
 {
-    
+
     public class MyMessageResponse
     {
         /// <summary>
@@ -47,18 +47,7 @@ namespace BF.BackWebAPI.Models.ResponseModel
                 _user_Image = value;
             }
         }
-
-
-        /// <summary>
-        /// 被评论的用户ID
-        /// </summary>
-        public int Accept_Comment_User_ID { get; set; }
         
-
-        /// <summary>
-        /// 评论数量
-        /// </summary>
-        public int CommentCount { get; set; }
 
         /// <summary>
         /// 用户名称
@@ -69,5 +58,11 @@ namespace BF.BackWebAPI.Models.ResponseModel
 
         public string Comment_Content { get; set; }
         public int Comment_Type { get; set; }
+
+        public string ShareContent { get; set; }
+
+        public string ShareImage { get; set; }
+
+        public int ShareID { get; set; }
     }
 }
