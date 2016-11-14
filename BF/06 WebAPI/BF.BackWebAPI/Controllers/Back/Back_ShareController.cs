@@ -68,11 +68,12 @@ namespace BF.BackWebAPI.Controllers.Back
             dic.Add("Hot", hot);
             dic.Add("ID", id);
             int result = DBBaseFactory.DALBase.ExecuteNonQuery("BackWeb_SetShareHot", dic);
-            if (result <= 0) {
+            if (result <= 0)
+            {
                 apiResult.code = ResultCode.CODE_UPDATE_FAIL;
                 apiResult.msg = ResultMsg.CODE_EXCEPTION;
             }
-            
+
 
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }
@@ -92,6 +93,29 @@ namespace BF.BackWebAPI.Controllers.Back
                 apiResult.msg = ResultMsg.CODE_EXCEPTION;
             }
 
+
+            return JsonHelper.SerializeObjectToWebApi(apiResult);
+        }
+
+        [HttpGet]
+        public HttpResponseMessage GetShareAttmnt(int id)
+        {
+            ApiResult<object> apiResult = new ApiResult<object>() { code = ResultCode.CODE_SUCCESS, msg = ResultMsg.CODE_SUCCESS };
+
+            Dictionary<string, object> dic = new Dictionary<string, object>();
+            dic.Add("ID", id);
+            DataTable dt = DBBaseFactory.DALBase.QueryForDataTable("BackWeb_GetShareAttmnt", dic);
+
+            if (dt != null)
+                foreach (DataRow item in dt.Rows)
+                {
+                    if (item["AttachmentUrl"] != null && !string.IsNullOrWhiteSpace(item["AttachmentUrl"].ToString()))
+                    {
+                        item["AttachmentUrl"] = Global.AttmntUrl + item["AttachmentUrl"].ToString();
+                    }
+                }
+
+            apiResult.data = dt;
 
             return JsonHelper.SerializeObjectToWebApi(apiResult);
         }

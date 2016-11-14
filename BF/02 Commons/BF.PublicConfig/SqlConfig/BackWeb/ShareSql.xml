@@ -122,7 +122,7 @@
       <SqlCommand>
         <![CDATA[
 SELECT s.`ID`,s.`Source_ID`,IF(s.`Source_Type`=1,'自定义',IF(s.`Source_Type`=2,'养生品','养生堂') ) AS Source_TypeStr,
-s.`ShareTitle`,s.`ShareContent`,s.`PraiseCount`,s.`CommentCount`,s.`CreationDate`,mi.`Account`,mi.`Name`,
+s.`ShareTitle`,s.`ShareContent`,s.`PraiseCount`,s.`CommentCount`,DATE_FORMAT(s.`CreationDate`, '%Y-%m-%d %H:%H:%S') as `CreationDate`,mi.`Account`,mi.`Name`,
 s.`IsHot`,IF(s.`IsHot`=FALSE,'否','是') AS IsHotStr,s.HotSort
 FROM `TB_MB_Share` s
 JOIN `TB_MB_MemberInfo` mi ON s.`User_ID`=mi.`ID`
@@ -141,7 +141,19 @@ WHERE s.`Status`=TRUE
       </SqlCommand>
     </SqlDefinition>
   </Data>
-	
+  
+	  <!--后台获取用户的社区分享附件-->
+  <Data name="BackWeb_GetShareAttmnt">
+    <SqlDefinition type="sql">
+      <SqlCommand>
+        <![CDATA[
+SELECT `AttachmentUrl` FROM `TB_MB_ShareAttmnt` WHERE Source_ID= @@ID@@ 
+      ]]>
+      </SqlCommand>
+    </SqlDefinition>
+  </Data>
+  
+  
 	<!--设置是否热门-->
 	<Data name="BackWeb_SetShareHot">
 		<SqlDefinition type="sql">

@@ -45,8 +45,9 @@
 
             for (var i = 0; i < data.data.table.length; i++) {
                 var str = "<tr><td>" + (i + 1) + "</td>";
-                str += "<td>" + data.data.table[i].ShareTitle + "</td>";
+               // str += "<td>" + data.data.table[i].ShareTitle + "</td>";
                 //str += "<td>" + data.data.table[i].ShareContent + "</td>";
+                str += "<td>" + data.data.table[i].ShareContent + "</td>";
                 str += "<td>" + data.data.table[i].Source_TypeStr + "</td>";
                 str += "<td>" + data.data.table[i].Account + "</td>";
                 str += "<td>" + data.data.table[i].Name + "</td>";
@@ -54,7 +55,7 @@
                 str += "<td>" + data.data.table[i].IsHotStr + "</td>";
                 str += "<td>" + data.data.table[i].HotSort + "</td>";
 
-                str += '<td><a href="#" data-toggle="modal" data-content="' + data.data.table[i].ShareContent + '" data-target="#modal_Content" id="btnContent">查看内容</a> ';
+                str += '<td><a href="#" data-toggle="modal" data-id="' + data.data.table[i].ID + '" data-target="#modal_Content" id="btnContent">查看图片</a> ';
                 if (data.data.table[i].IsHot == 1) {//已经设置热门
                     str += '<a href="#" role="button" id="btnSetHot"  data-id="' + data.data.table[i].ID + '"  data-hot="0" >取消热门</a> ';
                 } else {
@@ -87,7 +88,23 @@
 
             $("td #btnContent").off("click");
             $('td #btnContent').on('click', function () {
-                $("#lbContent").html($(this).attr("data-content"));
+
+                var url = window.apibase + "/Back_Share/GetShareAttmnt";
+                c.get({ id: $(this).attr("data-id") }, url, function (data) {
+
+                    if (data.data != null) {
+                        $("#lbContent").html("");
+                        for (var i = 0; i < data.data.length; i++) {
+                            $("#lbContent").html('<img style="width: 200px;height:200px;" src="'+data.data[i].AttachmentUrl+'" />');
+
+                        }
+                    }
+                    
+                    
+                })
+
+                //alert($(this).attr("data-id"));
+              //  $("#lbContent").html($(this).attr("data-content"));
 
             });
 
